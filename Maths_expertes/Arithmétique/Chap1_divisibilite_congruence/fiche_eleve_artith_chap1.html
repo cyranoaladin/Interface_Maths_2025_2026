@@ -115,26 +115,26 @@
           <div class="control-row" style="margin-bottom:8px"><button class="btn" id="btnOpenProps" aria-pressed="false" type="button">Tout ouvrir</button></div>
 
           <details><summary><strong>P1</strong> — Si $b\mid a$ alors $a\Z\subset b\Z$ et $D(b)\subset D(a)$</summary>
-            <div class="step"><div class="n">Utilité</div><div>Comparer des **ensembles de multiples/diviseurs** et prouver des inclusions rapidement.</div></div>
+            <div class="step"><div class="n">Utilité</div><div>Comparer des <b>ensembles de multiples/diviseurs</b> et prouver des inclusions rapidement.</div></div>
             <div class="step"><div class="n">Astuce</div><div>Partir de $a=bk$ puis multiplier par un entier quelconque $m$ : $am=b(km)$.</div></div>
             <details><summary>Mini‑preuve</summary>
-              <div class="step"><div class="n">1</div><div>$a=bk \\Rightarrow am=b(km)$ $\\forall m$ ⇒ $a\\Z\\subset b\\Z$.</div></div>
+              <div class="step"><div class="n">1</div><div>$a=bk \Rightarrow am=b(km)$ $\forall m$ ⇒ $a\Z\subset b\Z$.</div></div>
               <div class="step"><div class="n">2</div><div>$d\in D(b)$ ⇒ $d\mid b$ et $b\mid a$ ⇒ (transitivité) $d\mid a$ ⇒ $d\in D(a)$.</div></div>
             </details>
           </details>
 
           <details><summary><strong>P2</strong> — Invariance par changement de signe</summary>
-            <div class="step"><div class="n">Utilité</div><div>Travailler **avec des nombres positifs** sans changer la divisibilité.</div></div>
+            <div class="step"><div class="n">Utilité</div><div>Travailler <b>avec des nombres positifs</b> sans changer la divisibilité.</div></div>
             <div class="step"><div class="n">Mini‑preuve</div><div>$a=bk \Rightarrow a=(-b)(-k)$ et $-a=b(-k)$.</div></div>
           </details>
 
           <details><summary><strong>P3</strong> — Un entier non nul a un nombre fini de diviseurs</summary>
-            <div class="step"><div class="n">Utilité</div><div>Justifier des raisonnements par **exhaustion finie** (liste de diviseurs).</div></div>
+            <div class="step"><div class="n">Utilité</div><div>Justifier des raisonnements par <b>exhaustion finie</b> (liste de diviseurs).</div></div>
             <div class="step"><div class="n">Mini‑preuve</div><div>Si $d\mid n$ alors $|d|\le|n|$ ⇒ bornes ⇒ ensemble fini.</div></div>
           </details>
 
           <details><summary><strong>P4</strong> — Transitivité & combinaisons linéaires</summary>
-            <div class="step"><div class="n">Utilité</div><div>Prouver des **divisibilités composées** et former des **combinaisons** $ub+vc$ multiples de $a$.</div></div>
+            <div class="step"><div class="n">Utilité</div><div>Prouver des <b>divisibilités composées</b> et former des <b>combinaisons</b> $ub+vc$ multiples de $a$.</div></div>
             <details><summary>Mini‑preuve</summary>
               <div class="step"><div class="n">(i)</div><div>$b=ak_1, c=bk_2$ ⇒ $c=a(k_1k_2)$.</div></div>
               <div class="step"><div class="n">(ii)</div><div>$b=a\beta, c=a\gamma$ ⇒ $ub+vc=a(u\beta+v\gamma)$.</div></div>
@@ -142,19 +142,19 @@
           </details>
 
           <details><summary><strong>P5</strong> — Lemme des restes</summary>
-            <div class="step"><div class="n">Utilité</div><div>Passer en **classes de restes** (mod $b$) pour **raisonner par cas**.</div></div>
+            <div class="step"><div class="n">Utilité</div><div>Passer en <b>classes de restes</b> (mod $b$) pour <b>raisonner par cas</b>.</div></div>
             <details><summary>Exemple</summary>
-              <div class="step"><div class="n">Ex</div><div>Montrer $n^2+1\\not\\equiv0\\pmod{3}$ ⇒ $n\\equiv0,1,2$ ⇒ $n^2\\equiv0,1$ ⇒ $n^2+1\\equiv1,2$.</div></div>
+              <div class="step"><div class="n">Ex</div><div>Montrer $n^2+1\not\equiv 0\pmod{3}$ ⇒ $n\equiv 0,1,2$ ⇒ $n^2\equiv 0,1$ ⇒ $n^2+1\equiv 1,2$.</div></div>
             </details>
           </details>
 
           <details><summary><strong>P6</strong> — Même reste $\Leftrightarrow$ congruence</summary>
-            <div class="step"><div class="n">Utilité</div><div>Traduire « même reste » en **écriture modulaire** et vice‑versa.</div></div>
-            <div class="step"><div class="n">Formule</div><div>$a\\equiv b\\pmod{n} \\iff a=b+kn$ pour un $k\\in\\Z$.</div></div>
+            <div class="step"><div class="n">Utilité</div><div>Traduire « même reste » en <b>écriture modulaire</b> et vice‑versa.</div></div>
+            <div class="step"><div class="n">Formule</div><div>$a\equiv b\pmod{n} \iff a=b+kn$ pour un $k\in\Z$.</div></div>
           </details>
 
           <details><summary><strong>P7</strong> — Règles de calcul en congruences</summary>
-            <div class="step"><div class="n">Utilité</div><div>Simplifier des expressions : **addition, produit, puissance** OK ; **division** ⚠️ non admise en général.</div></div>
+            <div class="step"><div class="n">Utilité</div><div>Simplifier des expressions : <b>addition, produit, puissance</b> OK ; <b>division</b> ⚠️ non admise en général.</div></div>
             <div class="step"><div class="n">Piège</div><div>De $5\cdot4\equiv5\cdot6\pmod{10}$ on ne peut pas conclure $4\equiv6\pmod{10}$.</div></div>
           </details>
         </section>
@@ -164,7 +164,7 @@
           <div class="control-row" style="margin-bottom:8px"><button class="btn" id="btnOpenMethodo" aria-pressed="false" type="button">Tout ouvrir</button></div>
           <details open><summary><strong>A. Tester une divisibilité</strong> ($b\mid a$ ?)</summary>
             <div class="step"><div class="n">1</div><div>Essayer d’écrire $a=bk$ (calculer $k=a/b$ ; vérifier qu’il est entier).</div></div>
-            <div class="step"><div class="n">2</div><div>Sinon, faire la **division euclidienne** : $a=bq+r$ ; si $r=0$ ⇒ $b\mid a$.</div></div>
+            <div class="step"><div class="n">2</div><div>Sinon, faire la <b>division euclidienne</b> : $a=bq+r$ ; si $r=0$ ⇒ $b\mid a$.</div></div>
             <div class="step"><div class="n">3</div><div>Utiliser P4 pour combiner des divisibilités déjà connues.</div></div>
             <details><summary>Exemple corrigé</summary>
               <div class="step"><div class="n">Ex</div><div>Montrer que $12\mid 3\cdot 4\cdot 10 - 2\cdot 6$. On a $12\mid 3\cdot4\cdot10$ et $12\mid 2\cdot6$ ⇒ par P4(ii), la différence est multiple de 12.</div></div>
@@ -172,19 +172,19 @@
           </details>
 
           <details><summary><strong>B. Effectuer une division euclidienne</strong> ($a=bq+r$)</summary>
-            <div class="step"><div class="n">1</div><div>Calculer $q=\lfloor a/b\rfloor$, puis $r=a-bq$ en imposant $0\le r<b$.</div></div>
+            <div class="step"><div class="n">1</div><div>Calculer $q=\lfloor a/b\rfloor$, puis $r=a-bq $ en imposant $0 \le r< b$.</div></div>
             <div class="step"><div class="n">2</div><div>Pour le <strong>pgcd</strong>, appliquer <strong>Euclide</strong> : réitérer $x=yq+r$ jusqu’à $r=0$.</div></div>
             <details><summary>Exemple corrigé</summary>
-              <div class="step"><div class="n">Ex</div><div>$114=8\\cdot14+2$, $8=2\\cdot4+0$ ⇒ $\\operatorname{pgcd}(114,8)=2$.</div></div>
+              <div class="step"><div class="n">Ex</div><div>$114=8\cdot14+2$, $8=2\cdot4+0$ ⇒ $\operatorname{pgcd}(114,8)=2$.</div></div>
             </details>
           </details>
 
-          <details><summary><strong>C. Résoudre $ax\\equiv b\\pmod{n}$</strong></summary>
-            <div class="step"><div class="n">1</div><div>Poser $g=\\operatorname{pgcd}(a,n)$. Si $g\\nmid b$ ⇒ <strong>pas de solution</strong>.</div></div>
-            <div class="step"><div class="n">2</div><div>Sinon, réduire : $a'=a/g$, $b'=b/g$, $n'=n/g$ ; trouver l’**inverse** $a'^{-1}\pmod{n'}$ via Euclide étendu.</div></div>
-            <div class="step"><div class="n">3</div><div>Une solution : $x_0\\equiv a'^{-1}b'\\pmod{n'}$ ; il y a $g$ classes de solutions modulo $n$.</div></div>
+          <details><summary><strong>C. Résoudre $ax\equiv b\pmod{n}$</strong></summary>
+            <div class="step"><div class="n">1</div><div>Poser $g=\operatorname{pgcd}(a,n)$. Si $g\nmid b$ ⇒ <strong>pas de solution</strong>.</div></div>
+            <div class="step"><div class="n">2</div><div>Sinon, réduire : $a'=a/g$, $b'=b/g$, $n'=n/g$ ; trouver l’<b>inverse</b> $a'^{-1}\pmod{n'}$ via Euclide étendu.</div></div>
+            <div class="step"><div class="n">3</div><div>Une solution : $x_0\equiv a'^{-1}b'\pmod{n'}$ ; il y a $g$ classes de solutions modulo $n$.</div></div>
             <details><summary>Exemple corrigé</summary>
-              <div class="step"><div class="n">Ex</div><div>$3x\\equiv2\\pmod{5}$ ⇒ $g=1$, $3^{-1}\\equiv2$ ⇒ $x\\equiv4\\pmod{5}$.</div></div>
+              <div class="step"><div class="n">Ex</div><div>$3x\equiv 2\pmod{5}$ ⇒ $g=1$, $3^{-1}\equiv 2$ ⇒ $x\equiv 4\pmod{5}$.</div></div>
             </details>
           </details>
         </section>
@@ -193,20 +193,20 @@
           <div class="card">
             <h2>Checklist avant de rendre</h2>
             <ul>
-              <li>J’ai écrit la **définition** ou le **théorème** utilisé.</li>
+              <li>J’ai écrit la <b>définition</b> ou le <b>théorème</b> utilisé.</li>
               <li>Chaque égalité est justifiée (P1→P7, Euclide, lemme des restes).</li>
-              <li>Les **conditions** sont vérifiées (par ex. $0\le r<b$ ; $g\mid b$).</li>
-            <li>Le <strong>vocabulaire</strong> est précis : « $\\pmod{n}$ », « reste », « quotient »…</li>
-              <li>Je relis les **signes** (attention aux $-$ et aux simplifications interdites).</li>
+              <li>Les <b>conditions</b> sont vérifiées (par ex. $0\le r< b$ ; $g\mid b$).</li>
+            <li>Le <strong>vocabulaire</strong> est précis : « $\pmod{n}$ », « reste », « quotient »…</li>
+              <li>Je relis les <b>signes</b> (attention aux $-$ et aux simplifications interdites).</li>
             </ul>
           </div>
           <div class="card">
             <h2>Rappels rapides (formules utiles)</h2>
             <ul>
-              <li>$a\\equiv b\\pmod{n} \\iff a=b+kn$ ; $a\\equiv b\\pmod{n} \\iff \\exists q,q',r:\\ a=nq+r,\\ b=nq'+r$.</li>
+              <li>$a\equiv b\pmod{n} \iff a=b+kn$ ; $a\equiv b\pmod{n} \iff \exists q,q',r:\\ a=nq+r,\\ b=nq'+r$.</li>
               <li>Si $a\mid b$ et $a\mid c$ alors $a\mid (ub+vc)$ ; $\forall u,v\in\Z$.</li>
-              <li>$\\operatorname{pgcd}(a,b)$ est le <strong>dernier reste non nul</strong> d’Euclide.</li>
-              <li>Si $g=\\operatorname{pgcd}(a,n)$ et $g\\mid b$ alors $ax\\equiv b\\pmod{n}$ a des solutions, sinon non.</li>
+              <li>$\operatorname{pgcd}(a,b)$ est le <strong>dernier reste non nul</strong> d’Euclide.</li>
+              <li>Si $g=\operatorname{pgcd}(a,n)$ et $g\mid b$ alors $ax\equiv b\pmod{n}$ a des solutions, sinon non.</li>
             </ul>
           </div>
         </section>
@@ -214,8 +214,8 @@
         <section class="card" id="entrainement">
           <h2>Mini‑entraînements éclair</h2>
           <div class="control-row" style="margin-bottom:8px"><button class="btn" id="btnOpenEntrain" aria-pressed="false" type="button">Tout ouvrir</button></div>
-          <div class="step"><div class="n">1</div><div>Compléter : « $56=17\\times3+5=17\\times2+22$ mais la seconde n’est pas euclidienne car <input class="input mono" id="qA" size="10" placeholder=">" aria-label="Justification (ex. 22 > 17)">. » <button class="btn" onclick="checkText('qA','22 > 17')">Vérifier</button> <span id="qAr" aria-live="polite"></span></div></div>
-          <div class="step"><div class="n">2</div><div>Résoudre $5x\\equiv1\\pmod{12}$. <details><summary>Correction</summary>$\\operatorname{pgcd}(5,12)=1$, $5^{-1}\\equiv5\\pmod{12}$ ⇒ $x\\equiv5\\pmod{12}$.</details></div></div>
+          <div class="step"><div class="n">1</div><div>Compléter : « $56=17\times3+5=17\times2+22$ mais la seconde n’est pas euclidienne car <input class="input mono" id="qA" size="10" placeholder=">" aria-label="Justification (ex. 22 > 17)">. » <button class="btn" onclick="checkText('qA','22 > 17')">Vérifier</button> <span id="qAr" aria-live="polite"></span></div></div>
+          <div class="step"><div class="n">2</div><div>Résoudre $5x\equiv 1\pmod{12}$. <details><summary>Correction</summary>$\operatorname{pgcd}(5,12)=1$, $5^{-1}\equiv 5\pmod{12}$ ⇒ $x\equiv 5\pmod{12}$.</details></div></div>
           <div class="step"><div class="n">3</div><div>Déterminer $D(18)$ puis vérifier $D(9)\subset D(18)$. <details><summary>Correction</summary>$D(18)=\{-18, -9, -6, -3, -2, -1, 1, 2, 3, 6, 9, 18\}$, $D(9)=\{-9, -3, -1, 1, 3, 9\}$.</details></div></div>
         </section>
 
@@ -223,9 +223,9 @@
           <h2>Erreurs fréquentes à éviter</h2>
           <ul>
             <li>Écrire $a\equiv b\pmod{n}$ sans vérifier que <strong>$n\mid(a-b)$</strong>.</li>
-            <li>« Simplifier » une congruence par un facteur **non inversible** modulo $n$.</li>
-            <li>Oublier la contrainte **$0\le r<b$** dans une division euclidienne.</li>
-            <li>Confondre **divise** et **est multiple de**.</li>
+            <li>« Simplifier » une congruence par un facteur <b>non inversible</b> modulo $n$.</li>
+            <li>Oublier la contrainte <b>$0\le r< b$</b> dans une division euclidienne.</li>
+            <li>Confondre <b>divise</b> et <b>est multiple de</b>.</li>
           </ul>
         </section>
 

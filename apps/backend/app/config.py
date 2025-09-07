@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
 from dotenv import load_dotenv
 from pydantic import field_validator
@@ -25,7 +24,7 @@ class Settings(BaseSettings):
 
     @field_validator("CONTENT_ROOT", mode="before")
     @classmethod
-    def default_content_root(cls, v: Optional[str | Path]) -> Path:
+    def default_content_root(cls, v: str | Path | None) -> Path:
         if v:
             return Path(v)
         # Compute repo root from this file location: apps/backend/app/config.py -> repo root is 3 parents up

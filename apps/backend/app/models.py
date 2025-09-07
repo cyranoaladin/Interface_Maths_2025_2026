@@ -20,5 +20,6 @@ class DirNode(BaseModel):
     children: List[Union["DirNode", FileNode]]
 
 
-DirNode.update_forward_refs()
+# Rebuild model to resolve forward refs (Pydantic v2)
+DirNode.model_rebuild()
 

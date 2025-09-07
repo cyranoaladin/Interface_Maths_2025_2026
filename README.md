@@ -26,5 +26,11 @@ Ouvrir le fichier HTML dans un navigateur moderne. Boutons inclus:
 
 ## Licence
 
-Par défaut, tous droits réservés. Pour diffusion publique, préciser une licence (ex: CC BY-NC-SA 4.0) dans ce fichier.
+Ce dépôt est publié sous licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International (CC BY-NC-SA 4.0).
+
+- Vous devez créditer l’auteur.
+- Pas d’usage commercial.
+- Partage dans les mêmes conditions.
+
+Détails: https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr
 

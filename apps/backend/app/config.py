@@ -27,9 +27,9 @@ class Settings(BaseSettings):
     def default_content_root(cls, v: str | Path | None) -> Path:
         if v:
             return Path(v)
-        # Compute repo root from this file location: apps/backend/app/config.py -> repo root is 3 parents up
+        # Default to the public site root (docs/) so URLs and content match GitHub Pages
         repo_root = Path(__file__).resolve().parents[3]
-        return repo_root
+        return repo_root / "docs"
 
     @field_validator("STATIC_BASE_URL")
     @classmethod

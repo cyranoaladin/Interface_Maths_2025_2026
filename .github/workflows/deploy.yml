@@ -2,15 +2,8 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [ main ]
-    paths:
-      - 'EDS_premiere/**'
-      - 'EDS_terminale/**'
-      - 'Maths_expertes/**'
-      - 'docs/**'
-      - '.github/workflows/deploy.yml'
-      - 'README.md'
-      - 'CHANGELOG.md'
+    tags:
+      - 'v*.*.*'
   workflow_dispatch: {}
 
 jobs:

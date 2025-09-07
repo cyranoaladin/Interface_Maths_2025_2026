@@ -75,3 +75,55 @@ jobs:
             EDS_premiere EDS_terminale Maths_expertes docs index.html \
             "$VPS_USER@$VPS_HOST:$VPS_PATH/"
 
+      - name: Sanity check (VPS endpoints)
+        env:
+          VPS_BASE_URL: ${{ secrets.VPS_BASE_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VPS_BASE_URL:-}" ]; then
+            echo "VPS_BASE_URL not set, skipping VPS sanity checks."
+            exit 0
+          fi
+          check_url() {
+            url="$1"
+            for i in $(seq 1 12); do
+              code=$(curl -s -o /dev/null -w "%{http_code}" -L "$url" || true)
+              if [ "$code" = "200" ]; then
+                echo "OK $url"
+                return 0
+              fi
+              echo "Attempt $i/12: $code $url"
+              sleep 10
+            done
+            echo "FAIL $url"
+            return 1
+          }
+          check_url "$VPS_BASE_URL/"
+          check_url "$VPS_BASE_URL/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
+          check_url "$VPS_BASE_URL/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
+
+      - name: Sanity check (GitHub Pages endpoints)
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          owner="${GITHUB_REPOSITORY%%/*}"
+          repo="${GITHUB_REPOSITORY##*/}"
+          base="https://${owner}.github.io/${repo}"
+          check_url() {
+            url="$1"
+            for i in $(seq 1 12); do
+              code=$(curl -s -o /dev/null -w "%{http_code}" -L "$url" || true)
+              if [ "$code" = "200" ]; then
+                echo "OK $url"
+                return 0
+              fi
+              echo "Attempt $i/12: $code $url"
+              sleep 10
+            done
+            echo "FAIL $url"
+            return 1
+          }
+          check_url "$base/"
+          check_url "$base/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
+          check_url "$base/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
+

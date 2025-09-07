@@ -16,10 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install rsync and ssh-client
+      - name: Install dependencies (rsync, ssh-client, jq)
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y rsync openssh-client
+          sudo apt-get install -y rsync openssh-client jq
 
       - name: Start ssh-agent and add key
         uses: webfactory/ssh-agent@v0.8.0
@@ -32,6 +32,37 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Wait for CI workflows success (CI and backend-ci)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO="${GITHUB_REPOSITORY}"
+          SHA="${GITHUB_SHA}"
+          WF1="CI"
+          WF2="backend-ci"
+          echo "Waiting for workflows '$WF1' and '$WF2' on $SHA ..."
+          for i in $(seq 1 60); do
+            json=$(curl -sSf -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" \
+              "$GITHUB_API_URL/repos/$REPO/actions/runs?head_sha=$SHA&per_page=100")
+            c1=$(echo "$json" | jq -r --arg n "$WF1" '.workflow_runs[] | select(.name==$n) | .conclusion' | head -n1)
+            c2=$(echo "$json" | jq -r --arg n "$WF2" '.workflow_runs[] | select(.name==$n) | .conclusion' | head -n1)
+            s1=$(echo "$json" | jq -r --arg n "$WF1" '.workflow_runs[] | select(.name==$n) | .status' | head -n1)
+            s2=$(echo "$json" | jq -r --arg n "$WF2" '.workflow_runs[] | select(.name==$n) | .status' | head -n1)
+            if [ "$c1" = "success" ] && [ "$c2" = "success" ]; then
+              echo "Both workflows succeeded."
+              exit 0
+            fi
+            if [ "$c1" = "failure" ] || [ "$c1" = "cancelled" ] || [ "$c2" = "failure" ] || [ "$c2" = "cancelled" ]; then
+              echo "CI failed (CI:$c1, backend-ci:$c2). Aborting deploy."
+              exit 1
+            fi
+            echo "CI in progress... (CI: $s1/$c1, backend-ci: $s2/$c2). Attempt $i/60"
+            sleep 10
+          done
+          echo "Timeout waiting for CI."
+          exit 1
 
       - name: Deploy static site (EDS + docs) via rsync
         env:

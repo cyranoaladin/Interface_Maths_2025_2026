@@ -2,9 +2,12 @@ name: Deploy to VPS
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches: [ main ]
   workflow_dispatch: {}
+
+concurrency:
+  group: deploy-vps-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:

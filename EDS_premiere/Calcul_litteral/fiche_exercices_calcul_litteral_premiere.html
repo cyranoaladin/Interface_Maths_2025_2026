@@ -137,23 +137,157 @@
       </section>
 
       <section class="card" id="equations">
-        <h2>Équations (dont produit)</h2>
-        <details>
-          <summary><strong>Équations-produit — rappels</strong></summary>
-          <div class="step"><div class="n">Idée</div><div>Ramener à une forme $A(x)\cdot B(x)=0$ puis résoudre $A(x)=0$ ou $B(x)=0$.</div></div>
-          <div class="step"><div class="n">Ex</div><div>$(3x+1)(5x-3)=0 \Rightarrow x=-\tfrac13$ ou $x=\tfrac35$.</div></div>
+        <h2>Équations (produit, carrés, divers)</h2>
+        <details open>
+          <summary><strong>A. Équations-produit</strong> (se ramener à un produit nul)</summary>
+          <div class="step"><div class="n">1</div><div>$(3x+1)(5x-3)=0$ 
+            <details><summary>Correction</summary>
+              $3x+1=0 \Rightarrow x=-\tfrac13$ ; $5x-3=0 \Rightarrow x=\tfrac35$.<br/>Solution: $\{-\tfrac13,\tfrac35\}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$(3-x)(4-x)(10-x)=0$ 
+            <details><summary>Correction</summary>
+              $3-x=0\Rightarrow x=3$ ; $4-x=0\Rightarrow x=4$ ; $10-x=0\Rightarrow x=10$.<br/>Solution: $\{3,4,10\}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">3</div><div>$(x+\tfrac12)(x-\tfrac34)=\tfrac13\,(x-\tfrac32)$
+            <details><summary>Correction</summary>
+              Tout passer à gauche: $(x+\tfrac12)(x-\tfrac34)-\tfrac13(x-\tfrac32)=0$.<br/>
+              Mettre $(x-\tfrac32)$ en évidence: remarquer $x-\tfrac34=(x-\tfrac32)+\tfrac34$ et $x+\tfrac12=(x-\tfrac32)+2$.<br/>
+              On peut aussi développer: $(x^2-\tfrac14x-\tfrac38) - \tfrac13x + \tfrac12=0$ soit $x^2-\tfrac{7}{12}x+\tfrac{1}{8}=0$.<br/>
+              Discriminant $\Delta=(\tfrac{7}{12})^2-4\cdot1\cdot\tfrac18=\tfrac{49}{144}-\tfrac{72}{144}= -\tfrac{23}{144}<0$. Pas de solution réelle.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">4</div><div>$-2(5-x)+3(x-5)^2=x^2-25$
+            <details><summary>Correction</summary>
+              Écrire $x^2-25=(x-5)(x+5)$. Développer à gauche: $-10+2x+3(x^2-10x+25)=3x^2-28x+65$.<br/>
+              Équation $3x^2-28x+65=x^2-25 \Rightarrow 2x^2-28x+90=0 \Rightarrow x^2-14x+45=0$.<br/>
+              $\Delta=196-180=16$, $x=\dfrac{14\pm4}{2}\in\{5,9\}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">5</div><div>$(x+1)(x+2)-(x+1)(x+5)=0$
+            <details><summary>Correction</summary>
+              Mise en évidence $(x+1)$: $(x+1)\big[(x+2)-(x+5)\big]=(x+1)(-3)=0 \Rightarrow x=-1$.
+            </details>
+          </div></div>
         </details>
-        <div class="result"><strong>À compléter :</strong> Les équations détaillées des PDF « Calcul littéral 2025/2026 » et « Série Zéro » seront intégrées après extraction du texte (ou scan clair). Souhaitez‑vous que je les OCRise automatiquement ?</div>
+
+        <details>
+          <summary><strong>B. Carrés (équations quadratiques simples)</strong></summary>
+          <div class="step"><div class="n">1</div><div>$3x^2-1=0$ 
+            <details><summary>Correction</summary>
+              $x^2=\tfrac13 \Rightarrow x=\pm\dfrac{1}{\sqrt3}=\pm\dfrac{\sqrt3}{3}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$0{,}04x^2=1$ 
+            <details><summary>Correction</summary>
+              $x^2=25 \Rightarrow x=\pm5$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">3</div><div>$7x^2=\tfrac{1}{15}$ 
+            <details><summary>Correction</summary>
+              $x^2=\tfrac{1}{105} \Rightarrow x=\pm\dfrac{1}{\sqrt{105}}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">4</div><div>$(x+1)^2+(x-1)^2=6$ 
+            <details><summary>Correction</summary>
+              $x^2+2x+1+x^2-2x+1=6 \Rightarrow 2x^2+2=6 \Rightarrow x^2=2 \Rightarrow x=\pm\sqrt2$.
+            </details>
+          </div></div>
+        </details>
+
+        <details>
+          <summary><strong>C. Divers (exemples de la série)</strong></summary>
+          <div class="step"><div class="n">1</div><div>$2(4x-3)+4(1-2x)=2(3x+7)-4(2x+5)$
+            <details><summary>Correction</summary>
+              G: $8x-6+4-8x=-2$ ; D: $6x+14-8x-20=-2x-6$. Égalité $-2=-2x-6 \Rightarrow -2x=4 \Rightarrow x=-2$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$\dfrac{2x+1}{3}-\dfrac{2-3x}{12}=\dfrac{3-x}{8}$
+            <details><summary>Correction</summary>
+              PPCM $24$. $8(2x+1)-2(2-3x)=3(3-x)$ \Rightarrow $16x+8-4+6x=9-3x$ \Rightarrow $22x+4=9-3x$ \Rightarrow $25x=5$ \Rightarrow $x=\tfrac15$.
+            </details>
+          </div></div>
+        </details>
       </section>
 
       <section class="grid cols-2" id="inequations">
         <div class="card">
           <h2>Inéquations</h2>
-          <div class="result">À intégrer depuis les séries (Ex 55–56). Je peux les ajouter via extraction PDF.</div>
+          <details open>
+            <summary><strong>A. Produits/Polynômes</strong></summary>
+            <div class="step"><div class="n">1</div><div>$(3x+1)(-2x+5)\le0$
+              <details><summary>Correction</summary>
+                Zéros: $x=-\tfrac13$ et $x=\tfrac52$. Tableau de signes (coefficients opposés). Solution: $[-\tfrac13,\tfrac52]$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">2</div><div>$(x-2)(3x+5)(3-7x)<0$
+              <details><summary>Correction</summary>
+                Zéros: $2, -\tfrac53, \tfrac{3}{7}$. Ordre: $-\tfrac53 < \tfrac{3}{7} < 2$. Produits alternent de signe: solution = réunion des intervalles où le signe est négatif.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">3</div><div>$(x+3)^2-(x-1)^2\le0$
+              <details><summary>Correction</summary>
+                Différence de carrés: $[(x+3)-(x-1)][(x+3)+(x-1)]=(4)(2x+2)=8(x+1)\le0 \Rightarrow x\le-1$.
+              </details>
+            </div></div>
+          </details>
+
+          <details>
+            <summary><strong>B. Quotients</strong></summary>
+            <div class="step"><div class="n">4</div><div>$\dfrac{x-1}{x+1} > 2$
+              <details><summary>Correction</summary>
+                $\dfrac{x-1}{x+1}-2>0 \iff \dfrac{x-1-2x-2}{x+1}>0 \iff \dfrac{-x-3}{x+1}>0$. Zéros: $x=-3$ ; interdit: $x\ne-1$. Tableau de signes: solution $(-3,-1)$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">5</div><div>$\dfrac{3x-2}{5-3x}\ge 1$
+              <details><summary>Correction</summary>
+                $\dfrac{3x-2}{5-3x}-1\ge0 \iff \dfrac{3x-2-(5-3x)}{5-3x}=\dfrac{6x-7}{5-3x}\ge0$. Zéros: $x=\tfrac{7}{6}$ ; interdit: $x\ne \tfrac{5}{3}$. Tableau de signes.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">6</div><div>$\dfrac{2x+1}{x} \ge x$
+              <details><summary>Correction</summary>
+                $\dfrac{2x+1}{x}-x\ge0 \iff \dfrac{2x+1-x^2}{x}\ge0$. Zéros de $2x+1-x^2$ : $x=1\pm\sqrt2$. Exclure $x=0$. Tableau de signes.
+              </details>
+            </div></div>
+          </details>
         </div>
+
         <div class="card" id="domaine">
           <h2>Domaine de définition</h2>
-          <div class="result">À intégrer depuis Ex 59 (radicaux, dénominateurs). Méthode en bas.</div>
+          <details open>
+            <summary><strong>Ex 59 — Domaines (sélection)</strong></summary>
+            <div class="step"><div class="n">1</div><div>$f(x)=\dfrac{1}{x}+x$ 
+              <details><summary>Correction</summary>
+                Interdire $x=0$. Domaine: $\R\setminus\{0\}$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">2</div><div>$f(x)=\dfrac{1}{2x-1}$ 
+              <details><summary>Correction</summary>
+                Interdire $2x-1=0 \Rightarrow x\ne\tfrac12$. Domaine: $\R\setminus\{\tfrac12\}$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">3</div><div>$f(x)=\dfrac{3x+7}{1-x}$ 
+              <details><summary>Correction</summary>
+                Interdire $x=1$. Domaine: $\R\setminus\{1\}$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">4</div><div>$f(x)=\sqrt{x-1}$ 
+              <details><summary>Correction</summary>
+                Radicand $\ge0$: $x\ge1$. Domaine: $[1,+\infty)$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">5</div><div>$f(x)=\sqrt{x^2-10x+21}$ 
+              <details><summary>Correction</summary>
+                $(x-3)(x-7)\ge0 \Rightarrow x\le3$ ou $x\ge7$. Domaine: $(-\infty,3] \cup [7,+\infty)$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">6</div><div>$f(x)=\sqrt{\dfrac{2-x}{x+5}}$ 
+              <details><summary>Correction</summary>
+                Exiger $\dfrac{2-x}{x+5}\ge0$ et $x\ne-5$. Zéros/points interdits: $x=2$ (numérateur), $x=-5$ (dénominateur). Tableau de signes: $(-\infty,-5)\cup[2,+\infty)$.
+              </details>
+            </div></div>
+          </details>
         </div>
       </section>
 

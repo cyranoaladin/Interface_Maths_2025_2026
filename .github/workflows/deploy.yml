@@ -43,6 +43,6 @@ jobs:
         run: |
           test -n "$VPS_HOST" && test -n "$VPS_USER" && test -n "$VPS_PATH" || { echo "Secrets VPS_HOST/VPS_USER/VPS_PATH manquants"; exit 1; }
           rsync -az --delete --human-readable --progress \
-            EDS_terminale/ docs/ \
+            EDS_terminale docs index.html \
             "$VPS_USER@$VPS_HOST:$VPS_PATH/"
 

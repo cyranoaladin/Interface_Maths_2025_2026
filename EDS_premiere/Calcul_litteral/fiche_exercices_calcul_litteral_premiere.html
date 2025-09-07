@@ -134,6 +134,22 @@
           <div class="step"><div class="n">7</div><div>$ (x+1)^2-2=(x+1-\sqrt2)(x+1+\sqrt2)$ (sur $\R$).</div></div>
           <div class="step"><div class="n">8</div><div>$ 9(x-6)^2+16$ n'est pas factorisable sur $\R$ (somme de deux carrés non nuls).</div></div>
         </details>
+
+        <details>
+          <summary><strong>Trinômes — Série 1 (Ex. 5)</strong></summary>
+          <div class="step"><div class="n">1</div><div>$x^2+6x+9=(x+3)^2$.</div></div>
+          <div class="step"><div class="n">2</div><div>$x^2+20x+25$ 
+            <details><summary>Correction</summary>
+              $\Delta=20^2-4\cdot1\cdot25=300$. Racines $x=-10\pm5\sqrt3$ ; factorisation (sur $\R$): $(x+10-5\sqrt3)(x+10+5\sqrt3)$. Pas de factorisation à coefficients entiers.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">3</div><div>$x^2+4x+3=(x+1)(x+3)$.</div></div>
+          <div class="step"><div class="n">4</div><div>$x^2-3x+5$ 
+            <details><summary>Correction</summary>
+              $\Delta=9-20=-11<0$ : irréductible sur $\R$ (sur $\C$: $(x-\tfrac{3+i\sqrt{11}}{2})(x-\tfrac{3-i\sqrt{11}}{2})$).
+            </details>
+          </div></div>
+        </details>
       </section>
 
       <section class="card" id="equations">
@@ -277,7 +293,18 @@
             </div></div>
             <div class="step"><div class="n">3</div><div>$(x+3)^2-(x-1)^2\le0$
               <details><summary>Correction</summary>
-                Différence de carrés: $[(x+3)-(x-1)][(x+3)+(x-1)]=(4)(2x+2)=8(x+1)\le0 \Rightarrow x\le-1$.
+                $[(x+3)-(x-1)][(x+3)+(x-1)]=(4)(2x+2)=8(x+1)\le0 \Rightarrow x\le-1$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">4</div><div>$(3x+2)^2-(x-1)^2\le0$
+              <details><summary>Correction</summary>
+                $(3x+2-(x-1))(3x+2+(x-1))=(2x+3)(4x+1)\le0 \Rightarrow x\in\left[-\tfrac{3}{2},-\tfrac{1}{4}\right]$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">5</div><div>$(5x+1)^2+9\le0$ — aucune solution (toujours $>0$).</div></div>
+            <div class="step"><div class="n">6</div><div>$(3x^2+1)(9-2x)>0$ 
+              <details><summary>Correction</summary>
+                $3x^2+1>0$ pour tout $x$ ; inégalité équivalente à $9-2x>0$ donc $x<\tfrac{9}{2}$.
               </details>
             </div></div>
           </details>
@@ -294,9 +321,24 @@
                 $\dfrac{3x-2}{5-3x}-1\ge0 \iff \dfrac{3x-2-(5-3x)}{5-3x}=\dfrac{6x-7}{5-3x}\ge0$. Zéros: $x=\tfrac{7}{6}$ ; interdit: $x\ne \tfrac{5}{3}$. Tableau de signes.
               </details>
             </div></div>
-            <div class="step"><div class="n">6</div><div>$\dfrac{2x+1}{x} \ge x$
+            <div class="step"><div class="n">6</div><div>$\dfrac{2x+1}{x+2} > x$
               <details><summary>Correction</summary>
-                $\dfrac{2x+1}{x}-x\ge0 \iff \dfrac{2x+1-x^2}{x}\ge0$. Zéros de $2x+1-x^2$ : $x=1\pm\sqrt2$. Exclure $x=0$. Tableau de signes.
+                $\dfrac{2x+1}{x+2}-x>0 \iff \dfrac{1-x^2}{x+2}>0 \iff \dfrac{(1-x)(1+x)}{x+2}<0$. Points critiques: $-2,-1,1$. Solution: $(-\infty,-2)\cup(-1,1)$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">7</div><div>$\dfrac{5x+3}{3x+5} \le \dfrac{3x+5}{5x+3}$
+              <details><summary>Correction</summary>
+                Étudier $\dfrac{(5x+3)^2-(3x+5)^2}{(3x+5)(5x+3)}\le0$. Numérateur $=16(x-1)(x+1)$.\nSolution: $(-\tfrac{5}{3},-1]\cup(-\tfrac{3}{5},1]$ (domaines exclus : $x\ne-\tfrac{5}{3},-\tfrac{3}{5}$).
+              </details>
+            </div></div>
+            <div class="step"><div class="n">8</div><div>$\dfrac{7x-2}{4x^2-1}\le0$
+              <details><summary>Correction</summary>
+                Points: $x=\tfrac{2}{7}$, $x=\pm\tfrac{1}{2}$ (interdits pour le dénominateur). Solution: $(-\infty,-\tfrac12)\cup[\tfrac{2}{7},\tfrac12)$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">9</div><div>$\dfrac{4x^3-9x}{x^2-16}\ge0$
+              <details><summary>Correction</summary>
+                $\dfrac{x(2x-3)(2x+3)}{(x-4)(x+4)}\ge0$. Solution: $(-4,-\tfrac{3}{2}]\cup\{0\}\cup\{\tfrac{3}{2}\}\cup(4,+\infty)$.
               </details>
             </div></div>
           </details>
@@ -311,9 +353,9 @@
                 Interdire $x=0$. Domaine: $\R\setminus\{0\}$.
               </details>
             </div></div>
-            <div class="step"><div class="n">2</div><div>$f(x)=\dfrac{1}{2x-1}$ 
+            <div class="step"><div class="n">2</div><div>$f(x)=\dfrac{1}{x^2-1}$ 
               <details><summary>Correction</summary>
-                Interdire $2x-1=0 \Rightarrow x\ne\tfrac12$. Domaine: $\R\setminus\{\tfrac12\}$.
+                Interdire $x=\pm1$. Domaine: $\R\setminus\{-1,1\}$.
               </details>
             </div></div>
             <div class="step"><div class="n">3</div><div>$f(x)=\dfrac{3x+7}{1-x}$ 
@@ -321,9 +363,9 @@
                 Interdire $x=1$. Domaine: $\R\setminus\{1\}$.
               </details>
             </div></div>
-            <div class="step"><div class="n">4</div><div>$f(x)=\sqrt{x-1}$ 
+            <div class="step"><div class="n">4</div><div>$f(x)=\dfrac{1-x}{\sqrt{x-1}}$ 
               <details><summary>Correction</summary>
-                Radicand $\ge0$: $x\ge1$. Domaine: $[1,+\infty)$.
+                Exiger $x-1>0$ (dénominateur non nul et réel): $x>1$. Domaine: $(1,+\infty)$.
               </details>
             </div></div>
             <div class="step"><div class="n">5</div><div>$f(x)=\sqrt{x^2-10x+21}$ 

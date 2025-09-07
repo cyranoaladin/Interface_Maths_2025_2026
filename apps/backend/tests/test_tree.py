@@ -1,10 +1,8 @@
-import os
 from pathlib import Path
 
 import pytest
 
 from app.tree import build_tree
-from app.config import settings
 
 
 def test_build_tree_extracts_html_and_titles(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
@@ -13,10 +11,14 @@ def test_build_tree_extracts_html_and_titles(tmp_path: Path, monkeypatch: pytest
     (base / "SubA").mkdir(parents=True)
     (base / "SubB").mkdir(parents=True)
 
-    (base / "index.html").write_text("<html><head><title>Fiche CL</title></head><body></body></html>", encoding="utf-8")
-    (base / "SubA" / "page.htm").write_text("<html><head><title>Page A</title></head><body></body></html>", encoding="utf-8")
+    html_index = "<html><head><title>Fiche CL</title></head><body></body></html>"
+    html_a = "<html><head><title>Page A</title></head><body></body></html>"
+    html_b = "<html><head><title>Ex B</title></head><body></body></html>"
+
+    (base / "index.html").write_text(html_index, encoding="utf-8")
+    (base / "SubA" / "page.htm").write_text(html_a, encoding="utf-8")
     (base / "SubA" / "doc.txt").write_text("ignore me", encoding="utf-8")
-    (base / "SubB" / "ex.html").write_text("<html><head><title>Ex B</title></head><body></body></html>", encoding="utf-8")
+    (base / "SubB" / "ex.html").write_text(html_b, encoding="utf-8")
 
     # Act: build tree from tmp root
     root_dir = tmp_path

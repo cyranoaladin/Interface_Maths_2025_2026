@@ -4,7 +4,9 @@ on:
   push:
     branches: [ main ]
     paths:
+      - 'EDS_premiere/**'
       - 'EDS_terminale/**'
+      - 'Maths_expertes/**'
       - 'docs/**'
       - '.github/workflows/deploy.yml'
       - 'README.md'
@@ -43,6 +45,6 @@ jobs:
         run: |
           test -n "$VPS_HOST" && test -n "$VPS_USER" && test -n "$VPS_PATH" || { echo "Secrets VPS_HOST/VPS_USER/VPS_PATH manquants"; exit 1; }
           rsync -az --delete --human-readable --progress \
-            EDS_terminale docs index.html \
+            EDS_premiere EDS_terminale Maths_expertes docs index.html \
             "$VPS_USER@$VPS_HOST:$VPS_PATH/"
 

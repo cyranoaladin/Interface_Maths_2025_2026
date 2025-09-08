@@ -10,8 +10,12 @@ from starlette.staticfiles import StaticFiles
 from .config import settings
 from .models import DirNode
 from .tree import build_tree
+from .routers.auth import router as auth_router
 
 app = FastAPI(title="Maths Portal API")
+
+# Routers
+app.include_router(auth_router)
 
 # CORS (optional)
 if settings.CORS_ORIGINS:

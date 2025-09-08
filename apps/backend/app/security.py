@@ -11,7 +11,9 @@ from sqlalchemy.orm import Session
 
 from .config import settings
 from .db import get_db
-from .users import User
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .users import User
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -60,7 +62,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    user = db.get(User, int(user_id))
+    from .users import User as UserModel
+    user = db.get(UserModel, int(user_id))
     if user is None or not user.is_active:
         raise credentials_exception
     return user

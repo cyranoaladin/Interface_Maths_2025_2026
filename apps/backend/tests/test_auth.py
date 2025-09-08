@@ -36,7 +36,12 @@ def test_auth_token_and_me(tmp_path: Path):
     # Create a user directly in DB
     db = next(iter(app.dependency_overrides[get_db]()))
     try:
-        u = User(email="student@example.com", full_name="John Doe", role="student", hashed_password=get_password_hash("secret"))
+        u = User(
+            email="student@example.com",
+            full_name="John Doe",
+            role="student",
+            hashed_password=get_password_hash("secret"),
+        )
         db.add(u)
         db.commit()
         db.refresh(u)

@@ -28,6 +28,10 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Frontend artifacts
+apps/frontend/node_modules/
+apps/frontend/dist/
+
 # Backend generated data/outputs (never commit secrets)
 apps/backend/data/
 apps/backend/outputs/

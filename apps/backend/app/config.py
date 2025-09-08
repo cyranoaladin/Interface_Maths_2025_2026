@@ -39,9 +39,9 @@ class Settings(BaseSettings):
     def default_content_root(cls, v: str | Path | None) -> Path:
         if v:
             return Path(v)
-        # Default to the public site root (docs/) so URLs and content match GitHub Pages
+        # Default to the public site root (site/) so URLs and content match deployment
         repo_root = Path(__file__).resolve().parents[3]
-        return repo_root / "docs"
+        return repo_root / "site"
 
     @field_validator("DATABASE_URL", mode="before")
     @classmethod

@@ -22,7 +22,11 @@ jobs:
           pip install html5validator
       - name: Validate HTML files
         run: |
-          find . -name "*.html" -not -path "./.git/*" -print0 | xargs -0 -I{} bash -c "echo Validating {}; html5validator --alsocheckcss --filterurl https?://.* --root . --match {}"
+          find . -name "*.html" \
+            -not -path "./.git/*" \
+            -not -path "./apps/frontend/node_modules/*" \
+            -not -path "./apps/frontend/dist/*" \
+            -print0 | xargs -0 -I{} bash -c "echo Validating {}; html5validator --alsocheckcss --filterurl https?://.* --root . --match {}"
 
   link-check:
     runs-on: ubuntu-latest
@@ -32,7 +36,7 @@ jobs:
       - name: Lychee link checker
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --verbose --no-progress .
+          args: --verbose --no-progress --exclude-path "apps/frontend/node_modules/**,apps/frontend/dist/**" .
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 

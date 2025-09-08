@@ -34,6 +34,11 @@ jobs:
           mkdir -p site/assets
           rsync -a apps/frontend/dist/assets/ site/assets/ || true
 
+      - name: Generate sitemap.xml
+        run: |
+          set -euo pipefail
+          python3 scripts/generate_sitemap.py
+
       - name: Install dependencies (rsync, ssh-client, jq)
         run: |
           sudo apt-get update -y

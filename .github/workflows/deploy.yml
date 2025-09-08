@@ -72,8 +72,10 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$VPS_HOST" && test -n "$VPS_USER" && test -n "$VPS_PATH" || { echo "Secrets VPS_HOST/VPS_USER/VPS_PATH manquants"; exit 1; }
-          # Publish the contents of docs/ directly into the webroot
-          rsync -az --delete --human-readable --progress \
+          # Publish the contents of docs/ directly into the webroot, excluding PDFs
+          rsync -az --delete --delete-excluded \
+            --exclude='*.pdf' --exclude='*.PDF' --exclude='*.Pdf' \
+            --human-readable --progress \
             docs/ "$VPS_USER@$VPS_HOST:$VPS_PATH/"
 
       - name: Sanity check (VPS endpoints)

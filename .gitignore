@@ -27,3 +27,7 @@ Thumbs.db
 # Editors/IDE
 .vscode/
 .idea/
+
+# Backend generated data/outputs (never commit secrets)
+apps/backend/data/
+apps/backend/outputs/

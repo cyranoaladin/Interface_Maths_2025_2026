@@ -104,7 +104,7 @@ def _ensure_teacher(db: Session, email: str, full_name: Optional[str] = None) ->
     db.refresh(usr)
 
     # Write credential to outputs file (never to logs)
-    out_dir = Path(__file__).resolve().parents[2] / "outputs"
+    out_dir = Path(__file__).resolve().parents[1] / "outputs"
     out_dir.mkdir(parents=True, exist_ok=True)
     ts = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
     out_file = out_dir / f"bootstrap_credentials_{ts}.csv"

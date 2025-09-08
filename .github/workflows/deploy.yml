@@ -3,6 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches: [ main ]
+    tags: [ 'v*.*.*' ]
   workflow_dispatch: {}
 
 concurrency:
@@ -15,6 +16,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node (for frontend build)
+        if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build frontend (if present)
+        if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+        run: |
+          set -euo pipefail
+          cd apps/frontend
+          npm ci || npm install
+          npm run build
+          cd ../..
+          mkdir -p site/assets
+          rsync -a apps/frontend/dist/assets/ site/assets/ || true
+
+      - name: Generate sitemap.xml
+        run: |
+          set -euo pipefail
+          python3 scripts/generate_sitemap.py
 
       - name: Install dependencies (rsync, ssh-client, jq)
         run: |
@@ -64,7 +87,7 @@ jobs:
           echo "Timeout waiting for CI."
           exit 1
 
-      - name: Deploy static site (docs/ -> webroot) via rsync
+      - name: Deploy static site (site/ -> webroot) via rsync
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
@@ -72,11 +95,11 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$VPS_HOST" && test -n "$VPS_USER" && test -n "$VPS_PATH" || { echo "Secrets VPS_HOST/VPS_USER/VPS_PATH manquants"; exit 1; }
-          # Publish the contents of docs/ directly into the webroot, excluding PDFs
+          # Publish the contents of site/ directly into the webroot, excluding PDFs
           rsync -az --delete --delete-excluded \
             --exclude='*.pdf' --exclude='*.PDF' --exclude='*.Pdf' \
             --human-readable --progress \
-            docs/ "$VPS_USER@$VPS_HOST:$VPS_PATH/"
+            site/ "$VPS_USER@$VPS_HOST:$VPS_PATH/"
 
       - name: Sanity check (VPS endpoints)
         env:
@@ -101,9 +124,9 @@ jobs:
             echo "FAIL $url"
             return 1
           }
-          # Try root and fallback to /docs to accommodate server config
+          # Try root and fallback to /site to accommodate server config
           root="${VPS_BASE_URL%/}"
-          fallback="$root/docs"
+          fallback="$root/site"
           usable=""
           for base in "$root" "$fallback"; do
             if check_url "$base/index.html"; then

@@ -11,7 +11,7 @@ Key features
 
 Environment variables
 - CONTENT_ROOT: Absolute path to your content root on disk.
-  - Default: repository/docs (auto-detected)
+  - Default: repository/site (auto-detected)
 - STATIC_BASE_URL: Public base path that Nginx serves for CONTENT_ROOT.
   - Default: /content
 - SERVE_STATIC: If "true", the backend serves static files at STATIC_BASE_URL (dev only; use Nginx in production).

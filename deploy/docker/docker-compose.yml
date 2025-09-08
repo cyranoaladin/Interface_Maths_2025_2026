@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ../../apps/backend
+    image: interface-maths/backend:local
+    environment:
+      # Ensure backend reads tree from the mounted path
+      CONTENT_ROOT: /site
+      STATIC_BASE_URL: /content
+      SERVE_STATIC: "false"
+      # Avoid default_db_url path logic; use a temp SQLite path inside the container
+      DATABASE_URL: sqlite:////tmp/app.db
+    volumes:
+      - ../../site:/site:ro
+    expose:
+      - "8000"
+
+  nginx:
+    image: nginx:1.25
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    volumes:
+      - ../../site:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+

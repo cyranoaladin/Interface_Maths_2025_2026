@@ -99,9 +99,23 @@ jobs:
             echo "FAIL $url"
             return 1
           }
-          check_url "$VPS_BASE_URL/"
-          check_url "$VPS_BASE_URL/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
-          check_url "$VPS_BASE_URL/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
+          # Try root and fallback to /docs to accommodate server config
+          root="${VPS_BASE_URL%/}"
+          fallback="$root/docs"
+          usable=""
+          for base in "$root" "$fallback"; do
+            if check_url "$base/index.html"; then
+              usable="$base"
+              break
+            fi
+          done
+          if [ -z "$usable" ]; then
+            echo "No base URL responded with 200 (tried: $root/index.html and $fallback/index.html)"
+            exit 1
+          fi
+          echo "Using base: $usable"
+          check_url "$usable/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
+          check_url "$usable/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
 
       - name: Sanity check (GitHub Pages endpoints)
         continue-on-error: true

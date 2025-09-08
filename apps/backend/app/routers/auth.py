@@ -28,7 +28,12 @@ async def login_for_access_token(
 
 @router.get("/me", response_model=UserRead)
 async def read_me(current_user: User = Depends(get_current_user)):
-    return UserRead(id=current_user.id, email=current_user.email, full_name=current_user.full_name, role=current_user.role)
+    return UserRead(
+        id=current_user.id,
+        email=current_user.email,
+        full_name=current_user.full_name,
+        role=current_user.role,
+    )
 
 
 @router.get("/me/groups", response_model=List[GroupRead])

@@ -24,6 +24,7 @@ email,full_name,groups
 Output: writes an outputs/new_students_<timestamp>.csv with email and provisional password.
 """
 
+
 def import_students(csv_path: str) -> Path:
     from datetime import datetime
 

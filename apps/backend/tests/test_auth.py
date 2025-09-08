@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -45,7 +44,11 @@ def test_auth_token_and_me(tmp_path: Path):
         db.close()
 
     # Obtain token
-    r = client.post("/auth/token", data={"username": "student@example.com", "password": "secret"}, headers={"Content-Type": "application/x-www-form-urlencoded"})
+    r = client.post(
+        "/auth/token",
+        data={"username": "student@example.com", "password": "secret"},
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+    )
     assert r.status_code == 200, r.text
     token = r.json()["access_token"]
 
@@ -62,18 +65,39 @@ def test_teacher_only_requires_teacher(tmp_path: Path):
     # Create a student
     db = next(iter(app.dependency_overrides[get_db]()))
     try:
-        student = User(email="stud@example.com", full_name="Stud", role="student", hashed_password=get_password_hash("s"))
-        teacher = User(email="teach@example.com", full_name="Teach", role="teacher", hashed_password=get_password_hash("t"))
+        student = User(
+            email="stud@example.com",
+            full_name="Stud",
+            role="student",
+            hashed_password=get_password_hash("s"),
+        )
+        teacher = User(
+            email="teach@example.com",
+            full_name="Teach",
+            role="teacher",
+            hashed_password=get_password_hash("t"),
+        )
         db.add_all([student, teacher])
         db.commit()
-        db.refresh(student); db.refresh(teacher)
+        db.refresh(student)
+        db.refresh(teacher)
     finally:
         db.close()
 
     # Student token
-    t1 = client.post("/auth/token", data={"username": "stud@example.com", "password": "s"}, headers={"Content-Type": "application/x-www-form-urlencoded"}).json()["access_token"]
+    r_stud_token = client.post(
+        "/auth/token",
+        data={"username": "stud@example.com", "password": "s"},
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+    )
+    t1 = r_stud_token.json()["access_token"]
     # Teacher token
-    t2 = client.post("/auth/token", data={"username": "teach@example.com", "password": "t"}, headers={"Content-Type": "application/x-www-form-urlencoded"}).json()["access_token"]
+    r_teach_token = client.post(
+        "/auth/token",
+        data={"username": "teach@example.com", "password": "t"},
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+    )
+    t2 = r_teach_token.json()["access_token"]
 
     # Student should be forbidden
     r_stud = client.get("/auth/admin/users", headers={"Authorization": f"Bearer {t1}"})

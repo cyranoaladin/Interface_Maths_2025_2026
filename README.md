@@ -15,13 +15,33 @@ Ce dépôt contient notamment des fiches élèves prêtes à l'emploi (format HT
 
 ## Affichage local
 
-Le site public est servi depuis le dossier `docs/` (source GitHub Pages). Toute nouvelle fiche destinée au site doit être ajoutée sous `docs/`.
+Le site public est servi depuis le dossier `site/` (source de déploiement). Toute nouvelle fiche destinée au site doit être ajoutée sous `site/`.
 
 Ouvrir le fichier HTML dans un navigateur moderne. Boutons inclus:
 - Thème (clair/sombre)
 - Retypage LaTeX (si nécessaire)
 - Imprimer (ou générer un PDF via l’impression système)
 - Tout déplier/replier (pour les corrections et détails)
+
+## Démarrer en local (Docker)
+
+- Prérequis: Docker
+- Lancer la stack (Nginx + backend FastAPI):
+
+```bash
+# lance en arrière-plan
+docker compose -f deploy/docker/docker-compose.yml up -d --build
+
+# vérifications basiques
+curl http://localhost/content/index.html   # doit renvoyer 200
+curl http://localhost/api/tree             # doit renvoyer 200
+```
+
+- Arrêter:
+
+```bash
+docker compose -f deploy/docker/docker-compose.yml down
+```
 
 ## Conventions
 

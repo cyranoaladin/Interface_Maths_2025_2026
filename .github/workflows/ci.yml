@@ -40,3 +40,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+  frontend-lint:
+    if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install deps
+        run: |
+          cd apps/frontend
+          npm ci || npm install
+      - name: Lint (ESLint)
+        run: |
+          cd apps/frontend
+          npm run lint
+

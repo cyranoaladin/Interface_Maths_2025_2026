@@ -17,6 +17,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node (for frontend build)
+        if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build frontend (if present)
+        if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+        run: |
+          set -euo pipefail
+          cd apps/frontend
+          npm ci || npm install
+          npm run build
+          cd ../..
+          mkdir -p site/assets
+          rsync -a apps/frontend/dist/assets/ site/assets/ || true
+
       - name: Install dependencies (rsync, ssh-client, jq)
         run: |
           sudo apt-get update -y

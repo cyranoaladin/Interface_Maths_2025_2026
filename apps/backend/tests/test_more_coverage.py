@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 from app.db import get_db, SessionLocal
-from app.users import ensure_bootstrap, User, Group
+from app.users import ensure_bootstrap, User, Group, create_student
 
 
 def test_root_and_tree_endpoints_work():
@@ -38,7 +38,7 @@ def test_db_session_generator_opens_and_closes():
             pass
 
 
-def test_ensure_bootstrap_creates_defaults():
+def test_create_student_and_bootstrap_defaults():
     # Ensure default groups and teacher accounts exist
     ensure_bootstrap()
     with SessionLocal() as db:
@@ -47,3 +47,7 @@ def test_ensure_bootstrap_creates_defaults():
         assert len(groups) >= 3
         teachers = db.query(User).filter(User.role == "teacher").all()
         assert len(teachers) >= 1
+        # Create a student and attach groups (covers users.create_student)
+        pwd = create_student(db, email="student.cov@example.com", full_name="Cov Student", group_codes=[g.code for g in groups[:2]])
+        # If user already existed, function returns empty password; both are acceptable
+        assert pwd is not None

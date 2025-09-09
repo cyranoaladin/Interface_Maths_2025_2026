@@ -1,5 +1,11 @@
 # Interface Maths 2025–2026
 
+[![backend-ci](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml)
+[![deploy](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml/badge.svg)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml)
+[![docker-image](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-docker.yml/badge.svg?branch=main)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-docker.yml)
+[![Latest Tag](https://img.shields.io/github/v/tag/cyranoaladin/Interface_Maths_2025_2026?sort=semver)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/tags)
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 Ressources pédagogiques pour l'année 2025–2026.
 
 Ce dépôt contient notamment des fiches élèves prêtes à l'emploi (format HTML imprimable + PDF d’aperçu), suivant une charte graphique unifiée et un rendu LaTeX via MathJax.

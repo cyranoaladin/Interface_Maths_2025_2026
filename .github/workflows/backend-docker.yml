@@ -24,7 +24,8 @@ jobs:
 
       - name: Build image
         run: |
-          IMAGE=ghcr.io/${{ github.repository }}/backend:${{ github.ref_name }}
+          REPO_LC=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          IMAGE="ghcr.io/${REPO_LC}/backend:${{ github.ref_name }}"
           docker build -t "$IMAGE" apps/backend
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 

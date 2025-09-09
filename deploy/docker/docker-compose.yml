@@ -9,8 +9,11 @@ services:
       SERVE_STATIC: "false"
       # Avoid default_db_url path logic; use a temp SQLite path inside the container
       DATABASE_URL: sqlite:////tmp/app.db
+      # Persist generated outputs (credentials, imports) to a dedicated volume
+      OUTPUTS_DIR: /outputs
     volumes:
       - ../../site:/site:ro
+      - outputs:/outputs
     expose:
       - "8000"
 
@@ -23,4 +26,7 @@ services:
     volumes:
       - ../../site:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  outputs:
 

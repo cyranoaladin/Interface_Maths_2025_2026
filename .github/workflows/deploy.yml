@@ -45,11 +45,13 @@ jobs:
           sudo apt-get install -y rsync openssh-client jq
 
       - name: Start ssh-agent and add key
+        if: ${{ secrets.SSH_PRIVATE_KEY != '' && secrets.VPS_HOST != '' && secrets.VPS_USER != '' && secrets.VPS_PATH != '' }}
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Add VPS host to known_hosts
+        if: ${{ secrets.VPS_HOST != '' }}
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
         run: |
@@ -85,6 +87,7 @@ jobs:
           exit 1
 
       - name: Deploy static site (site/ -> webroot) via rsync
+        if: ${{ secrets.VPS_HOST != '' && secrets.VPS_USER != '' && secrets.VPS_PATH != '' && secrets.SSH_PRIVATE_KEY != '' }}
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
@@ -99,6 +102,7 @@ jobs:
             site/ "$VPS_USER@$VPS_HOST:$VPS_PATH/"
 
       - name: Sanity check (VPS endpoints)
+        if: ${{ secrets.VPS_BASE_URL != '' }}
         env:
           VPS_BASE_URL: ${{ secrets.VPS_BASE_URL }}
         run: |
@@ -141,6 +145,7 @@ jobs:
 
       - name: Sanity check (GitHub Pages endpoints)
         continue-on-error: true
+        if: ${{ always() }}
         run: |
           set -euo pipefail
           owner="${GITHUB_REPOSITORY%%/*}"

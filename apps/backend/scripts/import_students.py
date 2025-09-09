@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.db import engine
 from app.users import create_student
+from app.config import settings
 
 
 """
@@ -32,7 +33,7 @@ def import_students(csv_path: str) -> Path:
     if not csv_file.is_file():
         raise SystemExit(f"CSV not found: {csv_file}")
 
-    out_dir = Path(__file__).resolve().parents[1] / "outputs"
+    out_dir = settings.OUTPUTS_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
     out_file = out_dir / f"new_students_{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}.csv"
 

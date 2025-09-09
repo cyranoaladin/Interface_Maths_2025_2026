@@ -7,6 +7,7 @@ on:
 
 jobs:
   validate-html:
+    if: ${{ github.event_name != 'push' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,6 +27,7 @@ jobs:
           find site -type f -name "*.html" -print0 | xargs -0 -I{} bash -c "echo Validating {}; html5validator --alsocheckcss --filterurl https?://.* --root site --match {}"
 
   link-check:
+    if: ${{ github.event_name != 'push' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -45,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   frontend-lint:
-    if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+    if: ${{ github.event_name != 'push' && hashFiles('apps/frontend/package.json') != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

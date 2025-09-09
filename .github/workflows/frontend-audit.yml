@@ -7,7 +7,7 @@ on:
 
 jobs:
   npm-audit:
-    if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+    if: ${{ github.event_name != 'push' && hashFiles('apps/frontend/package.json') != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

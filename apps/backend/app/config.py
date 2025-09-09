@@ -72,7 +72,8 @@ class Settings(BaseSettings):
         else:
             repo_root = Path(__file__).resolve().parents[3]
             p = repo_root / "apps" / "backend" / "outputs"
-        p.mkdir(parents=True, exist_ok=True)
+        # Do not create directories here to avoid side effects during settings load.
+        # Callers that write files must ensure the directory exists.
         return p
 
     @field_validator("CORS_ORIGINS", mode="before")

@@ -48,6 +48,12 @@ def test_create_student_and_bootstrap_defaults():
         teachers = db.query(User).filter(User.role == "teacher").all()
         assert len(teachers) >= 1
         # Create a student and attach groups (covers users.create_student)
-        pwd = create_student(db, email="student.cov@example.com", full_name="Cov Student", group_codes=[g.code for g in groups[:2]])
+        codes = [g.code for g in groups[:2]]
+        pwd = create_student(
+            db,
+            email="student.cov@example.com",
+            full_name="Cov Student",
+            group_codes=codes,
+        )
         # If user already existed, function returns empty password; both are acceptable
         assert pwd is not None

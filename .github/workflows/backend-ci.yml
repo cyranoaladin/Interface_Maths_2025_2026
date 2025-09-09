@@ -27,6 +27,11 @@ jobs:
           pip install -r requirements.txt
           pip install pytest-cov
 
+      - name: Prepare OUTPUTS_DIR
+        run: |
+          mkdir -p "$RUNNER_TEMP/outputs"
+          echo "OUTPUTS_DIR=$RUNNER_TEMP/outputs" >> "$GITHUB_ENV"
+
       - name: Lint (flake8)
         run: flake8
 

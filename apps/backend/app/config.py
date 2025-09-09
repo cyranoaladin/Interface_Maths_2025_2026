@@ -28,6 +28,9 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     DATABASE_URL: str | None = None
 
+    # Outputs directory (for generated credentials, imports, etc.)
+    OUTPUTS_DIR: Path | None = None
+
     # Initial teacher provisioning
     TEACHER_EMAILS: List[str] = [
         # Non-secret default; can be overridden with env var
@@ -60,6 +63,17 @@ class Settings(BaseSettings):
         if not v.startswith("/"):
             v = "/" + v
         return v.rstrip("/") or "/content"
+
+    @field_validator("OUTPUTS_DIR", mode="before")
+    @classmethod
+    def default_outputs_dir(cls, v: str | Path | None) -> Path:
+        if v:
+            p = Path(v)
+        else:
+            repo_root = Path(__file__).resolve().parents[3]
+            p = repo_root / "apps" / "backend" / "outputs"
+        p.mkdir(parents=True, exist_ok=True)
+        return p
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod

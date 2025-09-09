@@ -4,11 +4,16 @@ Toutes les modifications notables de ce projet seront documentées dans ce fichi
 
 ## [Unreleased]
 ### Modifications
-- Renommage du webroot `docs/` → `site/` et mise à jour des workflows (CI/Deploy) et du backend (CONTENT_ROOT par défaut)
-- Déploiement: exclusion des PDF conservée; build frontend (si présent) puis copie des assets `apps/frontend/dist/assets/` → `site/assets/`
-- Ajout d’une chaîne Docker (FastAPI + Nginx) et d’un workflow de build d’image (GHCR) sur tags SemVer
-- CI backend: seuil de couverture ≥ 85%
-- CI frontend: lint ESLint + Prettier (si frontend présent)
+- (à renseigner)
+
+## [0.4.1] - 2025-09-09
+### Modifications
+- Backend: paramètre configurable `OUTPUTS_DIR` (par défaut `apps/backend/outputs`) et création automatique du dossier.
+- Refactor: écriture des fichiers sensibles (bootstrap credentials, import élèves) via `settings.OUTPUTS_DIR`.
+- Docker: volume nommé `outputs:/outputs` et `OUTPUTS_DIR=/outputs` pour persistance hors image.
+- CI (backend-ci): définition de `OUTPUTS_DIR=$RUNNER_TEMP/outputs` pour éviter les écritures dans le workspace et réduire le flakiness.
+- Docs: README et deploy/README mis à jour (docs/ → site/, section dédiée aux outputs et aux règles de sécurité).
+- Hygiène repo: suppression des artefacts cachés des commits futurs (pycache ignorés, outputs non versionnés).
 
 ## [0.2.0] - 2025-09-07
 ### Modifications

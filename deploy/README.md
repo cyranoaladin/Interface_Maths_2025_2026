@@ -65,7 +65,7 @@ server {
 
 ## Publication
 - HTML interactif: /EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html
-- Aperçu (GitHub Pages): /docs/index.html
+- Aperçu (GitHub Pages): /site/index.html
 
 ## Remarques
 - Aucun secret ne doit être commité. Utiliser les secrets GitHub pour l’agent SSH.

@@ -6,10 +6,10 @@ Ce dépôt contient notamment des fiches élèves prêtes à l'emploi (format HT
 
 ## Structure
 
-- `docs/EDS_premiere/Calcul_litteral/`
+- `site/EDS_premiere/Calcul_litteral/`
   - `fiche_exercices_calcul_litteral_premiere.html` — Fiche exercices + méthodologie (Calcul littéral, EDS Première)
   - `fiche_exercices_calcul_litteral_premiere.pdf` — Aperçu impression (PDF)
-- `docs/EDS_terminale/Suites/`
+- `site/EDS_terminale/Suites/`
   - `fiche_eleve_suites_rappels_premiere.html` — Fiche élève: Généralités sur les suites (Rappels de Première)
   - `fiche_eleve_suites_rappels_premiere.pdf` — Aperçu impression (PDF)
 
@@ -45,7 +45,14 @@ docker compose -f deploy/docker/docker-compose.yml down
 
 ## Conventions
 
-- Les pages dans `docs/` n'utilisent pas de chemins relatifs vers l'extérieur (`../`).
+### Dossier des sorties (outputs)
+- Les fichiers générés (ex: identifiants provisoires, import CSV → mots de passe) sont écrits dans un dossier d’outputs configurable.
+- Par défaut: `apps/backend/outputs/` (ignoré par Git).
+- Production/Docker: définir `OUTPUTS_DIR=/outputs` et monter un volume nommé (déjà configuré dans `deploy/docker/docker-compose.yml`).
+- CI: le workflow définit `OUTPUTS_DIR` vers un répertoire temporaire du runner pour éviter tout effet de bord.
+- Rappel sécurité: ne jamais publier ni committer ces fichiers. Ils contiennent des secrets temporaires.
+
+- Les pages dans `site/` n'utilisent pas de chemins relatifs vers l'extérieur (`../`).
 - Les PDF d'aperçu peuvent être régénérés localement via un navigateur Chromium/Chrome en mode headless.
 
 - MathJax chargé via CDN HTTPS (aucune donnée sensible dans le dépôt)

@@ -45,6 +45,11 @@ docker compose -f deploy/docker/docker-compose.yml down
 
 ## Conventions
 
+Note CI/CD
+- Les pushes sur `main` n’exécutent que la validation backend (backend-ci).
+- Le déploiement s’effectue sur tags SemVer (`v*.*.*`) ou manuellement.
+- Les vérifications HTML/liens et l’audit frontend sont non bloquants et/ou planifiés.
+
 ### Dossier des sorties (outputs)
 - Les fichiers générés (ex: identifiants provisoires, import CSV → mots de passe) sont écrits dans un dossier d’outputs configurable.
 - Par défaut: `apps/backend/outputs/` (ignoré par Git).

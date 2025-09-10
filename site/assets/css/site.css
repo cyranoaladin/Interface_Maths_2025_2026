@@ -35,13 +35,25 @@ html[data-theme="light"]{
 /* Utilities and simple table styling extracted from inline */
 .table-simple{border-collapse:collapse;margin-top:6px}
 .table-simple th,.table-simple td{border:1px solid var(--border);padding:4px}
-.mt-22{margin-top:22px}
-.mb-8{margin-bottom:8px}
+/* margin-top utilities */
 .mt-4{margin-top:4px}
 .mt-6{margin-top:6px}
 .mt-8{margin-top:8px}
 .mt-10{margin-top:10px}
+.mt-22{margin-top:22px}
+/* margin-bottom utilities */
 .mb-0{margin-bottom:0}
+.mb-8{margin-bottom:8px}
+/* width/whitespace */
 .w-100{width:100%}
-.pre-wrap{white-space:pre-wrap}
+pre-wrap{white-space:pre-wrap}
+
+/* Global print styles: hide interactive UI and flatten layout for printing */
+@media print{
+  .buttons, .sticky-footer, nav.card{display:none !important}
+  .grid.cols-2{grid-template-columns:1fr !important}
+  details{display:block}
+  details>summary{display:none}
+  details>*{display:block}
+}
 

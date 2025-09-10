@@ -58,7 +58,7 @@
     <div class="toolbar">
       <div>
 <h1>Arithmétique - Partie 1 : Divisibilité et congruences <span class="badge">Arithmétique : cours intégral + outils</span></h1>
-        <p class="muted" style="margin:4px 0 0">Terminale — Maths expertes</p>
+        <p class="muted mt-4 mb-0">Terminale — Maths expertes</p>
         <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © Propriété intellectuelle • Raccourcis : <kbd>Ctrl</kbd>+<kbd>B</kbd> (Tableau), <kbd>?</kbd> (Aide)</small>
       </div>
       <div class="buttons">
@@ -326,8 +326,8 @@
     <h2>Encart Python — Algorithme d’Euclide (Pyodide)</h2>
     <p class="muted">Les sorties <code>print</code> apparaissent ci‑dessous (stdout/stderr capturés). Saisir a et b, puis exécuter.</p>
       <div class="control-row"><label class="muted" for="pyA">a</label><input id="pyA" class="input" type="number" value="114"><label class="muted" for="pyB">b</label><input id="pyB" class="input" type="number" value="8"><label class="muted" for="autoCode"><input type="checkbox" id="autoCode" checked> Remplir le code automatiquement</label></div>
-    <div class="control-row" style="margin-top:6px"><button class="btn" id="loadPy">⚙️ Charger Pyodide</button><span id="pyStatus" class="muted" aria-live="polite">non chargé</span></div>
-    <textarea id="pyCode" class="input mono" rows="10" style="width:100%;margin-top:10px" aria-label="Zone de code Python"># Saisissez a et b ci-dessus ou éditez ce code puis Exécuter
+    <div class="control-row mt-6"><button class="btn" id="loadPy">⚙️ Charger Pyodide</button><span id="pyStatus" class="muted" aria-live="polite">non chargé</span></div>
+<textarea id="pyCode" class="input mono w-100 mt-10" rows="10" aria-label="Zone de code Python">
 # Exemple : a=114, b=8
 
 def egcd(a,b):
@@ -346,8 +346,8 @@ for s in steps:
     print(s)
 print("PGCD:", g)
 </textarea>
-    <div class="control-row" style="margin-top:8px"><button class="btn" id="runPy" disabled>▶️ Exécuter</button><button class="btn" id="clearPy" disabled>🧹 Effacer</button></div>
-    <pre id="pyOut" class="result" style="white-space:pre-wrap" aria-live="polite"></pre>
+    <div class="control-row mt-8"><button class="btn" id="runPy" disabled>▶️ Exécuter</button><button class="btn" id="clearPy" disabled>🧹 Effacer</button></div>
+<pre id="pyOut" class="result pre-wrap" aria-live="polite"></pre>
   </section>
 
   <!-- Auto-tests (développeur) -->
@@ -362,7 +362,7 @@ print("PGCD:", g)
     </details>
   </section>
 
-  <footer class="muted" style="margin-top:22px">© 2025 — Support interactif conçu et rédigé par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.</footer>
+  <footer class="muted mt-22">© 2025 — Support interactif conçu et rédigé par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.</footer>
   <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
 </div>
 

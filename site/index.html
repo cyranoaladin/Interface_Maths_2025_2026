@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="/assets/css/site.css" />
   <script src="/assets/js/contents.js" defer></script>
+  <script src="/assets/js/theme-toggle.js" defer></script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}))
@@ -25,10 +26,11 @@
   <a class="skip-link" href="#main">Aller au contenu</a>
   <div class="wrap">
     <header>
-      <h1 style="margin:8px 0">Interface Maths 2025–2026 — Aperçu</h1>
+      <h1>Interface Maths 2025–2026 — Aperçu</h1>
       <nav aria-label="Navigation principale">
         <a class="btn" href="/">Accueil</a>
         <a class="btn" href="/content/">/content (alias)</a>
+        <button id="theme-toggle" class="btn" type="button" aria-pressed="false" aria-label="Basculer le thème">Thème</button>
       </nav>
     </header>
 

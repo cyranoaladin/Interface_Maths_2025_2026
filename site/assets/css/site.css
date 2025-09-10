@@ -36,4 +36,5 @@ html[data-theme="light"]{
 .table-simple{border-collapse:collapse;margin-top:6px}
 .table-simple th,.table-simple td{border:1px solid var(--border);padding:4px}
 .mt-22{margin-top:22px}
+.mb-8{margin-bottom:8px}
 

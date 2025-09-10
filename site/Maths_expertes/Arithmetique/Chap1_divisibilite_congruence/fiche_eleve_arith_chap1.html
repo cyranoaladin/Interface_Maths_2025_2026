@@ -113,7 +113,7 @@
 
         <section class="card" id="props">
           <h2>Propriétés P1→P7 — utilité & pièges</h2>
-          <div class="control-row" style="margin-bottom:8px"><button class="btn" id="btnOpenProps" aria-pressed="false" type="button">Tout ouvrir</button></div>
+          <div class="control-row mb-8"><button class="btn" id="btnOpenProps" aria-pressed="false" type="button">Tout ouvrir</button></div>
 
           <details><summary><strong>P1</strong> — Si $b\mid a$ alors $a\Z\subset b\Z$ et $D(b)\subset D(a)$</summary>
             <div class="step"><div class="n">Utilité</div><div>Comparer des <b>ensembles de multiples/diviseurs</b> et prouver des inclusions rapidement.</div></div>
@@ -162,7 +162,7 @@
 
         <section class="card" id="methodo">
           <h2>Méthodologie par type d’exercice</h2>
-          <div class="control-row" style="margin-bottom:8px"><button class="btn" id="btnOpenMethodo" aria-pressed="false" type="button">Tout ouvrir</button></div>
+          <div class="control-row mb-8"><button class="btn" id="btnOpenMethodo" aria-pressed="false" type="button">Tout ouvrir</button></div>
           <details open><summary><strong>A. Tester une divisibilité</strong> ($b\mid a$ ?)</summary>
             <div class="step"><div class="n">1</div><div>Essayer d’écrire $a=bk$ (calculer $k=a/b$ ; vérifier qu’il est entier).</div></div>
             <div class="step"><div class="n">2</div><div>Sinon, faire la <b>division euclidienne</b> : $a=bq+r$ ; si $r=0$ ⇒ $b\mid a$.</div></div>
@@ -214,7 +214,7 @@
 
         <section class="card" id="entrainement">
           <h2>Mini‑entraînements éclair</h2>
-          <div class="control-row" style="margin-bottom:8px"><button class="btn" id="btnOpenEntrain" aria-pressed="false" type="button">Tout ouvrir</button></div>
+          <div class="control-row mb-8"><button class="btn" id="btnOpenEntrain" aria-pressed="false" type="button">Tout ouvrir</button></div>
           <div class="step"><div class="n">1</div><div>Compléter : « $56=17\times3+5=17\times2+22$ mais la seconde n’est pas euclidienne car <input class="input mono" id="qA" size="10" placeholder=">" aria-label="Justification (ex. 22 > 17)">. » <button class="btn" onclick="checkText('qA','22 > 17')">Vérifier</button> <span id="qAr" aria-live="polite"></span></div></div>
           <div class="step"><div class="n">2</div><div>Résoudre $5x\equiv 1\pmod{12}$. <details><summary>Correction</summary>$\operatorname{pgcd}(5,12)=1$, $5^{-1}\equiv 5\pmod{12}$ ⇒ $x\equiv 5\pmod{12}$.</details></div></div>
           <div class="step"><div class="n">3</div><div>Déterminer $D(18)$ puis vérifier $D(9)\subset D(18)$. <details><summary>Correction</summary>$D(18)=\{-18, -9, -6, -3, -2, -1, 1, 2, 3, 6, 9, 18\}$, $D(9)=\{-9, -3, -1, 1, 3, 9\}$.</details></div></div>
@@ -230,7 +230,7 @@
           </ul>
         </section>
 
-        <footer class="muted" style="margin-top:22px">© 2025 — Fiche mémo & méthodologie conçue par <strong>Alaeddine Ben Rhouma</strong> (Maths expertes). Tous droits réservés.</footer>
+        <footer class="muted mt-22">© 2025 — Fiche mémo & méthodologie conçue par <strong>Alaeddine Ben Rhouma</strong> (Maths expertes). Tous droits réservés.</footer>
         <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button> <button class="btn" id="toggleAll" aria-pressed="false">🧩 Tout déplier/replier</button></div>
       </div>
 

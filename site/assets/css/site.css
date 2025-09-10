@@ -37,4 +37,11 @@ html[data-theme="light"]{
 .table-simple th,.table-simple td{border:1px solid var(--border);padding:4px}
 .mt-22{margin-top:22px}
 .mb-8{margin-bottom:8px}
+.mt-4{margin-top:4px}
+.mt-6{margin-top:6px}
+.mt-8{margin-top:8px}
+.mt-10{margin-top:10px}
+.mb-0{margin-bottom:0}
+.w-100{width:100%}
+.pre-wrap{white-space:pre-wrap}
 

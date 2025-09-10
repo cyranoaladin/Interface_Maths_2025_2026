@@ -50,8 +50,9 @@
       <header>
         <div class="toolbar">
           <div>
-            <h1>Calcul littéral — Exercices + Méthodologie <span class="badge">EDS Première</span></h1>
+            <h1>Calcul littéral — Exercices + Méthodologie <span class="badge">Rappels de seconde</span></h1>
             <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © 2025</small>
+            <p class="pill" aria-label="périmètre de la fiche">Fiche de rappels strictement au programme de Seconde (aucune notion de Première)</p>
           </div>
           <div class="buttons">
             <button class="btn" id="themeBtn">🌓 Thème</button>
@@ -146,19 +147,12 @@
         </details>
 
         <details>
-          <summary><strong>Trinômes — Série 1</strong></summary>
-          <div class="step"><div class="n">1</div><div>$x^2+6x+9=(x+3)^2$.</div></div>
-          <div class="step"><div class="n">2</div><div>$x^2+20x+25$ 
-            <details><summary>Correction</summary>
-              $\Delta=20^2-4\cdot1\cdot25=300$. Racines $x=-10\pm5\sqrt3$ ; factorisation (sur $\R$): $(x+10-5\sqrt3)(x+10+5\sqrt3)$. Pas de factorisation à coefficients entiers.
-            </details>
-          </div></div>
-          <div class="step"><div class="n">3</div><div>$x^2+4x+3=(x+1)(x+3)$.</div></div>
-          <div class="step"><div class="n">4</div><div>$x^2-3x+5$ 
-            <details><summary>Correction</summary>
-              $\Delta=9-20=-11<0$ : irréductible sur $\R$ (sur $\C$: $(x-\tfrac{3+i\sqrt{11}}{2})(x-\tfrac{3-i\sqrt{11}}{2})$).
-            </details>
-          </div></div>
+          <summary><strong>Factorisations sans discriminant (rappels de seconde)</strong></summary>
+          <div class="step"><div class="n">1</div><div>Reconnaître un carré parfait: $x^2+6x+9=(x+3)^2$.</div></div>
+          <div class="step"><div class="n">2</div><div>Différence de deux carrés: $x^2-9=(x-3)(x+3)$.</div></div>
+          <div class="step"><div class="n">3</div><div>Mise en évidence: $(3x-1)(2x+4)-(3x-1)(4x-5)=(3x-1)(-2x+9)$.</div></div>
+          <div class="step"><div class="n">4</div><div>Cas simple factorisable à coefficients entiers: $x^2+4x+3=(x+1)(x+3)$.</div></div>
+          <p class="muted">Remarque: pas d'usage du discriminant en rappels de seconde; on se limite aux identités remarquables et aux factorisations évidentes.</p>
         </details>
       </section>
 
@@ -395,12 +389,12 @@
       <section class="card" id="methodo">
         <h2>Fiche méthodologie — Calcul littéral</h2>
         <ul>
-          <li><strong>Développer</strong>: distributivité + identités remarquables $(a\pm b)^2$, $(a-b)(a+b)$.</li>
-          <li><strong>Réduire</strong>: regrouper termes de même degré; ordonner par puissances de $x$.</li>
-          <li><strong>Factoriser</strong>: mise en évidence; $a^2-b^2$; trinôme $ax^2+bx+c$; sur $\R$, autoriser $\sqrt{\cdot}$.</li>
-          <li><strong>Équations-produit</strong>: amener au produit nul; solutions de chaque facteur.</li>
-          <li><strong>Inéquations</strong>: passer tout à gauche; signes de produits/quotients; tableau de signes.</li>
-          <li><strong>Domaine</strong>: interdire dénominateurs nuls; radicands $\ge0$; arguments de log $>0$ (si utilisé).</li>
+          <li><strong>Développer</strong>: distributivité et identités remarquables $(a\\pm b)^2$, $(a-b)(a+b)$.</li>
+          <li><strong>Réduire</strong>: regrouper les termes de même degré, ordonner par puissances de $x$.</li>
+          <li><strong>Factoriser</strong>: mise en évidence, différence de deux carrés, reconnaissance de carrés parfaits (pas de discriminant en rappels de seconde).</li>
+          <li><strong>Équations</strong>: formes simples (ex. $x^2=c$), équations-produit (se ramener à un produit nul).</li>
+          <li><strong>Inéquations</strong>: premier degré; produits/quotients factorizables; tableau de signes.</li>
+          <li><strong>Domaine</strong>: interdire les dénominateurs nuls; radicands $\\ge 0$.</li>
         </ul>
 
         <details open>

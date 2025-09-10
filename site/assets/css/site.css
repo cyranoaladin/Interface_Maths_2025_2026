@@ -43,5 +43,14 @@ html[data-theme="light"]{
 .mt-10{margin-top:10px}
 .mb-0{margin-bottom:0}
 .w-100{width:100%}
-.pre-wrap{white-space:pre-wrap}
+pre-wrap{white-space:pre-wrap}
+
+/* Global print styles: hide interactive UI and flatten layout for printing */
+@media print{
+  .buttons, .sticky-footer, nav.card{display:none !important}
+  .grid.cols-2{grid-template-columns:1fr !important}
+  details{display:block}
+  details>summary{display:none}
+  details>*{display:block}
+}
 

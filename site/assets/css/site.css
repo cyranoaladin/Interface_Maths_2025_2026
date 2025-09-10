@@ -46,7 +46,7 @@ html[data-theme="light"]{
 .mb-8{margin-bottom:8px}
 /* width/whitespace */
 .w-100{width:100%}
-pre-wrap{white-space:pre-wrap}
+.pre-wrap{white-space:pre-wrap}
 
 /* Global print styles: hide interactive UI and flatten layout for printing */
 @media print{

@@ -47,20 +47,28 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   frontend-lint:
-    if: ${{ github.event_name != 'push' && hashFiles('apps/frontend/package.json') != '' }}
+    if: ${{ github.event_name != 'push' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Detect frontend workspace
+        id: detect
+        shell: bash
+        run: |
+          if [ -f "apps/frontend/package.json" ]; then echo "present=true" >> "$GITHUB_OUTPUT"; else echo "present=false" >> "$GITHUB_OUTPUT"; fi
       - name: Setup Node
+        if: ${{ steps.detect.outputs.present == 'true' }}
         uses: actions/setup-node@v4
         with:
           node-version: '20'
       - name: Install deps
+        if: ${{ steps.detect.outputs.present == 'true' }}
         run: |
           cd apps/frontend
           npm ci || npm install
       - name: Lint (ESLint)
+        if: ${{ steps.detect.outputs.present == 'true' }}
         run: |
           cd apps/frontend
           npm run lint

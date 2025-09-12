@@ -1,5 +1,4 @@
 name: Uptime monitor
-
 on:
   schedule:
     - cron: '*/30 * * * *'
@@ -12,7 +11,21 @@ jobs:
     env:
       VPS_BASE_URL: ${{ secrets.VPS_BASE_URL }}
     steps:
-      - name: Check GitHub Pages (if applicable)
+      - name: Check VPS (if provided)
+        if: ${{ env.VPS_BASE_URL != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${VPS_BASE_URL%/}"
+          for path in "/" "/sitemap.xml"; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$base$path" || true)
+            echo "$base$path -> $code"
+            if [ "$code" != "200" ]; then
+              echo "Endpoint failed: $base$path ($code)"; exit 1
+            fi
+          done
+
+      - name: Check GitHub Pages (best-effort)
         shell: bash
         run: |
           set -euo pipefail
@@ -22,19 +35,5 @@ jobs:
           for path in "/" "/sitemap.xml" "/robots.txt"; do
             code=$(curl -s -o /dev/null -w '%{http_code}' -L "$base$path" || true)
             echo "$base$path -> $code"
-          done
-
-      - name: Check VPS (if secrets provided)
-        if: ${{ env.VPS_BASE_URL != '' }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          base="${VPS_BASE_URL%/}"
-          for path in "/" "/content/index.html" "/api/tree"; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$base$path" || true)
-            echo "$base$path -> $code"
-            if [ "$code" != "200" ]; then
-              echo "Endpoint failed: $base$path ($code)"; exit 1
-            fi
           done
 

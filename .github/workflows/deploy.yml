@@ -2,7 +2,10 @@ name: Deploy to VPS
 
 on:
   push:
-    tags: [ 'v*.*.*' ]
+    tags:
+      -'v*..'
+  release:
+    types: [published]
   workflow_dispatch: {}
 
 concurrency:
@@ -63,6 +66,7 @@ jobs:
           ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts
 
       - name: Wait for CI workflow success (backend-ci)
+        if: ${{ github.event_name == 'push' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

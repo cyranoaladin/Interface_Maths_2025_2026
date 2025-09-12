@@ -3,7 +3,6 @@ on:
   schedule:
     - cron: '*/30 * * * *'
   workflow_dispatch: {}
-
 jobs:
   check:
     if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
@@ -36,4 +35,3 @@ jobs:
             code=$(curl -s -o /dev/null -w '%{http_code}' -L "$base$path" || true)
             echo "$base$path -> $code"
           done
-

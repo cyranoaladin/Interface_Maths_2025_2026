@@ -1,5 +1,4 @@
 name: Uptime monitor
-
 on:
   schedule:
     - cron: '*/30 * * * *'
@@ -37,3 +36,4 @@ jobs:
             code=$(curl -s -o /dev/null -w '%{http_code}' -L "$base$path" || true)
             echo "$base$path -> $code"
           done
+

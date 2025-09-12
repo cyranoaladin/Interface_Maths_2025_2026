@@ -1,5 +1,4 @@
 name: Uptime monitor
-
 on:
   schedule:
     - cron: '*/30 * * * *'
@@ -7,12 +6,25 @@ on:
 
 jobs:
   check:
-    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
-    env:
-      VPS_BASE_URL: ${{ secrets.VPS_BASE_URL }}
     steps:
-      - name: Check GitHub Pages (if applicable)
+      - name: Check VPS (if VPS_BASE_URL provided)
+        if: ${{ secrets.VPS_BASE_URL != '' }}
+        shell: bash
+        env:
+          BASE: ${{ secrets.VPS_BASE_URL }}
+        run: |
+          set -euo pipefail
+          base="${BASE%/}"
+          for path in "/" "/sitemap.xml"; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$base$path" || true)
+            echo "$base$path -> $code"
+            if [ "$code" != "200" ]; then
+              echo "Endpoint failed: $base$path ($code)"; exit 1
+            fi
+          done
+
+      - name: Check GitHub Pages (best-effort)
         shell: bash
         run: |
           set -euo pipefail
@@ -23,18 +35,3 @@ jobs:
             code=$(curl -s -o /dev/null -w '%{http_code}' -L "$base$path" || true)
             echo "$base$path -> $code"
           done
-
-      - name: Check VPS (if secrets provided)
-        if: ${{ env.VPS_BASE_URL != '' }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          base="${VPS_BASE_URL%/}"
-          for path in "/" "/content/index.html" "/api/tree"; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$base$path" || true)
-            echo "$base$path -> $code"
-            if [ "$code" != "200" ]; then
-              echo "Endpoint failed: $base$path ($code)"; exit 1
-            fi
-          done
-

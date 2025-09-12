@@ -109,6 +109,7 @@
             <div class="step"><div class="n">A</div><div>
               <strong>Suite arithmétique.</strong> $u_{n+1}=u_n+r$ (raison $r$). Alors $u_n=u_0+nr$.<br/>
 Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
+              
             </div></div>
             <div class="step"><div class="n">B</div><div>
               <strong>Suite géométrique.</strong> $u_{n+1}=q\,u_n$ (raison $q$). Alors $u_n=u_0\,q^n$.
@@ -122,7 +123,9 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
         <h2>2. Principe de récurrence</h2>
         <p><strong>Principe.</strong> Pour une propriété $P(n)$, si (i) $P(n_0)$ est vraie (initialisation) et (ii) $P(n)\Rightarrow P(n+1)$ pour tout $n\ge n_0$ (hérédité), alors $P(n)$ est vraie pour tout $n\ge n_0$.</p>
         <details open><summary><strong>Exemple guidé — Polynésie 2022</strong></summary>
+
 <div class="step"><div class="n">1</div><div>Suite $u_0=1$, $\displaystyle u_{n+1}=\dfrac{u_n}{1+u_n}$. Conjecture: $u_n=\dfrac{1}{n+1}$.<br/>Preuve: <em>Initialisation</em> $u_0=1=1/(0+1)$; <em>Hérédité</em> si $u_n=\dfrac{1}{n+1}$, alors $\displaystyle u_{n+1}=\dfrac{\dfrac{1}{n+1}}{1+\dfrac{1}{n+1}}=\dfrac{1}{n+2}$.</div></div>
+
         </details>
         <details><summary><strong>Inégalité de Bernoulli</strong></summary>
           <div class="step"><div class="n">Th.</div><div>Pour $a>0$ et tout $n\in\N$, $(1+a)^n\ge 1+na$ (preuve par récurrence: multiplier par $(1+a)>0$ à l'étape d'hérédité).</div></div>

@@ -30,13 +30,14 @@
   function renderGroups(groups){
     const frag = document.createDocumentFragment()
     for(const [label, items] of Object.entries(groups)){
+      if(label === 'Autres') continue // masquer le groupe "Autres"
       if(!items.length) continue
       const section = document.createElement('section')
       const h3 = document.createElement('h3'); h3.textContent = label
       const ul = document.createElement('ul')
-      items.sort((a,b)=>a.title.localeCompare(b.title)).forEach(it => {
+      items.sort((a,b)=>a.title.localeCompare(b.title, 'fr')).forEach(it => {
         const li = document.createElement('li')
-        const a = document.createElement('a'); a.href = it.url; a.textContent = it.title
+        const a = document.createElement('a'); a.href = it.url; a.textContent = it.title; a.target = '_blank'; a.rel = 'noopener'
         li.appendChild(a); ul.appendChild(li)
       })
       section.appendChild(h3); section.appendChild(ul)
@@ -47,11 +48,15 @@
     container.appendChild(frag)
   }
 
-  fetch('/api/tree').then(r=>r.json()).then(tree => {
-    const groups = groupTree(tree)
-    renderGroups(groups)
-  }).catch(() => {
-    container.innerHTML = '<small>Impossible de charger le sommaire dynamique.</small>'
+  // Try dynamic API first when served over HTTP(S)
+  const isHttp = location.protocol === 'http:' || location.protocol === 'https:'
+  const tryApi = () => fetch('/api/tree').then(r=>r.json()).then(tree => { const groups = groupTree(tree); renderGroups(groups) })
+  const tryStaticJson = () => fetch('assets/contents.json').then(r=>r.json()).then(data => { if (data && data.groups) renderGroups(data.groups); else throw new Error('invalid contents.json') })
+  const tryStaticJs = () => new Promise((resolve,reject)=>{
+    const s = document.createElement('script'); s.src = 'assets/contents.static.js'; s.onload = () => { try { if (window.__SITE_CONTENTS__?.groups) { renderGroups(window.__SITE_CONTENTS__.groups); resolve() } else reject(new Error('no data')) } catch(e){ reject(e) } }; s.onerror = reject; document.head.appendChild(s);
   })
+  ;(isHttp ? tryApi() : Promise.reject()).catch(()=> tryStaticJson().catch(()=> tryStaticJs().catch(()=>{
+    container.innerHTML = '<small>Impossible de charger le sommaire dynamique.</small>'
+  })))
 })()
 

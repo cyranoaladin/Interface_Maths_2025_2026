@@ -15,6 +15,11 @@ nav a{color:var(--link);text-decoration:none;margin:0 8px}
 .btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:10px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin:14px 0}
 small{color:var(--muted)}
+header .subtitle{display:block;color:var(--muted);margin-top:2px;font-size:.95rem;font-style:italic}
+header .title-block{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:10px}
+header .title-block .logo{width:36px;height:36px;flex:0 0 36px;display:block;object-fit:contain;object-position:center center;align-self:center;filter:drop-shadow(0 0 2px rgba(0,0,0,.2))}
+header .title-block .title-text{display:flex;flex-direction:column;justify-content:center}
+header .subtitle .i{margin-right:6px}
 ul{margin:0 0 0 18px}
 /* Skip link */
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}

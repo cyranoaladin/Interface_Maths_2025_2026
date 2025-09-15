@@ -1,0 +1,96 @@
+{
+  "generatedAt": "2025-09-15T22:32:30.292Z",
+  "base": "site/",
+  "groups": {
+    "EDS Première": [
+      {
+        "title": "Calcul littéral — Exercices + Méthodologie (EDS Première)",
+        "url": "EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
+      },
+      {
+        "title": "Second degré — Cours complet (EDS Première)",
+        "url": "EDS_premiere/Second_Degre/cours_second_degre.html"
+      },
+      {
+        "title": "Second degré — Fiche élève (Mémo • Révisions • Méthode • Conseils)",
+        "url": "EDS_premiere/Second_Degre/fiche_eleve_second_degre.html"
+      }
+    ],
+    "EDS Terminale": [
+      {
+        "title": "Fiche élève — Généralités sur les suites (Rappels de Première) — EDS Terminale",
+        "url": "EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
+      },
+      {
+        "title": "Suites — Cours et récurrence (EDS Terminale)",
+        "url": "EDS_terminale/Suites/cours_suites.html"
+      }
+    ],
+    "Maths expertes": [
+      {
+        "title": "Arithmétique - Partie 1 : Divisibilité et congruences",
+        "url": "Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html"
+      },
+      {
+        "title": "Fiche mémo & méthodologie — Arithmétique (Maths expertes)",
+        "url": "Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/fiche_eleve_arith_chap1.html"
+      }
+    ],
+    "Autres": [
+      {
+        "title": "Page non trouvée — Interface Maths",
+        "url": "404.html"
+      }
+    ]
+  },
+  "all": [
+    {
+      "title": "Page non trouvée — Interface Maths",
+      "url": "404.html",
+      "file": "404.html",
+      "name": "404.html"
+    },
+    {
+      "title": "Calcul littéral — Exercices + Méthodologie (EDS Première)",
+      "url": "EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html",
+      "file": "EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html",
+      "name": "fiche_exercices_calcul_litteral_premiere.html"
+    },
+    {
+      "title": "Second degré — Cours complet (EDS Première)",
+      "url": "EDS_premiere/Second_Degre/cours_second_degre.html",
+      "file": "EDS_premiere/Second_Degre/cours_second_degre.html",
+      "name": "cours_second_degre.html"
+    },
+    {
+      "title": "Second degré — Fiche élève (Mémo • Révisions • Méthode • Conseils)",
+      "url": "EDS_premiere/Second_Degre/fiche_eleve_second_degre.html",
+      "file": "EDS_premiere/Second_Degre/fiche_eleve_second_degre.html",
+      "name": "fiche_eleve_second_degre.html"
+    },
+    {
+      "title": "Suites — Cours et récurrence (EDS Terminale)",
+      "url": "EDS_terminale/Suites/cours_suites.html",
+      "file": "EDS_terminale/Suites/cours_suites.html",
+      "name": "cours_suites.html"
+    },
+    {
+      "title": "Fiche élève — Généralités sur les suites (Rappels de Première) — EDS Terminale",
+      "url": "EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html",
+      "file": "EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html",
+      "name": "fiche_eleve_suites_rappels_premiere.html"
+    },
+    {
+      "title": "Arithmétique - Partie 1 : Divisibilité et congruences",
+      "url": "Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html",
+      "file": "Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html",
+      "name": "chap1_divisibilite_congruence.html"
+    },
+    {
+      "title": "Fiche mémo & méthodologie — Arithmétique (Maths expertes)",
+      "url": "Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/fiche_eleve_arith_chap1.html",
+      "file": "Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/fiche_eleve_arith_chap1.html",
+      "name": "fiche_eleve_arith_chap1.html"
+    }
+  ]
+}

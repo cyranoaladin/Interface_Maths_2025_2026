@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Second degré — Fiche élève (Mémo • Révisions • Méthode • Conseils)</title>
+    <link rel="stylesheet" href="/assets/css/site.css" />
+    <style>
+      :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
+      .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
+      html,body{height:100%}
+      body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+      .container{max-width:1100px;margin:0 auto;padding:26px 18px 90px}
+      header{position:sticky;top:0;background:linear-gradient(180deg,var(--bg) 80%,#0000);backdrop-filter:saturate(1.2);z-index:20;padding-bottom:8px}
+      .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+      .buttons{display:flex;gap:10px;flex-wrap:wrap}
+      .btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:14px;cursor:pointer;box-shadow:var(--shadow)}
+      .badge{display:inline-block;font-size:.8rem;color:white;background:linear-gradient(135deg,var(--accent),#7dd3fc);padding:2px 10px;border-radius:999px;margin-left:6px}
+      .muted{color:var(--muted)}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin:14px 0}
+      .grid{display:grid;gap:14px}
+      .hr{height:1px;background:linear-gradient(90deg,#0000,#39508f,#0000);margin:12px 0}
+      .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace}
+      .result{background:var(--bg2);border:1px dashed #3b4a77;border-radius:10px;padding:8px 10px;margin-top:8px}
+      .ok{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35)}
+      .bad{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35)}
+      .input{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:8px 10px;color:var(--text)}
+      .pill{display:inline-flex;gap:8px;align-items:center;background:var(--bg2);padding:8px 12px;border-radius:999px;border:1px solid var(--border)}
+      .sticky-footer{position:fixed;right:16px;bottom:16px}
+      @media (max-width:920px){ .grid2{grid-template-columns:1fr} }
+    </style>
+    <script>
+      window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}",pp:"\\mathbb{P}"}},svg:{fontCache:'global'}};
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </head>
+  <body class="light">
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <div class="container">
+      <header>
+        <div class="toolbar">
+          <div>
+            <h1>Second degré — Fiche élève <span class="badge">Mémo • Révisions • Méthode • Conseils</span></h1>
+            <p class="muted">À lire avant un contrôle: formules clés, méthodes pas à pas, pièges et mini‑tests rapides.</p>
+          </div>
+          <div class="buttons">
+            <button class="btn" id="themeBtn">🌓 Thème</button>
+            <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
+            <button class="btn" id="printBtn">🖨️ Imprimer</button>
+          </div>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="card" id="memo">
+          <h2>1) Mémo — Formules indispensables</h2>
+          <div class="grid">
+            <div class="pill">Trinôme $f(x)=ax^2+bx+c$ avec $a\ne0$</div>
+            <ul>
+              <li>Forme canonique: $f(x)=a(x-\alpha)^2+\beta$ où $\alpha=-\dfrac{b}{2a}$ et $\beta=f(\alpha)=c-\dfrac{b^2}{4a}$.</li>
+              <li>Discriminant: $\Delta=b^2-4ac$.
+                <ul>
+                  <li>$\Delta>0$: racines $\dfrac{-b\pm\sqrt{\Delta}}{2a}$, factorisation $a(x-x_1)(x-x_2)$.</li>
+                  <li>$\Delta=0$: racine double $-\dfrac{b}{2a}$, factorisation $a(x-x_0)^2$.</li>
+                  <li>$\Delta<0$: pas de racine réelle; signe de $f$ = signe de $a$.</li>
+                </ul>
+              </li>
+              <li>Somme/produit (si racines réelles $x_1,x_2$): $S=x_1+x_2=-\dfrac{b}{a}$, $P=x_1x_2=\dfrac{c}{a}$.</li>
+              <li>Signe (notation française): $a>0 \Rightarrow f\ge0$ sur $]-\infty;x_1]\cup[x_2;+\infty[$ et $f\le0$ sur $[x_1;x_2]$ (règle inversée si $a<0$).</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="card" id="methodes">
+          <h2>2) Méthodologie — Pas à pas</h2>
+          <details open><summary><strong>Mettre sous forme canonique</strong></summary>
+            <ol>
+              <li>Calculer $\alpha=-\dfrac{b}{2a}$ puis $\beta=f(\alpha)$.</li>
+              <li>Écrire $f(x)=a(x-\alpha)^2+\beta$.</li>
+              <li>Interpréter: $S(\alpha,\beta)$ est le sommet; minimum si $a>0$, maximum si $a<0$.</li>
+            </ol>
+          </details>
+          <details><summary><strong>Résoudre $ax^2+bx+c=0$</strong></summary>
+            <ol>
+              <li>Calculer $\Delta=b^2-4ac$.</li>
+              <li>$\Delta<0$: pas de solution réelle. $\Delta=0$: $x=-\dfrac{b}{2a}$. $\Delta>0$: $x_{1,2}=\dfrac{-b\pm\sqrt{\Delta}}{2a}$.</li>
+            </ol>
+          </details>
+          <details><summary><strong>Signe de $f$</strong></summary>
+            <ol>
+              <li>Si $\Delta<0$: signe de $f$ = signe de $a$ sur $\R$.</li>
+              <li>Si $\Delta\ge0$: placer les racines sur l’axe et appliquer la règle « signe de $a$ à l’extérieur, signe contraire entre ».</li>
+            </ol>
+          </details>
+        </section>
+
+        <section class="card" id="quick">
+          <h2>3) Révisions express — 10 minutes</h2>
+          <div class="grid">
+            <div class="card">
+              <h3>Δ et racines</h3>
+              <label class="mono">a <input id="qa" class="input" type="number" step="any" value="1" style="width:120px"></label>
+              <label class="mono">b <input id="qb" class="input" type="number" step="any" value="-2" style="width:120px"></label>
+              <label class="mono">c <input id="qc" class="input" type="number" step="any" value="-3" style="width:120px"></label>
+              <button class="btn" id="btnQ1">Vérifier</button>
+              <div id="q1out" class="result"></div>
+            </div>
+            <div class="card">
+              <h3>Forme canonique</h3>
+              <label class="mono">a <input id="ca" class="input" type="number" step="any" value="2" style="width:120px"></label>
+              <label class="mono">b <input id="cb" class="input" type="number" step="any" value="-20" style="width:120px"></label>
+              <label class="mono">c <input id="cc" class="input" type="number" step="any" value="10" style="width:120px"></label>
+              <button class="btn" id="btnQ2">Vérifier</button>
+              <div id="q2out" class="result"></div>
+            </div>
+            <div class="card">
+              <h3>Signe (notation française)</h3>
+              <label class="mono">a <input id="sa" class="input" type="number" step="any" value="1" style="width:120px"></label>
+              <label class="mono">b <input id="sb" class="input" type="number" step="any" value="-5" style="width:120px"></label>
+              <label class="mono">c <input id="sc" class="input" type="number" step="any" value="6" style="width:120px"></label>
+              <button class="btn" id="btnQ3">Vérifier</button>
+              <div id="q3out" class="result"></div>
+            </div>
+            <div class="card">
+              <h3>Reconstruire depuis S et P</h3>
+              <label class="mono">S <input id="rs" class="input" type="number" step="any" value="5" style="width:120px"></label>
+              <label class="mono">P <input id="rp" class="input" type="number" step="any" value="6" style="width:120px"></label>
+              <button class="btn" id="btnQ4">Construire</button>
+              <div id="q4out" class="result"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" id="conseils">
+          <h2>4) Conseils & erreurs fréquentes</h2>
+          <details open><summary><strong>Pièges à éviter</strong></summary>
+            <ul>
+              <li>Oublier $a\ne0$ (il faut tester avant toute division par $a$).</li>
+              <li>Confondre $-\dfrac{b}{2a}$ et $\dfrac{-b}{2a}$ (c’est la même chose, mais pas $\dfrac{-b}{2}\,a$).</li>
+              <li>Appliquer la règle de signe sans trier $x_1\le x_2$.</li>
+              <li>Mauvaise notation des intervalles: utiliser $]-\infty;\,\cdot]$ et $[\cdot;\,+\infty[$.</li>
+            </ul>
+          </details>
+          <details><summary><strong>Avant un contrôle</strong></summary>
+            <ul>
+              <li>Recopier la fiche Mémo sur une feuille A4 et la relire 2 fois.</li>
+              <li>Faire 3 équations et 3 inéquations en autonomie (temps limité).</li>
+              <li>Vérifier ses réponses avec l’outil du cours (Δ, racines, signe).</li>
+            </ul>
+          </details>
+        </section>
+
+        <section class="card" id="liens">
+          <h2>5) Aller plus loin</h2>
+          <ul>
+            <li>Relire le cours complet: <a href="/EDS_premiere/Second_Degre/cours_second_degre.html">Second degré — Cours complet</a></li>
+          </ul>
+        </section>
+      </main>
+
+      <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
+    </div>
+
+    <script>
+      const $=(q)=>document.querySelector(q);
+      function fmt(x){ if(!isFinite(x)) return String(x); const s=Number(x).toFixed(6); return s.replace(/\.0+$/,'').replace(/(\.[0-9]*[1-9])0+$/,'$1'); }
+      function intervalsFR(a,b,c){ const D=b*b-4*a*c; if(D<0){return a>0?"$]-\\infty;+\\infty[$":"∅";} if(D===0){const x0=-b/(2*a); return a>0?`$]-\\infty;${fmt(x0)}]\\cup[${fmt(x0)};+\\infty[$`:`∅`; } const r1=(-b-Math.sqrt(D))/(2*a), r2=(-b+Math.sqrt(D))/(2*a); const [x1,x2]=[Math.min(r1,r2),Math.max(r1,r2)]; return a>0?`$]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$`:`$[${fmt(x1)};${fmt(x2)}]$`; }
+      function canonical(a,b,c){ const alpha=-b/(2*a); const beta=c-(b*b)/(4*a); return {alpha,beta}; }
+      // UI
+      $('#themeBtn')?.addEventListener('click',()=>{ document.body.classList.toggle('light'); MathJax.typesetPromise?.(); });
+      $('#retypesetBtn')?.addEventListener('click',()=>MathJax.typesetPromise?.());
+      $('#printBtn')?.addEventListener('click',()=>window.print());
+
+      // Quick checks
+      $('#btnQ1')?.addEventListener('click',()=>{
+        const a=parseFloat($('#qa').value), b=parseFloat($('#qb').value), c=parseFloat($('#qc').value);
+        if(!(isFinite(a)&&a!==0&&isFinite(b)&&isFinite(c))){ $('#q1out').innerHTML='<div class="result bad">Entrer a non nul, b, c.</div>'; return; }
+        const D=b*b-4*a*c; let msg=`$\\Delta=${fmt(D)}$`;
+        if(D<0){ msg+=` — aucune racine réelle`; }
+        else if(D===0){ msg+=` — racine double $x=${fmt(-b/(2*a))}$`; }
+        else{ const x1=(-b-Math.sqrt(D))/(2*a), x2=(-b+Math.sqrt(D))/(2*a); msg+=` — racines $x=${fmt(x1)}, ${fmt(x2)}$`; }
+        $('#q1out').innerHTML=`<div class="result ok">${msg}</div>`; MathJax.typesetPromise?.();
+      });
+      $('#btnQ2')?.addEventListener('click',()=>{
+        const a=parseFloat($('#ca').value), b=parseFloat($('#cb').value), c=parseFloat($('#cc').value);
+        if(!(isFinite(a)&&a!==0&&isFinite(b)&&isFinite(c))){ $('#q2out').innerHTML='<div class="result bad">Entrer a non nul, b, c.</div>'; return; }
+        const {alpha,beta}=canonical(a,b,c);
+        $('#q2out').innerHTML=`<div class="result ok">$f(x)=${fmt(a)}(x-${fmt(alpha)})^2+${fmt(beta)}$ ; sommet $S(${fmt(alpha)},${fmt(beta)})$</div>`; MathJax.typesetPromise?.();
+      });
+      $('#btnQ3')?.addEventListener('click',()=>{
+        const a=parseFloat($('#sa').value), b=parseFloat($('#sb').value), c=parseFloat($('#sc').value);
+        if(!(isFinite(a)&&a!==0&&isFinite(b)&&isFinite(c))){ $('#q3out').innerHTML='<div class="result bad">Entrer a non nul, b, c.</div>'; return; }
+        const z=intervalsFR(a,b,c);
+        $('#q3out').innerHTML=`<div class="result ok">$f(x) \\ge 0$ sur ${z}</div>`; MathJax.typesetPromise?.();
+      });
+      $('#btnQ4')?.addEventListener('click',()=>{
+        const S=parseFloat($('#rs').value), P=parseFloat($('#rp').value);
+        if(!(isFinite(S)&&isFinite(P))){ $('#q4out').innerHTML='<div class="result bad">Entrer S et P.</div>'; return; }
+        $('#q4out').innerHTML=`<div class="result ok">Trinôme monique: $x^2-${fmt(S)}x+${fmt(P)}$</div>`; MathJax.typesetPromise?.();
+      });
+    </script>
+  </body>
+</html>

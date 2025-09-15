@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Interface Maths 2025–2026 — Aperçu (release test 2)</title>
+  <title>Page Mathématique 2025-2026</title>
   <meta name="description" content="Fiches élèves prêtes à l’emploi (HTML imprimable + MathJax) — EDS Première, EDS Terminale, Maths expertes." />
   <meta name="theme-color" content="#0b1020" />
-  <meta property="og:title" content="Interface Maths 2025–2026 — Aperçu (release test 2)" />
+  <meta property="og:title" content="Page Mathématique 2025-2026" />
   <meta property="og:description" content="Fiches élèves prêtes à l’emploi (HTML imprimable + MathJax)." />
   <meta property="og:type" content="website" />
   <link rel="canonical" href="/" />
-  <link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml" />
-  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="/assets/css/site.css" />
-  <script src="/assets/js/contents.js" defer></script>
-  <script src="/assets/js/theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="assets/css/site.css" />
+  <script src="assets/js/contents.js" defer></script>
+  <script src="assets/js/theme-toggle.js" defer></script>
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}))
+    // En file://, PWA (manifest/SW) est restreint. En HTTP(S) ou localhost, ok.
+    if ((location.protocol === 'http:' || location.protocol === 'https:') && 'serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}))
     }
   </script>
 </head>
@@ -27,52 +27,25 @@
   <a class="skip-link" href="#main">Aller au contenu</a>
   <div class="wrap">
     <header>
-      <h1>Interface Maths 2025–2026 — Aperçu</h1>
+      <div class="title-block">
+        <img class="logo" src="assets/img/icon.svg" alt="Logo Interface Maths" />
+        <div class="title-text">
+          <h1>Page Mathématique 2025-2026</h1>
+          <small class="subtitle"><span class="i" aria-hidden="true">🎓</span> Alaeddine BEN RHOUMA - Lycée Pierre Mendès Fraance de Tunis</small>
+        </div>
+      </div>
       <nav aria-label="Navigation principale">
-        <a class="btn" href="/">Accueil</a>
-        <a class="btn" href="/content/">/content (alias)</a>
         <button id="theme-toggle" class="btn" type="button" aria-pressed="false" aria-label="Basculer le thème">Thème</button>
       </nav>
     </header>
 
     <main id="main">
-      <p class="card">Ce site de prévisualisation liste les fiches élèves disponibles dans le dépôt. Pour une version imprimable, utilisez le bouton “Imprimer” dans chaque fiche.</p>
 
       <section class="card" id="auto-index">
-        <h2>Sommaire dynamique</h2>
-        <div id="auto-index-body">
+        <h2>Sommaire</h2>
+        <div id="auto-index-body" class="pre-wrap">
           <small>Chargement...</small>
         </div>
-      </section>
-
-      <section class="card">
-        <h2>EDS Première — Calcul littéral</h2>
-        <ul>
-          <li>
-            <a href="EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html">Fiche exercices + Méthodologie — Calcul littéral (EDS Première)</a>
-            <br/>
-            <small>HTML interactif (thème, LaTeX, impression)</small>
-          </li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <h2>EDS Terminale — Suites</h2>
-        <ul>
-          <li>
-            <a href="EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html">Fiche élève — Généralités sur les suites (Rappels de Première)</a>
-            <br/>
-            <small>HTML interactif (thème, LaTeX, impression)</small>
-          </li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <h2>Maths expertes — Arithmétique</h2>
-        <ul>
-          <li><a href="Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html">Chapitre 1 — Divisibilité et congruences (cours + outils)</a></li>
-          <li><a href="Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/fiche_eleve_arith_chap1.html">Fiche élève — Arithmétique (chapitre 1)</a></li>
-        </ul>
       </section>
     </main>
 

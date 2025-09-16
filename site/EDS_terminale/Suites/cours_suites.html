@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Suites — Cours et récurrence (EDS Terminale)</title>
+    <title>Suites — Cours, limites et récurrence (EDS Terminale)</title>
+    <meta name="description" content="Cours complet sur les suites (définitions, arithmétique et géométrique, variations, bornes, limites, suites adjacentes, récurrence)." />
     <link rel="stylesheet" href="/assets/css/site.css" />
     <style>
       :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
@@ -43,8 +44,13 @@
       .goodbox{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35)}
       .badbox{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35)}
       .print-only{display:none}
+      /* Sommaire local en tête de section */
+      .local-toc{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:999px;padding:6px 10px;font-size:.9rem;margin:-4px 0 10px}
+      .local-toc a{color:var(--text);text-decoration:none;padding:2px 6px;border-radius:8px}
+      .local-toc a[aria-current="page"]{background:var(--card);border:1px solid var(--border)}
+      .local-toc .sep{opacity:.6}
       @media print{
-        .buttons, .sticky-footer, nav.card{display:none !important}
+        .buttons, .sticky-footer, nav.card, .local-toc{display:none !important}
         .grid.cols-2{grid-template-columns:1fr !important}
         .print-only{display:block}
         details{display:block}
@@ -59,12 +65,13 @@
   </head>
   <body class="light">
     <div class="container">
+      <a id="top"></a>
       <header>
         <div class="toolbar">
           <div>
-            <h1>Suites — Cours et récurrence <span class="badge">EDS Terminale</span></h1>
+            <h1>Suites — Cours, limites et récurrence <span class="badge">EDS Terminale</span></h1>
             <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © 2025</small>
-            <p class="pill">Plan de cours complet + méthodes — conforme au programme de Terminale (EDS)</p>
+            <p class="pill">Synthèse basée sur « Cours Les Suites », « Cours_limites », « Cours_RPR »</p>
           </div>
           <div class="buttons">
             <button class="btn" id="themeBtn">🌓 Thème</button>
@@ -78,12 +85,14 @@
       <section class="print-only card">
         <h2>Sommaire (impression)</h2>
         <ol>
-          <li>Définitions générales (exemples : arithmétique, géométrique)</li>
+          <li>Définitions (arithmétique, géométrique, explicite vs récursive)</li>
           <li>Principe de récurrence (exemples, Bernoulli)</li>
           <li>Suites majorées/minorées/bornées</li>
           <li>Variations (critères usuels, étude via une fonction)</li>
           <li>Limites (finies, infinies, opérations)</li>
-          <li>Entraînements ciblés</li>
+          <li>Pièges fréquents</li>
+          <li>Suites adjacentes</li>
+          <li>Entraînements</li>
         </ol>
       </section>
 
@@ -97,7 +106,9 @@
             <li><a href="#bornes">3. Suites majorées / minorées / bornées</a></li>
             <li><a href="#variations">4. Variations d'une suite</a></li>
             <li><a href="#limites">5. Limites de suites</a></li>
-            <li><a href="#entrainements">6. Entraînements</a></li>
+            <li><a href="#pieges">6. Pièges fréquents</a></li>
+            <li><a href="#suites-adjacentes">7. Suites adjacentes</a></li>
+            <li><a href="#entrainements">8. Entraînements</a></li>
           </ol>
           <p class="muted">Les preuves et corrections détaillées sont repliées — dépliez au besoin.</p>
         </nav>
@@ -114,6 +125,37 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
               <strong>Suite géométrique.</strong> $u_{n+1}=q\,u_n$ (raison $q$). Alors $u_n=u_0\,q^n$.
             </div></div>
             <div class="result goodbox"><strong>Méthode.</strong> Pour reconnaître la nature d'une suite définie par récurrence simple, mettre en évidence $u_{n+1}-u_n$ (arithmétique) ou $\dfrac{u_{n+1}}{u_n}$ (géométrique) lorsque $u_n>0$.</div>
+          </details>
+          <details><summary><strong>Tableau récapitulatif</strong> — arithmétique vs géométrique</summary>
+            <table class="table-simple w-100 mt-8">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Définition (récurrence)</th>
+                  <th>Terme général</th>
+                  <th>Somme $S_n=\sum_{k=0}^{n} u_k$</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Arithmétique</td>
+                  <td>$u_{n+1}=u_n+r$</td>
+                  <td>$u_n=u_0+nr$</td>
+                  <td>$\dfrac{n+1}{2}(u_0+u_n)$</td>
+                </tr>
+                <tr>
+                  <td>Géométrique</td>
+                  <td>$u_{n+1}=q\,u_n$</td>
+                  <td>$u_n=u_0\,q^n$</td>
+                  <td>$\begin{cases}(n+1)u_0 & (q=1)\\[1mm] u_0\,\dfrac{1-q^{n+1}}{1-q} & (q\ne 1)\end{cases}$</td>
+                </tr>
+              </tbody>
+            </table>
+          </details>
+          <details><summary><strong>Méthodes clés</strong></summary>
+            <div class="step"><div class="n">M1</div><div><strong>Reconnaître le type.</strong> Calculer $u_{n+1}-u_n$ (constante $\Rightarrow$ arithmétique) ou le rapport $\dfrac{u_{n+1}}{u_n}$ (constant $\Rightarrow$ géométrique, si $u_n\ne 0$).</div></div>
+            <div class="step"><div class="n">M2</div><div><strong>Somme géométrique.</strong> Pour $q\ne 1$, $\displaystyle \sum_{k=0}^{n} q^k=\dfrac{1-q^{n+1}}{1-q}$; pour $q=1$, $n+1$.</div></div>
+            <div class="step"><div class="n">M3</div><div><strong>Résoudre $u_{n+1}=a\,u_n+b$.</strong> Si $a\ne 1$, la solution se met sous la forme $u_n=a^n(u_0-u^*)+u^*$ avec $u^*=\dfrac{b}{1-a}$. Si $a=1$, alors $u_n=u_0+nb$.</div></div>
           </details>
         </div>
       </section>
@@ -169,12 +211,82 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
           <div class="step"><div class="n">Somme</div><div>Si $u_n\to \ell$ et $v_n\to \ell'$, alors $u_n+v_n\to \ell+\ell'$ (hors formes indéterminées).</div></div>
           <div class="step"><div class="n">Produit</div><div>Si $u_n\to \ell$ et $v_n\to \ell'$, alors $u_nv_n\to \ell\ell'$ (hors F.I.).</div></div>
           <div class="step"><div class="n">Quotient</div><div>Si $u_n\to \ell$ et $v_n\to \ell'\ne 0$, alors $\dfrac{u_n}{v_n}\to \dfrac{\ell}{\ell'}$.</div></div>
-          <div class="result badbox">Formes indéterminées classiques: $\infty-\infty$, $0\times\infty$, $\dfrac{\infty}{\infty}$, $\dfrac{0}{0}$ — à lever par transformations algébriques.</div>
+          <div class="result badbox">Formes indéterminées classiques: $\infty-\infty$, $0\times\infty$, $\dfrac{\infty}{\infty}$, $\dfrac{0}{0}$ — lever par transformations algébriques.</div>
+        </details>
+        <details><summary><strong>Mémo rapide — limites usuelles</strong></summary>
+          <table class="table-simple w-100 mt-8">
+            <thead>
+              <tr>
+                <th>Suite $(u_n)$</th>
+                <th>Condition</th>
+                <th>Limite</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$\dfrac{1}{n}$, $\dfrac{1}{n^p}$</td>
+                <td>$p>0$</td>
+                <td>$0$</td>
+              </tr>
+              <tr>
+                <td>$n^p$, $\sqrt[n]{n}$</td>
+                <td>$p>0$</td>
+                <td>$+\\infty$</td>
+              </tr>
+              <tr>
+                <td>$q^n$</td>
+                <td>$\lvert q\rvert<1$</td>
+                <td>$0$</td>
+              </tr>
+              <tr>
+                <td>$q^n$</td>
+                <td>$q>1$</td>
+                <td>$+\\infty$</td>
+              </tr>
+              <tr>
+                <td>$(-q)^n$</td>
+                <td>$0<q<1$</td>
+                <td>oscille $\\to 0$</td>
+              </tr>
+              <tr>
+                <td>$\sqrt{n+a}-\sqrt{n}$</td>
+                <td>$a$ réel fixe</td>
+                <td>$0$ (par rationalisation)</td>
+              </tr>
+              <tr>
+                <td>$\dfrac{an+b}{cn+d}$</td>
+                <td>$c\\ne 0$</td>
+                <td>$\\dfrac{a}{c}$</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+        <a id="pieges"></a>
+        <details><summary><strong>Pièges fréquents</strong> (formes indéterminées et erreurs classiques)</summary>
+          <ul>
+            <li><strong>Formes indéterminées</strong>: $\infty-\infty$, $0\times\infty$, $\dfrac{\infty}{\infty}$, $\dfrac{0}{0}$. — Les lever par factorisation par le terme dominant, rationalisation ($\sqrt{n+a}-\sqrt{n}$), mise au même dénominateur, etc.</li>
+            <li><strong>Confusion « rang » vs « terme »</strong>: $n\to+\infty$ ne dit rien du signe de $u_n$. Ne concluez pas $\dfrac{u_{n+1}}{u_n}\ge1$ sans hypothèses; privilégier l'étude de $u_{n+1}-u_n$ ou l'analyse de $f$ si $u_{n+1}=f(u_n)$.</li>
+            <li><strong>Puissances et signe</strong>: $q^n\to0$ seulement si $\lvert q\rvert<1$; si $q<-1$, $q^n$ n'a pas de limite; si $-1<q<0$, alternance mais $q^n\to0$.</li>
+            <li><strong>Inégalités et opérations</strong>: diviser par une quantité potentiellement négative/qui tend vers 0 peut inverser le sens ou être illégitime. Vérifier les signes/limites avant d'opérer.</li>
+            <li><strong>Racines/carrés</strong>: élever au carré peut créer des implications non équivalentes. Préférer rationaliser ou travailler sur des fonctions monotones.</li>
+            <li><strong>Gendarmes mal posés</strong>: pour appliquer le théorème des gendarmes, il faut <em>deux</em> suites encadrantes qui convergent vers <em>la même</em> limite au même rang.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section class="card section" id="suites-adjacentes">
+        <h2>6. Suites adjacentes</h2>
+        <details open><summary><strong>Définition et théorème</strong></summary>
+          <div class="step"><div class="n">Def</div><div>Deux suites $(u_n)$ et $(v_n)$ sont <em>adjacentes</em> si $(u_n)$ est croissante, $(v_n)$ est décroissante et $u_n\le v_n$ pour tout $n$.</div></div>
+          <div class="result goodbox"><strong>Théorème.</strong> Si $(u_n)$ et $(v_n)$ sont adjacentes et $v_n-u_n\to 0$, alors $u_n$ et $v_n$ sont convergentes et ont la même limite.</div>
+        </details>
+        <details><summary><strong>Exemple</strong></summary>
+          <div class="step"><div class="n">Ex</div><div>Définir $u_{n+1}=\sqrt{2+u_n}$, $u_0=1$ et $v_n=2$; montrer que $u_n\nearrow$ et $v_n\searrow$ avec $0\le v_n-u_n\to 0$ donc convergence commune.</div></div>
         </details>
       </section>
 
       <section class="card section" id="entrainements">
-        <h2>6. Entraînements (sélection)</h2>
+        <h2>7. Entraînements (sélection)</h2>
         <details open><summary><strong>Récurrence</strong></summary>
           <ul>
             <li>Montrer $u_n=\dfrac{1}{n+1}$ pour $u_{n+1}=\dfrac{u_n}{1+u_n}$, $u_0=1$.</li>
@@ -192,6 +304,40 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
           <ul>
             <li>$\displaystyle \lim_{n\to+\infty} (n^2-5n+1)$ ; $\lim \dfrac{5n^2+4}{4n^2+3n}$ ; $\lim (\sqrt{n+2}-\sqrt n)$.</li>
           </ul>
+        </details>
+        <details><summary><strong>Arithmétique / Géométrique — exercices</strong></summary>
+          <ul>
+            <li><strong>Reconnaissance.</strong> Déterminer la nature et le terme général de $u_{n+1}=u_n+3$, $u_0=5$ ; de $v_{n+1}=2v_n$, $v_0=\tfrac12$.</li>
+            <li><strong>Sommes.</strong> Calculer $\sum_{k=0}^{n} (2k+1)$ et $\sum_{k=0}^{n} 3\cdot 2^k$.</li>
+            <li><strong>Linéaire 1er ordre.</strong> Résoudre $w_{n+1}=\tfrac34 w_n+6$, $w_0=0$.</li>
+          </ul>
+        </details>
+        <details><summary><strong>Limites — exercices</strong></summary>
+          <ul>
+            <li>Étudier $\lim\limits_{n\to+\infty} \dfrac{5n^2+4}{4n^2+3n}$ ; $\lim (\sqrt{n+3}-\sqrt{n})$.</li>
+            <li>Si $|q|<1$, montrer $\sum_{k=0}^{n} q^k$ converge et trouver sa limite quand $n\to+\infty$.</li>
+          </ul>
+        </details>
+        <details><summary><strong>Variations/Bornes — exercices</strong></summary>
+          <ul>
+            <li>$u_{n+1}=\sqrt{2+u_n}$, $u_0=1$. Montrer que $(u_n)$ est croissante et majorée.</li>
+            <li>$u_{n+1}=\dfrac{5u_n+4}{u_n+2}$, $u_0=1$. Étudier $0\le u_n\le u_{n+1}\le 4$.</li>
+          </ul>
+        </details>
+        <details><summary><strong>Exercices guidés — limites et convergence</strong></summary>
+          <div class="step"><div class="n">G1</div><div>
+            <strong>Limite d'une suite rationnelle de suites</strong> — $u_{n+1}=\dfrac{u_n+3}{u_n+1}$, $u_0>0$.
+            <details><summary>Correction</summary>
+              <p><em>1) Monotonie / bornes (esquisse):</em> on montre $u_n>0$ et que $(u_n)$ est croissante et majorée (par 3 typiquement) en étudiant $u_{n+1}-u_n$ ou via une étude de $f(x)=\dfrac{x+3}{x+1}$ sur un intervalle stable.</p>
+              <p><em>2) Limite candidate:</em> si $u_n\to \ell$, alors en passant à la limite dans $u_{n+1}=\dfrac{u_n+3}{u_n+1}$, on obtient $\ell=\dfrac{\ell+3}{\ell+1}$, soit $\ell(\ell+1)=\ell+3$, donc $\ell^2-3=0$. Ainsi $\ell\in\{\sqrt{3},-\sqrt{3}\}$. Avec $u_n>0$, on retient $\ell=\sqrt{3}$.</p>
+            </details>
+          </div></div>
+          <div class="step"><div class="n">G2</div><div>
+            <strong>Limite par rationalisation</strong> — $v_n=\sqrt{n+a}-\sqrt{n}$ avec $a$ réel fixé.
+            <details><summary>Correction</summary>
+              <p>Multiplier par le conjugué: $v_n=\dfrac{a}{\sqrt{n+a}+\sqrt{n}} \to 0$.</p>
+            </details>
+          </div></div>
         </details>
       </section>
 
@@ -212,6 +358,26 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
       // Petit utilitaire de corriger du texte (si besoin)
       function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
       window.checkText=function(id,expected){ const el=$('#'+id), out=$('#'+id+'r'); if(!el) return; let ans=(el.value||'').trim(); let pattern=escRe(expected).replace(/\s\+/g,'\\s*').replace(/×/g,'[×x*]').replace(/\s/g,'\\s*').replace(/>/g,'\\s*>\\s*'); const re=new RegExp('^'+pattern+'$','i'); const ok=re.test(ans); const box=document.createElement('span'); box.className='result '+(ok?'ok':'err'); box.textContent= ok? '✅ Correct' : '❌ Attendu : '+expected; if(out){out.replaceChildren(box);} };
+      // Sommaire local cliquable en haut des sections
+      (function(){
+        const items=[
+          {id:'defs',label:'Définitions'},
+          {id:'rpr',label:'Récurrence'},
+          {id:'bornes',label:'Bornes'},
+          {id:'variations',label:'Variations'},
+          {id:'limites',label:'Limites'},
+          {id:'pieges',label:'Pièges'},
+          {id:'suites-adjacentes',label:'Adjacentes'},
+          {id:'entrainements',label:'Entraînements'}
+        ];
+        document.querySelectorAll('section.section').forEach(sec=>{
+          const nav=document.createElement('nav');
+          nav.className='local-toc';
+          const html=items.map(it=>`<a href="#${it.id}" ${sec.id===it.id? 'aria-current="page"':''}>${it.label}</a>`).join('<span class="sep">•</span>') + ' <span class="sep">•</span> <a href="#top" title="Haut">↑ Haut</a>'
+          nav.innerHTML=html;
+          sec.insertBefore(nav, sec.firstChild);
+        });
+      })();
     </script>
   </body>
 </html>

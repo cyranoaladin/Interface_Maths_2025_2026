@@ -214,7 +214,7 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
           <div class="result badbox">Formes indéterminées classiques: $\infty-\infty$, $0\times\infty$, $\dfrac{\infty}{\infty}$, $\dfrac{0}{0}$ — lever par transformations algébriques.</div>
         </details>
         <details><summary><strong>Mémo rapide — limites usuelles</strong></summary>
-          <table class="table-simple w-100 mt-8">
+          <table class="table-simple table-vert w-100 mt-8">
             <thead>
               <tr>
                 <th>Suite $(u_n)$</th>
@@ -231,7 +231,7 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
               <tr>
                 <td>$n^p$, $\sqrt[n]{n}$</td>
                 <td>$p>0$</td>
-                <td>$+\\infty$</td>
+                <td>$+\infty$</td>
               </tr>
               <tr>
                 <td>$q^n$</td>
@@ -241,12 +241,12 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
               <tr>
                 <td>$q^n$</td>
                 <td>$q>1$</td>
-                <td>$+\\infty$</td>
+                <td>$+\infty$</td>
               </tr>
               <tr>
                 <td>$(-q)^n$</td>
-                <td>$0<q<1$</td>
-                <td>oscille $\\to 0$</td>
+                <td>$\lvert q\rvert<1$</td>
+                <td>oscille $\to 0$</td>
               </tr>
               <tr>
                 <td>$\sqrt{n+a}-\sqrt{n}$</td>
@@ -255,8 +255,8 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
               </tr>
               <tr>
                 <td>$\dfrac{an+b}{cn+d}$</td>
-                <td>$c\\ne 0$</td>
-                <td>$\\dfrac{a}{c}$</td>
+                <td>$c\ne 0$</td>
+                <td>$\dfrac{a}{c}$</td>
               </tr>
             </tbody>
           </table>
@@ -352,6 +352,10 @@ Somme partielle: $\displaystyle \sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.
       $('#themeBtn')?.addEventListener('click',()=>{ document.body.classList.toggle('light'); try{ localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark'); }catch(e){} MathJax.typesetPromise?.(); });
       // Outils
       $('#retypesetBtn')?.addEventListener('click',()=>MathJax.typesetPromise?.());
+      // Re-typeset when a <details> is toggled (to handle content revealed after load)
+      document.querySelectorAll('details').forEach(d=>{
+        d.addEventListener('toggle',()=>{ try{ MathJax.typesetPromise?.([d]); }catch(e){} });
+      });
       $('#printBtn')?.addEventListener('click',()=>window.print());
       let revealed=false; try{ revealed=localStorage.getItem('revealed_suites')==='1'; }catch(e){} if(revealed){ $$('details').forEach(d=>d.open=true); } $('#revealBtn')?.setAttribute('aria-pressed',revealed);
       $('#revealBtn')?.addEventListener('click',()=>{ revealed=!revealed; $$('details').forEach(d=>d.open=revealed); $('#revealBtn')?.setAttribute('aria-pressed',revealed); try{ localStorage.setItem('revealed_suites', revealed?'1':'0'); }catch(e){} });

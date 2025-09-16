@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.dist/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+**/.venv/
+**/venv/
+apps/backend/.venv/
+
+# Environment files
+.env
+*.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors/IDE
+.vscode/
+.idea/
+
+# Frontend artifacts
+apps/frontend/node_modules/
+apps/frontend/dist/
+
+# Backend generated data/outputs (never commit secrets)
+apps/backend/data/
+apps/backend/outputs/
+
+# Root node modules (do not commit)
+node_modules/

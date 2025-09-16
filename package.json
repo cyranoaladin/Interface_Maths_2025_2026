@@ -1,0 +1,29 @@
+{
+  "name": "interface-maths-2025-2026",
+  "private": true,
+  "version": "0.0.0-development",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cyranoaladin/Interface_Maths_2025_2026.git"
+  },
+  "scripts": {
+    "test:unit": "vitest run tests/unit",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:e2e",
+    "release": "semantic-release"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.9.1",
+    "@playwright/test": "^1.47.2",
+    "http-server": "^14.1.1",
+    "vitest": "^2.0.5",
+    "semantic-release": "^23.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^10.0.4",
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/release-notes-generator": "^13.0.0",
+    "conventional-changelog-conventionalcommits": "^7.0.2"
+  }
+}

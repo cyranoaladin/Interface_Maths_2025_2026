@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fiche élève — Généralités sur les suites (Rappels de Première) — EDS Terminale</title>
+    <link rel="stylesheet" href="/assets/css/site.css" />
+    <style>
+      :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
+      .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
+      html,body{height:100%}
+      body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+      .container{max-width:1100px;margin:0 auto;padding:26px 18px 90px}
+      header{position:sticky;top:0;background:linear-gradient(180deg,var(--bg) 80%,#0000);backdrop-filter:saturate(1.2);z-index:20;padding-bottom:8px}
+      .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+      .buttons{display:flex;gap:10px;flex-wrap:wrap}
+      .btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:14px;cursor:pointer;box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:8px}
+      .btn:hover{filter:brightness(1.05)}
+      .badge{display:inline-block;font-size:.8rem;color:white;background:linear-gradient(135deg,var(--accent),#7dd3fc);padding:2px 10px;border-radius:999px;margin-left:6px}
+      .muted{color:var(--muted)}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
+      h1{font-size:clamp(1.4rem,2.2vw + .8rem,2.4rem);margin:8px 0}
+      h2{font-size:1.45rem;margin:.2rem 0 .6rem}
+      h3{font-size:1.1rem;margin:.2rem 0}
+      .grid{display:grid;gap:18px}
+      .cols-2{grid-template-columns:1.1fr .9fr}
+      @media (max-width:980px){.cols-2{grid-template-columns:1fr}}
+      .pill{display:inline-flex;gap:8px;align-items:center;background:var(--bg2);padding:8px 12px;border-radius:999px;border:1px solid var(--border)}
+      .section{scroll-margin-top:90px}
+      details{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:10px 12px;margin:.6rem 0}
+      summary{cursor:pointer;font-weight:600}
+      .step{display:flex;gap:12px;align-items:flex-start;border-left:3px solid #30406e;padding:10px 12px;margin:10px 0;background:linear-gradient(90deg,#0000,rgba(99,102,241,.08))}
+      .step .n{flex:0 0 26px;height:26px;display:grid;place-items:center;border-radius:8px;background:#334155;color:#fff;font-weight:700}
+      .result{background:var(--bg2);border:1px dashed #3b4a77;border-radius:10px;padding:8px 10px;margin-top:8px}
+      .ok{background:var(--good);border-color:#0f5132;color:#fff}
+      .err{background:var(--bad);border-color:#842029;color:#fff}
+      .input{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 10px;color:var(--text)}
+      .input:focus{outline:2px solid var(--primary)}
+      .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace}
+      .hr{height:1px;background:linear-gradient(90deg,#0000,#39508f,#0000);margin:12px 0}
+      nav.card ol{margin:0 0 8px 18px}
+      .sticky-footer{position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:10px}
+      .goodbox{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35)}
+      .badbox{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35)}
+      .print-only{display:none}
+      @media print{
+        .buttons, .sticky-footer{display:none !important}
+        nav.card{display:none !important}
+        .grid.cols-2{grid-template-columns:1fr !important}
+        .print-only{display:block}
+        details{display:block}
+        details>summary{display:none}
+        details>*{display:block}
+      }
+    </style>
+    <script>
+      window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}",div:"\\mid",ndiv:"\\nmid",pmod:"\\;\\mathrm{mod}\\;"}},svg:{fontCache:'global'}};
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </head>
+  <body class="light">
+    <div class="container">
+      <header>
+        <div class="toolbar">
+          <div>
+            <h1>Fiche élève — Généralités sur les suites (Rappels de Première) <span class="badge">Suites — EDS Terminale</span></h1>
+            <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © Propriété intellectuelle</small>
+          </div>
+          <div class="buttons">
+            <button class="btn" id="themeBtn">🌓 Thème</button>
+            <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
+            <button class="btn" id="printBtn">🖨️ Imprimer</button>
+          </div>
+        </div>
+      </header>
+
+      <section class="card print-only">
+        <h2>Sommaire (impression)</h2>
+        <ol>
+          <li>1. Définir une suite</li>
+          <li>2. Monotonie d’une suite</li>
+          <li>3. Suites arithmétiques et géométriques</li>
+        </ol>
+      </section>
+
+      <section class="grid cols-2">
+        <nav class="card">
+          <h2>Plan</h2>
+          <div class="hr"></div>
+          <ol>
+            <li><a href="#definir">1. Définir une suite</a></li>
+            <li><a href="#monotonie">2. Monotonie d’une suite</a></li>
+            <li><a href="#arith_geo">3. Suites arithmétiques et géométriques</a></li>
+          </ol>
+          <p class="muted">Toutes les preuves/corrections sont repliées par défaut — dépliez si besoin.</p>
+        </nav>
+
+        <div class="card" id="definir">
+          <h2>1. Définir une suite</h2>
+          <p><strong>Définition.</strong> Une suite $(u_n)$ est une application $u: \N \to \R$, $n\mapsto u_n$. L’<em>indice de départ</em> est précisé (souvent $n=0$ ou $n=1$).</p>
+          <p><strong>Deux modes de définition.</strong> <em>Explicite</em> : $u_n=f(n)$. <em>Récurrente</em> : $u_0$ (ou $u_1$) donné et relation $u_{n+1}=g(u_n)$.</p>
+          <p><strong>Suite arithmétique.</strong> $u_{n+1}=u_n+r$ (raison $r$). Alors $u_n=u_0+nr$. <em>Somme</em> : $\displaystyle \sum_{k=0}^n u_k=\frac{n+1}{2}(u_0+u_n)$. <em>Variations</em> : $r>0$ croissante, $r<0$ décroissante, $r=0$ constante.</p>
+          <p><strong>Suite géométrique.</strong> $u_{n+1}=q\,u_n$ (raison $q$). Alors $u_n=u_0\,q^n$. <em>Somme</em> : si $q\ne1$, $\displaystyle \sum_{k=0}^n u_k=u_0\,\frac{1-q^{n+1}}{1-q}$; sinon $(n+1)u_0$.</p>
+          <div class="result goodbox"><strong>Limites usuelles :</strong> $|q|<1 \Rightarrow q^n\to0$; $q=1$ constante; $q=-1$ non convergente; $|q|>1$ divergence en module (alternance si $q<0$). Une arithmétique $u_0+nr$ diverge si $r\ne0$.</div>
+          <details><summary>Exemples (définitions)</summary>
+            <div class="step"><div class="n">1</div><div>Explicite : $u_n=(-1)^n$ (on peut calculer $u_9$ immédiatement).</div></div>
+            <div class="step"><div class="n">2</div><div>Récurrente : $w_{n+1}=5w_n+3$ (il faut connaître un terme initial).</div></div>
+          </details>
+          <details><summary>Remarques</summary>
+            <div class="step"><div class="n">•</div><div>On peut souvent <strong>passer</strong> d’une définition à l’autre selon la question étudiée.</div></div>
+            <div class="step"><div class="n">•</div><div>La suite peut être notée <strong>$u$</strong>; <strong>$u_n$</strong> désigne le <em>n‑ième terme</em> de la suite $u$.</div></div>
+          </details>
+        </div>
+      </section>
+
+      <section class="card" id="monotonie">
+        <h2>2. Monotonie d’une suite</h2>
+        <div class="control-row mb-8"><button class="btn" id="btnOpenMonotonie" aria-pressed="false" type="button">Tout ouvrir</button></div>
+
+        <details>
+          <summary><strong>N0</strong> — Définitions de la monotonie</summary>
+          <div class="step"><div class="n">Croiss.</div><div>Strictement croissante à partir du rang $p$ si $\forall n\ge p$, $u_{n+1}>u_n$. Strictement décroissante si $u_{n+1}<u_n$.</div></div>
+          <div class="step"><div class="n">Large</div><div>Croissante si $u_{n+1}\ge u_n$; décroissante si $u_{n+1}\le u_n$. Stationnaire/constante à partir d’un rang si $u_{n+1}=u_n$ pour tout $n$ assez grand.</div></div>
+          <details><summary>Remarques</summary>
+            <div class="step"><div class="n">(1)</div><div>Si $u_n=f(n)$ (définition explicite), les variations de $(u_n)$ suivent celles de $f$.</div></div>
+            <div class="step"><div class="n">(2)</div><div>Si $u_{n+1}=f(u_n)$ (définition récurrente), les variations de $(u_n)$ ne suivent <em>pas forcément</em> celles de $f$.</div></div>
+          </details>
+        </details>
+
+        <details>
+          <summary><strong>N1</strong> — Critère de monotonie par les différences</summary>
+          <div class="step"><div class="n">Utilité</div><div>Décider si $(u_n)$ est croissante/décroissante via $\Delta_n=u_{n+1}-u_n$.</div></div>
+          <div class="step"><div class="n">Énoncé</div><div>$\forall n$, $\Delta_n\ge0$ $\Rightarrow$ $(u_n)$ croissante; $\Delta_n\le0$ $\Rightarrow$ décroissante.</div></div>
+          <details><summary>Mini‑preuve</summary>
+            <div class="step"><div class="n">Idée</div><div>Si $u_{n+1}-u_n\ge0$ alors $u_{n+1}\ge u_n$. En enchaînant, on obtient $u_{n+k}\ge u_n$.</div></div>
+          </details>
+        </details>
+
+        <details>
+          <summary><strong>N4</strong> — Critère multiplicatif (termes positifs)</summary>
+          <div class="step"><div class="n">Énoncé</div><div>Si $u_n>0$ et $\dfrac{u_{n+1}}{u_n}\ge1$ $\forall n$, alors $(u_n)$ croît; si $\le1$, décroît.</div></div>
+          <details><summary>Astuce</summary>
+            <div class="step"><div class="n">Idée</div><div>Comparer $u_{n+1}/u_n$ est utile pour les suites de type exponentiel.</div></div>
+          </details>
+        </details>
+      </section>
+
+      <section class="card" id="arith_geo">
+        <h2>3. Suites arithmétiques et géométriques</h2>
+        <div class="control-row mb-8"><button class="btn" id="btnOpenProps" aria-pressed="false" type="button">Tout ouvrir</button></div>
+
+
+
+        <details>
+          <summary><strong>N2</strong> — Suites arithmétiques</summary>
+          <div class="step"><div class="n">Formule</div><div>$u_{n+1}=u_n+r \iff u_n=u_0+nr$.</div></div>
+          <div class="step"><div class="n">Somme</div><div>$\sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.</div></div>
+          <div class="step"><div class="n">Généralisation</div><div>Pour tous entiers $n,p$, $u_n=u_p+(n-p)r$.</div></div>
+          <div class="step"><div class="n">Variations</div><div>$r>0$ croissante; $r<0$ décroissante.</div></div>
+          <details><summary>Exemple</summary>
+            <div class="step"><div class="n">Ex</div><div>$u_0=2,\ r=3 \Rightarrow u_n=2+3n$; $\sum_{k=0}^{4}u_k=\frac{5}{2}(u_0+u_4)=\frac{5}{2}(2+14)=40$.</div></div>
+          </details>
+        </details>
+
+        <details>
+          <summary><strong>N3</strong> — Suites géométriques</summary>
+          <div class="step"><div class="n">Formule</div><div>$u_{n+1}=q\,u_n \iff u_n=u_0\,q^n$.</div></div>
+          <div class="step"><div class="n">Somme</div><div>Si $q\ne1$, $\sum_{k=0}^n u_k=u_0\,\dfrac{1-q^{n+1}}{1-q}$; sinon $(n+1)u_0$.</div></div>
+          <div class="step"><div class="n">Généralisation</div><div>Pour tous entiers $n,p$, $u_n=u_p\,q^{\,n-p}$.</div></div>
+          <div class="step"><div class="n">Limites</div><div>$|q|<1$ $\Rightarrow$ $u_n\to0$; $q>1$ $\Rightarrow$ $|u_n|\to+\infty$ (si $u_0\ne0$).</div></div>
+          <details><summary>Exemple</summary>
+            <div class="step"><div class="n">Ex</div><div>$u_0=8,\ q=\tfrac12 \Rightarrow u_n=8\,(\tfrac12)^n$; $\sum_{k=0}^{3}u_k=8\,\dfrac{1-(1/2)^4}{1-1/2}=15$.</div></div>
+          </details>
+        </details>
+
+
+        <details>
+          <summary><strong>N5</strong> — Comportements limites courants</summary>
+          <div class="step"><div class="n">Règle</div><div>$|q|<1 \Rightarrow q^n\to0$; arithmétique $u_0+nr$ diverge si $r\ne0$; $(-1)^n$ n’a pas de limite.</div></div>
+          <details><summary>Exemple</summary>
+            <div class="step"><div class="n">Ex</div><div>$u_n=5\cdot(0{,}8)^n \to 0$; $v_n=3-2n\to-\infty$.</div></div>
+          </details>
+        </details>
+
+        <details>
+          <summary><strong>N6</strong> — Passer de récurrence à explicite</summary>
+          <div class="step"><div class="n">Arith.</div><div>$u_{n+1}=u_n+r \Rightarrow u_n=u_0+nr$.</div></div>
+          <div class="step"><div class="n">Géo.</div><div>$u_{n+1}=q\,u_n \Rightarrow u_n=u_0\,q^n$.</div></div>
+          <details><summary>Exemple</summary>
+            <div class="step"><div class="n">Ex</div><div>$u_0=1,\ u_{n+1}=u_n+4 \Rightarrow u_n=1+4n$; $v_0=9,\ v_{n+1}=0{,}6v_n \Rightarrow v_n=9\cdot0{,}6^n$.</div></div>
+          </details>
+        </details>
+
+        <details>
+          <summary><strong>N7</strong> — Sommes (bornes d’indice)</summary>
+          <div class="step"><div class="n">Attention</div><div>Vérifier l’<em>indice de départ</em> (0 ou 1) avant d’appliquer les formules de somme.</div></div>
+          <details><summary>Piège</summary>
+            <div class="step"><div class="n">⚠️</div><div>Confondre $\sum_{k=0}^n$ et $\sum_{k=1}^n$ change les résultats.</div></div>
+          </details>
+        </details>
+      </section>
+
+      <section class="card" id="methodo">
+        <h2>Méthodologie par type d’exercice</h2>
+        <div class="control-row mb-8"><button class="btn" id="btnOpenMethodo" aria-pressed="false" type="button">Tout ouvrir</button></div>
+
+        <details open><summary><strong>A. Reconnaître et caractériser la suite</strong></summary>
+          <div class="step"><div class="n">1</div><div>Identifier le type : arithmétique ($u_{n+1}-u_n$ constant), géométrique ($u_{n+1}/u_n$ constant pour $u_n\ne0$), autre.</div></div>
+          <div class="step"><div class="n">2</div><div>Relever l’indice de départ ($u_0$ ou $u_1$) et la ou les constantes (raison $r$ ou $q$).</div></div>
+          <details><summary>Exemple corrigé</summary>
+            <div class="step"><div class="n">Ex</div><div>$u_0=2,\ u_{n+1}=u_n+5$ ⇒ arithmétique (r=5). $v_1=3,\ v_{n+1}=2v_n$ ⇒ géométrique (q=2) à partir de $n=1$.</div></div>
+          </details>
+        </details>
+
+        <details><summary><strong>B. Passer de la récurrence à l’expression explicite</strong></summary>
+          <div class="step"><div class="n">1</div><div>Arithmétique : $u_n=u_0+nr$.</div></div>
+          <div class="step"><div class="n">2</div><div>Géométrique : $u_n=u_0\,q^n$.</div></div>
+          <details><summary>Exemple corrigé</summary>
+            <div class="step"><div class="n">Ex</div><div>$w_0=7,\ w_{n+1}=w_n-2$ ⇒ $w_n=7-2n$. $x_0=5,\ x_{n+1}=\tfrac34 x_n$ ⇒ $x_n=5\,(\tfrac34)^n$.</div></div>
+          </details>
+        </details>
+
+        <details><summary><strong>C. Étudier les variations</strong></summary>
+          <div class="step"><div class="n">1</div><div>Calculer $u_{n+1}-u_n$ (ou $u_{n+1}/u_n$ si $u_n>0$) et conclure.</div></div>
+          <div class="step"><div class="n">2</div><div>Pour une géométrique $u_0>0$ : $q>1$ ⇒ croissante; $0<q<1$ ⇒ décroissante.</div></div>
+          <details><summary>Exemple corrigé</summary>
+            <div class="step"><div class="n">Ex</div><div>$u_n=2+3n$ ↑; $v_n=8\cdot0{,}5^n$ ↓ vers 0.</div></div>
+          </details>
+        </details>
+
+        <details><summary><strong>D. Calculer des sommes</strong></summary>
+          <div class="step"><div class="n">1</div><div>Arithmétique : $S_n=\sum_{k=0}^n u_k=\dfrac{n+1}{2}(u_0+u_n)$.</div></div>
+          <div class="step"><div class="n">2</div><div>Géométrique ($q\ne1$) : $S_n=\sum_{k=0}^n u_k=u_0\,\dfrac{1-q^{n+1}}{1-q}$.</div></div>
+          <details><summary>Exemple corrigé</summary>
+            <div class="step"><div class="n">Ex</div><div>Si $u_k=3+2k$ (arith.), alors $\sum_{k=0}^{10}u_k=\dfrac{11}{2}(u_0+u_{10})=\dfrac{11}{2}(3+23)=143$.</div></div>
+          </details>
+        </details>
+
+        <details><summary><strong>E. Limites simples</strong></summary>
+          <div class="step"><div class="n">1</div><div>$|q|<1$ ⇒ $q^n\to0$; $q=1$ ⇒ constante; $|q|>1$ ⇒ divergence en module.</div></div>
+          <div class="step"><div class="n">2</div><div>Arithmétique $u_0+nr$ : si $r>0$, $\to +\infty$; si $r<0$, $\to -\infty$.</div></div>
+          <details><summary>Exemple corrigé</summary>
+            <div class="step"><div class="n">Ex</div><div>$x_n=5\cdot(0{,}8)^n\to0$, $y_n=1-0{,}2n\to-\infty$.</div></div>
+          </details>
+        </details>
+      </section>
+
+      <section class="grid cols-2" id="checklist">
+        <div class="card">
+          <h2>Checklist avant de rendre</h2>
+          <ul>
+            <li>J’ai indiqué le <strong>type</strong> de la suite (arithmétique, géométrique, autre) et l’<strong>indice de départ</strong>.</li>
+            <li>J’ai écrit la <strong>formule</strong> (explicite/récurrente) et les paramètres ($u_0$, $r$ ou $q$).</li>
+            <li>Variations justifiées (signe de $u_{n+1}-u_n$ ou du quotient).</li>
+            <li>Pour une somme, j’ai vérifié les <strong>bornes d’indice</strong> et le <strong>cas $q=1$</strong>.</li>
+            <li>Limites : j’ai appliqué les <strong>règles usuelles</strong> correctement.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Rappels rapides (formules utiles)</h2>
+          <ul>
+            <li>Arith. $u_{n+1}=u_n+r \iff u_n=u_0+nr$; somme $\displaystyle \sum_{k=0}^n u_k=\frac{n+1}{2}(u_0+u_n)$.</li>
+            <li>Géo. $u_{n+1}=q\,u_n \iff u_n=u_0\,q^n$; somme si $q\ne1$, $\displaystyle \sum_{k=0}^n u_k=u_0\,\frac{1-q^{n+1}}{1-q}$.</li>
+            <li>Limites : $|q|<1 \Rightarrow q^n\to0$; $q=1$ constante; $|q|>1$ divergence; $(-1)^n$ non convergente.</li>
+            <li>Monotonie : $u_{n+1}-u_n\ge0$ ⇒ croissante; si $u_n>0$, $\dfrac{u_{n+1}}{u_n}\ge1$ ⇒ croissante.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card" id="entrainement">
+        <h2>Mini‑entraînements éclair</h2>
+        <div class="control-row mb-8"><button class="btn" id="btnOpenEntrain" aria-pressed="false" type="button">Tout ouvrir</button></div>
+
+        <div class="step"><div class="n">1</div><div>Reconnaître le type : $u_0=4,\ u_{n+1}=u_n-3$. <details><summary>Réponse</summary>Suite arithmétique de raison $r=-3$, $u_n=4-3n$.</details></div></div>
+
+        <div class="step"><div class="n">2</div><div>Somme géométrique : $u_n=5\cdot(0{,}8)^n$. Calculer $\sum_{k=0}^{3}u_k$. <details><summary>Correction</summary>$5\,\dfrac{1-0{,}8^{4}}{1-0{,}8}=5\,\dfrac{1-0{,}4096}{0{,}2}=5\cdot2{,}952=14{,}76$.</details></div></div>
+
+        <div class="step"><div class="n">3</div><div>Limite : pour $q=\tfrac12$, compléter : « $q^n \to$ <input class="input mono" id="qA" size="4" placeholder="?" aria-label="Réponse attendue"> » <button class="btn" onclick="checkText('qA','0')">Vérifier</button> <span id="qAr" aria-live="polite"></span></div></div>
+
+        <div class="step"><div class="n">4</div><div>Variations : $v_n=9\cdot 1{,}2^n$ ($v_n>0$). <details><summary>Réponse</summary>$\dfrac{v_{n+1}}{v_n}=1{,}2>1$ ⇒ $(v_n)$ croissante et $\to +\infty$.</details></div></div>
+        <div class="step"><div class="n">5</div><div>Étudier le sens de variation de $u_n=2n^2+n+5$. <details><summary>Correction</summary>$u_{n+1}-u_n=2((n+1)^2-n^2)+1=2(2n+1)+1=4n+3>0$ $\forall n\in\N$ ⇒ $(u_n)$ strictement croissante.</details></div></div>
+
+        <div class="step"><div class="n">6</div><div>Étudier le sens de variation de $v_{n+1}=v_n-2$, $v_0=-1$. <details><summary>Correction</summary>$v_{n+1}-v_n=-2<0$ ⇒ $(v_n)$ strictement décroissante; de plus $v_n=-1-2n$.</details></div></div>
+
+        <div class="step"><div class="n">7</div><div>Soit $u_0=0$ et $u_{n+1}=-\tfrac12 u_n+1$; poser $v_n=u_n-\tfrac23$. <details><summary>Correction</summary><div class="step"><div class="n">(i)</div><div>$u$ n’est ni arithmétique ($u_{n+1}-u_n=-\tfrac32 u_n+1$ dépend de $n$) ni géométrique ($\dfrac{u_{n+1}}{u_n}=-\tfrac12+\dfrac{1}{u_n}$ non constant).</div></div><div class="step"><div class="n">(ii)</div><div>$v_{n+1}=u_{n+1}-\tfrac23=-\tfrac12 u_n+1-\tfrac23=-\tfrac12(u_n-\tfrac23)=-\tfrac12 v_n$. Donc $(v_n)$ est géométrique de raison $q=-\tfrac12$ et $v_0=u_0-\tfrac23=-\tfrac23$.</div></div></details></div></div>
+      </section>
+
+      <section class="card badbox" id="erreurs">
+        <h2>Erreurs fréquentes à éviter</h2>
+        <ul>
+          <li>Oublier de préciser <strong>l’indice de départ</strong> et/ou le <strong>type</strong> de la suite.</li>
+          <li>Confondre <strong>$r$</strong> et <strong>$u_0$</strong> en arithmétique; oublier le cas <strong>$q=1$</strong> en géométrique.</li>
+          <li>Appliquer une formule de <strong>somme</strong> avec de <strong>mauvaises bornes</strong> ou le mauvais type.</li>
+          <li>Conclure une limite sans vérifier les <strong>conditions</strong> ($|q|<1$, signe de $r$, etc.).</li>
+        </ul>
+      </section>
+
+      <footer class="muted mt-22">© 2025 — Fiche mémo & méthodologie conçue par <strong>Alaeddine Ben Rhouma</strong> (Maths expertes). Tous droits réservés.</footer>
+      <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button> <button class="btn" id="toggleAll" aria-pressed="false">🧩 Tout déplier/replier</button></div>
+    </div>
+
+    <script>
+      const $=(q)=>document.querySelector(q), $$=(q)=>document.querySelectorAll(q);
+      $('#themeBtn').addEventListener('click',()=>{document.body.classList.toggle('light'); MathJax.typesetPromise?.(); });
+      $('#retypesetBtn').addEventListener('click',()=>MathJax.typesetPromise?.());
+      $('#printBtn').addEventListener('click',()=>window.print());
+      $('#toggleAll').addEventListener('click',()=>{ const anyClosed=[...$$('details')].some(d=>!d.open); $$('details').forEach(d=>d.open=anyClosed); const btn=$('#toggleAll'); if(btn){ btn.setAttribute('aria-pressed', anyClosed ? 'true' : 'false'); } });
+      window.addEventListener('beforeprint', ()=>{ $$('details').forEach(d=>d.open=true); MathJax.typesetPromise?.(); });
+
+      function toggleSectionDetails(sectionSelector, btnId){ const sec=document.querySelector(sectionSelector); if(!sec) return; const ds=sec.querySelectorAll('details'); if(!ds.length) return; const anyClosed=[...ds].some(d=>!d.open); ds.forEach(d=>d.open=anyClosed); const btn=document.getElementById(btnId); if(btn){ btn.setAttribute('aria-pressed', anyClosed?'true':'false'); btn.textContent = anyClosed ? 'Tout replier' : 'Tout ouvrir'; } MathJax.typesetPromise?.(); }
+      document.getElementById('btnOpenProps')?.addEventListener('click',()=>toggleSectionDetails('#arith_geo','btnOpenProps'));
+      document.getElementById('btnOpenMethodo')?.addEventListener('click',()=>toggleSectionDetails('#methodo','btnOpenMethodo'));
+      document.getElementById('btnOpenMonotonie')?.addEventListener('click',()=>toggleSectionDetails('#monotonie','btnOpenMonotonie'));
+      document.getElementById('btnOpenEntrain')?.addEventListener('click',()=>toggleSectionDetails('#entrainement','btnOpenEntrain'));
+
+      function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+      function checkText(id,expected){ const el=$('#'+id), out=$('#'+id+'r'); if(!el) return; let ans=(el.value||'').trim(); let pattern=escRe(expected).replace(/\s\+/g,'\\s*').replace(/×/g,'[×x*]').replace(/\s/g,'\\s*').replace(/>/g,'\\s*>\\s*'); const re=new RegExp('^'+pattern+'$','i'); const ok=re.test(ans); const box=document.createElement('span'); box.className='result '+(ok?'ok':'err'); box.textContent= ok? '✅ Correct' : '❌ Réponse attendue : '+expected; if(out){out.replaceChildren(box);} }
+    </script>
+  </body>
+</html>
+

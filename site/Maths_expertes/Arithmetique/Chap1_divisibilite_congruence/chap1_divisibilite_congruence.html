@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Arithmétique - Partie 1 : Divisibilité et congruences</title>
+<link rel="stylesheet" href="/assets/css/site.css" />
+<style>
+  :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
+  .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  .container{max-width:1200px;margin:0 auto;padding:26px 18px 90px}
+  header{position:sticky;top:0;background:linear-gradient(180deg,var(--bg) 80%,#0000);backdrop-filter:saturate(1.2);z-index:20;padding-bottom:8px}
+  .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .buttons{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:14px;cursor:pointer;box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:8px}
+  .btn:hover{filter:brightness(1.05)}
+  .badge{display:inline-block;font-size:.8rem;color:white;background:linear-gradient(135deg,var(--accent),#7dd3fc);padding:2px 10px;border-radius:999px;margin-left:6px}
+  .muted{color:var(--muted)}
+  .grid{display:grid;gap:18px}
+  .cols-2{grid-template-columns:1.05fr .95fr}
+  @media (max-width:980px){.cols-2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+  h1{font-size:clamp(1.4rem,2.2vw + .8rem,2.4rem);margin:8px 0}
+  h2{font-size:1.45rem;margin:.2rem 0 .6rem}
+  h3{font-size:1.1rem;margin:.2rem 0}
+  .pill{display:inline-flex;gap:8px;align-items:center;background:var(--bg2);padding:8px 12px;border-radius:999px;border:1px solid var(--border)}
+  .section{scroll-margin-top:90px}
+  details{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:10px 12px;margin:.6rem 0}
+  summary{cursor:pointer;font-weight:600}
+  .step{display:flex;gap:12px;align-items:flex-start;border-left:3px solid #30406e;padding:10px 12px;margin:10px 0;background:linear-gradient(90deg,#0000,rgba(99,102,241,.08))}
+  .step .n{flex:0 0 26px;height:26px;display:grid;place-items:center;border-radius:8px;background:#334155;color:#fff;font-weight:700}
+  .result{background:var(--bg2);border:1px dashed #3b4a77;border-radius:10px;padding:8px 10px;margin-top:8px}
+  .ok{background:var(--good);border-color:#0f5132;color:#fff}
+  .err{background:var(--bad);border-color:#842029;color:#fff}
+  .input{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 10px;color:var(--text)}
+  .input:focus{outline:2px solid var(--primary)}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace}
+  .hr{height:1px;background:linear-gradient(90deg,#0000,#39508f,#0000);margin:12px 0}
+  .board *{font-size:1.12em}
+  .toolbar small{display:block}
+  .control-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .tag{font-size:.78rem;color:#cbd5e1;background:#1f2937;border:1px solid #334155;padding:2px 8px;border-radius:999px}
+  .sticky-footer{position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:10px}
+  .hidden{display:none}
+  nav.card ol{margin:0 0 8px 18px}
+  .btn:focus-visible, .input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+<script>
+  window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}",div:"\\mid",ndiv:"\\nmid",pmod:"\\;\\mathrm{mod}\\;"}},svg:{fontCache:'global'}};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body class="light">
+<div class="container">
+  <header>
+    <div class="toolbar">
+      <div>
+<h1>Arithmétique - Partie 1 : Divisibilité et congruences <span class="badge">Arithmétique : cours intégral + outils</span></h1>
+        <p class="muted mt-4 mb-0">Terminale — Maths expertes</p>
+        <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © Propriété intellectuelle • Raccourcis : <kbd>Ctrl</kbd>+<kbd>B</kbd> (Tableau), <kbd>?</kbd> (Aide)</small>
+      </div>
+      <div class="buttons">
+        <button class="btn" id="themeBtn">🌓 Thème</button>
+        <button class="btn" id="boardBtn">🖥️ Tableau</button>
+        <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
+        <button class="btn" id="revealBtn">🧩 Révélations</button>
+        <button class="btn" id="printBtn">🖨️ Imprimer</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="grid cols-2">
+    <nav class="card">
+      <h2>Plan</h2><div class="hr"></div>
+      <ol>
+        <li><a href="#div">Divisibilité (P1→P4)</a></li>
+        <li><a href="#de">Division euclidienne + Lemme (P5)</a></li>
+        <li><a href="#cong">Congruences (déf., P6–P7)</a></li>
+        <li><a href="#bank">Banque d’items paramétrables</a></li>
+        <li><a href="#timer">Chronomètre d’activité</a></li>
+        <li><a href="#exports">Exports des traces</a></li>
+        <li><a href="#python">Encart Python (Euclide)</a></li>
+        <li><a href="#tests">Auto‑tests</a></li>
+      </ol>
+      <p class="muted">Les corrections et preuves sont masquées par défaut (bouton “🧩 Révélations”).</p>
+    </nav>
+    <div class="card">
+      <h2>Objectifs pédagogiques</h2>
+      <ul>
+        <li>Définir et utiliser la <strong>divisibilité</strong> dans $\mathbb{Z}$ et en démontrer les propriétés P1→P4.</li>
+        <li>Mettre en œuvre la <strong>division euclidienne</strong> et le <strong>lemme des restes</strong> pour raisonner par classes de restes.</li>
+        <li>Introduire les <strong>congruences</strong> (P6–P7) pour <strong>simplifier</strong> des calculs et prouver des propriétés.</li>
+        <li>Résoudre des <strong>équations linéaires modulaires</strong> $ax\equiv b\pmod  n$ via Euclide étendu et interpréter les solutions.</li>
+        <li>Compétences : chercher, modéliser, raisonner/démontrer, calculer, communiquer.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 1. Divisibilité -->
+  <section id="div" class="section card">
+    <h2>1. Divisibilité dans $\Z$ — déf., P1→P4</h2>
+    <p><strong>Définition.</strong> Soient $a,b\in\Z$ avec $b\ne0$. On dit que $b$ divise $a$ s’il existe $k\in\Z$ tel que $a=bk$. On dit aussi que $a$ est un multiple de $b$. <em>Rappel :</em> $0$ est multiple de tout entier mais ne divise aucun entier.</p>
+
+    <details><summary>P1 — inclusions d’ensembles</summary>
+      <div class="step"><div class="n">Énoncé</div><div>Si $b\mid a$, alors $a\Z\subset b\Z$ et $D(b)\subset D(a)$.</div></div>
+      <details><summary>Preuve pas à pas</summary>
+        <div class="step"><div class="n">1</div><div>Supposons $a=bk$. Soit $m\in\Z$. Tout multiple de $a$ s’écrit $am=b(km)$ : c’est un multiple de $b$.</div></div>
+        <div class="step"><div class="n">2</div><div>Si $d\in D(b)$, il existe $x\in\Z$ tel que $b=dx$. Et si $b\mid a$, il existe $y\in\Z$ tel que $a=by=d(xy)$ : donc $d\mid a$ et $d\in D(a)$.</div></div>
+      </details>
+    <details><summary>Preuve rédigée</summary>
+      <p>Supposons $b\mid a$. Alors il existe $k\in\Z$ tel que $a=bk$.
+      Pour tout $m\in\Z$, tout multiple de $a$ s’écrit $am=b(km)$, donc $a\Z\subset b\Z$.
+      D’autre part, si $d\in D(b)$, il existe $x\in\Z$ tel que $b=dx$. Comme $b\mid a$, il existe $y\in\Z$ tel que $a=by=d(xy)$ ; ainsi $d\mid a$ et $D(b)\subset D(a)$.</p>
+    </details>
+    <details><summary>Exemples (du poly)</summary>
+        <div class="step"><div class="n">E1</div><div>Les multiples de $24$ sont aussi des multiples de $3$ : $24\Z\subset3\Z$.</div></div>
+        <div class="step"><div class="n">E2</div><div>Les diviseurs de $12$ sont des diviseurs de $24$ : $D(12)=\{-12,-6,-4,-3,-2,-1,1,2,3,4,6,12\}$ et $D(24)=\{\,?\,\}$. <br>Compléter ci‑dessous puis vérifier $D(12)\subset D(24)$.</div></div>
+        <div class="result">
+          <label class="muted mono">$D(24)$</label>
+          <input class="input mono" id="qD24" size="46" placeholder="{-24,-12,-8,-6,-4,-3,-2,-1,1,2,3,4,6,8,12,24}">
+          <button class="btn" onclick="checkSet('qD24',[ -24,-12,-8,-6,-4,-3,-2,-1,1,2,3,4,6,8,12,24 ])">Vérifier</button>
+          <span id="qD24r" aria-live="polite"></span>
+        </div>
+      </details>
+    </details>
+
+    <details><summary>P2 — gestion des signes</summary>
+      <div class="step"><div class="n">Énoncé</div><div>$b\mid a \iff -b\mid a \iff b\mid -a \iff -b\mid -a$.</div></div>
+      <details><summary>Preuve pas à pas</summary>
+        <div class="step"><div class="n">1</div><div>De $a=bk$ on tire $a=(-b)(-k)$, donc $-b\mid a$.</div></div>
+        <div class="step"><div class="n">2</div><div>De $a=bk$ on tire $-a=b(-k)$, donc $b\mid -a$.</div></div>
+      </details>
+      <details><summary>Preuve rédigée</summary>
+        <p>Des égalités $a=bk \iff a=(-b)(-k)$ et $a=bk \iff -a=b(-k)$, on déduit les équivalences $b\mid a \iff -b\mid a \iff b\mid -a \iff -b\mid -a$.</p>
+      </details>
+    </details>
+    <p class="muted">Conséquence : $a$ et $-a$ ont les mêmes diviseurs dans $\Z$. On pourra souvent restreindre l’étude à $\N$.</p>
+
+    <details><summary>P3 — nombre fini de diviseurs</summary>
+      <div class="step"><div class="n">Énoncé</div><div>Tout $n\in\Z^*$ possède un nombre fini de diviseurs compris entre $-n$ et $n$.</div></div>
+      <details><summary>Preuve pas à pas</summary>
+        <div class="step"><div class="n">1</div><div>Si $d\mid n$ alors $|d|\le |n|$.</div></div>
+        <div class="step"><div class="n">2</div><div>Il n’existe qu’un nombre fini d’entiers dans l’intervalle $[-|n|,|n|]$.</div></div>
+      </details>
+      <details><summary>Preuve rédigée</summary>
+        <p>Soit $n\in\Z^*$. Si $d\mid n$, alors $n=dk$ pour un certain $k\in\Z$, d’où $|d|\le |n|$.
+        Comme l’intervalle $[-|n|,|n|]$ ne contient qu’un nombre fini d’entiers, $n$ n’a qu’un nombre fini de diviseurs.</p>
+      </details>
+    </details>
+    <p class="muted">Remarque : le nombre de multiples d’un entier non nul est infini.</p>
+
+    <details><summary>P4 — transitivité et combinaisons linéaires</summary>
+      <div class="step"><div class="n">Énoncé</div><div>(i) $a\mid b$ et $b\mid c$ $\Rightarrow a\mid c$. (ii) Si $a\mid b$ et $a\mid c$ alors $a\mid (ub+vc)$ pour tous $u,v\in\Z$.</div></div>
+      <details><summary>Preuve pas à pas</summary>
+        <div class="step"><div class="n">1</div><div>(i) $b=ak_1$, $c=bk_2$ $\Rightarrow$ $c=a(k_1k_2)$.</div></div>
+        <div class="step"><div class="n">2</div><div>(ii) $b=a\beta$, $c=a\gamma$ $\Rightarrow$ $ub+vc=a(u\beta+v\gamma)$ donc $a\mid(ub+vc)$.</div></div>
+      </details>
+      <details><summary>Preuve rédigée</summary>
+        <p>(i) Si $a\mid b$ et $b\mid c$, il existe $k_1,k_2\in\Z$ tels que $b=ak_1$ et $c=bk_2$ ; ainsi $c=a(k_1k_2)$ et $a\mid c$.
+        (ii) Si $a\mid b$ et $a\mid c$, il existe $\beta,\gamma\in\Z$ tels que $b=a\beta$ et $c=a\gamma$ ;
+        pour tous $u,v\in\Z$, on a $ub+vc=a(u\beta+v\gamma)$, donc $a\mid(ub+vc)$.</p>
+      </details>
+      <details><summary>Exemple (du poly)</summary>
+        <div class="step"><div class="n">Ex</div><div>Si $a$ divise deux entiers consécutifs, alors $a=\pm1$. <em>Idée :</em> $a\mid (n)$ et $a\mid (n+1)$ $\Rightarrow$ $a\mid ((n+1)-n)=1$.</div></div>
+      </details>
+    </details>
+
+    <details>
+      <summary>Exemples & mini‑quiz (trous du poly)</summary>
+      <div class="step"><div class="n">E1</div><div>Compléter : « 4 divise 24 car $24 = 4\	imes 6$ ; −4 divise aussi 24 car <input class="input mono" id="q1" size="16" placeholder="24 = -4 × -6">. » <button class="btn" onclick="checkText('q1','24 = -4×-6')">Vérifier</button> <span id="q1r" class="muted" aria-live="polite">Formats acceptés : espaces libres, `×`, `x` ou `*`.</span></div></div>
+      <div class="step"><div class="n">E2</div><div>Déterminer les entiers $n$ tels que $2n+1$ divise $n+13$. <details><summary>Correction détaillée</summary><div>Si $2n+1\mid n+13$, alors par combinaison linéaire on a $2(n+13)-(2n+1)=25$, donc $2n+1\mid 25$. Comme $2n+1$ est impair, on obtient $2n+1\in\{\pm1,\pm5,\pm25\}$. On résout $2n+1=d$ pour chaque cas et on trouve $n\in\{0,-1,2,-3,12,-13\}$. Vérification : par exemple pour $n=12$, $2n+1=25\mid 25$ ; pour $n=-3$, $2n+1=-5\mid 10$. Ainsi les solutions sont $n\in\{-13,-3,-1,0,2,12\}$.</div></details></div></div>
+    </details>
+  </section>
+
+  <!-- 2. Division euclidienne + Lemme -->
+  <section id="de" class="section card">
+    <h2>2. Division euclidienne — Théorème & P5 (Lemme des restes)</h2>
+    <p><strong>Théorème.</strong> Pour $a\in\Z$, $b\in\N^*$, il existe un unique $(q,r)\in\Z^2$ tel que $a=bq+r$ avec $0\le r<b$. $q$ est le <em>quotient</em> et $r$ le <em>reste</em>.</p>
+    <details open><summary>Exemple guidé (114 ÷ 8)</summary>
+      <div class="control-row"><label class="muted" for="dea">$a$</label><input id="dea" class="input" type="number" value="114" aria-describedby="deOut"><label class="muted" for="deb">$b$</label><input id="deb" class="input" type="number" value="8" aria-describedby="deOut"><button class="btn" onclick="doDiv()">Calculer</button></div>
+      <div id="deOut" class="result" role="status" aria-live="polite"></div><div id="deSteps" aria-live="polite"></div>
+    </details>
+    <details>
+      <summary>Remarques et contre‑exemples (trous du poly)</summary>
+      <div class="step"><div class="n">R1</div><div>Compléter : « Dans la division par $b$, il y a <input class="input mono" id="q3" size="3" placeholder="b"> restes possibles : $0,1,\\dots,b-1$. » <button class="btn" onclick="checkText('q3','b')">Vérifier</button> <span id="q3r" aria-live="polite"></span></div></div>
+      <div class="step"><div class="n">R2</div><div>Compléter : « $56 = 17\	imes 3 + 5 = 17\	imes 2 + 22$ mais la seconde n’est <strong>pas</strong> euclidienne car <input class="input mono" id="q4" size="10" placeholder="22 > 17">. » <button class="btn" onclick="checkText('q4','22 > 17')">Vérifier</button> <span id="q4r" class="muted" aria-live="polite">Format accepté : espaces libres autour de `>`.</span></div></div>
+    </details>
+    <details open><summary>Propriété P5 — Lemme des restes</summary>
+      <div class="step"><div class="n">Énoncé</div><div>Pour tout $b\ge2$, tout entier s’écrit sous l’une des formes $bq,\,bq+1,\,\dots,\,bq+(b-1)$.</div></div>
+      <div class="step"><div class="n">Exercice</div><div>Montrer que $n^2+1$ n’est jamais divisible par $3$. <button class="btn" onclick="toggle('exP5')">Indice / solution</button></div></div>
+      <div id="exP5" class="result hidden">
+        <details><summary>Indice</summary>
+          Considérer $n$ modulo $3$.
+        </details>
+        <details><summary>Correction détaillée</summary>
+          On a $n\equiv 0,1,2 \pmod {3}$. Donc $n^2 \equiv 0,1,1$ et $n^2+1\equiv 1,2,2$ : jamais $0$. Ainsi $3\nmid (n^2+1)$.
+        </details>
+      </div>
+    </details>
+    <details><summary>Exercice — Produit de trois entiers consécutifs divisible par 3</summary>
+      <div class="step"><div class="n">Énoncé</div><div>Montrer que, pour tout entier $n$, le produit $n(n+1)(n-1)$ est divisible par $3$.</div></div>
+      <details><summary>Correction</summary>
+        <div class="step"><div class="n">1</div><div>Raisonnement modulaire : modulo $3$, tout entier est congru à $0,1$ ou $2$. Parmi trois entiers consécutifs $n-1,n,n+1$, il y en a toujours un congru à $0$ modulo $3$.</div></div>
+        <div class="step"><div class="n">2</div><div>Donc le produit est un multiple de $3$.</div></div>
+      </details>
+    </details>
+  </section>
+
+  <!-- 3. Congruences -->
+  <section id="cong" class="section card">
+    <h2>3. Congruences — déf., P6 (reste) & P7 (règles)</h2>
+    <details><summary>Préambule — Jeu « course à 20 » (mod 4)</summary>
+      <div class="step"><div class="n">Règle</div><div>Deux joueurs ajoutent à tour de rôle 1, 2 ou 3 à un total initialement nul. Celui qui annonce 20 gagne.</div></div>
+      <div class="step"><div class="n">Idée</div><div>Viser les paliers $4,8,12,16,20$ (nombres $\equiv0\pmod 4$). L’objectif est de conserver l’invariant « après mon tour, le total est $\equiv 0 \pmod 4$ ».</div></div>
+      <div class="step"><div class="n">Stratégie</div><div>Comme $20\equiv 0\pmod  4$, le <strong>deuxième</strong> joueur possède une stratégie gagnante : à tout coup $c\in\{1,2,3\}$ du premier, répondre $4-c$ pour que la paire de coups vaille $4$ et atteindre successivement $4,8,12,16,20$.</div></div>
+      <details><summary>Généralisation</summary>
+        <p>Avec des coups autorisés $1,2,\dots,m$, les paliers sont les multiples de $m+1$. Si la cible $T$ vérifie $T\equiv r\pmod  {m+1}$ avec $r\ne 0$, alors le premier joueur gagne en jouant $r$ au premier coup puis en « complétant à $m+1$ ». Si $T\equiv 0\pmod  {m+1}$, le second joueur a une stratégie gagnante.</p>
+      </details>
+      <details><summary>Justification modulaire</summary>
+        <p>Le coup adverse ajoute $c\in\{1,2,3\}$. Répondez $4-c$ : la somme des deux coups vaut 4. On poursuit ainsi jusqu’à $20=4	imes 5$.</p>
+      </details>
+    </details>
+    <p><strong>Définition.</strong> Pour $a,b\in\Z$, $n\in\N^*$, $a\equiv b\pmod{n}$ si $n\mid(a-b)$.</p>
+    <details open><summary>P6 — « même reste » $\Leftrightarrow$ congruence</summary>
+      <div class="step"><div class="n">⇐</div><div>Si $a=qn+r$ et $b=pn+r$ alors $a-b=(q-p)n$ : $n\mid(a-b)$.</div></div>
+      <div class="step"><div class="n">⇒</div><div>Si $a-b=kn$ alors $a=b+kn$ : $a$ et $b$ ont le même reste mod $n$.</div></div>
+    <details><summary>Preuve rédigée</summary>
+      <p>Écrire $a=qn+r$ et $b=pn+s$ avec $0\le r,s < n$. Si $r=s$ alors $a-b=(q-p)n$ et $n\mid(a-b)$. Réciproquement, si $n\mid(a-b)$, il existe $k\in\Z$ tel que $a=b+kn$.
+      Les divisions euclidiennes de $a$ et $b$ par $n$ coïncident modulo $n$, donc les restes sont égaux.</p>
+    </details>
+    <details><summary>P7 — Compatibilités & limites</summary>
+      <ol>
+        <li>Si $a\equiv b\pmod  n$ alors, pour tout $c\in\Z$, $a+c\equiv b+c\pmod  n$.</li>
+        <li>Si $a\equiv b\pmod  n$ et $c\equiv d\pmod  n$ alors $a+c\equiv b+d\pmod  n$.</li>
+        <li>Si $a\equiv b\pmod  n$ alors, pour tout $c\in\Z$, $ac\equiv bc\pmod  n$.</li>
+        <li>Si $a\equiv b\pmod  n$ et $c\equiv d\pmod  n$ alors $ac\equiv bd\pmod  n$.</li>
+        <li>Si $a\equiv b\pmod  n$ alors, pour tout $p\in\N^*$, $a^p\equiv b^p\pmod  n$.</li>
+      </ol>
+      <p class="muted">La division n’est <strong>pas</strong> compatible en général (ex. $5\cdot    4 \equiv 5\cdot    6\pmod {10}$ mais $4 \not\equiv 6\pmod {10}$).</p>
+      <details><summary>Preuve rédigée</summary>
+        <p>Si $n\mid(a-b)$, alors $n\mid((a+c)-(b+c))$ (1) et, pour tout $c\in\Z$, $n\mid(ac-bc)$ (3) car $ac-bc=c(a-b)$.
+        Les versions « mixtes » (2) et (4) découlent en combinant (1) et (3). Enfin, $a^p-b^p=(a-b)(a^{p-1}+\cdot   s+b^{p-1})$ montre (5). L’incompatibilité de la division provient de ce que $n\mid ac$ et $\gcd(c,n)\ne 1$ n’implique pas $n\mid a$.</p>
+      </details>
+    </details>
+    <details><summary>Résolveur linéaire $ax\\equiv b\\pmod{n}$</summary>
+      <div class="control-row"><label class="muted" for="ma">$a$</label><input id="ma" class="input" type="number" value="3" aria-describedby="modOut"><label class="muted" for="mb">$b$</label><input id="mb" class="input" type="number" value="2" aria-describedby="modOut"><label class="muted" for="mn">$n$</label><input id="mn" class="input" type="number" value="5" aria-describedby="modOut"><button class="btn" onclick="solveMod()">Résoudre</button></div>
+      <div id="modOut" class="result" role="status" aria-live="polite"></div>
+      <details><summary>Exercices types (auto‑correction)</summary>
+        <div class="step"><div class="n">1</div><div>Résoudre $x+3 \equiv 2 \pmod {7}$. <details><summary>Correction</summary>On a $x\equiv -1 \equiv 6 \pmod {7}$.</details></div></div>
+        <div class="step"><div class="n">2</div><div>Résoudre $3x \equiv 2\pmod {5}$. <details><summary>Correction</summary>$\operatorname{pgcd}(3,5)=1$, $3\times 2\equiv 1\pmod {5}$ donc $x\equiv 4\pmod {5}$.</details></div></div>
+        <div class="step"><div class="n">3</div><div>Trouver les $x$ tels que $x^2\equiv 0\pmod {4}$. <details><summary>Correction</summary>$x\equiv 0$ ou $2\pmod {4}$.</details></div></div>
+      </details>
+    </details>
+    <details><summary>Exercice 2 — Divisibilités via congruences</summary>
+      <div class="step"><div class="n">1</div><div>Montrer que pour tout $n\ge 1$, $2^{3n}-1$ est un multiple de $7$.</div></div>
+      <details><summary>Correction 1</summary>
+        $2^3=8\equiv 1\pmod {7}$ donc $2^{3n}=(2^3)^n\equiv 1^n\equiv 1\pmod {7}$, ainsi $2^{3n}-1\equiv 0\pmod {7}$.
+      </details>
+      <div class="step"><div class="n">2</div><div>Déterminer les $n\in\N$ pour lesquels $n^2-3n+6$ est divisible par $4$.</div></div>
+      <details><summary>Correction 2</summary>
+        On teste $n\equiv 0,1,2,3\pmod {4}$ : on obtient $2,0,0,2\pmod {4}$ respectivement ; donc $n\equiv 1$ ou $2 \pmod {4}$.
+      </details>
+    </details>
+    <details><summary>Exercice 3 — Reste de 112021 modulo 3</summary>
+      <div class="step"><div class="n">Énoncé</div><div>Déterminer le reste de la division euclidienne de $112021$ par $3$.</div></div>
+      <details><summary>Correction</summary>
+        Écrire $112021=1\times 10^5+1\times   10^4+2\times  10^3+0\times   10^2+2\times   10+1$. Or $10\equiv 1\pmod {3}$, donc $10^k\equiv 1$ pour tout $k$ et $112021\equiv 1+1+2+0+2+1=7 \equiv 1\pmod {3}$. Reste $1$.
+      </details>
+    </details>
+  </section>
+
+  <!-- Banque d’items -->
+  <section id="bank" class="section card">
+    <h2>Banque d’items paramétrables</h2>
+    <div class="control-row">
+      <label>Thème</label>
+      <select id="bkTheme" class="input">
+        <option value="div">Divisibilité</option>
+        <option value="de">Division euclidienne</option>
+        <option value="cong">Congruences</option>
+        <option value="game">Jeu — course (modulaire)</option>
+        <option value="pdf">Exercices (poly)</option>
+      </select>
+      <label>Niveau</label>
+      <select id="bkDiff" class="input">
+        <option value="1">★ Début</option>
+        <option value="2">★★ Intermédiaire</option>
+        <option value="3">★★★ Avancé</option>
+      </select>
+      <button class="btn" onclick="bankNew()">Générer</button>
+      <button class="btn" onclick="bankShowSol()">Solution</button>
+    </div>
+    <div id="bkTask" class="result" aria-live="polite"></div>
+    <div id="bkSol" class="result hidden" aria-live="polite"></div>
+  </section>
+
+  <!-- Timer -->
+  <section id="timer" class="section card">
+    <h2>Chronomètre d’activité</h2>
+    <div class="control-row">
+      <input id="tmName" class="input" placeholder="Nom de l’activité (ex. Défi 1 : résolveur modulaire)" size="36" aria-label="Nom de l’activité">
+      <button class="btn" onclick="tmUseBank()">⤴️ Nom = Banque actuelle</button>
+      <button class="btn" onclick="tmStart()">▶️ Démarrer</button>
+      <button class="btn" onclick="tmPause()">⏸️ Pause</button>
+      <button class="btn" onclick="tmReset()">⟲ Réinitialiser</button>
+    </div>
+    <div id="tmDisplay" class="result" role="status" aria-live="polite">00:00</div>
+  </section>
+
+  <!-- Exports -->
+  <section id="exports" class="section card">
+    <h2>Export des traces</h2>
+    <p class="muted">Toutes les interactions (réponses élèves, validations, générateur, résolutions) sont journalisées côté navigateur (anonymes). Exporter au format JSON ou CSV.</p>
+    <div class="control-row">
+      <button class="btn" onclick="exportJSON()">📥 Export JSON</button>
+      <button class="btn" onclick="exportCSV()">📥 Export CSV</button>
+      <button class="btn" onclick="clearLog()">🧹 Effacer</button>
+      <span id="expCount" class="pill" aria-live="polite">0 évènements</span>
+    </div>
+  </section>
+
+  <!-- Python / Euclide -->
+  <section id="python" class="section card">
+    <h2>Encart Python — Algorithme d’Euclide (Pyodide)</h2>
+    <p class="muted">Les sorties <code>print</code> apparaissent ci‑dessous (stdout/stderr capturés). Saisir a et b, puis exécuter.</p>
+      <div class="control-row"><label class="muted" for="pyA">a</label><input id="pyA" class="input" type="number" value="114"><label class="muted" for="pyB">b</label><input id="pyB" class="input" type="number" value="8"><label class="muted" for="autoCode"><input type="checkbox" id="autoCode" checked> Remplir le code automatiquement</label></div>
+    <div class="control-row mt-6"><button class="btn" id="loadPy">⚙️ Charger Pyodide</button><span id="pyStatus" class="muted" aria-live="polite">non chargé</span></div>
+<textarea id="pyCode" class="input mono w-100 mt-10" rows="10" aria-label="Zone de code Python">
+# Exemple : a=114, b=8
+
+def egcd(a,b):
+    steps=[]
+    x,y=a,b
+    while y!=0:
+        q=x//y; r=x%y
+        steps.append((x,y,q,r))
+        x,y=y,r
+    return steps,x
+
+a,b = 114,8
+steps,g = egcd(a,b)
+print("Étapes (x,y,q,r):")
+for s in steps:
+    print(s)
+print("PGCD:", g)
+</textarea>
+    <div class="control-row mt-8"><button class="btn" id="runPy" disabled>▶️ Exécuter</button><button class="btn" id="clearPy" disabled>🧹 Effacer</button></div>
+<pre id="pyOut" class="result pre-wrap" aria-live="polite"></pre>
+  </section>
+
+  <!-- Auto-tests (développeur) -->
+  <section id="tests" class="section card">
+    <h2>Auto‑tests (développeur)</h2>
+    <details>
+      <summary>Vérifier les fonctions clés</summary>
+      <div class="control-row">
+        <button class="btn" onclick="runTests()">▶️ Lancer</button>
+      </div>
+      <pre id="testOut" class="result mono" aria-live="polite"></pre>
+    </details>
+  </section>
+
+  <footer class="muted mt-22">© 2025 — Support interactif conçu et rédigé par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.</footer>
+  <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
+</div>
+
+<script>
+  // ===== util =====
+  const $=(q)=>document.querySelector(q), $$=(q)=>document.querySelectorAll(q);
+  let log=[]; try{ const persisted=localStorage.getItem('mathsexp_log'); if(persisted){ log=JSON.parse(persisted); } }catch(e){}
+  const updateExpCount=()=>{ const pill=$('#expCount'); if(pill) pill.textContent=log.length+" évènements"; };
+  updateExpCount();
+  const addLog=(type,payload)=>{ const evt={t:Date.now(),type,...payload}; log.push(evt); updateExpCount(); try{ localStorage.setItem('mathsexp_log', JSON.stringify(log)); }catch(e){} return evt; };
+  const dl=(name,content,type)=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([content],{type})); a.download=name; a.click(); };
+  const prettyT=(ms)=>{ const s=Math.floor(ms/1000), m=Math.floor(s/60), ss=(s%60+"").padStart(2,'0'); return `${m.toString().padStart(2,'0')}:${ss}`; };
+  const mod=(a,n)=>((a%n)+n)%n;
+
+  // ===== UI top =====
+  // Initial theme from localStorage ou préférence système
+  try{ const savedTheme=localStorage.getItem('theme'); if(savedTheme){ if(savedTheme==='light'){ document.body.classList.add('light'); } else { document.body.classList.remove('light'); } } else if(window.matchMedia?.('(prefers-color-scheme: light)').matches){ document.body.classList.add('light'); } }catch(e){}
+  $('#themeBtn').addEventListener('click',()=>{ document.body.classList.toggle('light'); try{ localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark'); }catch(e){} MathJax.typesetPromise?.(); });
+  $('#boardBtn').addEventListener('click',()=>{ document.body.classList.toggle('board'); MathJax.typesetPromise?.(); });
+  $('#retypesetBtn').addEventListener('click',()=>MathJax.typesetPromise?.());
+  $('#printBtn').addEventListener('click',()=>window.print());
+  let revealed=false; try{ revealed=localStorage.getItem('revealed')==='1'; }catch(e){} if(revealed){ $$('details').forEach(d=>d.open=true); } $('#revealBtn').setAttribute('aria-pressed',revealed);
+  $('#revealBtn').addEventListener('click',()=>{ revealed=!revealed; $$('details').forEach(d=>d.open=revealed); $('#revealBtn').setAttribute('aria-pressed',revealed); try{ localStorage.setItem('revealed', revealed?'1':'0'); }catch(e){} });
+  document.addEventListener('keydown',(e)=>{ if(e.key==='?'&&!e.ctrlKey&&!e.metaKey){ alert('Raccourcis : Ctrl+B (tableau), ? (aide), Esc (replier).'); } if(e.key==='Escape'){ $$('details[open]').forEach(d=>d.open=false);} if(e.key.toLowerCase()==='b'&&(e.ctrlKey||e.metaKey)){ e.preventDefault(); $('#boardBtn').click(); }});
+
+  // ===== quiz helpers =====
+  function checkText(id,expected){ const inp=$("#"+id); const ans=(inp.value||'').trim(); const esc=(s)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); let pattern = esc(expected).replace(/\s\+/g,'\\s*').replace(/×/g,'[×x*]').replace(/\s/g,'\\s*').replace(/>/g,'\\s*>\\s*'); const re=new RegExp('^'+pattern+'$','i'); const ok=re.test(ans); const where=$("#"+id+"r"); if(where){ where.textContent= ok? '✅': '❌'; where.className= ok? 'ok result': 'err result'; } addLog({},{area:'quiz',action:'checkText',id,ans,expected,ok}); }
+  function checkSet(id,arr){ const raw=$("#"+id).value.replace(/[{}]/g,'').split(/[,;\s]+/).filter(Boolean).map(x=>parseInt(x,10)).sort((a,b)=>a-b); const exp=[...arr].sort((a,b)=>a-b); const ok = raw.length===exp.length && raw.every((v,i)=>v===exp[i]); const where=$("#"+id+"r"); where.textContent= ok? '✅': '❌'; where.className= ok? 'ok result': 'err result'; addLog({},{area:'quiz',action:'checkSet',id,ans:raw,expected:exp,ok}); }
+  function toggle(id){ const el=document.getElementById(id); if(!el) { addLog({},{area:'ui',action:'toggle-missing',id}); return; } el.classList.toggle('hidden'); addLog({},{area:'ui',action:'toggle',id,visible:!el.classList.contains('hidden')}); MathJax.typesetPromise?.([el]); }
+
+  // ===== Division euclidienne outil =====
+  function doDiv(){ const a=parseInt($('#dea').value,10), b=parseInt($('#deb').value,10); const out=$('#deOut'), steps=$('#deSteps'); if(!(b>0)){ out.className='result err'; out.innerHTML='Choisir $b\\in \\mathbb{N}^*$, $b\\ge 1$.'; steps.innerHTML=''; MathJax.typesetPromise?.([out]); return;} const q=Math.floor(a/b); const r=a-b*q;
+    out.className='result ok'; out.innerHTML=`On obtient $q=${q}$ et $r=${r}$ avec $0\\le r<${b}$. Ainsi $${a}=${b}\\cdot   ${q}+${r}$.`;
+    let x=Math.abs(a), y=Math.abs(b), trace='', i=1; while(y!==0&&i<=20){ const qq=Math.floor(x/y), rr=x%y; trace+=`<div class=\"step\"><div class=\"n\">${i}</div><div>${x} = ${y} \\cdot    ${qq} + ${rr}</div></div>`; x=y; y=rr; i++; }
+    steps.innerHTML=`<details open><summary>Algorithme d’Euclide (sur |a|,|b|)</summary>${trace}</details>`; MathJax.typesetPromise?.([out,steps]); addLog({},{area:'division',action:'doDiv',a,b,q,r}); }
+
+  // ===== Congruences: solve ax ≡ b [n] =====
+  function egcd(a,b){ let x=1,y=0,x1=0,y1=1; while(b){ const q=Math.trunc(a/b); [a,b]=[b,a-q*b]; [x,x1]=[x1,x-q*x1]; [y,y1]=[y1,y-q*y1]; } return {g:a,x,y}; }
+  function solveMod(){ const a=parseInt($('#ma').value,10), b=parseInt($('#mb').value,10), n=parseInt($('#mn').value,10); const out=$('#modOut'); if(!(n>0)){ out.className='result err'; out.innerHTML='Prendre $n\\ge 1$.'; MathJax.typesetPromise?.([out]); return;} const {g}=egcd(Math.abs(a),n); if(b%g!==0){ out.className='result err'; out.innerHTML=`Aucune solution ( $\\operatorname{pgcd}(${a},${n})=${g} \nmid ${b}$ ).`; MathJax.typesetPromise?.([out]); addLog({},{area:'congruences',action:'solveMod',a,b,n,sol:null}); return;} const a0=mod(a/g,n/g), b0=b/g, n0=n/g; const inv=mod(egcd(a0,n0).x,n0); const x0=mod(inv*b0,n0); out.className='result ok'; out.innerHTML=`Solutions : $x\\equiv ${x0}\\pmod {${n0}}$ (soit ${g} classe(s) modulo ${n}).`; MathJax.typesetPromise?.([out]); addLog({},{area:'congruences',action:'solveMod',a,b,n,sol:{x0,n0,g}}); }
+
+  // ===== Banque d’items =====
+  function randint(a,b){ return Math.floor(Math.random()*(b-a+1))+a }
+  const bank={
+    div:{
+      1:()=>{ const a=randint(2,10), b=randint(10,50); return {q:`Tester si $${a}\\mid${b}$`, s:()=> (b%a===0?`Oui, $${a}\\mid${b}$`:`Non, reste $${((b%a)+a)%a}$`)}; },
+      2:()=>{ const n=randint(10,60), d=randint(2,10); return {q:`Montrer que $D(${d})\\subset D(${n})$`, s:()=> (n % d === 0)?`Vrai car $${d}\\mid${n}$.`:`Faux : $${d}\\nmid${n}$.`}; },
+      3:()=>{ const n=randint(20,120); return {q:`Donner $D(${n})$ (tous les diviseurs).`, s:()=>`Réponse via factorisation des premiers.`}; }
+    },
+    de:{
+      1:()=>{ const a=randint(30,200), b=randint(2,15); return {q:`Donner la division euclidienne de ${a} par ${b}.`, s:()=>{ const q=Math.floor(a/b), r=a-b*q; return `$${a}=${b} \cdot   ${q}+${r}$`; }}; },
+      2:()=>{ const b=randint(5,12); return {q:`Combien de restes possibles modulo $${b}$ ?`, s:()=>`Il y en a ${b} : $0,1,\\dots,${b-1}$.`}; },
+      3:()=>({q:`Montrer que $n^2+1$ n’est jamais multiple de 3.`, s:()=>`Classes $\\pmod {3}$: $n^2\\equiv 0$ ou $1$ ⇒ $n^2+1\\not\\equiv 0$.`})
+    },
+    cong:{
+      1:()=>{ const n=[5,7,8,9,11][randint(0,4)], a=randint(1,n-1), b=randint(0,n-1); return {q:`Résoudre $${a}x\\equiv${b}\\pmod {${n}}$.`, s:()=>{ const g=egcd(a,n).g; if(b%g!==0) return `Aucune solution ( $\\operatorname{pgcd}(${a},${n})=${g}\\nmid${b}$ ).`; const n0=n/g, inv=mod(egcd(a/g,n0).x,n0), x0=mod(inv*(b/g),n0); return `$x\\equiv${x0} \\pmod {${n0}}$ ( $\\operatorname{pgcd}(${a},${n})=${g}$ ).`; }}; },
+      2:()=>({q:`Montrer que $11 \\equiv 7\\pmod {4}$ et expliquer pourquoi on ne peut pas « simplifier » par 5 dans $5 \\cdot    4\\equiv 5\\cdot    6\\pmod {10}$.`, s:()=>`$11\\equiv 7\\pmod {4}$ et ces deux entiers ont reste $3$ modulo $4$; la division n’est pas admissible en général.`}),
+      3:()=>({q:`Trouver tous les $x$ tels que $x^2\\equiv 0\\pmod 4$.`, s:()=>`$x\\equiv 0\\text{ ou }2\\pmod {4}$`})
+    },
+    game:{
+      1:()=>({
+        q:`Jeu — course à 20 (coups autorisés 1–3). Quels sont les paliers gagnants et quelle stratégie selon que vous commencez (J1) ou jouez en second (J2) ?`,
+        s:()=>`Paliers: $4,8,12,16,20$ (multiples de $4$). Comme $20\equiv 0\pmod {4}$, J2 a une stratégie gagnante: répondre $4-c$ à chaque coup adverse $c\in\{1,2,3\}$. En J1, pas de coup gagnant forcé.`
+      }),
+      2:()=>{ const T=randint(17,25), m=3, p=m+1, r=T%p; const paliers=Array.from({length:Math.floor(T/p)},(_,i)=>(i+1)*p).join(', ');
+        return { q:`Jeu — course à ${T} (coups 1–${m}). Déterminer les paliers gagnants, et le plan gagnant (J1/J2).`,
+                 s:()=> r===0? `Paliers: $${paliers}$. $${T}\equiv 0 \pmod {${p}}$ ⇒ J2 gagne en répondant $${p}-c$ à chaque coup.`
+                         : `Paliers: $${paliers}$. $${T}\equiv${r}\pmod {${p}}$ ⇒ J1 joue $${r}$ au premier coup puis « complète à $${p}$ »; J1 gagne.` };
+      },
+      3:()=>{ const m=randint(3,4), p=m+1, T=randint(p*3+2,p*5); const r=T%p; const paliers=Array.from({length:Math.floor(T/p)},(_,i)=>(i+1)*p).join(', ');
+        return { q:`Jeu — course à ${T} (coups 1–${m}). Quels paliers gagnants et premier coup gagnant (si existant) ?`,
+                 s:()=> r===0? `Paliers: $${paliers}$. $${T}\equiv 0\pmod {${p}}$ ⇒ pas de « premier coup gagnant » pour J1; J2 gagne.`
+                         : `Paliers: $${paliers}$. $${T}\equiv${r}\pmod {${p}}$ ⇒ J1 joue $${r}$ puis maintient les multiples de $${p}$.` };
+      }
+    },
+    pdf:{
+      1:()=>({q:`Montrer que pour tout $n\\ge1$, $2^{3n}-1$ est multiple de $7$.`, s:()=>`$2^3\equiv 1\pmod {7}$ ⇒ $2^{3n}\equiv 1$ ⇒ $2^{3n}-1\equiv 0$.`} ),
+      2:()=>({q:`Déterminer les $n\\in\\N$ tels que $n^2-3n+6$ est divisible par 4.`, s:()=>`Tester $n\equiv 0,1,2,3\pmod {4}$ ⇒ seuls $n\equiv 1$ ou $2$ conviennent.`}),
+      3:()=>{ const len=randint(5,7); const digs=Array.from({length:len},(_,i)=> (i===0? randint(1,9): randint(0,9))); const N=digs.join(''); const sum=digs.reduce((a,b)=>a+b,0); const r=sum%3; return {q:`Déterminer le reste de $${N}$ dans la division euclidienne par 3.`, s:()=>`$10\equiv 1\pmod {3}$ ⇒ $${N}\equiv${digs.join('+')}=${sum}\equiv${r}$ (reste ${r}).`}; }
+    }
+  };
+  let bkCurrent=null;
+  function bankNew(){ const theme=$('#bkTheme').value, diff=+$('#bkDiff').value; const pool = bank[theme] ?? bank.pdf; const gen=pool[diff]||pool[1]; const item=gen(); bkCurrent={...item, theme, diff}; $('#bkTask').innerHTML=item.q; $('#bkSol').classList.add('hidden'); $('#bkSol').textContent= typeof item.s==='function'?item.s():item.s; MathJax.typesetPromise?.([$('#bkTask'),$('#bkSol')]); addLog({},{area:'bank',action:'new',theme,diff,q:bkCurrent.q}); }
+  function bankShowSol(){ if(!bkCurrent) return; $('#bkSol').classList.remove('hidden'); MathJax.typesetPromise?.([$('#bkSol')]); addLog({},{area:'bank',action:'reveal',q:bkCurrent.q}); }
+
+  // ===== Timer =====
+  let t0=null, acc=0, intv=null, tmName='';
+  function tick(){ $('#tmDisplay').textContent=prettyT((t0?Date.now()-t0:0)+acc); }
+  function tmStart(){ if(!t0){ t0=Date.now(); intv=setInterval(tick,250); tmName=$('#tmName').value||'Activité'; addLog({},{area:'timer',action:'start',name:tmName}); } }
+  function tmPause(){ if(t0){ acc+=Date.now()-t0; t0=null; clearInterval(intv); tick(); addLog({},{area:'timer',action:'pause',name:tmName,duration:acc}); } }
+  function tmReset(){ t0=null; acc=0; clearInterval(intv); tick(); addLog({},{area:'timer',action:'reset',name:tmName}); }
+  function tmUseBank(){ const t=$('#bkTask')?.textContent?.trim(); if(t){ $('#tmName').value=t.slice(0,120); }}
+  tick();
+
+  // ===== Exports =====
+  function exportJSON(){ dl('traces_mathsexp.json', JSON.stringify(log,null,2), 'application/json'); }
+  function exportCSV(){ if(!log.length){ dl('traces_mathsexp.csv','type,t,area,action,extra\n','text/csv'); return; } const keys=[...new Set(log.flatMap(o=>Object.keys(o)))]; const rows=[keys.join(',')].concat(log.map(o=>keys.map(k=>JSON.stringify(o[k]??'')).join(','))); dl('traces_mathsexp.csv', rows.join('\n'), 'text/csv'); }
+  function clearLog(){ log.length=0; updateExpCount(); try{ localStorage.removeItem('mathsexp_log'); }catch(e){} }
+
+  // ===== Pyodide =====
+  let pyReady=false, pyodide=null; function ensurePyStdout(){ try{ if(pyodide&&pyodide.setStdout){ pyodide.setStdout({ batched:(s)=>{ const out=$('#pyOut'); out.textContent+=s; } }); pyodide.setStderr({ batched:(s)=>{ const out=$('#pyOut'); out.textContent+=s; } }); } }catch(e){} }
+  $('#loadPy').addEventListener('click', async()=>{ if(pyReady) return; $('#pyStatus').textContent='chargement…'; const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js'; document.body.appendChild(s); await new Promise(res=>{ s.onload=res; }); // @ts-ignore
+    pyodide=await loadPyodide({ indexURL:'https://cdn.jsdelivr.net/pyodide/v0.24.1/full/' }); pyReady=true; $('#pyStatus').textContent='ok'; $('#runPy').disabled=false; $('#clearPy').disabled=false; ensurePyStdout(); });
+  $('#runPy').addEventListener('click', async()=>{ if(!pyReady) return; const out=$('#pyOut'); out.textContent=''; let code=$('#pyCode').value; if($('#autoCode').checked){ const a=parseInt($('#pyA').value||'114',10), b=parseInt($('#pyB').value||'8',10); code=`def egcd(a,b):\n    steps=[]\n    x,y=a,b\n    while y!=0:\n        q=x//y; r=x%y\n        steps.append((x,y,q,r))\n        x,y=y,r\n    return steps,x\n\na,b=${a},${b}\nsteps,g=egcd(a,b)\nprint('Étapes (x,y,q,r):')\nfor s in steps:\n    print(s)\nprint('PGCD:', g)`; }
+  try{ await pyodide.runPythonAsync(code); if(!out.textContent) out.textContent='(aucune sortie — utilisez print)'; addLog({},{area:'py',action:'run',code}); } catch(e){ out.textContent='Erreur : '+e; } });
+  $('#clearPy').addEventListener('click',()=>{ $('#pyOut').textContent=''; addLog({},{area:'py',action:'clear'}); });
+
+  // ===== Auto-tests =====
+  function runTests(){
+    const out=$('#testOut'); const lines=[];
+    try{
+      // Test 1: toggle
+      const tdiv=document.createElement('div'); tdiv.id='__tmpToggle'; tdiv.className='result hidden'; document.body.appendChild(tdiv);
+      const beforeHidden=tdiv.classList.contains('hidden'); toggle('__tmpToggle'); const afterFirst=!tdiv.classList.contains('hidden'); toggle('__tmpToggle'); const afterSecond=tdiv.classList.contains('hidden');
+      lines.push(`Test toggle: beforeHidden=${beforeHidden}, afterFirstVisible=${afterFirst}, afterSecondHidden=${afterSecond} → ${(beforeHidden&&afterFirst&&afterSecond)?'OK':'FAIL'}`);
+      tdiv.remove();
+
+      // Test 2: Euclide shows \cdot   
+      const dea=$('#dea'), deb=$('#deb'); const oldA=dea.value, oldB=deb.value; dea.value=114; deb.value=8; doDiv(); const hasDot=$('#deSteps').innerHTML.includes('\cdot   ') || $('#deSteps').innerHTML.includes('cdot');
+      lines.push(`Test Euclide (\cdot    rendu): ${hasDot?'OK':'FAIL'}`); dea.value=oldA; deb.value=oldB;
+
+      // Test 3: tolerant matcher for 24 = -4 × -6
+      const expected='24 = -4×-6'; const esc=(s)=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); const re=new RegExp('^'+esc(expected).replace(/\s\+/g,'\\s*').replace(/×/g,'[×x*]').replace(/\s/g,'\\s*').replace(/>/g,'\\s*>\\s*')+'$','i');
+      const samples=['24=-4x-6','24 = -4 * -6','24 = -4×-6','24= -4  ×  -6'];
+      const okAll=samples.every(s=>re.test(s));
+      lines.push(`Test formats tolérants: ${okAll?'OK':'FAIL'}`);
+
+      // Test 4: solver mod — example 3x ≡ 2 [5]
+      $('#ma').value=3; $('#mb').value=2; $('#mn').value=5; solveMod(); const modOk=$('#modOut').textContent.includes('x') && $('#modOut').textContent.match(/4\b/);
+      lines.push(`Test solveMod (3x≡2[5]): ${modOk?'OK':'FAIL'}`);
+    } catch(e){ lines.push('Erreur tests: '+e); }
+    out.textContent=lines.join('\n');
+  }
+</script>
+</body>
+</html>

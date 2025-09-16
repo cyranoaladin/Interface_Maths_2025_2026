@@ -1,0 +1,18 @@
+server {
+    listen 80;
+    server_name maths.labomaths.tn;
+
+    # Racine de publication
+    root /var/www/maths;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Optionnel: compression
+    gzip on;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 256;
+}
+

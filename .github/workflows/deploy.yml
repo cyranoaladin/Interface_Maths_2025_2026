@@ -1,0 +1,173 @@
+name: Deploy to VPS
+
+on:
+  push:
+    tags:
+      -'v*..'
+  release:
+    types: [published]
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-vps-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ github.event_name != 'push' || startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-latest
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_PATH: ${{ secrets.VPS_PATH }}
+      VPS_BASE_URL: ${{ secrets.VPS_BASE_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node (for frontend build)
+        if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build frontend (if present)
+        if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+        run: |
+          set -euo pipefail
+          cd apps/frontend
+          npm ci || npm install
+          npm run build
+          cd ../..
+          mkdir -p site/assets
+          rsync -a apps/frontend/dist/assets/ site/assets/ || true
+
+      - name: Generate sitemap.xml
+        run: |
+          set -euo pipefail
+          python3 scripts/generate_sitemap.py
+
+      - name: Install dependencies (rsync, ssh-client, jq)
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y rsync openssh-client jq
+
+      - name: Start ssh-agent and add key
+        if: ${{ env.SSH_PRIVATE_KEY != '' && env.VPS_HOST != '' && env.VPS_USER != '' && env.VPS_PATH != '' }}
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ env.SSH_PRIVATE_KEY }}
+
+      - name: Add VPS host to known_hosts
+        if: ${{ env.VPS_HOST != '' }}
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Wait for CI workflow success (backend-ci)
+        if: ${{ github.event_name == 'push' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO="${GITHUB_REPOSITORY}"
+          SHA="${GITHUB_SHA}"
+          WF="backend-ci"
+          echo "Waiting for workflow '$WF' on $SHA ..."
+          for i in $(seq 1 60); do
+            json=$(curl -sSf -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" \
+              "$GITHUB_API_URL/repos/$REPO/actions/runs?head_sha=$SHA&per_page=100")
+            c=$(echo "$json" | jq -r --arg n "$WF" '.workflow_runs[] | select(.name==$n) | .conclusion' | head -n1)
+            s=$(echo "$json" | jq -r --arg n "$WF" '.workflow_runs[] | select(.name==$n) | .status' | head -n1)
+            if [ "$c" = "success" ]; then
+              echo "backend-ci succeeded."
+              exit 0
+            fi
+            if [ "$c" = "failure" ] || [ "$c" = "cancelled" ]; then
+              echo "backend-ci failed ($c). Aborting deploy."
+              exit 1
+            fi
+            echo "CI in progress... (backend-ci: $s/$c). Attempt $i/60"
+            sleep 10
+          done
+          echo "Timeout waiting for backend-ci."
+          exit 1
+
+      - name: Deploy static site (site/ -> webroot) via rsync
+        if: ${{ env.VPS_HOST != '' && env.VPS_USER != '' && env.VPS_PATH != '' && env.SSH_PRIVATE_KEY != '' }}
+        run: |
+          set -euo pipefail
+          test -n "$VPS_HOST" && test -n "$VPS_USER" && test -n "$VPS_PATH" || { echo "Secrets VPS_HOST/VPS_USER/VPS_PATH manquants"; exit 1; }
+          # Publish the contents of site/ directly into the webroot, excluding PDFs
+          rsync -az --delete --delete-excluded \
+            --exclude='*.pdf' --exclude='*.PDF' --exclude='*.Pdf' \
+            --human-readable --progress \
+            site/ "$VPS_USER@$VPS_HOST:$VPS_PATH/"
+
+      - name: Sanity check (VPS endpoints)
+        if: ${{ env.VPS_BASE_URL != '' }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VPS_BASE_URL:-}" ]; then
+            echo "VPS_BASE_URL not set, skipping VPS sanity checks."
+            exit 0
+          fi
+          check_url() {
+            url="$1"
+            for i in $(seq 1 12); do
+              code=$(curl -s -o /dev/null -w "%{http_code}" -L "$url" || true)
+              if [ "$code" = "200" ]; then
+                echo "OK $url"
+                return 0
+              fi
+              echo "Attempt $i/12: $code $url"
+              sleep 10
+            done
+            echo "FAIL $url"
+            return 1
+          }
+          # Try root and fallback to /site to accommodate server config
+          root="${VPS_BASE_URL%/}"
+          fallback="$root/site"
+          usable=""
+          for base in "$root" "$fallback"; do
+            if check_url "$base/index.html"; then
+              usable="$base"
+              break
+            fi
+          done
+          if [ -z "$usable" ]; then
+            echo "No base URL responded with 200 (tried: $root/index.html and $fallback/index.html)"
+            exit 1
+          fi
+          echo "Using base: $usable"
+          check_url "$usable/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
+          check_url "$usable/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
+
+      - name: Sanity check (GitHub Pages endpoints)
+        continue-on-error: true
+        if: ${{ always() }}
+        run: |
+          set -euo pipefail
+          owner="${GITHUB_REPOSITORY%%/*}"
+          repo="${GITHUB_REPOSITORY##*/}"
+          base="https://${owner}.github.io/${repo}"
+          check_url() {
+            url="$1"
+            for i in $(seq 1 12); do
+              code=$(curl -s -o /dev/null -w "%{http_code}" -L "$url" || true)
+              if [ "$code" = "200" ]; then
+                echo "OK $url"
+                return 0
+              fi
+              echo "Attempt $i/12: $code $url"
+              sleep 10
+            done
+            echo "FAIL $url"
+            return 1
+          }
+          check_url "$base/"
+          check_url "$base/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
+          check_url "$base/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
+

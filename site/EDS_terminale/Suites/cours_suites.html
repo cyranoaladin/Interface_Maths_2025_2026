@@ -1135,7 +1135,7 @@
       // Tests (sanity check)
       try {
         console.assert(Array.isArray(items) && items.length === 8, 'items doit contenir 8 entrées');
-        items.forEach(it => { if (!document.getElementById(it.id)) {/* Optionally handle missing anchor here */} });
+        items.forEach(it => { if (!document.getElementById(it.id)) {/* Optionally handle missing anchor here */ } });
       } catch (e) {}
       document.querySelectorAll('section.section, div.section').forEach(sec => {
         const nav = document.createElement('nav');

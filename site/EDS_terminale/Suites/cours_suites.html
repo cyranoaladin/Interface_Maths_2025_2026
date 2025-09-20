@@ -448,7 +448,7 @@
         </details>
         <details>
           <summary><strong>Tableau récapitulatif</strong> — arithmétique vs géométrique</summary>
-          <table class="table-simple w-100 mt-8">
+          <table class="table-simple mt-8" style="width:100%">
             <thead>
               <tr>
                 <th>Type</th>
@@ -785,7 +785,7 @@
 
       <details>
         <summary><strong>Mémo rapide — limites usuelles</strong></summary>
-        <table class="table-simple table-vert w-100 mt-8">
+        <table class="table-simple table-vert mt-8" style="width:100%">
           <thead>
             <tr>
               <th>Suite $(u_n)$</th>
@@ -1137,7 +1137,7 @@
         console.assert(Array.isArray(items) && items.length === 8, 'items doit contenir 8 entrées');
         items.forEach(it => { if (!document.getElementById(it.id)) {/* Optionally handle missing anchor here */} });
       } catch (e) {}
-      document.querySelectorAll('section.section').forEach(sec => {
+      document.querySelectorAll('section.section, div.section').forEach(sec => {
         const nav = document.createElement('nav');
         nav.className = 'local-toc';
         const html = items.map(it => `<a href="#${it.id}" ${sec.id === it.id ? 'aria-current="page"' : ''}>${it.label}</a>`).join('<span class="sep">•</span>') + ' <span class="sep">•</span> <a href="#top" title="Haut">↑ Haut</a>';

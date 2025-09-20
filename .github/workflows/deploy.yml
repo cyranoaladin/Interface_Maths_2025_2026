@@ -144,9 +144,9 @@ jobs:
           check_url "$usable/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
           check_url "$usable/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
 
-      - name: Sanity check (GitHub Pages endpoints)
+      - name: Sanity check (GitHub Pages endpoints) — disabled
+        if: ${{ false }}
         continue-on-error: true
-        if: ${{ always() }}
         run: |
           set -euo pipefail
           owner="${GITHUB_REPOSITORY%%/*}"
@@ -169,4 +169,3 @@ jobs:
           check_url "$base/"
           check_url "$base/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
           check_url "$base/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
-

@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.0.3...v1.1.0) (2025-09-20)
+
+
+### Features
+
+* **maths_expertes:** add rigorous proofs P1–P4 (divisibilité), division euclidienne (existence+unicité), and congruences (def, P6, P7) ([7a120e9](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/7a120e9d66df61d3b9a41c76e9e544a1d3cd0929))
+
 ## [1.0.3](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.0.2...v1.0.3) (2025-09-20)
 
 ## [1.0.2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.0.1...v1.0.2) (2025-09-20)

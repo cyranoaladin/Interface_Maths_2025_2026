@@ -48,15 +48,35 @@
     container.appendChild(frag)
   }
 
-  // Try dynamic API first when served over HTTP(S)
+  // Préférer le statique en production (pas d'API sur le VPS)
   const isHttp = location.protocol === 'http:' || location.protocol === 'https:'
-  const tryApi = () => fetch('/api/tree').then(r=>r.json()).then(tree => { const groups = groupTree(tree); renderGroups(groups) })
-  const tryStaticJson = () => fetch('assets/contents.json').then(r=>r.json()).then(data => { if (data && data.groups) renderGroups(data.groups); else throw new Error('invalid contents.json') })
+  function fetchApiTree() {
+    return fetch('/api/tree').then(r => {
+      if (!r.ok) throw new Error('no api');
+      return r.json();
+    });
+  }
+
+  function handleApiTree(tree) {
+    const groups = groupTree(tree);
+    renderGroups(groups);
+  }
+
+  function handleApiError(e) {
+    container.innerHTML = '<small>Impossible de charger le sommaire.</small>';
+  }
+
+  const tryApi = () =>
+    fetchApiTree()
+      .then(handleApiTree)
+      .catch(handleApiError);
+  const tryStaticJson = () => fetch('assets/contents.json').then(r=>{ if(!r.ok) throw new Error('no contents.json'); return r.json() }).then(data => { if (data && data.groups) renderGroups(data.groups); else throw new Error('invalid contents.json') })
   const tryStaticJs = () => new Promise((resolve,reject)=>{
     const s = document.createElement('script'); s.src = 'assets/contents.static.js'; s.onload = () => { try { if (window.__SITE_CONTENTS__?.groups) { renderGroups(window.__SITE_CONTENTS__.groups); resolve() } else reject(new Error('no data')) } catch(e){ reject(e) } }; s.onerror = reject; document.head.appendChild(s);
   })
-  ;(isHttp ? tryApi() : Promise.reject()).catch(()=> tryStaticJson().catch(()=> tryStaticJs().catch(()=>{
-    container.innerHTML = '<small>Impossible de charger le sommaire dynamique.</small>'
-  })))
+  // Ordre: JSON statique -> JS statique -> API (si dispo)
+  tryStaticJson().catch(()=> tryStaticJs().catch(()=> (isHttp ? tryApi() : Promise.reject()))).catch(()=>{
+    container.innerHTML = '<small>Impossible de charger le sommaire.</small>'
+  })
 })()
 

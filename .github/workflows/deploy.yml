@@ -47,6 +47,20 @@ jobs:
           set -euo pipefail
           python3 scripts/generate_sitemap.py
 
+      - name: Setup Node (for site index)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate contents index (assets/contents.json)
+        run: |
+          set -euo pipefail
+          if [ -f scripts/gen_site_index.mjs ]; then
+            node scripts/gen_site_index.mjs
+          else
+            node Interface_Maths_2025_2026/scripts/gen_site_index.mjs
+          fi
+
       - name: Install dependencies (rsync, ssh-client, jq)
         run: |
           sudo apt-get update -y

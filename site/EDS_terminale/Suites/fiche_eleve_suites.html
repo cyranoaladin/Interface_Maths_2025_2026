@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suites — Fiche élève (Mémo • Flash‑cards • Exercices minute ++)</title>
+  <meta name="description"
+    content="Fiche élève Suites : mémo de formules, flash‑cards et exercices minute avec validation.">
+  <link rel="canonical" href="/EDS_terminale/Suites/fiche_eleve_suites.html">
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #11162a;
+      --card: #151b34;
+      --text: #eef2ff;
+      --muted: #a2b0d6;
+      --primary: #6aa6ff;
+      --accent: #22d3ee;
+      --good: #0b3d23;
+      --bad: #65121f;
+      --border: #28314f;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .25)
+    }
+
+    .light {
+      --bg: #f6f7fb;
+      --bg2: #eef0f8;
+      --card: #fff;
+      --text: #0f172a;
+      --muted: #4b5563;
+      --primary: #3b82f6;
+      --accent: #06b6d4;
+      --good: #059669;
+      --bad: #b91c1c;
+      --border: #e5e7eb;
+      --shadow: 0 10px 30px rgba(2, 6, 23, .06)
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 26px 18px 90px
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, var(--bg) 80%, #0000);
+      backdrop-filter: saturate(1.2);
+      z-index: 20;
+      padding-bottom: 8px
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center
+    }
+
+    .btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn:hover {
+      filter: brightness(1.05)
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .8rem;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), #7dd3fc);
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-left: 6px
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin: 14px 0
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: var(--bg2);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border)
+    }
+
+    .local-toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .9rem;
+      margin: -4px 0 10px
+    }
+
+    .local-toc a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 2px 6px;
+      border-radius: 8px
+    }
+
+    .local-toc a[aria-current="page"] {
+      background: var(--card);
+      border: 1px solid var(--border)
+    }
+
+    .local-toc .sep {
+      opacity: .6
+    }
+
+    .hr {
+      height: 1px;
+      background: linear-gradient(90deg, #0000, #39508f, #0000);
+      margin: 12px 0
+    }
+
+    .result {
+      background: var(--bg2);
+      border: 1px dashed #3b4a77;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-top: 8px
+    }
+
+    .ok {
+      background: rgba(16, 185, 129, .12);
+      border: 1px solid rgba(16, 185, 129, .35)
+    }
+
+    .bad {
+      background: rgba(239, 68, 68, .12);
+      border: 1px solid rgba(239, 68, 68, .35)
+    }
+
+    .input {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      color: var(--text)
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace
+    }
+
+    .flash-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px
+    }
+
+    @media (max-width:980px) {
+      .grid2 {
+        grid-template-columns: 1fr
+      }
+
+      .flash-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    .flash {
+      perspective: 1000px
+    }
+
+    .flash .card3d {
+      position: relative;
+      height: 142px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transform-style: preserve-3d;
+      transition: transform .5s;
+      background: var(--card);
+      cursor: pointer
+    }
+
+    .flash .side {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      border-radius: 14px;
+      backface-visibility: hidden
+    }
+
+    .flash .back {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, rgba(34, 211, 238, .15), rgba(59, 130, 246, .15))
+    }
+
+    .flash.flipped .card3d {
+      transform: rotateY(180deg)
+    }
+
+    .sticky-footer {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    @media print {
+
+      .buttons,
+      .sticky-footer,
+      .local-toc {
+        display: none !important
+      }
+
+      body[data-print-mode="eleve"] .result {
+        display: none !important
+      }
+
+      body[data-print-mode="eleve"] input.input {
+        border: 0;
+        background: transparent
+      }
+
+      body[data-print-mode="prof"] .result {
+        display: block !important
+      }
+    }
+  </style>
+  <script>
+    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}" } }, svg: { fontCache: 'global' } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body class="light">
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <main id="main" class="container">
+    <header>
+      <div class="toolbar">
+        <div>
+          <h1>Suites — Fiche élève <span class="badge">Mémo • Flash‑cards • Exercices minute ++</span></h1>
+          <p class="muted">Synthèse + entraînement rapide inspirés de la page principale « Suites ».</p>
+        </div>
+        <div class="buttons">
+          <button class="btn" id="themeBtn">🌓 Thème</button>
+          <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
+          <span class="btn" id="scoreBox" aria-live="polite">🧮 Score : 0/0</span>
+          <button class="btn" id="regenBtn">🎲 Régénérer</button>
+          <button class="btn" id="resetBtn">♻️ Réinitialiser</button>
+          <button class="btn" id="exportEleveBtn">📄 Export PDF — Élève</button>
+          <button class="btn" id="exportProfBtn">📄 Export PDF — Prof</button>
+          <button class="btn" id="printBtn">🖨️ Imprimer</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="card section" id="memo">
+      <h2>1) Mémo — Formules indispensables</h2>
+      <nav class="local-toc" aria-label="Sous-plan"><a href="#memo" aria-current="page">Mémo</a><span
+          class="sep">•</span><a href="#flash">À connaître</a><span class="sep">•</span><a href="#tests">Exercices
+          ++</a></nav>
+      <div class="grid">
+        <div class="pill">Arithmétique & géométrique</div>
+        <ul>
+          <li><strong>Arith.</strong> $u_{n + 1}=u_n+r$ ⇒ $u_n=u_0+nr$, $\displaystyle \sum_{k = 0}^{n} u_k=\tfrac{n +
+            1}{2}(u_0+u_n)$.</li>
+          <li><strong>Géom.</strong> $u_{n + 1}=q\,u_n$ ⇒ $u_n=u_0\,q^n$, $\displaystyle \sum_{k = 0}^{n}
+            q^k=\begin{cases} n+1&(q=1)\\ \dfrac{1 - q ^ { n+ 1}}{1 - q}&(q\ne1)\end{cases}$.</li>
+        </ul>
+        <div class="pill">Limites et comparaisons</div>
+        <ul>
+          <li>$q^n\to0$ si $|q|<1$ ; $q>1$ ⇒ $q^n\to+\infty$ ; $q\le-1$ ⇒ pas de limite.</li>
+          <li>Gendarmes : $v_n\le u_n\le w_n$ et $v_n,w_n\to\ell$ ⇒ $u_n\to\ell$.</li>
+          <li>F.I. : $\infty-\infty$, $0\times\infty$, $0/0$, $\infty/\infty$.</li>
+        </ul>
+        <div class="pill">Linéaire 1er ordre</div>
+        <ul>
+          <li>$u_{n + 1}=a\,u_n+b$ : $u_n=a^n(u_0-u^*)+u^*$, $u^*=\dfrac{b}{1 - a}$ si $a\ne1$.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card section" id="flash">
+      <h2>2) À connaître par cœur — 12 flash‑cards</h2>
+      <nav class="local-toc" aria-label="Sous-plan"><a href="#memo">Mémo</a><span class="sep">•</span><a href="#flash"
+          aria-current="page">À connaître</a><span class="sep">•</span><a href="#tests">Exercices ++</a></nav>
+      <div class="flash-grid">
+        <!-- 12 cartes; clic pour retourner -->
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Somme géom. $\sum_{k = 0}^{n} q^k$</div>
+            <div class="side back">$\begin{cases} n+1&(q=1)\\ \dfrac{1 - q ^ { n+ 1}}{1 - q}&(q\ne1)\end{cases}$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Suite arith. $u_{n + 1}=u_n+r$</div>
+            <div class="side back">$u_n=u_0+nr$ ; $\sum u_k=\tfrac{n + 1}{2}(u_0+u_n)$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Suite géom. $u_{n + 1}=q u_n$</div>
+            <div class="side back">$u_n=u_0 q^n$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Linéaire $u_{n + 1}=a u_n+b$</div>
+            <div class="side back">$u_n=a^n(u_0-u^*)+u^*$, $u^*=\dfrac{b}{1 - a}$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">$q^n$</div>
+            <div class="side back">$|q|<1\Rightarrow q^n\to0$ ; $q>1\Rightarrow +\infty$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">$\dfrac{1}{n ^ p}$ ($p>0$)</div>
+            <div class="side back">$\to 0$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">$\dfrac{an + b}{cn + d}$</div>
+            <div class="side back">$\to \dfrac{a}{c}$ si $c\ne0$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">$\sqrt{n + a}-\sqrt{n}$</div>
+            <div class="side back">$\to 0$ (rationalisation)</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Polynôme degré $p\ge1$</div>
+            <div class="side back">$\to \pm\infty$ (terme dominant)</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Comparaison</div>
+            <div class="side back">$u_n\le v_n$ et $u_n\to+\infty$ ⇒ $v_n\to+\infty$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Gendarmes</div>
+            <div class="side back">Si $v_n\le u_n\le w_n$ et $v_n,w_n\to\ell$ ⇒ $u_n\to\ell$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Bernoulli</div>
+            <div class="side back">$(1+a)^n\ge 1+na$ pour $a>0$</div>
+          </div>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:8px">Astuce : Tab puis Entrée pour retourner au clavier. Clic = recto/verso.
+      </p>
+    </section>
+
+    <section class="card section" id="tests">
+      <h2>3) Exercices minute ++</h2>
+      <nav class="local-toc" aria-label="Sous-plan"><a href="#memo">Mémo</a><span class="sep">•</span><a href="#flash">À
+          connaître</a><span class="sep">•</span><a href="#tests" aria-current="page">Exercices ++</a>
+      </nav>
+      <p class="muted">Saisissez une expression courte. Tolérance aux espaces et au signe × (<code>x</code>,
+        <code>*</code> acceptés).
+      </p>
+      <div class="grid2">
+        <!-- Import abrégé E1–E8 -->
+        <div class="card">
+          <h3>E1 — Terme général (arith.)</h3>
+          <p>$u_{n + 1}=u_n+3$, $u_0=5$. Donner $u_n$.</p>
+          <input id="e1" class="input mono" placeholder="ex: 5+3n" oninput="checkText('e1','5+3n')" />
+          <div id="e1r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E2 — Somme arith.</h3>
+          <p>$S_n=\sum_{k = 0}^{n}(2k+1)$.</p>
+          <input id="e2" class="input mono" placeholder="ex: (n+1)^2" oninput="checkText('e2','(n+1)^2')" />
+          <div id="e2r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E3 — Somme géom.</h3>
+          <p>$S_n=\sum_{k = 0}^{n}3\cdot 2^k$.</p>
+          <input id="e3" class="input mono" placeholder="ex: 3(2^{n+1}-1)" oninput="checkText('e3','3(2^{n+1}-1)')" />
+          <div id="e3r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E4 — Limite rationnelle</h3>
+          <p>$\displaystyle \lim_{n\to+\infty} \dfrac{5n ^ 2 + 4}{4n ^ 2 + 3n}=\;$</p>
+          <input id="e4" class="input mono" placeholder="ex: 5/4" oninput="checkText('e4','5/4')" />
+          <div id="e4r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E5 — Rationalisation</h3>
+          <p>$\displaystyle \lim_{n\to+\infty}(\sqrt{n + 3}-\sqrt{n})=\;$</p>
+          <input id="e5" class="input mono" placeholder="ex: 0" oninput="checkText('e5','0')" />
+          <div id="e5r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E6 — Puissances</h3>
+          <p>$\displaystyle \lim_{n\to+\infty} q^n$ pour $|q|<1\;:\;$< /p>
+              <input id="e6" class="input mono" placeholder="ex: 0" oninput="checkText('e6','0')" />
+              <div id="e6r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E7 — Linéaire 1er ordre</h3>
+          <p>Résoudre $w_{n + 1}=\tfrac{3}{4}w_n+6$, $w_0=0$.</p>
+          <input id="e7" class="input mono" placeholder="ex: 24(1-(3/4)^n)" oninput="checkText('e7','24(1-(3/4)^n)')" />
+          <div id="e7r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E8 — Limite de $\dfrac{u_n + 3}{u_n + 1}$</h3>
+          <p>$u_{n + 1}=\dfrac{u_n + 3}{u_n + 1}$, $u_0>0$ : $\ell=\;$</p>
+          <input id="e8" class="input mono" placeholder="ex: sqrt(3)" oninput="checkText('e8','sqrt(3)')" />
+          <div id="e8r" class="result"></div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+      <h3>Générateurs aléatoires (3)</h3>
+      <div id="randbox"></div>
+
+      <div class="hr"></div>
+      <h3>Exercices minute supplémentaires</h3>
+      <div id="extra"></div>
+    </section>
+
+    <footer class="muted">© 2025 — Fiche élève « Suites ». Tous droits réservés.</footer>
+    <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
+  </main>
+
+  <script>
+    const $ = (q) => document.querySelector(q);
+    // Thème + outils
+    try { const s = localStorage.getItem('theme'); if (s) { document.body.classList.toggle('light', s === 'light'); } else if (window.matchMedia?.('(prefers-color-scheme: light)').matches) { document.body.classList.add('light'); } } catch (e) {}
+    $('#themeBtn')?.addEventListener('click', () => { document.body.classList.toggle('light'); try { localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch (e) {} MathJax.typesetPromise?.(); });
+    $('#retypesetBtn')?.addEventListener('click', () => MathJax.typesetPromise?.());
+    $('#printBtn')?.addEventListener('click', () => window.print());
+
+    // Export PDF Élève / Prof
+    (function () {
+      function doPrint(mode) {
+        const body = document.body;
+        body.setAttribute('data-print-mode', mode);
+        // Optionnel : ouvrir tous les <details> si on en ajoute plus tard
+        setTimeout(() => { window.print(); body.removeAttribute('data-print-mode'); }, 20);
+      }
+      document.getElementById('exportEleveBtn')?.addEventListener('click', () => doPrint('eleve'));
+      document.getElementById('exportProfBtn')?.addEventListener('click', () => doPrint('prof'));
+    })();
+
+    // Validation tolérante
+    function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    window.checkText = function (id, expected) { const el = document.getElementById(id), out = document.getElementById(id + 'r'); if (!el || !out) return; const ans = (el.value || '').trim(); let pattern = escRe(expected).replace(/\\s\+/g, '\\s*').replace(/×/g, '[×x*]').replace(/\s/g, '\\s*').replace(/>/g, '\\s*>\\s*'); const re = new RegExp('^' + pattern + '$', 'i'); const ok = re.test(ans); out.className = 'result ' + (ok ? 'ok' : 'bad'); out.textContent = ok ? '✅ Correct' : '❌ Attendu : ' + expected; el.dataset.correct = ok ? '1' : '0'; updateScore(); };
+    window.checkSet = function (id, answers) { const el = document.getElementById(id), out = document.getElementById(id + 'r'); if (!el || !out) return; const norm = s => String(s || '').toLowerCase().replace(/\s+/g, ''); const ok = (answers || []).some(a => norm(el.value) === norm(a)); out.className = 'result ' + (ok ? 'ok' : 'bad'); out.textContent = ok ? '✅ Correct' : '❌ Ex. attendu : ' + ((answers && answers[0]) || ''); el.dataset.correct = ok ? '1' : '0'; updateScore(); };
+
+    // Score
+    function updateScore() { const inputs = [...document.querySelectorAll('.input')]; const tot = inputs.length; const ok = inputs.filter(i => i.dataset.correct === '1').length; const sb = document.getElementById('scoreBox'); if (sb) sb.textContent = '🧮 Score : ' + ok + '/' + tot; }
+    document.addEventListener('input', e => { if (!e.target.classList?.contains('input')) return; updateScore(); });
+    $('#resetBtn')?.addEventListener('click', () => { document.querySelectorAll('.input').forEach(inp => { inp.value = ''; inp.dataset.correct = '0'; const out = document.getElementById(inp.id + 'r'); if (out) { out.className = 'result'; out.textContent = ''; } }); updateScore(); });
+
+    // Flash-cards flip (clic ou Entrée/Espace)
+    document.querySelectorAll('.flash').forEach(fc => {
+      const toggle = () => fc.classList.toggle('flipped');
+      fc.addEventListener('click', toggle);
+      fc.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    });
+
+    // Générateurs aléatoires (3 items)
+    function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+    function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function renderRandom() {
+      const box = document.getElementById('randbox'); if (!box) return; box.innerHTML = '';
+      // R1 — Somme géométrique A * sum q^k
+      const A = choice([1, 2, 3, 5]); const q = choice([2, 3, 4]);
+      const r1 = `<div class="card"><h3>R1 — Somme géométrique</h3>
+          <p>$S_n=\\sum_{k = 0}^{n} ${A}\\cdot ${q}^k$.</p>
+          <input id="r1" class="input mono" placeholder="ex: ${A}*(1-${q}^(n+1))/(1-${q})" />
+          <div id="r1r" class="result"></div></div>`;
+      // R2 — Limite rationnelle (an+b)/(cn+d) -> a/c
+      let a = randInt(-5, 5); if (a === 0) a = 1; let c = choice([2, 3, 4, 5]); if (Math.abs(a) % c === 0) a += 1; let b = randInt(-5, 5), d = randInt(-5, 5);
+      const r2 = `<div class="card"><h3>R2 — Limite rationnelle</h3>
+          <p>$\\displaystyle \\lim_{n\\to+\\infty} \\dfrac{${a}n+${b}}{${c}n+${d}}=\;$</p>
+          <input id="r2" class="input mono" placeholder="ex: ${a}/${c}" />
+          <div id="r2r" class="result"></div></div>`;
+      // R3 — Terme dominant d'un polynôme
+      const deg = Math.random() < 0.5 ? 2 : 3; const Acoef = (Math.random() < 0.5 ? -1 : 1) * (1 + Math.floor(Math.random() * 3));
+      const b2 = (Math.floor(Math.random() * 11) - 5), c2 = (Math.floor(Math.random() * 11) - 5), d2 = (Math.floor(Math.random() * 11) - 5);
+      const poly = deg === 2 ? `${Acoef}n^2 ${b2 >= 0 ? '+' : ''}${b2}n ${c2 >= 0 ? '+' : ''}${c2}` : `${Acoef}n^3 ${b2 >= 0 ? '+' : ''}${b2}n^2 ${c2 >= 0 ? '+' : ''}${c2}n ${d2 >= 0 ? '+' : ''}${d2}`;
+      const sign = Acoef > 0 ? '+∞' : '-∞';
+      const r3 = `<div class="card"><h3>R3 — Terme dominant</h3>
+          <p>$\\displaystyle \\lim_{n\\to+\\infty} (${poly})=\;$</p>
+          <input id="r3" class="input mono" placeholder="ex: ${sign}" />
+          <div id="r3r" class="result"></div></div>`;
+      box.insertAdjacentHTML('beforeend', r1 + r2 + r3);
+      try { MathJax.typesetPromise?.([box]); } catch (e) {}
+      // Validation multi-formes
+      $('#r1')?.addEventListener('input', () => { const ans1 = `${A}*(1-${q}^(n+1))/(1-${q})`; const ans2 = `${A}*(${q}^(n+1)-1)/(${q}-1)`; checkSet('r1', [ans1, ans2]); });
+      $('#r2')?.addEventListener('input', () => checkSet('r2', [`${a}/${c}`, `(${a})/(${c})`]));
+      $('#r3')?.addEventListener('input', () => checkSet('r3', [sign, sign.replace('∞', 'inf'), sign.replace('∞', 'infty'), sign.replace('∞', 'infinity')]));
+    }
+
+    // Exercices minute supplémentaires (3) : rationalisation variable, gendarmes, Bernoulli
+    function renderExtras() {
+      const box = document.getElementById('extra'); if (!box) return; box.innerHTML = '';
+      // M1 — Rationalisation variable
+      const a = 1 + Math.floor(Math.random() * 6);
+      const m1 = `<div class="grid2"><div class="card"><h3>M1 — Rationalisation variable</h3>
+          <p>$\\displaystyle \\lim_{n\\to+\\infty}(\\sqrt{n + ${a}}-\\sqrt{n})=\;$</p>
+          <input id="m1" class="input mono" placeholder="ex: 0" />
+          <div id="m1r" class="result"></div></div>`;
+      // M2 — Gendarmes (exemple classique)
+      const m2 = `<div class="card"><h3>M2 — Gendarmes</h3>
+            <p>En utilisant $-\\dfrac{1}{n}\\le \\dfrac{\\sin n}{n}\\le \\dfrac{1}{n}$, donner $\\displaystyle \\lim_{n\\to+\\infty} \\dfrac{\\sin n}{n}=\;$</p>
+            <input id="m2" class="input mono" placeholder="ex: 0" />
+            <div id="m2r" class="result"></div></div>`;
+      // M3 — Bernoulli (forme à compléter)
+      const m3 = `<div class="card"><h3>M3 — Bernoulli</h3>
+            <p>Pour $a>0$ et tout $n\\in\\N$, compléter : $(1+a)^n\\ge\;$</p>
+            <input id="m3" class="input mono" placeholder="ex: 1+na" />
+            <div id="m3r" class="result"></div></div></div>`;
+      box.insertAdjacentHTML('beforeend', m1 + m2 + m3);
+      try { MathJax.typesetPromise?.([box]); } catch (e) {}
+      document.getElementById('m1')?.addEventListener('input', () => checkSet('m1', [`0`]));
+      document.getElementById('m2')?.addEventListener('input', () => checkSet('m2', [`0`]));
+      document.getElementById('m3')?.addEventListener('input', () => checkSet('m3', [`1+na`, `1 + n a`]));
+    }
+
+    $('#regenBtn')?.addEventListener('click', () => { renderRandom(); renderExtras(); updateScore(); });
+    // First render
+    renderRandom();
+    renderExtras();
+    // Mise à jour initiale du score
+    updateScore();
+  </script>
+</body>
+
+</html>

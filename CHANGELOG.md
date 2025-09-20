@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.0.1...v1.0.2) (2025-09-20)
+
+
+### Bug Fixes
+
+* **cours_suites:** remove undefined w-100 class and widen table via style; include div.section in TOC injection selector ([d879e1e](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/d879e1e49fdcc690503d00f670f988581c8f0dbd))
+
 ## [1.0.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.0.0...v1.0.1) (2025-09-20)
 
 ## 1.0.0 (2025-09-20)

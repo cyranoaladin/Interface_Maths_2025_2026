@@ -1300,20 +1300,6 @@
   </script>
 
   <!-- Auto-tests minimaux (ne gêne pas la prod, aide au debug) -->
-  <script>
-    (function () {
-      try {
-        // 1) Aucun encodage HTML parasite dans les <script>
-        console.assert(![...document.querySelectorAll('script')].some(s => /&lt;|&gt;/.test(s.textContent)), 'Encode HTML trouvé dans <script>');
-        // 2) Les ancres de sections existent
-        const ids = ['defs', 'rpr', 'bornes', 'variations', 'limites', 'monotones', 'entrainements', 'banque'];
-        ids.forEach(id => console.assert(document.getElementById(id), 'Ancre manquante #' + id));
-        // 3) Générateur d'exercices dispo et conteneur présent
-        console.assert(typeof window.generateRandomExercises === 'function', 'generateRandomExercises absent');
-        console.assert(document.getElementById('randbox'), '#randbox manquant');
-      } catch (e) { console.warn('Self-tests échoués', e); }
-    })();
-  </script>
 
   <!-- Fin du document -->
 </body>

@@ -305,6 +305,7 @@
           <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
           <button class="btn" id="revealBtn">🧩 Révélations</button>
           <button class="btn" id="printBtn">🖨️ Imprimer</button>
+          <button class="btn" id="proofsBtn">📚 Preuves</button>
         </div>
       </div>
     </header>
@@ -314,9 +315,27 @@
         <h2>Plan</h2>
         <div class="hr"></div>
         <ol>
-          <li><a href="#div">Divisibilité (P1→P4)</a></li>
-          <li><a href="#de">Division euclidienne + Lemme (P5)</a></li>
-          <li><a href="#cong">Congruences (déf., P6–P7)</a></li>
+          <li><a href="#div">Divisibilité (P1→P4)</a>
+            <ol>
+              <li><a href="#p1">P1 Inclusions</a></li>
+              <li><a href="#p2">P2 Signes</a></li>
+              <li><a href="#p3">P3 Finitude</a></li>
+              <li><a href="#p4">P4 Combinaisons</a></li>
+            </ol>
+          </li>
+          <li><a href="#de">Division euclidienne + Lemme (P5)</a>
+            <ol>
+              <li><a href="#de-theoreme">Théorème (existence+unicité)</a></li>
+              <li><a href="#p5">P5 Lemme des restes</a></li>
+            </ol>
+          </li>
+          <li><a href="#cong">Congruences (déf., P6–P7)</a>
+            <ol>
+              <li><a href="#def-cong">Définition</a></li>
+              <li><a href="#p6">P6 Même reste</a></li>
+              <li><a href="#p7">P7 Compatibilités</a></li>
+            </ol>
+          </li>
           <li><a href="#bank">Banque d’items paramétrables</a></li>
           <li><a href="#timer">Chronomètre d’activité</a></li>
           <li><a href="#exports">Exports des traces</a></li>
@@ -347,7 +366,7 @@
       <p><strong>Définition.</strong> Soient $a,b\in\Z$ avec $b\ne0$. On dit que $b$ divise $a$ s’il existe $k\in\Z$ tel
         que $a=bk$. On dit aussi que $a$ est un multiple de $b$. <em>Rappel :</em> $0$ est multiple de tout entier mais
         ne divise aucun entier.</p>
-      <details open>
+      <details open id="p1" class="preuve">
         <summary>P1 — Inclusions d’ensembles (preuve rigoureuse)</summary>
         <div class="step">
           <div class="n">Énoncé</div>
@@ -368,7 +387,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="p2" class="preuve">
         <summary>P2 — Stabilité par les signes</summary>
         <div class="step">
           <div class="n">Énoncé</div>
@@ -386,7 +405,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="p3" class="preuve">
         <summary>P3 — Un entier non nul a un nombre fini de diviseurs</summary>
         <div class="step">
           <div class="n">Énoncé</div>
@@ -405,7 +424,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="p4" class="preuve">
         <summary>P4 — Stabilité par combinaison linéaire</summary>
         <div class="step">
           <div class="n">Énoncé</div>
@@ -474,7 +493,7 @@
               aria-live="polite">Format accepté : espaces libres autour de `>`.</span></div>
         </div>
       </details>
-      <details open class="corrige">
+      <details open class="corrige preuve" id="de-theoreme">
         <summary><strong>Théorème — Division euclidienne</strong> (preuve détaillée)</summary>
         <div class="step">
           <div class="n">Énoncé</div>
@@ -506,7 +525,7 @@
           </div>
         </div>
       </details>
-      <details open>
+      <details open id="p5">
         <summary>Propriété P5 — Lemme des restes</summary>
         <div class="step">
           <div class="n">Énoncé</div>
@@ -586,7 +605,7 @@
 
       <p><strong>Définition.</strong> Pour $a,b\in\Z$, $n\in\N^*$, $a\equiv b\pmod{n}$ si $n\mid(a-b)$.</p>
 
-      <details open>
+      <details open id="def-cong" class="preuve">
         <summary><strong>Définition (modulo $n$)</strong> et exemples</summary>
         <div class="step">
           <div class="n">Déf.</div>
@@ -604,7 +623,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="p6" class="preuve">
         <summary><strong>Propriété 6 (clé)</strong> — « Même reste ⇔ congrus »</summary>
         <div class="step">
           <div class="n">Énoncé</div>
@@ -625,7 +644,7 @@
         </div>
       </details>
 
-      <details>
+      <details id="p7" class="preuve">
         <summary><strong>Propriété 7</strong> — règles de calcul (compatibilités)</summary>
         <div class="step">
           <div class="n">Énoncé</div>
@@ -814,6 +833,15 @@ print("PGCD:", g)
     $('#printBtn').addEventListener('click', () => window.print());
     let revealed = false; try { revealed = localStorage.getItem('revealed') === '1'; } catch (e) {} if (revealed) { $$('details').forEach(d => d.open = true); } $('#revealBtn').setAttribute('aria-pressed', revealed);
     $('#revealBtn').addEventListener('click', () => { revealed = !revealed; $$('details').forEach(d => d.open = revealed); $('#revealBtn').setAttribute('aria-pressed', revealed); try { localStorage.setItem('revealed', revealed ? '1' : '0'); } catch (e) {} });
+    // Toggle uniquement les preuves
+    let proofsShown = true; try { proofsShown = (localStorage.getItem('proofs_shown') ?? '1') === '1'; } catch (e) {}
+    function setProofs(open) {
+      document.querySelectorAll('details.preuve').forEach(d => d.open = open);
+      proofsShown = open;
+      try { localStorage.setItem('proofs_shown', open ? '1' : '0'); } catch (e) {}
+    }
+    setProofs(proofsShown);
+    $('#proofsBtn').addEventListener('click', () => { setProofs(!proofsShown); MathJax.typesetPromise?.(); });
     document.addEventListener('keydown', (e) => { if (e.key === '?' && !e.ctrlKey && !e.metaKey) { alert('Raccourcis : Ctrl+B (tableau), ? (aide), Esc (replier).'); } if (e.key === 'Escape') { $$('details[open]').forEach(d => d.open = false); } if (e.key.toLowerCase() === 'b' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); $('#boardBtn').click(); } });
 
     // ===== quiz helpers =====

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import Table, Column, Integer, String, Boolean, DateTime, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
@@ -43,7 +43,7 @@ class User(Base):
     role: Mapped[str] = mapped_column(String(32), default="student")  # 'student' | 'teacher'
     hashed_password: Mapped[str] = mapped_column(String(255))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     groups: Mapped[List[Group]] = relationship(
         Group, secondary=user_groups, back_populates="members", lazy="selectin"
@@ -160,4 +160,3 @@ def create_student(db: Session, email: str, full_name: str, group_codes: List[st
         user.groups.append(grp)
     db.commit()
     return password
-

@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.1.0...v1.2.0) (2025-09-20)
+
+
+### Features
+
+* **maths_expertes:** anchors P1–P7 + DE theorem; plan sublinks; proofs toggle button ([ee2875e](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/ee2875ed9036b0f16ee37d5d22a9dca8d81e1ee2))
+
 ## [1.1.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.0.3...v1.1.0) (2025-09-20)
 
 

@@ -4,16 +4,372 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Page non trouvée — Interface Maths</title>
-  <link rel="stylesheet" href="/assets/css/site.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    :root {
+      /* Palette éducative */
+      --bleu-confiance: #2563EB;
+      --vert-reussite: #16A34A;
+      --violet-creativite: #7C3AED;
+      --orange-energie: #EA580C;
+      --jaune-lumiere: #FCD34D;
+      --rose-encouragement: #EC4899;
+      
+      /* Couleurs neutres */
+      --gris-ardoise: #475569;
+      --gris-clair: #94A3B8;
+      --blanc-pur: #FFFFFF;
+      --bleu-nuit: #0F172A;
+      --gris-tres-clair: #F8FAFC;
+      
+      /* Gradients éducatifs */
+      --gradient-apprentissage: linear-gradient(135deg, var(--bleu-confiance), var(--vert-reussite));
+      --gradient-creativite: linear-gradient(135deg, var(--violet-creativite), var(--bleu-confiance));
+      --gradient-energie: linear-gradient(135deg, var(--orange-energie), var(--jaune-lumiere));
+      
+      /* Ombres éducatives */
+      --ombre-douce: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
+      --ombre-moyenne: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+      --ombre-forte: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
+    }
+
+    [data-theme="light"] {
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-secondary: rgba(248, 250, 252, 0.8);
+      --texte: var(--gris-ardoise);
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(226, 232, 240, 0.6);
+      --bordure-forte: rgba(226, 232, 240, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --bg-card: rgba(30, 41, 59, 0.95);
+      --bg-secondary: rgba(15, 23, 42, 0.8);
+      --texte: #F1F5F9;
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(51, 65, 85, 0.6);
+      --bordure-forte: rgba(51, 65, 85, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--texte);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    body[data-theme="light"] {
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-secondary: rgba(248, 250, 252, 0.8);
+      --texte: var(--gris-ardoise);
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(226, 232, 240, 0.6);
+      --bordure-forte: rgba(226, 232, 240, 1);
+    }
+
+    body[data-theme="dark"] {
+      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --bg-card: rgba(30, 41, 59, 0.95);
+      --bg-secondary: rgba(15, 23, 42, 0.8);
+      --texte: #F1F5F9;
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(51, 65, 85, 0.6);
+      --bordure-forte: rgba(51, 65, 85, 1);
+    }
+
+    .wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--bordure);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      box-shadow: var(--ombre-forte);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-apprentissage);
+    }
+
+    .error-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 2rem;
+      background: var(--gradient-creativite);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      background: var(--gradient-creativite);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+    }
+
+    .message {
+      font-size: 1.125rem;
+      color: var(--texte-secondaire);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--gradient-apprentissage);
+      color: white;
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: var(--ombre-douce);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ombre-forte);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--bordure);
+      color: var(--texte);
+      padding: 0.75rem;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: var(--ombre-douce);
+      z-index: 100;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: var(--ombre-moyenne);
+    }
+
+    .suggestions {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--bordure);
+    }
+
+    .suggestions h3 {
+      color: var(--violet-creativite);
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .suggestions ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .suggestions li {
+      margin: 0.75rem 0;
+    }
+
+    .suggestions a {
+      color: var(--bleu-confiance);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .suggestions a:hover {
+      color: var(--violet-creativite);
+      transform: translateX(4px);
+    }
+
+    /* Animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .wrap {
+        padding: 1rem;
+      }
+      
+      .card {
+        padding: 2rem 1.5rem;
+      }
+      
+      .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+
+    /* Couleurs des icônes */
+    .icone-bleue { color: var(--bleu-confiance); }
+    .icone-verte { color: var(--vert-reussite); }
+    .icone-violette { color: var(--violet-creativite); }
+    .icone-orange { color: var(--orange-energie); }
+    .icone-jaune { color: var(--jaune-lumiere); }
+    .icone-rose { color: var(--rose-encouragement); }
+  </style>
 </head>
-<body>
+<body data-theme="light">
+  <!-- Bouton de thème -->
+  <button class="theme-toggle" id="themeBtn" aria-label="Basculer le thème">
+    <i data-lucide="moon" id="theme-icon" style="width: 20px; height: 20px;"></i>
+  </button>
+
   <div class="wrap">
-    <div class="card">
+    <div class="card animate-in">
+      <div class="error-icon">
+        <i data-lucide="search-x" style="width: 40px; height: 40px;"></i>
+      </div>
+      
       <h1>404 — Page non trouvée</h1>
-      <p>Désolé, la page demandée n’existe pas ou a été déplacée.</p>
-      <p><a class="btn" href="/">← Retour à l’accueil</a></p>
+      
+      <p class="message">
+        <i data-lucide="info" class="icone-orange" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+        Désolé, la page que vous recherchez n'existe pas ou a été déplacée. 
+        Mais ne vous inquiétez pas, nous sommes là pour vous aider à retrouver votre chemin !
+      </p>
+      
+      <a class="btn" href="/">
+        <i data-lucide="home" style="width: 20px; height: 20px;"></i>
+        Retour à l'accueil
+      </a>
+      
+      <div class="suggestions">
+        <h3>
+          <i data-lucide="compass" class="icone-violette" style="width: 20px; height: 20px;"></i>
+          Suggestions utiles
+        </h3>
+        <ul>
+          <li>
+            <a href="/EDS_premiere/Second_Degre/cours_second_degre.html">
+              <i data-lucide="book-open" class="icone-bleue" style="width: 16px; height: 16px;"></i>
+              Cours Second Degré (EDS Première)
+            </a>
+          </li>
+          <li>
+            <a href="/EDS_terminale/Suites/cours_suites.html">
+              <i data-lucide="trending-up" class="icone-bleue" style="width: 16px; height: 16px;"></i>
+              Cours Suites (EDS Terminale)
+            </a>
+          </li>
+          <li>
+            <a href="/Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html">
+              <i data-lucide="target" class="icone-orange" style="width: 16px; height: 16px;"></i>
+              Arithmétique (Maths Expertes)
+            </a>
+          </li>
+          <li>
+            <a href="/">
+              <i data-lucide="layers" class="icone-verte" style="width: 16px; height: 16px;"></i>
+              Voir toutes les ressources
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
+
+  <script>
+    // Initialiser les icônes Lucide
+    lucide.createIcons();
+
+    // Gestion du thème
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const themeIcon = document.getElementById('theme-icon');
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme-404', newTheme);
+      
+      // Changer l'icône
+      themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
+      lucide.createIcons();
+    }
+
+    // Chargement du thème sauvegardé
+    const savedTheme = localStorage.getItem('theme-404') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+    document.getElementById('theme-icon').setAttribute('data-lucide', savedTheme === 'dark' ? 'sun' : 'moon');
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      
+      // Bouton thème
+      document.getElementById('themeBtn')?.addEventListener('click', toggleTheme);
+    });
+  </script>
 </body>
 </html>
-

@@ -5,6 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Fiche mémo & méthodologie — Arithmétique (Maths expertes)</title>
       <link rel="stylesheet" href="/assets/css/site.css" />
+      <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
       <style>
         :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
         .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
@@ -67,9 +68,9 @@
               <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © Propriété intellectuelle</small>
             </div>
             <div class="buttons">
-              <button class="btn" id="themeBtn">🌓 Thème</button>
-              <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
-              <button class="btn" id="printBtn">🖨️ Imprimer</button>
+              <button class="btn" id="themeBtn"><i data-lucide="moon" style="width: 16px; height: 16px;"></i> Thème</button>
+              <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> LaTeX</button>
+              <button class="btn" id="printBtn"><i data-lucide="printer" style="width: 16px; height: 16px;"></i> Imprimer</button>
             </div>
           </div>
         </header>
@@ -249,6 +250,11 @@
 
         function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
         function checkText(id,expected){ const el=$('#'+id), out=$('#'+id+'r'); if(!el) return; let ans=(el.value||'').trim(); let pattern=escRe(expected).replace(/\s\+/g,'\\s*').replace(/×/g,'[×x*]').replace(/\s/g,'\\s*').replace(/>/g,'\\s*>\\s*'); const re=new RegExp('^'+pattern+'$','i'); const ok=re.test(ans); const box=document.createElement('span'); box.className='result '+(ok?'ok':'err'); box.textContent= ok? '✅ Correct' : '❌ Réponse attendue : '+expected; if(out){out.replaceChildren(box);} }
+        
+        // Initialiser les icônes Lucide
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
       </script>
     </body>
   </html>

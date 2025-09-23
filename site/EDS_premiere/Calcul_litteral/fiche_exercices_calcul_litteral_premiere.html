@@ -4,547 +4,44 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Calcul littéral — Exercices + Méthodologie (EDS Première)</title>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="/assets/css/site.css" />
     <style>
-      :root {
-        /* Palette éducative */
-        --bleu-confiance: #2563EB;
-        --vert-reussite: #16A34A;
-        --violet-creativite: #7C3AED;
-        --orange-energie: #EA580C;
-        --jaune-lumiere: #FCD34D;
-        --rose-encouragement: #EC4899;
-        
-        /* Couleurs neutres */
-        --gris-ardoise: #475569;
-        --gris-clair: #94A3B8;
-        --blanc-pur: #FFFFFF;
-        --bleu-nuit: #0F172A;
-        --gris-tres-clair: #F8FAFC;
-        
-        /* Gradients éducatifs */
-        --gradient-apprentissage: linear-gradient(135deg, var(--bleu-confiance), var(--vert-reussite));
-        --gradient-creativite: linear-gradient(135deg, var(--violet-creativite), var(--bleu-confiance));
-        --gradient-energie: linear-gradient(135deg, var(--orange-energie), var(--jaune-lumiere));
-        
-        /* Ombres éducatives */
-        --ombre-douce: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
-        --ombre-moyenne: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
-        --ombre-forte: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
-      }
-
-      [data-theme="light"] {
-        --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-        --bg-card: rgba(255, 255, 255, 0.95);
-        --bg-secondary: rgba(248, 250, 252, 0.8);
-        --texte: var(--gris-ardoise);
-        --texte-secondaire: var(--gris-clair);
-        --bordure: rgba(226, 232, 240, 0.6);
-        --bordure-forte: rgba(226, 232, 240, 1);
-      }
-
-      [data-theme="dark"] {
-        --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        --bg-card: rgba(30, 41, 59, 0.95);
-        --bg-secondary: rgba(15, 23, 42, 0.8);
-        --texte: #F1F5F9;
-        --texte-secondaire: var(--gris-clair);
-        --bordure: rgba(51, 65, 85, 0.6);
-        --bordure-forte: rgba(51, 65, 85, 1);
-      }
-
-      /* Compatibilité avec l'ancien système */
-      .light {
-        --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-        --bg2: rgba(248, 250, 252, 0.8);
-        --card: rgba(255, 255, 255, 0.95);
-        --text: var(--gris-ardoise);
-        --muted: var(--gris-clair);
-        --primary: var(--bleu-confiance);
-        --accent: var(--violet-creativite);
-        --good: var(--vert-reussite);
-        --bad: #DC2626;
-        --border: rgba(226, 232, 240, 0.6);
-        --shadow: var(--ombre-douce);
-      }
-
-      .dark {
-        --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        --bg2: rgba(15, 23, 42, 0.8);
-        --card: rgba(30, 41, 59, 0.95);
-        --text: #F1F5F9;
-        --muted: var(--gris-clair);
-        --primary: var(--bleu-confiance);
-        --accent: var(--violet-creativite);
-        --good: var(--vert-reussite);
-        --bad: #DC2626;
-        --border: rgba(51, 65, 85, 0.6);
-        --shadow: var(--ombre-douce);
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      html, body {
-        height: 100%;
-      }
-
-      body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        line-height: 1.6;
-        transition: all 0.3s ease;
-      }
-
-      .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 26px 18px 90px;
-      }
-
-      /* Header modernisé */
-      header {
-        position: sticky;
-        top: 0;
-        background: var(--card);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border);
-        z-index: 100;
-        padding: 1rem 0;
-        box-shadow: var(--shadow);
-        border-radius: 0 0 16px 16px;
-        margin-bottom: 2rem;
-      }
-
-      .toolbar {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .header-info {
-        flex: 1;
-      }
-
-      .header-info h1 {
-        font-size: clamp(1.4rem, 2.2vw + 0.8rem, 2.4rem);
-        margin: 8px 0;
-        background: var(--gradient-apprentissage);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.8rem;
-        color: white;
-        background: var(--gradient-energie);
-        padding: 6px 12px;
-        border-radius: 20px;
-        margin-left: 12px;
-        font-weight: 600;
-      }
-
-      .muted {
-        color: var(--muted);
-        font-size: 0.875rem;
-        margin: 4px 0;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .pill {
-        display: inline-flex;
-        gap: 8px;
-        align-items: center;
-        background: var(--bg2);
-        padding: 10px 16px;
-        border-radius: 25px;
-        border: 1px solid var(--border);
-        margin-top: 8px;
-        font-size: 0.9rem;
-      }
-
-      .buttons {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .btn {
-        background: var(--card);
-        border: 1px solid var(--border);
-        color: var(--text);
-        padding: 10px 16px;
-        border-radius: 12px;
-        cursor: pointer;
-        box-shadow: var(--shadow);
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 500;
-        font-size: 0.875rem;
-        transition: all 0.2s ease;
-        text-decoration: none;
-      }
-
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--ombre-moyenne);
-        border-color: var(--primary);
-      }
-
-      .btn-primary {
-        background: var(--gradient-apprentissage);
-        color: white;
-        border: none;
-      }
-
-      .btn-accent {
-        background: var(--gradient-creativite);
-        color: white;
-        border: none;
-      }
-
-      /* Cards modernisées */
-      .card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 24px;
-        box-shadow: var(--shadow);
-        margin-bottom: 24px;
-        transition: all 0.3s ease;
-      }
-
-      .card:hover {
-        box-shadow: var(--ombre-moyenne);
-        transform: translateY(-2px);
-      }
-
-      /* Sommaire par difficulté */
-      .difficulty-summary {
-        background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(234, 88, 12, 0.05));
-        border: 2px solid rgba(124, 58, 237, 0.2);
-      }
-
-      .difficulty-level {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 12px 0;
-        padding: 12px 16px;
-        background: var(--bg2);
-        border-radius: 12px;
-        border-left: 4px solid var(--violet-creativite);
-      }
-
-      .stars {
-        display: flex;
-        gap: 2px;
-      }
-
-      .star {
-        color: var(--jaune-lumiere);
-      }
-
-      .exercise-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-left: 8px;
-      }
-
-      .exercise-link {
-        background: var(--gradient-apprentissage);
-        color: white;
-        padding: 4px 12px;
-        border-radius: 16px;
-        text-decoration: none;
-        font-size: 0.85rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-      }
-
-      .exercise-link:hover {
-        transform: scale(1.05);
-        box-shadow: var(--ombre-douce);
-      }
-
-      /* Navigation et plan */
-      .plan-card {
-        background: var(--gradient-creativite);
-        color: white;
-        border: none;
-      }
-
-      .plan-card h2::before {
-        background: white;
-      }
-
-      .plan-card ol {
-        margin: 0 0 8px 24px;
-        line-height: 1.8;
-      }
-
-      .plan-card a {
-        color: rgba(255, 255, 255, 0.9);
-        text-decoration: none;
-        transition: color 0.2s ease;
-      }
-
-      .plan-card a:hover {
-        color: white;
-        text-decoration: underline;
-      }
-
-      /* Titres et sections */
-      h1 {
-        font-size: clamp(1.4rem, 2.2vw + 0.8rem, 2.4rem);
-        margin: 8px 0;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-        margin: 0.2rem 0 1rem;
-        color: var(--text);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      h2::before {
-        content: '';
-        width: 4px;
-        height: 24px;
-        background: var(--gradient-apprentissage);
-        border-radius: 2px;
-      }
-
-      h3 {
-        font-size: 1.2rem;
-        margin: 0.2rem 0 0.8rem;
-        color: var(--violet-creativite);
-        font-weight: 600;
-      }
-
-      /* Exercices */
-      .exercise-section {
-        border-left: 4px solid var(--bleu-confiance);
-        background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05));
-        border-radius: 0 16px 16px 0;
-      }
-
-      .exercise-number {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--gradient-apprentissage);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-weight: 700;
-        margin-bottom: 16px;
-      }
-
-      .step {
-        display: flex;
-        gap: 16px;
-        align-items: flex-start;
-        border-left: 4px solid var(--vert-reussite);
-        padding: 16px 20px;
-        margin: 16px 0;
-        background: linear-gradient(90deg, transparent, rgba(22, 163, 74, 0.08));
-        border-radius: 0 12px 12px 0;
-      }
-
-      .step .n {
-        flex: 0 0 32px;
-        height: 32px;
-        display: grid;
-        place-items: center;
-        border-radius: 10px;
-        background: var(--gradient-apprentissage);
-        color: white;
-        font-weight: 700;
-        font-size: 0.875rem;
-      }
-
-      /* Details et accordéons */
-      details {
-        background: var(--bg2);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 16px 20px;
-        margin: 16px 0;
-        transition: all 0.3s ease;
-      }
-
-      details:hover {
-        box-shadow: var(--ombre-douce);
-      }
-
-      details[open] {
-        background: var(--card);
-        box-shadow: var(--ombre-douce);
-      }
-
-      summary {
-        cursor: pointer;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 8px 0;
-        color: var(--violet-creativite);
-      }
-
-      summary::before {
-        content: '';
-        width: 24px;
-        height: 24px;
-        background: var(--gradient-creativite);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 12px;
-        font-weight: bold;
-      }
-
-      details[open] summary::before {
-        background: var(--gradient-apprentissage);
-      }
-
-      /* Grilles et layouts */
-      .grid {
-        display: grid;
-        gap: 24px;
-      }
-
-      .cols-2 {
-        grid-template-columns: 1.1fr 0.9fr;
-      }
-
-      @media (max-width: 980px) {
-        .cols-2 {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      /* Dividers */
-      .hr {
-        height: 2px;
-        background: var(--gradient-apprentissage);
-        border-radius: 1px;
-        margin: 20px 0;
-        opacity: 0.3;
-      }
-
-      /* Footer flottant */
-      .sticky-footer {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        z-index: 50;
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        .container {
-          padding: 16px 12px 60px;
-        }
-        
-        .toolbar {
-          flex-direction: column;
-          align-items: stretch;
-          gap: 16px;
-        }
-        
-        .buttons {
-          justify-content: center;
-        }
-        
-        .step {
-          padding: 12px 16px;
-        }
-      }
-
-      /* Animations */
-      @keyframes slideInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .animate-in {
-        animation: slideInUp 0.6s ease-out;
-      }
-
-      /* Print styles */
-      @media print {
-        .buttons, .sticky-footer {
-          display: none !important;
-        }
-        .grid.cols-2 {
-          grid-template-columns: 1fr !important;
-        }
-        details {
-          display: block;
-        }
-        details > summary {
-          display: none;
-        }
-        details > * {
-          display: block;
-        }
-      }
-
-      /* Couleurs des icônes */
-      .icone-bleue { color: var(--bleu-confiance); }
-      .icone-verte { color: var(--vert-reussite); }
-      .icone-violette { color: var(--violet-creativite); }
-      .icone-orange { color: var(--orange-energie); }
-      .icone-jaune { color: var(--jaune-lumiere); }
-      .icone-rose { color: var(--rose-encouragement); }
+      :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
+      .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
+      html,body{height:100%}
+      body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+      .container{max-width:1100px;margin:0 auto;padding:26px 18px 90px}
+      header{position:sticky;top:0;background:linear-gradient(180deg,var(--bg) 80%,#0000);backdrop-filter:saturate(1.2);z-index:20;padding-bottom:8px}
+      .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+      .buttons{display:flex;gap:10px;flex-wrap:wrap}
+      .btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:14px;cursor:pointer;box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:8px}
+      .btn:hover{filter:brightness(1.05)}
+      .badge{display:inline-block;font-size:.8rem;color:white;background:linear-gradient(135deg,var(--accent),#7dd3fc);padding:2px 10px;border-radius:999px;margin-left:6px}
+      .muted{color:var(--muted)}
+      .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
+      h1{font-size:clamp(1.4rem,2.2vw + .8rem,2.4rem);margin:8px 0}
+      h2{font-size:1.45rem;margin:.2rem 0 .6rem}
+      h3{font-size:1.1rem;margin:.2rem 0}
+      .grid{display:grid;gap:18px}
+      .cols-2{grid-template-columns:1.1fr .9fr}
+      @media (max-width:980px){.cols-2{grid-template-columns:1fr}}
+      .pill{display:inline-flex;gap:8px;align-items:center;background:var(--bg2);padding:8px 12px;border-radius:999px;border:1px solid var(--border)}
+      details{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:10px 12px;margin:.6rem 0}
+      summary{cursor:pointer;font-weight:600}
+      .step{display:flex;gap:12px;align-items:flex-start;border-left:3px solid #30406e;padding:10px 12px;margin:10px 0;background:linear-gradient(90deg,#0000,rgba(99,102,241,.08))}
+      .step .n{flex:0 0 26px;height:26px;display:grid;place-items:center;border-radius:8px;background:#334155;color:#fff;font-weight:700}
+      .result{background:var(--bg2);border:1px dashed #3b4a77;border-radius:10px;padding:8px 10px;margin-top:8px}
+      .ok{background:var(--good);border-color:#0f5132;color:#fff}
+      .err{background:var(--bad);border-color:#842029;color:#fff}
+      .input{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 10px;color:var(--text)}
+      .input:focus{outline:2px solid var(--primary)}
+      .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace}
+      .hr{height:1px;background:linear-gradient(90deg,#0000,#39508f,#0000);margin:12px 0}
+      .sticky-footer{position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:10px}
+      @media print{.buttons,.sticky-footer{display:none!important}}
     </style>
     <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [["$", "$"], ["\\(", "\\)"]],
-          displayMath: [["$$", "$$"], ["\\[", "\\]"]],
-          macros: {
-            N: "\\mathbb{N}",
-            Z: "\\mathbb{Z}",
-            Q: "\\mathbb{Q}",
-            R: "\\mathbb{R}"
-          }
-        },
-        svg: { fontCache: 'global' }
-      };
+      window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}"}},svg:{fontCache:'global'}};
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   </head>
@@ -552,97 +49,32 @@
     <div class="container">
       <header>
         <div class="toolbar">
-          <div class="header-info">
-            <h1>
-              <i data-lucide="calculator" class="icone-violette" style="width: 32px; height: 32px;"></i>
-              Calcul littéral — Exercices + Méthodologie
-              <span class="badge">
-                <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
-                Rappels de seconde
-              </span>
-            </h1>
-            <small class="muted">
-              <i data-lucide="user" class="icone-bleue" style="width: 16px; height: 16px;"></i>
-              Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © 2025
-            </small>
-            <p class="pill" aria-label="périmètre de la fiche">
-              <i data-lucide="info" class="icone-orange" style="width: 20px; height: 20px;"></i>
-              Fiche de rappels strictement au programme de Seconde (aucune notion de Première)
-            </p>
+          <div>
+            <h1>Calcul littéral — Exercices + Méthodologie <span class="badge">Rappels de seconde</span></h1>
+            <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © 2025</small>
+            <p class="pill" aria-label="périmètre de la fiche">Fiche de rappels strictement au programme de Seconde (aucune notion de Première)</p>
           </div>
           <div class="buttons">
-            <button class="btn" id="themeBtn">
-              <i data-lucide="moon" id="theme-icon" style="width: 18px; height: 18px;"></i>
-              <span>Thème</span>
-            </button>
-            <button class="btn" id="retypesetBtn">
-              <i data-lucide="refresh-cw" style="width: 18px; height: 18px;"></i>
-              <span>LaTeX</span>
-            </button>
-            <button class="btn" id="printBtn">
-              <i data-lucide="printer" style="width: 18px; height: 18px;"></i>
-              <span>Imprimer</span>
-            </button>
+            <button class="btn" id="themeBtn">🌓 Thème</button>
+            <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
+            <button class="btn" id="printBtn">🖨️ Imprimer</button>
           </div>
         </div>
       </header>
 
-      <!-- Sommaire par difficulté -->
-      <section class="card difficulty-summary animate-in" id="sommaire-difficulte">
-        <h2>
-          <i data-lucide="layers" class="icone-violette" style="width: 28px; height: 28px;"></i>
-          Sommaire par difficulté
-        </h2>
-        
-        <div class="difficulty-level">
-          <div class="stars">
-            <i data-lucide="star" class="star" style="width: 20px; height: 20px;"></i>
-          </div>
-          <span><strong>Niveau débutant :</strong></span>
-          <div class="exercise-links">
-            <a href="#ex1" class="exercise-link">Ex 1 — Développer & réduire</a>
-            <a href="#ex4" class="exercise-link">Ex 4 — Carrés</a>
-          </div>
-        </div>
-        
-        <div class="difficulty-level">
-          <div class="stars">
-            <i data-lucide="star" class="star" style="width: 20px; height: 20px;"></i>
-            <i data-lucide="star" class="star" style="width: 20px; height: 20px;"></i>
-          </div>
-          <span><strong>Niveau intermédiaire :</strong></span>
-          <div class="exercise-links">
-            <a href="#ex2" class="exercise-link">Ex 2 — Factoriser</a>
-            <a href="#ex3" class="exercise-link">Ex 3 — Équations-produit</a>
-            <a href="#ex5" class="exercise-link">Ex 5 — Équations — divers</a>
-            <a href="#ex8" class="exercise-link">Ex 8 — Inéquations (produits/polynômes)</a>
-            <a href="#ex9" class="exercise-link">Ex 9 — Inéquations (quotients)</a>
-            <a href="#ex10" class="exercise-link">Ex 10 — Domaines</a>
-          </div>
-        </div>
-        
-        <div class="difficulty-level">
-          <div class="stars">
-            <i data-lucide="star" class="star" style="width: 20px; height: 20px;"></i>
-            <i data-lucide="star" class="star" style="width: 20px; height: 20px;"></i>
-            <i data-lucide="star" class="star" style="width: 20px; height: 20px;"></i>
-          </div>
-          <span><strong>Niveau avancé :</strong></span>
-          <div class="exercise-links">
-            <a href="#ex6" class="exercise-link">Ex 6 — Équations avec fractions</a>
-            <a href="#ex7" class="exercise-link">Ex 7 — Équations supplémentaires</a>
-          </div>
-        </div>
+      <section class="card" id="sommaire-difficulte">
+        <h2>Sommaire par difficulté</h2>
+        <ul>
+          <li>★ : <a href="#ex1">Ex 1 — Développer & réduire</a>, <a href="#ex4">Ex 4 — Carrés</a></li>
+          <li>★★ : <a href="#ex2">Ex 2 — Factoriser</a>, <a href="#ex3">Ex 3 — Équations-produit</a>, <a href="#ex5">Ex 5 — Équations — divers</a>, <a href="#ex8">Ex 8 — Inéquations (produits/polynômes)</a>, <a href="#ex9">Ex 9 — Inéquations (quotients)</a>, <a href="#ex10">Ex 10 — Domaines</a></li>
+          <li>★★★ : <a href="#ex6">Ex 6 — Équations avec fractions</a>, <a href="#ex7">Ex 7 — Équations supplémentaires</a></li>
+        </ul>
       </section>
 
-      <!-- Navigation et plan -->
       <section class="grid cols-2">
-        <nav class="card plan-card animate-in">
-          <h2>
-            <i data-lucide="map" style="width: 28px; height: 28px; color: white;"></i>
-            Plan de la fiche
-          </h2>
-          <div class="hr" style="background: rgba(255, 255, 255, 0.3);"></div>
+        <nav class="card">
+          <h2>Plan</h2>
+          <div class="hr"></div>
           <ol>
             <li><a href="#dev">Développer & réduire</a></li>
             <li><a href="#facto">Factoriser</a></li>
@@ -651,539 +83,348 @@
             <li><a href="#domaine">Domaine de définition</a></li>
             <li><a href="#methodo">Fiche méthodologie</a></li>
           </ol>
-          <p style="color: rgba(255, 255, 255, 0.8); margin-top: 16px;">
-            <i data-lucide="info" style="width: 16px; height: 16px; margin-right: 8px;"></i>
-            Corrections détaillées repliées — dépliez au besoin.
-          </p>
+          <p class="muted">Corrections détaillées repliées — dépliez au besoin.</p>
         </nav>
 
-        <!-- Section Développer & réduire -->
-        <div class="card exercise-section animate-in" id="dev">
-          <h2>
-            <i data-lucide="expand" class="icone-bleue" style="width: 28px; height: 28px;"></i>
-            Développer & réduire <span id="ex1"></span>
-          </h2>
-          
+        <div class="card" id="dev">
+          <h2>Développer & réduire <span id="ex1"></span></h2>
           <details open>
-            <summary>
-              <i data-lucide="list" style="width: 20px; height: 20px;"></i>
-              <strong>Série — Développement (sélection)</strong>
-            </summary>
-            
-            <div class="step">
-              <div class="n">1</div>
-              <div>
-                <i data-lucide="edit" class="icone-bleue" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-                $ (3x-1)(2x+4) - (x+2)(4x-5) $
-                <details style="margin-top: 12px;">
-                  <summary>
-                    <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                    <strong>Correction</strong>
-                  </summary>
-                  <div style="padding: 12px 0;">
-                    $ (3x-1)(2x+4)=6x^2+12x-2x-4=6x^2+10x-4 $.<br/>
-                    $ (x+2)(4x-5)=4x^2-5x+8x-10=4x^2+3x-10 $.<br/>
-                    Différence: $(6x^2+10x-4)-(4x^2+3x-10)=2x^2+7x+6$.
-                  </div>
-                </details>
-              </div>
-            </div>
-            
-            <div class="step">
-              <div class="n">2</div>
-              <div>
-                <i data-lucide="edit" class="icone-bleue" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-                $ (7x+3)^2 - (3x-2)^2 $
-                <details style="margin-top: 12px;">
-                  <summary>
-                    <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                    <strong>Correction</strong>
-                  </summary>
-                  <div style="padding: 12px 0;">
-                    Forme $a^2-b^2=(a-b)(a+b)$.<br/>
-                    $a=7x+3,\ b=3x-2$. Alors $a-b=4x+5$, $a+b=10x+1$.<br/>
-                    Résultat: $(4x+5)(10x+1)=40x^2+54x+5$.
-                  </div>
-                </details>
-              </div>
-            </div>
-            
-            <div class="step">
-              <div class="n">3</div>
-              <div>
-                <i data-lucide="edit" class="icone-bleue" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-                $ (5x-1)^2 - 4 $
-                <details style="margin-top: 12px;">
-                  <summary>
-                    <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                    <strong>Correction</strong>
-                  </summary>
-                  <div style="padding: 12px 0;">
-                    $a=5x-1,\ 4=2^2$. $a^2-2^2=(a-2)(a+2)=(5x-3)(5x+1)$.
-                  </div>
-                </details>
-              </div>
-            </div>
-            
-            <div class="step">
-              <div class="n">4</div>
-              <div>
-                <i data-lucide="edit" class="icone-bleue" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-                $ 4(3x-4)^2 - 3(x-5)^2 $
-                <details style="margin-top: 12px;">
-                  <summary>
-                    <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                    <strong>Correction</strong>
-                  </summary>
-                  <div style="padding: 12px 0;">
-                    Écrire sous forme $A^2-B^2$ : $[2(3x-4)]^2-[\sqrt{3}(x-5)]^2$.<br/>
-                    Donc $(2(3x-4)-\sqrt{3}(x-5))(2(3x-4)+\sqrt{3}(x-5))$.<br/>
-                    Remarque: on peut aussi développer/réduire si l'on préfère éviter les racines.
-                  </div>
-                </details>
-              </div>
-            </div>
+            <summary><strong>Série — Développement (sélection)</strong></summary>
+            <div class="step"><div class="n">1</div><div>$ (3x-1)(2x+4) - (x+2)(4x-5) $
+              <details><summary>Correction</summary>
+                $ (3x-1)(2x+4)=6x^2+12x-2x-4=6x^2+10x-4 $.<br/>
+                $ (x+2)(4x-5)=4x^2-5x+8x-10=4x^2+3x-10 $.<br/>
+                Différence: $(6x^2+10x-4)-(4x^2+3x-10)=2x^2+7x+6$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">2</div><div>$ (7x+3)^2 - (3x-2)^2 $
+              <details><summary>Correction</summary>
+                Forme $a^2-b^2=(a-b)(a+b)$.<br/>
+                $a=7x+3,\ b=3x-2$. Alors $a-b=4x+5$, $a+b=10x+1$.<br/>
+                Résultat: $(4x+5)(10x+1)=40x^2+54x+5$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">3</div><div>$ (5x-1)^2 - 4 $
+              <details><summary>Correction</summary>
+                $a=5x-1,\ 4=2^2$. $a^2-2^2=(a-2)(a+2)=(5x-3)(5x+1)$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">4</div><div>$ 4(3x-4)^2 - 3(x-5)^2 $
+              <details><summary>Correction</summary>
+                Écrire sous forme $A^2-B^2$ : $[2(3x-4)]^2-[\sqrt{3}(x-5)]^2$.<br/>
+                Donc $(2(3x-4)-\sqrt{3}(x-5))(2(3x-4)+\sqrt{3}(x-5))$.<br/>
+                Remarque: on peut aussi développer/réduire si l'on préfère éviter les racines.
+              </details>
+            </div></div>
           </details>
         </div>
       </section>
 
-      <!-- Section Factoriser -->
-      <section class="card exercise-section animate-in" id="facto">
-        <h2>
-          <i data-lucide="git-branch" class="icone-verte" style="width: 28px; height: 28px;"></i>
-          Factoriser <span id="ex2"></span>
-        </h2>
-        
+      <section class="card" id="facto">
+        <h2>Factoriser <span id="ex2"></span></h2>
         <details open>
-          <summary>
-            <i data-lucide="scissors" style="width: 20px; height: 20px;"></i>
-            <strong>Série — Factorisation (sélection)</strong>
-          </summary>
-          
-          <div class="step">
-            <div class="n">1</div>
-            <div>
-              <i data-lucide="target" class="icone-verte" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $ (3x-1)(2x+4)-(3x-1)(4x-5) $
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  Mise en évidence $(3x-1)$: $(3x-1)\big[(2x+4)-(4x-5)\big]=(3x-1)(-2x+9)$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">2</div>
-            <div>
-              <i data-lucide="target" class="icone-verte" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $ 9x^2-1+(3x-1)(5x+3) $
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  $9x^2-1=(3x-1)(3x+1)$. Donc $ (3x-1)(3x+1+5x+3)=(3x-1)(8x+4)=4(3x-1)(2x+1)$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">3</div>
-            <div>
-              <i data-lucide="target" class="icone-verte" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $ (7x+3)^2-(3x-2)^2$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  Différence de deux carrés: $(4x+5)(10x+1)$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">4</div>
-            <div>
-              <i data-lucide="target" class="icone-verte" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $ (5x-1)^2-4=(5x-3)(5x+1)$.
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">5</div>
-            <div>
-              <i data-lucide="target" class="icone-verte" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $ 4(3x-4)^2-9(x-5)^2 = \big(2(3x-4)-3(x-5)\big)\big(2(3x-4)+3(x-5)\big)$.
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">6</div>
-            <div>
-              <i data-lucide="target" class="icone-verte" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $ (x-4)^2-9=(x-7)(x-1)$.
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">7</div>
-            <div>
-              <i data-lucide="target" class="icone-verte" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $ (x+1)^2-2=(x+1-\sqrt2)(x+1+\sqrt2)$ (sur $\R$).
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">8</div>
-            <div>
-              <i data-lucide="x-circle" class="icone-orange" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $ 9(x-6)^2+16$ n'est pas factorisable sur $\R$ (somme de deux carrés non nuls).
-            </div>
-          </div>
+          <summary><strong>Série — Factorisation (sélection)</strong></summary>
+          <div class="step"><div class="n">1</div><div>$ (3x-1)(2x+4)-(3x-1)(4x-5) $
+            <details><summary>Correction</summary>
+              Mise en évidence $(3x-1)$: $(3x-1)\big[(2x+4)-(4x-5)\big]=(3x-1)(-2x+9)$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$ 9x^2-1+(3x-1)(5x+3) $
+            <details><summary>Correction</summary>
+              $9x^2-1=(3x-1)(3x+1)$. Donc $ (3x-1)(3x+1+5x+3)=(3x-1)(8x+4)=4(3x-1)(2x+1)$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">3</div><div>$ (7x+3)^2-(3x-2)^2$
+            <details><summary>Correction</summary>
+              Différence de deux carrés: $(4x+5)(10x+1)$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">4</div><div>$ (5x-1)^2-4=(5x-3)(5x+1)$.</div></div>
+          <div class="step"><div class="n">5</div><div>$ 4(3x-4)^2-9(x-5)^2 = \big(2(3x-4)-3(x-5)\big)\big(2(3x-4)+3(x-5)\big)$.</div></div>
+          <div class="step"><div class="n">6</div><div>$ (x-4)^2-9=(x-7)(x-1)$.</div></div>
+          <div class="step"><div class="n">7</div><div>$ (x+1)^2-2=(x+1-\sqrt2)(x+1+\sqrt2)$ (sur $\R$).</div></div>
+          <div class="step"><div class="n">8</div><div>$ 9(x-6)^2+16$ n'est pas factorisable sur $\R$ (somme de deux carrés non nuls).</div></div>
         </details>
 
         <details>
-          <summary>
-            <i data-lucide="book-open" style="width: 20px; height: 20px;"></i>
-            <strong>Factorisations sans discriminant (rappels de seconde)</strong>
-          </summary>
-          
-          <div class="step">
-            <div class="n">1</div>
-            <div>
-              <i data-lucide="square" class="icone-jaune" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              Reconnaître un carré parfait: $x^2+6x+9=(x+3)^2$.
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">2</div>
-            <div>
-              <i data-lucide="minus" class="icone-jaune" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              Différence de deux carrés: $x^2-9=(x-3)(x+3)$.
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">3</div>
-            <div>
-              <i data-lucide="eye" class="icone-jaune" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              Mise en évidence: $(3x-1)(2x+4)-(3x-1)(4x-5)=(3x-1)(-2x+9)$.
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">4</div>
-            <div>
-              <i data-lucide="zap" class="icone-jaune" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              Cas simple factorisable à coefficients entiers: $x^2+4x+3=(x+1)(x+3)$.
-            </div>
-          </div>
-          
-          <p class="muted" style="margin-top: 16px;">
-            <i data-lucide="info" style="width: 16px; height: 16px; margin-right: 8px;"></i>
-            Remarque: pas d'usage du discriminant en rappels de seconde; on se limite aux identités remarquables et aux factorisations évidentes.
-          </p>
+          <summary><strong>Factorisations sans discriminant (rappels de seconde)</strong></summary>
+          <div class="step"><div class="n">1</div><div>Reconnaître un carré parfait: $x^2+6x+9=(x+3)^2$.</div></div>
+          <div class="step"><div class="n">2</div><div>Différence de deux carrés: $x^2-9=(x-3)(x+3)$.</div></div>
+          <div class="step"><div class="n">3</div><div>Mise en évidence: $(3x-1)(2x+4)-(3x-1)(4x-5)=(3x-1)(-2x+9)$.</div></div>
+          <div class="step"><div class="n">4</div><div>Cas simple factorisable à coefficients entiers: $x^2+4x+3=(x+1)(x+3)$.</div></div>
+          <p class="muted">Remarque: pas d'usage du discriminant en rappels de seconde; on se limite aux identités remarquables et aux factorisations évidentes.</p>
         </details>
       </section>
 
-      <!-- Section Équations -->
-      <section class="card exercise-section animate-in" id="equations">
-        <h2>
-          <i data-lucide="equal" class="icone-violette" style="width: 28px; height: 28px;"></i>
-          Équations (produit, carrés, divers)
-        </h2>
-        
+      <section class="card" id="equations">
+        <h2>Équations (produit, carrés, divers)</h2>
         <details open>
-          <summary>
-            <i data-lucide="zap" style="width: 20px; height: 20px;"></i>
-            <strong>A. Équations-produit</strong> (se ramener à un produit nul) <span id="ex3"></span>
-          </summary>
-          
-          <div class="step">
-            <div class="n">1</div>
-            <div>
-              <i data-lucide="calculator" class="icone-violette" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $(3x+1)(5x-3)=0$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  $3x+1=0 \Rightarrow x=-\tfrac13$ ; $5x-3=0 \Rightarrow x=\tfrac35$.<br/>Solution: $\{-\tfrac13,\tfrac35\}$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">2</div>
-            <div>
-              <i data-lucide="calculator" class="icone-violette" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $(3-x)(4-x)(10-x)=0$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  $3-x=0\Rightarrow x=3$ ; $4-x=0\Rightarrow x=4$ ; $10-x=0\Rightarrow x=10$.<br/>Solution: $\{3,4,10\}$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">3</div>
-            <div>
-              <i data-lucide="calculator" class="icone-violette" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $(x+\tfrac13)^2 = 4\,(x-\tfrac13)^2$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  Écrire $4(x-\tfrac13)^2=[2(x-\tfrac13)]^2$ et utiliser $a^2-b^2=(a-b)(a+b)$.<br/>
-                  $(x+\tfrac13)^2 - [2(x-\tfrac13)]^2 = \big(x+\tfrac13 - 2(x-\tfrac13)\big)\,\big(x+\tfrac13 + 2(x-\tfrac13)\big)=0$.<br/>
-                  Facteurs: $1-x$ et $3x-\tfrac13$. Donc $x=1$ ou $x=\tfrac{1}{9}$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">4</div>
-            <div>
-              <i data-lucide="calculator" class="icone-violette" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $-x(5-x)+3(x-5)^2=x^2-25$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  Développer à gauche: $-5x+x^2+3(x^2-10x+25)=4x^2-35x+75$.<br/>
-                  Égaliser à droite: $4x^2-35x+75=x^2-25 \Rightarrow 3x^2-35x+100=0$.<br/>
-                  $\Delta=35^2-4\cdot3\cdot100=25$; solutions $x=\dfrac{35\pm5}{6}\in\{5,\tfrac{20}{3}\}$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">5</div>
-            <div>
-              <i data-lucide="calculator" class="icone-violette" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $(x+1)(x+2)-(x+1)(x+5)=0$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  Mise en évidence $(x+1)$: $(x+1)\big[(x+2)-(x+5)\big]=(x+1)(-3)=0 \Rightarrow x=-1$.
-                </div>
-              </details>
-            </div>
-          </div>
+          <summary><strong>A. Équations-produit</strong> (se ramener à un produit nul) <span id="ex3"></span></summary>
+          <div class="step"><div class="n">1</div><div>$(3x+1)(5x-3)=0$ 
+            <details><summary>Correction</summary>
+              $3x+1=0 \Rightarrow x=-\tfrac13$ ; $5x-3=0 \Rightarrow x=\tfrac35$.<br/>Solution: $\{-\tfrac13,\tfrac35\}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$(3-x)(4-x)(10-x)=0$ 
+            <details><summary>Correction</summary>
+              $3-x=0\Rightarrow x=3$ ; $4-x=0\Rightarrow x=4$ ; $10-x=0\Rightarrow x=10$.<br/>Solution: $\{3,4,10\}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">3</div><div>$(x+\tfrac13)^2 = 4\,(x-\tfrac13)^2$
+            <details><summary>Correction</summary>
+              Écrire $4(x-\tfrac13)^2=[2(x-\tfrac13)]^2$ et utiliser $a^2-b^2=(a-b)(a+b)$.<br/>
+              $(x+\tfrac13)^2 - [2(x-\tfrac13)]^2 = \big(x+\tfrac13 - 2(x-\tfrac13)\big)\,\big(x+\tfrac13 + 2(x-\tfrac13)\big)=0$.<br/>
+              Facteurs: $1-x$ et $3x-\tfrac13$. Donc $x=1$ ou $x=\tfrac{1}{9}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">4</div><div>$-x(5-x)+3(x-5)^2=x^2-25$
+            <details><summary>Correction</summary>
+              Développer à gauche: $-5x+x^2+3(x^2-10x+25)=4x^2-35x+75$.<br/>
+              Égaliser à droite: $4x^2-35x+75=x^2-25 \Rightarrow 3x^2-35x+100=0$.<br/>
+              $\Delta=35^2-4\cdot3\cdot100=25$; solutions $x=\dfrac{35\pm5}{6}\in\{5,\tfrac{20}{3}\}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">5</div><div>$(x+1)(x+2)-(x+1)(x+5)=0$
+            <details><summary>Correction</summary>
+              Mise en évidence $(x+1)$: $(x+1)\big[(x+2)-(x+5)\big]=(x+1)(-3)=0 \Rightarrow x=-1$.
+            </details>
+          </div></div>
         </details>
 
         <details>
-          <summary>
-            <i data-lucide="square" style="width: 20px; height: 20px;"></i>
-            <strong>B. Carrés (équations quadratiques simples)</strong> <span id="ex4"></span>
-          </summary>
-          
-          <div class="step">
-            <div class="n">1</div>
-            <div>
-              <i data-lucide="square-root" class="icone-orange" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $3x^2-1=0$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  $x^2=\tfrac13 \Rightarrow x=\pm\dfrac{1}{\sqrt3}=\pm\dfrac{\sqrt3}{3}$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">2</div>
-            <div>
-              <i data-lucide="square-root" class="icone-orange" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $0{,}04x^2=1$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  $x^2=25 \Rightarrow x=\pm5$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">3</div>
-            <div>
-              <i data-lucide="square-root" class="icone-orange" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $7x^2=\tfrac{1}{15}$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  $x^2=\tfrac{1}{105} \Rightarrow x=\pm\dfrac{1}{\sqrt{105}}$.
-                </div>
-              </details>
-            </div>
-          </div>
-          
-          <div class="step">
-            <div class="n">4</div>
-            <div>
-              <i data-lucide="square-root" class="icone-orange" style="width: 20px; height: 20px; margin-right: 8px;"></i>
-              $(x+1)^2+(x-1)^2=6$
-              <details style="margin-top: 12px;">
-                <summary>
-                  <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
-                  <strong>Correction</strong>
-                </summary>
-                <div style="padding: 12px 0;">
-                  $x^2+2x+1+x^2-2x+1=6 \Rightarrow 2x^2+2=6 \Rightarrow x^2=2 \Rightarrow x=\pm\sqrt2$.
-                </div>
-              </details>
-            </div>
-          </div>
+          <summary><strong>B. Carrés (équations quadratiques simples)</strong> <span id="ex4"></span></summary>
+          <div class="step"><div class="n">1</div><div>$3x^2-1=0$ 
+            <details><summary>Correction</summary>
+              $x^2=\tfrac13 \Rightarrow x=\pm\dfrac{1}{\sqrt3}=\pm\dfrac{\sqrt3}{3}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$0{,}04x^2=1$ 
+            <details><summary>Correction</summary>
+              $x^2=25 \Rightarrow x=\pm5$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">3</div><div>$7x^2=\tfrac{1}{15}$ 
+            <details><summary>Correction</summary>
+              $x^2=\tfrac{1}{105} \Rightarrow x=\pm\dfrac{1}{\sqrt{105}}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">4</div><div>$(x+1)^2+(x-1)^2=6$ 
+            <details><summary>Correction</summary>
+              $x^2+2x+1+x^2-2x+1=6 \Rightarrow 2x^2+2=6 \Rightarrow x^2=2 \Rightarrow x=\pm\sqrt2$.
+            </details>
+          </div></div>
         </details>
 
-        <!-- Continuer avec les autres sections d'équations... -->
-        <!-- Pour la brièveté, je vais inclure les sections principales -->
+        <details>
+          <summary><strong>C. Divers (exemples de la série)</strong> <span id="ex5"></span></summary>
+          <div class="step"><div class="n">1</div><div>$2(4x-3)+4(1-2x)=2(3x+7)-4(2x+5)$
+            <details><summary>Correction</summary>
+              G: $8x-6+4-8x=-2$ ; D: $6x+14-8x-20=-2x-6$. Égalité $-2=-2x-6 \Rightarrow -2x=4 \Rightarrow x=-2$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$\dfrac{2x+1}{3}-\dfrac{2-3x}{12}=\dfrac{3-x}{8}$
+            <details><summary>Correction</summary>
+              PPCM $24$. $8(2x+1)-2(2-3x)=3(3-x)$ \Rightarrow $16x+8-4+6x=9-3x$ \Rightarrow $22x+4=9-3x$ \Rightarrow $25x=5$ \Rightarrow $x=\tfrac15$.
+            </details>
+          </div></div>
+        </details>
 
+        <details>
+          <summary><strong>D. Équations avec fractions</strong> <span id="ex6"></span></summary>
+          <div class="step"><div class="n">1</div><div>$\dfrac{2x+1}{3}-1=\dfrac{2-3x}{2}$
+            <details><summary>Correction</summary>
+              Multiplier par $6$: $2(2x+1)-6=3(2-3x)$ $\Rightarrow$ $4x-4=6-9x$ $\Rightarrow$ $13x=10$ $\Rightarrow$ $x=\tfrac{10}{13}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$\dfrac{3x-5}{8}-\dfrac{2x-1}{3}=\dfrac{3-x}{12}$
+            <details><summary>Correction</summary>
+              Multiplier par $24$: $3(3x-5)-8(2x-1)=2(3-x)$ $\Rightarrow$ $9x-15-16x+8=6-2x$ $\Rightarrow$ $-7x-7=6-2x$ $\Rightarrow$ $-5x=13$ $\Rightarrow$ $x=-\tfrac{13}{5}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">3</div><div>$\dfrac{3x-1}{2}+\dfrac{2x+1}{3}=2x+\dfrac{x-1}{6}$
+            <details><summary>Correction</summary>
+              Multiplier par $6$: $3(3x-1)+2(2x+1)=12x+(x-1)$ $\Rightarrow$ $13x-1=13x-1$ (identité). Solution: $\R$.
+            </details>
+          </div></div>
+        </details>
+
+        <details>
+          <summary><strong>E. Équations supplémentaires</strong> <span id="ex7"></span></summary>
+          <div class="step"><div class="n">1</div><div>$(2x-4)(x+1)-(4x-8)(2x+3)=0$
+            <details><summary>Correction</summary>
+              Factoriser $(2x-4)=2(x-2)$ et $(4x-8)=4(x-2)$. Mise en évidence $(x-2)$: $(x-2)[2(x+1)-4(2x+3)]=-(3x+5)(x-2)$.\nSolutions: $x=2$ ou $x=-\tfrac{5}{3}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>$(7x-4)^2-2(4-7x)(3x+2)=0$
+            <details><summary>Correction</summary>
+              $4-7x=-(7x-4)$ $\Rightarrow$ $(7x-4)[(7x-4)+2(3x+2)]=(7x-4)(13x)=0$. Solutions: $x=\tfrac{4}{7}$ ou $x=0$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">3</div><div>$4(x+3)^2-9(x-1)^2=0$
+            <details><summary>Correction</summary>
+              Différence de carrés: $[2(x+3)-3(x-1)]\,[2(x+3)+3(x-1)]=(-x+9)(5x+3)=0$. Solutions: $x=9$ ou $x=-\tfrac{3}{5}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">4</div><div>$4x^2=3$
+            <details><summary>Correction</summary>
+              $x=\pm\dfrac{\sqrt{3}}{2}$.
+            </details>
+          </div></div>
+          <div class="step"><div class="n">5</div><div>$(4x^2-1)^2-9(2x+1)^2=0$
+            <details><summary>Correction</summary>
+              Poser $A=4x^2-1$, $B=3(2x+1)$. $A^2-B^2=(A-B)(A+B)$.<br/>
+              $A-B=4x^2-1-6x-3=2(2x+1)(x-2)$ ; $A+B=4x^2-1+6x+3=2(2x+1)(x+1)$.<br/>
+              Solutions: $x\in\{-\tfrac12,\,2,\,-1\}$ (avec multiplicité pour $-\tfrac12$).
+            </details>
+          </div></div>
+        </details>
       </section>
 
-      <!-- Section Méthodologie -->
-      <section class="card animate-in" id="methodo" style="background: linear-gradient(135deg, rgba(22, 163, 74, 0.05), rgba(37, 99, 235, 0.05)); border: 2px solid rgba(22, 163, 74, 0.2);">
-        <h2>
-          <i data-lucide="compass" class="icone-verte" style="width: 28px; height: 28px;"></i>
-          Fiche méthodologie
-        </h2>
-        
-        <div class="grid cols-2">
-          <div>
-            <h3>
-              <i data-lucide="lightbulb" class="icone-jaune" style="width: 24px; height: 24px;"></i>
-              Conseils généraux
-            </h3>
-            <ul style="margin-left: 20px; line-height: 1.8;">
-              <li><strong>Développer :</strong> Distribuer chaque terme du premier facteur avec chaque terme du second</li>
-              <li><strong>Factoriser :</strong> Chercher d'abord un facteur commun, puis les identités remarquables</li>
-              <li><strong>Équations :</strong> Isoler l'inconnue en effectuant les mêmes opérations des deux côtés</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3>
-              <i data-lucide="bookmark" class="icone-violette" style="width: 24px; height: 24px;"></i>
-              Identités remarquables
-            </h3>
-            <div style="background: var(--bg2); padding: 16px; border-radius: 12px; margin-top: 12px;">
-              <p><strong>$(a+b)^2 = a^2 + 2ab + b^2$</strong></p>
-              <p><strong>$(a-b)^2 = a^2 - 2ab + b^2$</strong></p>
-              <p><strong>$(a+b)(a-b) = a^2 - b^2$</strong></p>
-            </div>
-          </div>
+      <section class="grid cols-2" id="inequations">
+        <div class="card">
+          <h2>Inéquations</h2>
+          <details open>
+            <summary><strong>A. Produits/Polynômes</strong> <span id="ex8"></span></summary>
+            <div class="step"><div class="n">1</div><div>$(3x+1)(-2x+5)\le0$
+              <details><summary>Correction</summary>
+                Zéros: $x=-\tfrac13$ et $x=\tfrac52$. Tableau de signes (coefficients opposés). Solution: $[-\tfrac13,\tfrac52]$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">2</div><div>$(x-2)(3x+5)(3-7x)<0$
+              <details><summary>Correction</summary>
+                Zéros: $2, -\tfrac53, \tfrac{3}{7}$. Ordre: $-\tfrac53 < \tfrac{3}{7} < 2$. Produits alternent de signe: solution = réunion des intervalles où le signe est négatif.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">3</div><div>$(x+3)^2-(x-1)^2\le0$
+              <details><summary>Correction</summary>
+                $[(x+3)-(x-1)][(x+3)+(x-1)]=(4)(2x+2)=8(x+1)\le0 \Rightarrow x\le-1$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">4</div><div>$(3x+2)^2-(x-1)^2\le0$
+              <details><summary>Correction</summary>
+                $(3x+2-(x-1))(3x+2+(x-1))=(2x+3)(4x+1)\le0 \Rightarrow x\in\left[-\tfrac{3}{2},-\tfrac{1}{4}\right]$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">5</div><div>$(5x+1)^2+9\le0$ — aucune solution (toujours $>0$).</div></div>
+            <div class="step"><div class="n">6</div><div>$(3x^2+1)(9-2x)>0$ 
+              <details><summary>Correction</summary>
+                $3x^2+1>0$ pour tout $x$ ; inégalité équivalente à $9-2x>0$ donc $x<\tfrac{9}{2}$.
+              </details>
+            </div></div>
+          </details>
+
+          <details>
+            <summary><strong>B. Quotients</strong> <span id="ex9"></span></summary>
+            <div class="step"><div class="n">1</div><div>$\dfrac{x-1}{x+1} > 2$
+              <details><summary>Correction</summary>
+                $\dfrac{x-1}{x+1}-2>0 \iff \dfrac{x-1-2x-2}{x+1}>0 \iff \dfrac{-x-3}{x+1}>0$. Zéros: $x=-3$ ; interdit: $x\ne-1$. Tableau de signes: solution $(-3,-1)$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">2</div><div>$\dfrac{3x-2}{5-3x}\ge 1$
+              <details><summary>Correction</summary>
+                $\dfrac{3x-2}{5-3x}-1\ge0 \iff \dfrac{3x-2-(5-3x)}{5-3x}=\dfrac{6x-7}{5-3x}\ge0$. Zéros: $x=\tfrac{7}{6}$ ; interdit: $x\ne \tfrac{5}{3}$. Tableau de signes.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">3</div><div>$\dfrac{2x+1}{x+2} > x$
+              <details><summary>Correction</summary>
+                $\dfrac{2x+1}{x+2}-x>0 \iff \dfrac{1-x^2}{x+2}>0 \iff \dfrac{(1-x)(1+x)}{x+2}<0$. Points critiques: $-2,-1,1$. Solution: $]-\infty;-2[\cup]-1;1[$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">4</div><div>$\dfrac{5x+3}{3x+5} \\le \\dfrac{3x+5}{5x+3}$
+              <details><summary>Correction</summary>
+                Étudier $\dfrac{(5x+3)^2-(3x+5)^2}{(3x+5)(5x+3)}\le0$. Numérateur $=16(x-1)(x+1)$.\nSolution: $(-\tfrac{5}{3},-1]\cup(-\tfrac{3}{5},1]$ (domaines exclus : $x\ne-\tfrac{5}{3},-\tfrac{3}{5}$).
+              </details>
+            </div></div>
+            <div class="step"><div class="n">5</div><div>$\dfrac{7x-2}{4x^2-1}\\le0$
+              <details><summary>Correction</summary>
+                Points: $x=\tfrac{2}{7}$, $x=\pm\tfrac{1}{2}$ (interdits pour le dénominateur). Solution: $(-\infty,-\tfrac12)\cup[\tfrac{2}{7},\tfrac12)$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">6</div><div>$\\dfrac{4x^3-9x}{x^2-16}\\ge0$
+              <details><summary>Correction</summary>
+                $\dfrac{x(2x-3)(2x+3)}{(x-4)(x+4)}\ge0$. Solution: $]-4;-\tfrac{3}{2}]\cup\{0\}\cup\{\tfrac{3}{2}\}\cup]4;+\infty[$.
+              </details>
+            </div></div>
+          </details>
+        </div>
+
+        <div class="card" id="domaine">
+          <h2>Domaine de définition <span id="ex10"></span></h2>
+          <details open>
+            <summary><strong>Domaines (sélection)</strong></summary>
+            <div class="step"><div class="n">1</div><div>$f(x)=\dfrac{1}{x}+x$ 
+              <details><summary>Correction</summary>
+                Interdire $x=0$. Domaine: $\R\setminus\{0\}$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">2</div><div>$f(x)=\dfrac{1}{x^2-1}$ 
+              <details><summary>Correction</summary>
+                Interdire $x=\pm1$. Domaine: $\R\setminus\{-1,1\}$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">3</div><div>$f(x)=\dfrac{3x+7}{1-x}$ 
+              <details><summary>Correction</summary>
+                Interdire $x=1$. Domaine: $\R\setminus\{1\}$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">4</div><div>$f(x)=\dfrac{1-x}{\sqrt{x-1}}$ 
+              <details><summary>Correction</summary>
+                Exiger $x-1>0$ (dénominateur non nul et réel): $x>1$. Domaine: $]1;+\infty[$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">5</div><div>$f(x)=\sqrt{x^2-10x+21}$ 
+              <details><summary>Correction</summary>
+                $(x-3)(x-7)\ge0 \Rightarrow x\le3$ ou $x\ge7$. Domaine: $]-\infty;3] \cup [7;+\infty[$.
+              </details>
+            </div></div>
+            <div class="step"><div class="n">6</div><div>$f(x)=\sqrt{\dfrac{2-x}{x+5}}$ 
+              <details><summary>Correction</summary>
+                Exiger $\dfrac{2-x}{x+5}\ge0$ et $x\ne-5$. Zéros/points interdits: $x=2$ (numérateur), $x=-5$ (dénominateur). Tableau de signes: $]-\infty;-5[\cup[2;+\infty[$.
+              </details>
+            </div></div>
+          </details>
         </div>
       </section>
-    </div>
 
-    <!-- Footer flottant -->
-    <div class="sticky-footer">
-      <button class="btn btn-primary" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-        <i data-lucide="arrow-up" style="width: 18px; height: 18px;"></i>
-        <span>Haut</span>
-      </button>
+      <section class="card" id="methodo">
+        <h2>Fiche méthodologie — Calcul littéral</h2>
+        <ul>
+          <li><strong>Développer</strong>: distributivité et identités remarquables $(a\pm b)^2$, $(a-b)(a+b)$.</li>
+          <li><strong>Réduire</strong>: regrouper les termes de même degré, ordonner par puissances de $x$.</li>
+          <li><strong>Factoriser</strong>: mise en évidence, différence de deux carrés, reconnaissance de carrés parfaits (pas de discriminant en rappels de seconde).</li>
+          <li><strong>Équations</strong>: formes simples (ex. $x^2=c$), équations-produit (se ramener à un produit nul).</li>
+          <li><strong>Inéquations</strong>: premier degré; produits/quotients factorizables; tableau de signes.</li>
+          <li><strong>Domaine</strong>: interdire les dénominateurs nuls; radicands $\ge 0$.</li>
+        </ul>
+
+        <details open>
+          <summary><strong>Méthodes rapides — Inéquations (tableaux de signes)</strong></summary>
+          <div class="step"><div class="n">1</div><div>
+            Produit $(x-a)(x-b)$ avec $a<b$. Zéros $a,b$. Le signe alterne entre chaque zéro (en partant du signe du coefficient dominant).<br/>
+            <table class="table-simple">
+              <tr><th>x</th><th>(-∞,a)</th><th>a</th><th>(a,b)</th><th>b</th><th>(b,+∞)</th></tr>
+              <tr><td>(x-a)(x-b)</td><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr>
+            </table>
+          </div></div>
+          <div class="step"><div class="n">2</div><div>
+            Quotient $\dfrac{U(x)}{V(x)}$: zéros de $U$, zéros interdits de $V$;  alterner le signe par intervalles délimités par ces points. Inclure/exclure selon $\le/\ge$ ou $</>$ et selon $V\ne0$.
+          </div></div>
+          <div class="step"><div class="n">3</div><div>
+            Carré $W(x)^2\ge0$: toujours vrai. $W(x)^2\le0$: équivaut à $W(x)=0$.
+          </div></div>
+        </details>
+      </section>
+
+      <footer class="muted mt-22">© 2025 — Fiche conçue par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.</footer>
+      <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
     </div>
 
     <script>
-      // Initialiser les icônes Lucide
-      lucide.createIcons();
-
-      // Gestion du thème
-      function toggleTheme() {
-        const body = document.body;
-        const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        const themeIcon = document.getElementById('theme-icon');
-        
-        body.className = newTheme;
-        localStorage.setItem('theme-educatif', newTheme);
-        
-        // Changer l'icône
-        themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
-        lucide.createIcons();
-      }
-
-      // Chargement du thème sauvegardé
-      const savedTheme = localStorage.getItem('theme-educatif') || 'light';
-      document.body.className = savedTheme;
-      document.getElementById('theme-icon').setAttribute('data-lucide', savedTheme === 'dark' ? 'sun' : 'moon');
-
-      // Event listeners
-      document.addEventListener('DOMContentLoaded', () => {
-        lucide.createIcons();
-        
-        // Boutons
-        document.getElementById('themeBtn')?.addEventListener('click', toggleTheme);
-        
-        // Retypeset MathJax
-        document.getElementById('retypesetBtn')?.addEventListener('click', () => {
-          MathJax.typesetPromise?.();
-        });
-        
-        // Print
-        document.getElementById('printBtn')?.addEventListener('click', () => {
-          window.print();
-        });
-        
-        // Animation d'entrée progressive
-        const cards = document.querySelectorAll('.animate-in');
-        cards.forEach((card, index) => {
-          setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          }, index * 200);
-        });
-        
-        // Navigation fluide
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const target = document.querySelector(link.getAttribute('href'));
-            if (target) {
-              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          });
-        });
-      });
+      const $=(q)=>document.querySelector(q), $$=(q)=>document.querySelectorAll(q);
+      $('#themeBtn')?.addEventListener('click',()=>{document.body.classList.toggle('light'); MathJax.typesetPromise?.(); });
+      $('#retypesetBtn')?.addEventListener('click',()=>MathJax.typesetPromise?.());
+      $('#printBtn')?.addEventListener('click',()=>window.print());
     </script>
   </body>
 </html>
+

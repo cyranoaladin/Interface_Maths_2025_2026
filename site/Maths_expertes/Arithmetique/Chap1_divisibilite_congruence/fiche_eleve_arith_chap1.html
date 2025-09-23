@@ -1,781 +1,254 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fiche mémo & méthodologie — Arithmétique (Maths expertes)</title>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-  <style>
-    :root {
-      /* Palette éducative */
-      --bleu-confiance: #2563EB;
-      --vert-reussite: #16A34A;
-      --violet-creativite: #7C3AED;
-      --orange-energie: #EA580C;
-      --jaune-lumiere: #FCD34D;
-      --rose-encouragement: #EC4899;
-      
-      /* Couleurs neutres */
-      --gris-ardoise: #475569;
-      --gris-clair: #94A3B8;
-      --blanc-pur: #FFFFFF;
-      --bleu-nuit: #0F172A;
-      --gris-tres-clair: #F8FAFC;
-      
-      /* Gradients éducatifs */
-      --gradient-apprentissage: linear-gradient(135deg, var(--bleu-confiance), var(--vert-reussite));
-      --gradient-creativite: linear-gradient(135deg, var(--violet-creativite), var(--bleu-confiance));
-      --gradient-energie: linear-gradient(135deg, var(--orange-energie), var(--jaune-lumiere));
-      
-      /* Ombres éducatives */
-      --ombre-douce: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
-      --ombre-moyenne: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
-      --ombre-forte: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
-    }
-
-    /* Compatibilité avec l'ancien système */
-    :root {
-      --bg: #0b1020;
-      --bg2: #11162a;
-      --card: #151b34;
-      --text: #eef2ff;
-      --muted: #a2b0d6;
-      --primary: #6aa6ff;
-      --accent: #22d3ee;
-      --good: #0b3d23;
-      --bad: #65121f;
-      --border: #28314f;
-      --shadow: 0 10px 30px rgba(0, 0, 0, .25);
-    }
-
-    .light {
-      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-      --bg2: rgba(248, 250, 252, 0.8);
-      --card: rgba(255, 255, 255, 0.95);
-      --text: var(--gris-ardoise);
-      --muted: var(--gris-clair);
-      --primary: var(--bleu-confiance);
-      --accent: var(--violet-creativite);
-      --good: var(--vert-reussite);
-      --bad: #DC2626;
-      --border: rgba(226, 232, 240, 0.6);
-      --shadow: var(--ombre-douce);
-    }
-
-    .dark {
-      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      --bg2: rgba(15, 23, 42, 0.8);
-      --card: rgba(30, 41, 59, 0.95);
-      --text: #F1F5F9;
-      --muted: var(--gris-clair);
-      --primary: var(--bleu-confiance);
-      --accent: var(--violet-creativite);
-      --good: var(--vert-reussite);
-      --bad: #DC2626;
-      --border: rgba(51, 65, 85, 0.6);
-      --shadow: var(--ombre-douce);
-    }
-
-    html, body {
-      height: 100%;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font: 16px/1.6 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      transition: all 0.3s ease;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 26px 18px 90px;
-    }
-
-    /* Header modernisé */
-    header {
-      position: sticky;
-      top: 0;
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-      z-index: 100;
-      padding: 1rem 0;
-      box-shadow: var(--shadow);
-      border-radius: 0 0 16px 16px;
-      margin-bottom: 2rem;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .header-info h1 {
-      font-size: clamp(1.4rem, 2.2vw + 0.8rem, 2.4rem);
-      margin: 8px 0;
-      background: var(--gradient-apprentissage);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500;
-      font-size: 0.875rem;
-      transition: all 0.2s ease;
-      text-decoration: none;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--ombre-moyenne);
-      border-color: var(--primary);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      color: white;
-      background: var(--gradient-energie);
-      padding: 6px 12px;
-      border-radius: 20px;
-      margin-left: 12px;
-      font-weight: 600;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 0.875rem;
-      margin: 4px 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 24px;
-      transition: all 0.3s ease;
-    }
-
-    .card:hover {
-      box-shadow: var(--ombre-moyenne);
-      transform: translateY(-2px);
-    }
-
-    h1 {
-      font-size: clamp(1.4rem, 2.2vw + 0.8rem, 2.4rem);
-      margin: 8px 0;
-    }
-
-    h2 {
-      font-size: 1.45rem;
-      margin: 0.2rem 0 0.6rem;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    h2::before {
-      content: '';
-      width: 4px;
-      height: 24px;
-      background: var(--gradient-apprentissage);
-      border-radius: 2px;
-    }
-
-    h3 {
-      font-size: 1.1rem;
-      margin: 0.2rem 0;
-      color: var(--violet-creativite);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .grid {
-      display: grid;
-      gap: 18px;
-    }
-
-    .cols-2 {
-      grid-template-columns: 1.1fr 0.9fr;
-    }
-
-    @media (max-width: 980px) {
-      .cols-2 {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .pill {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      background: var(--bg2);
-      padding: 12px 16px;
-      border-radius: 25px;
-      border: 1px solid var(--border);
-      margin-bottom: 16px;
-      font-weight: 600;
-      color: var(--violet-creativite);
-    }
-
-    .section {
-      scroll-margin-top: 90px;
-    }
-
-    details {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px 20px;
-      margin: 16px 0;
-      transition: all 0.3s ease;
-    }
-
-    details:hover {
-      box-shadow: var(--ombre-douce);
-    }
-
-    details[open] {
-      background: var(--card);
-      box-shadow: var(--ombre-douce);
-    }
-
-    summary {
-      cursor: pointer;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 0;
-      color: var(--violet-creativite);
-    }
-
-    .step {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      border-left: 4px solid var(--bleu-confiance);
-      padding: 16px 20px;
-      margin: 16px 0;
-      background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05));
-      border-radius: 0 12px 12px 0;
-    }
-
-    .step .n {
-      flex: 0 0 32px;
-      height: 32px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--gradient-apprentissage);
-      color: white;
-      font-weight: 700;
-      font-size: 0.875rem;
-    }
-
-    .result {
-      background: var(--bg2);
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      margin-top: 12px;
-      transition: all 0.3s ease;
-    }
-
-    .ok {
-      background: rgba(22, 163, 74, 0.1);
-      border: 1px solid rgba(22, 163, 74, 0.3);
-      color: var(--vert-reussite);
-    }
-
-    .err {
-      background: rgba(220, 38, 38, 0.1);
-      border: 1px solid rgba(220, 38, 38, 0.3);
-      color: #DC2626;
-    }
-
-    .input {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
-      color: var(--text);
-      transition: all 0.2s ease;
-    }
-
-    .input:focus {
-      outline: 2px solid var(--primary);
-      border-color: var(--primary);
-    }
-
-    .mono {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-    }
-
-    .hr {
-      height: 2px;
-      background: var(--gradient-apprentissage);
-      border-radius: 1px;
-      margin: 20px 0;
-      opacity: 0.3;
-    }
-
-    nav.card ol {
-      margin: 0 0 8px 18px;
-    }
-
-    .sticky-footer {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 50;
-    }
-
-    .goodbox {
-      background: rgba(22, 163, 74, 0.1);
-      border: 1px solid rgba(22, 163, 74, 0.3);
-    }
-
-    .badbox {
-      background: rgba(220, 38, 38, 0.1);
-      border: 1px solid rgba(220, 38, 38, 0.3);
-    }
-
-    .print-only {
-      display: none;
-    }
-
-    @media print {
-      .buttons, .sticky-footer {
-        display: none !important;
-      }
-      nav.card {
-        display: none !important;
-      }
-      .grid.cols-2 {
-        grid-template-columns: 1fr !important;
-      }
-      .print-only {
-        display: block;
-      }
-    }
-
-    /* Animations */
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .animate-in {
-      animation: slideInUp 0.6s ease-out;
-    }
-
-    /* Couleurs des icônes */
-    .icone-bleue { color: var(--bleu-confiance); }
-    .icone-verte { color: var(--vert-reussite); }
-    .icone-violette { color: var(--violet-creativite); }
-    .icone-orange { color: var(--orange-energie); }
-    .icone-jaune { color: var(--jaune-lumiere); }
-    .icone-rose { color: var(--rose-encouragement); }
-  </style>
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [["$", "$"], ["\\(", "\\)"]],
-        displayMath: [["$$", "$$"], ["\\[", "\\]"]],
-        macros: {
-          N: "\\mathbb{N}",
-          Z: "\\mathbb{Z}",
-          Q: "\\mathbb{Q}",
-          R: "\\mathbb{R}",
-          pp: "\\mathbb{P}"
+  <html lang="fr">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Fiche mémo & méthodologie — Arithmétique (Maths expertes)</title>
+      <link rel="stylesheet" href="/assets/css/site.css" />
+      <style>
+        :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
+        .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
+        html,body{height:100%}
+        body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+        .container{max-width:1100px;margin:0 auto;padding:26px 18px 90px}
+        header{position:sticky;top:0;background:linear-gradient(180deg,var(--bg) 80%,#0000);backdrop-filter:saturate(1.2);z-index:20;padding-bottom:8px}
+        .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+        .buttons{display:flex;gap:10px;flex-wrap:wrap}
+        .btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:14px;cursor:pointer;box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:8px}
+        .btn:hover{filter:brightness(1.05)}
+        .badge{display:inline-block;font-size:.8rem;color:white;background:linear-gradient(135deg,var(--accent),#7dd3fc);padding:2px 10px;border-radius:999px;margin-left:6px}
+        .muted{color:var(--muted)}
+        .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:18px}
+        h1{font-size:clamp(1.4rem,2.2vw + .8rem,2.4rem);margin:8px 0}
+        h2{font-size:1.45rem;margin:.2rem 0 .6rem}
+        h3{font-size:1.1rem;margin:.2rem 0}
+        .grid{display:grid;gap:18px}
+        .cols-2{grid-template-columns:1.1fr .9fr}
+        @media (max-width:980px){.cols-2{grid-template-columns:1fr}}
+        .pill{display:inline-flex;gap:8px;align-items:center;background:var(--bg2);padding:8px 12px;border-radius:999px;border:1px solid var(--border)}
+        .section{scroll-margin-top:90px}
+        details{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:10px 12px;margin:.6rem 0}
+        summary{cursor:pointer;font-weight:600}
+        .step{display:flex;gap:12px;align-items:flex-start;border-left:3px solid #30406e;padding:10px 12px;margin:10px 0;background:linear-gradient(90deg,#0000,rgba(99,102,241,.08))}
+        .step .n{flex:0 0 26px;height:26px;display:grid;place-items:center;border-radius:8px;background:#334155;color:#fff;font-weight:700}
+        .result{background:var(--bg2);border:1px dashed #3b4a77;border-radius:10px;padding:8px 10px;margin-top:8px}
+        .ok{background:var(--good);border-color:#0f5132;color:#fff}
+        .err{background:var(--bad);border-color:#842029;color:#fff}
+        .input{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 10px;color:var(--text)}
+        .input:focus{outline:2px solid var(--primary)}
+        .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace}
+        .hr{height:1px;background:linear-gradient(90deg,#0000,#39508f,#0000);margin:12px 0}
+        nav.card ol{margin:0 0 8px 18px}
+        .sticky-footer{position:fixed;bottom:16px;right:16px;display:flex;flex-direction:column;gap:10px}
+        .goodbox{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35)}
+        .badbox{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35)}
+        .print-only{display:none}
+        @media print{
+          .buttons, .sticky-footer{display:none !important}
+          nav.card{display:none !important}
+          .grid.cols-2{grid-template-columns:1fr !important}
+          .print-only{display:block}
+          details{display:block}
+          details>summary{display:none}
+          details>*{display:block}
         }
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-</head>
-<body class="light">
-  <a class="skip-link" href="#main">Aller au contenu</a>
-  <div class="container">
-    <header>
-      <div class="toolbar">
-        <div class="header-info">
-          <h1>
-            <i data-lucide="calculator" class="icone-orange" style="width: 32px; height: 32px;"></i>
-            Fiche mémo & méthodologie — Arithmétique
-            <span class="badge">
-              <i data-lucide="target" style="width: 16px; height: 16px;"></i>
-              Maths expertes
-            </span>
-          </h1>
-          <p class="muted">
-            <i data-lucide="info" class="icone-orange" style="width: 16px; height: 16px;"></i>
-            Divisibilité, congruences, PGCD/PPCM et théorèmes fondamentaux
-          </p>
-        </div>
-        <div class="buttons">
-          <button class="btn" id="themeBtn">
-            <i data-lucide="moon" id="theme-icon" style="width: 18px; height: 18px;"></i>
-            <span>Thème</span>
-          </button>
-          <button class="btn" id="retypesetBtn">
-            <i data-lucide="refresh-cw" style="width: 18px; height: 18px;"></i>
-            <span>LaTeX</span>
-          </button>
-          <button class="btn" id="printBtn">
-            <i data-lucide="printer" style="width: 18px; height: 18px;"></i>
-            <span>Imprimer</span>
-          </button>
-        </div>
-      </div>
-    </header>
+      </style>
+      <script>
+        window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}",div:"\\mid",ndiv:"\\nmid",pmod:"\\;\\mathrm{mod}\\;"}},svg:{fontCache:'global'}};
+      </script>
+      <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body class="light">
+      <div class="container">
+        <header>
+          <div class="toolbar">
+            <div>
+              <h1>Fiche mémo & méthodologie <span class="badge">Arithmétique — Maths expertes</span></h1>
+              <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © Propriété intellectuelle</small>
+            </div>
+            <div class="buttons">
+              <button class="btn" id="themeBtn">🌓 Thème</button>
+              <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
+              <button class="btn" id="printBtn">🖨️ Imprimer</button>
+            </div>
+          </div>
+        </header>
 
-    <main id="main">
-      <div class="grid cols-2">
-        <div>
-          <nav class="card animate-in">
-            <h2>
-              <i data-lucide="map" class="icone-violette" style="width: 24px; height: 24px;"></i>
-              Plan de la fiche
-            </h2>
+        <section class="card print-only">
+          <h2>Sommaire (impression)</h2>
+          <ol>
+            <li>Résumé du chapitre</li>
+            <li>Propriétés P1→P7 — utilité & pièges</li>
+            <li>Méthodologie par type d’exercice</li>
+            <li>Checklist avant de rendre</li>
+            <li>Mini‑entraînements éclair</li>
+            <li>Erreurs fréquentes</li>
+          </ol>
+        </section>
+
+        <section class="grid cols-2">
+          <nav class="card">
+            <h2>Plan</h2>
+            <div class="hr"></div>
             <ol>
-              <li><a href="#divisibilite">Divisibilité dans $\mathbb{Z}$</a></li>
-              <li><a href="#congruences">Congruences</a></li>
-              <li><a href="#pgcd">PGCD et algorithme d'Euclide</a></li>
-              <li><a href="#bezout">Théorème de Bézout</a></li>
-              <li><a href="#gauss">Théorème de Gauss</a></li>
-              <li><a href="#ppcm">PPCM</a></li>
-              <li><a href="#premiers">Nombres premiers</a></li>
-              <li><a href="#exercices">Exercices types</a></li>
+              <li><a href="#resume">Résumé du chapitre</a></li>
+              <li><a href="#props">Propriétés P1→P7 — utilité & pièges</a></li>
+              <li><a href="#methodo">Méthodologie par type d’exercice</a></li>
+              <li><a href="#checklist">Checklist avant de rendre</a></li>
+              <li><a href="#entrainement">Mini‑entraînements éclair</a></li>
+              <li><a href="#erreurs">Erreurs fréquentes</a></li>
             </ol>
+            <p class="muted">Toutes les preuves/corrections sont repliées par défaut — dépliez si besoin.</p>
           </nav>
 
-          <section class="card section animate-in" id="divisibilite">
-            <h2>
-              <i data-lucide="divide" class="icone-bleue" style="width: 24px; height: 24px;"></i>
-              1) Divisibilité dans $\mathbb{Z}$
-            </h2>
-            
-            <div class="pill">
-              <i data-lucide="book-open" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Définition et propriétés
-            </div>
-            
-            <p><strong>Définition :</strong> Soient $a, b \in \mathbb{Z}$ avec $a \neq 0$. On dit que $a$ divise $b$ (noté $a \mid b$) s'il existe $k \in \mathbb{Z}$ tel que $b = ka$.</p>
-            
-            <details>
-              <summary>
-                <i data-lucide="list" style="width: 20px; height: 20px;"></i>
-                <strong>Propriétés fondamentales</strong>
-              </summary>
-              <ul>
-                <li>$a \mid a$ (réflexivité)</li>
-                <li>Si $a \mid b$ et $b \mid c$, alors $a \mid c$ (transitivité)</li>
-                <li>Si $a \mid b$ et $a \mid c$, alors $a \mid (ub + vc)$ pour tous $u, v \in \mathbb{Z}$</li>
-                <li>Si $a \mid b$ et $b \mid a$, alors $|a| = |b|$</li>
-              </ul>
+          <div class="card" id="resume">
+            <h2>Résumé du chapitre</h2>
+            <p><strong>Divisibilité.</strong> Pour $a,b\in\Z$ ($b\ne0$), $b\mid a \iff \exists k\in\Z,\ a=bk$. Ensembles : $a\Z=\{ak:k\in\Z\}$ ; $D(n)$ : diviseurs de $n$.</p>
+            <p><strong>Division euclidienne.</strong> $\forall a\in\Z,\ \forall b\in\N^*$, $\exists!\,(q,r)\in\Z^2$ : $a=bq+r$ avec $0\le r<b$.</p>
+            <p><strong>Lemme des restes.</strong> $\forall b\ge2$, tout entier est $bq,\,bq+1,\dots,\,bq+(b-1)$.</p>
+            <p><strong>Congruences.</strong> $a\equiv b\pmod{n} \iff n\mid(a-b)$ ; opérations compatibles : $+$, $\times$, puissances.</p>
+            <div class="result goodbox"><strong>À retenir :</strong> Euclide (pgcd) + congruences = outils pour prouver, factoriser, et résoudre $ax\equiv b\pmod{n}$.</div>
+          </div>
+        </section>
+
+        <section class="card" id="props">
+          <h2>Propriétés P1→P7 — utilité & pièges</h2>
+          <div class="control-row mb-8"><button class="btn" id="btnOpenProps" aria-pressed="false" type="button">Tout ouvrir</button></div>
+
+          <details><summary><strong>P1</strong> — Si $b\mid a$ alors $a\Z\subset b\Z$ et $D(b)\subset D(a)$</summary>
+            <div class="step"><div class="n">Utilité</div><div>Comparer des <b>ensembles de multiples/diviseurs</b> et prouver des inclusions rapidement.</div></div>
+            <div class="step"><div class="n">Astuce</div><div>Partir de $a=bk$ puis multiplier par un entier quelconque $m$ : $am=b(km)$.</div></div>
+            <details><summary>Mini‑preuve</summary>
+              <div class="step"><div class="n">1</div><div>$a=bk \Rightarrow am=b(km)$ $\forall m$ ⇒ $a\Z\subset b\Z$.</div></div>
+              <div class="step"><div class="n">2</div><div>$d\in D(b)$ ⇒ $d\mid b$ et $b\mid a$ ⇒ (transitivité) $d\mid a$ ⇒ $d\in D(a)$.</div></div>
             </details>
-          </section>
+          </details>
 
-          <section class="card section animate-in" id="congruences">
-            <h2>
-              <i data-lucide="equal" class="icone-verte" style="width: 24px; height: 24px;"></i>
-              2) Congruences
-            </h2>
-            
-            <div class="pill">
-              <i data-lucide="function-square" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Relation d'équivalence modulo n
-            </div>
-            
-            <p><strong>Définition :</strong> Soient $a, b \in \mathbb{Z}$ et $n \in \mathbb{N}^*$. On dit que $a$ est congru à $b$ modulo $n$ (noté $a \equiv b \pmod{n}$) si $n \mid (a - b)$.</p>
-            
-            <details>
-              <summary>
-                <i data-lucide="calculator" style="width: 20px; height: 20px;"></i>
-                <strong>Propriétés des congruences</strong>
-              </summary>
-              <ul>
-                <li><strong>Réflexivité :</strong> $a \equiv a \pmod{n}$</li>
-                <li><strong>Symétrie :</strong> Si $a \equiv b \pmod{n}$, alors $b \equiv a \pmod{n}$</li>
-                <li><strong>Transitivité :</strong> Si $a \equiv b \pmod{n}$ et $b \equiv c \pmod{n}$, alors $a \equiv c \pmod{n}$</li>
-                <li><strong>Addition :</strong> Si $a \equiv b \pmod{n}$ et $c \equiv d \pmod{n}$, alors $a + c \equiv b + d \pmod{n}$</li>
-                <li><strong>Multiplication :</strong> Si $a \equiv b \pmod{n}$ et $c \equiv d \pmod{n}$, alors $ac \equiv bd \pmod{n}$</li>
-              </ul>
+          <details><summary><strong>P2</strong> — Invariance par changement de signe</summary>
+            <div class="step"><div class="n">Utilité</div><div>Travailler <b>avec des nombres positifs</b> sans changer la divisibilité.</div></div>
+            <div class="step"><div class="n">Mini‑preuve</div><div>$a=bk \Rightarrow a=(-b)(-k)$ et $-a=b(-k)$.</div></div>
+          </details>
+
+          <details><summary><strong>P3</strong> — Un entier non nul a un nombre fini de diviseurs</summary>
+            <div class="step"><div class="n">Utilité</div><div>Justifier des raisonnements par <b>exhaustion finie</b> (liste de diviseurs).</div></div>
+            <div class="step"><div class="n">Mini‑preuve</div><div>Si $d\mid n$ alors $|d|\le|n|$ ⇒ bornes ⇒ ensemble fini.</div></div>
+          </details>
+
+          <details><summary><strong>P4</strong> — Transitivité & combinaisons linéaires</summary>
+            <div class="step"><div class="n">Utilité</div><div>Prouver des <b>divisibilités composées</b> et former des <b>combinaisons</b> $ub+vc$ multiples de $a$.</div></div>
+            <details><summary>Mini‑preuve</summary>
+              <div class="step"><div class="n">(i)</div><div>$b=ak_1, c=bk_2$ ⇒ $c=a(k_1k_2)$.</div></div>
+              <div class="step"><div class="n">(ii)</div><div>$b=a\beta, c=a\gamma$ ⇒ $ub+vc=a(u\beta+v\gamma)$.</div></div>
             </details>
-          </section>
+          </details>
 
-          <section class="card section animate-in" id="pgcd">
-            <h2>
-              <i data-lucide="git-branch" class="icone-orange" style="width: 24px; height: 24px;"></i>
-              3) PGCD et algorithme d'Euclide
-            </h2>
-            
-            <div class="pill">
-              <i data-lucide="trending-up" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Plus Grand Commun Diviseur
-            </div>
-            
-            <p><strong>Définition :</strong> Le PGCD de deux entiers $a$ et $b$ non tous deux nuls est le plus grand entier positif qui divise à la fois $a$ et $b$. On le note $\gcd(a, b)$ ou $a \wedge b$.</p>
-            
-            <details>
-              <summary>
-                <i data-lucide="repeat" style="width: 20px; height: 20px;"></i>
-                <strong>Algorithme d'Euclide</strong>
-              </summary>
-              <div class="step">
-                <div class="n">1</div>
-                <div>Effectuer la division euclidienne : $a = bq + r$ avec $0 \leq r < |b|$</div>
-              </div>
-              <div class="step">
-                <div class="n">2</div>
-                <div>Si $r = 0$, alors $\gcd(a, b) = |b|$</div>
-              </div>
-              <div class="step">
-                <div class="n">3</div>
-                <div>Sinon, $\gcd(a, b) = \gcd(b, r)$ et on recommence avec $(b, r)$</div>
-              </div>
+          <details><summary><strong>P5</strong> — Lemme des restes</summary>
+            <div class="step"><div class="n">Utilité</div><div>Passer en <b>classes de restes</b> (mod $b$) pour <b>raisonner par cas</b>.</div></div>
+            <details><summary>Exemple</summary>
+              <div class="step"><div class="n">Ex</div><div>Montrer $n^2+1\not\equiv 0\pmod{3}$ ⇒ $n\equiv 0,1,2$ ⇒ $n^2\equiv 0,1$ ⇒ $n^2+1\equiv 1,2$.</div></div>
             </details>
-          </section>
-        </div>
+          </details>
 
-        <div>
-          <section class="card section animate-in" id="bezout">
-            <h2>
-              <i data-lucide="link" class="icone-rose" style="width: 24px; height: 24px;"></i>
-              4) Théorème de Bézout
-            </h2>
-            
-            <div class="pill">
-              <i data-lucide="key" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Relation de Bézout
-            </div>
-            
-            <p><strong>Théorème :</strong> Soient $a, b \in \mathbb{Z}$ non tous deux nuls. Il existe $u, v \in \mathbb{Z}$ tels que $au + bv = \gcd(a, b)$.</p>
-            
-            <details>
-              <summary>
-                <i data-lucide="search" style="width: 20px; height: 20px;"></i>
-                <strong>Algorithme d'Euclide étendu</strong>
-              </summary>
-              <p>L'algorithme d'Euclide étendu permet de calculer les coefficients $u$ et $v$ de la relation de Bézout en remontant les étapes de l'algorithme d'Euclide.</p>
+          <details><summary><strong>P6</strong> — Même reste $\Leftrightarrow$ congruence</summary>
+            <div class="step"><div class="n">Utilité</div><div>Traduire « même reste » en <b>écriture modulaire</b> et vice‑versa.</div></div>
+            <div class="step"><div class="n">Formule</div><div>$a\equiv b\pmod{n} \iff a=b+kn$ pour un $k\in\Z$.</div></div>
+          </details>
+
+          <details><summary><strong>P7</strong> — Règles de calcul en congruences</summary>
+            <div class="step"><div class="n">Utilité</div><div>Simplifier des expressions : <b>addition, produit, puissance</b> OK ; <b>division</b> ⚠️ non admise en général.</div></div>
+            <div class="step"><div class="n">Piège</div><div>De $5\cdot4\equiv5\cdot6\pmod{10}$ on ne peut pas conclure $4\equiv6\pmod{10}$.</div></div>
+          </details>
+        </section>
+
+        <section class="card" id="methodo">
+          <h2>Méthodologie par type d’exercice</h2>
+          <div class="control-row mb-8"><button class="btn" id="btnOpenMethodo" aria-pressed="false" type="button">Tout ouvrir</button></div>
+          <details open><summary><strong>A. Tester une divisibilité</strong> ($b\mid a$ ?)</summary>
+            <div class="step"><div class="n">1</div><div>Essayer d’écrire $a=bk$ (calculer $k=a/b$ ; vérifier qu’il est entier).</div></div>
+            <div class="step"><div class="n">2</div><div>Sinon, faire la <b>division euclidienne</b> : $a=bq+r$ ; si $r=0$ ⇒ $b\mid a$.</div></div>
+            <div class="step"><div class="n">3</div><div>Utiliser P4 pour combiner des divisibilités déjà connues.</div></div>
+            <details><summary>Exemple corrigé</summary>
+              <div class="step"><div class="n">Ex</div><div>Montrer que $12\mid 3\cdot 4\cdot 10 - 2\cdot 6$. On a $12\mid 3\cdot4\cdot10$ et $12\mid 2\cdot6$ ⇒ par P4(ii), la différence est multiple de 12.</div></div>
             </details>
-          </section>
+          </details>
 
-          <section class="card section animate-in" id="gauss">
-            <h2>
-              <i data-lucide="shield" class="icone-jaune" style="width: 24px; height: 24px;"></i>
-              5) Théorème de Gauss
-            </h2>
-            
-            <div class="pill">
-              <i data-lucide="star" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Lemme de Gauss
-            </div>
-            
-            <p><strong>Théorème :</strong> Soient $a, b, c \in \mathbb{Z}$. Si $a \mid bc$ et $\gcd(a, b) = 1$, alors $a \mid c$.</p>
-            
-            <p><strong>Corollaire :</strong> Si $p$ est premier et $p \mid ab$, alors $p \mid a$ ou $p \mid b$.</p>
-          </section>
-
-          <section class="card section animate-in" id="ppcm">
-            <h2>
-              <i data-lucide="maximize" class="icone-bleu" style="width: 24px; height: 24px;"></i>
-              6) PPCM
-            </h2>
-            
-            <div class="pill">
-              <i data-lucide="arrow-up" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Plus Petit Commun Multiple
-            </div>
-            
-            <p><strong>Définition :</strong> Le PPCM de deux entiers $a$ et $b$ non nuls est le plus petit entier positif qui est multiple de $a$ et de $b$. On le note $\text{lcm}(a, b)$ ou $a \vee b$.</p>
-            
-            <p><strong>Relation fondamentale :</strong> $\gcd(a, b) \times \text{lcm}(a, b) = |ab|$</p>
-          </section>
-
-          <section class="card section animate-in" id="premiers">
-            <h2>
-              <i data-lucide="gem" class="icone-rose" style="width: 24px; height: 24px;"></i>
-              7) Nombres premiers
-            </h2>
-            
-            <div class="pill">
-              <i data-lucide="diamond" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Définition et propriétés
-            </div>
-            
-            <p><strong>Définition :</strong> Un nombre premier est un entier naturel $p \geq 2$ qui admet exactement deux diviseurs positifs : 1 et $p$.</p>
-            
-            <details>
-              <summary>
-                <i data-lucide="layers" style="width: 20px; height: 20px;"></i>
-                <strong>Théorème fondamental de l'arithmétique</strong>
-              </summary>
-              <p>Tout entier $n \geq 2$ se décompose de manière unique (à l'ordre près) en produit de nombres premiers :</p>
-              <p>$$n = p_1^{a_1} \times p_2^{a_2} \times \cdots \times p_k^{a_k}$$</p>
-              <p>où les $p_i$ sont des nombres premiers distincts et les $a_i$ sont des entiers strictement positifs.</p>
+          <details><summary><strong>B. Effectuer une division euclidienne</strong> ($a=bq+r$)</summary>
+            <div class="step"><div class="n">1</div><div>Calculer $q=\lfloor a/b\rfloor$, puis $r=a-bq $ en imposant $0 \le r< b$.</div></div>
+            <div class="step"><div class="n">2</div><div>Pour le <strong>pgcd</strong>, appliquer <strong>Euclide</strong> : réitérer $x=yq+r$ jusqu’à $r=0$.</div></div>
+            <details><summary>Exemple corrigé</summary>
+              <div class="step"><div class="n">Ex</div><div>$114=8\cdot14+2$, $8=2\cdot4+0$ ⇒ $\operatorname{pgcd}(114,8)=2$.</div></div>
             </details>
-          </section>
-        </div>
+          </details>
+
+          <details><summary><strong>C. Résoudre $ax\equiv b\pmod{n}$</strong></summary>
+            <div class="step"><div class="n">1</div><div>Poser $g=\operatorname{pgcd}(a,n)$. Si $g\nmid b$ ⇒ <strong>pas de solution</strong>.</div></div>
+            <div class="step"><div class="n">2</div><div>Sinon, réduire : $a'=a/g$, $b'=b/g$, $n'=n/g$ ; trouver l’<b>inverse</b> $a'^{-1}\pmod{n'}$ via Euclide étendu.</div></div>
+            <div class="step"><div class="n">3</div><div>Une solution : $x_0\equiv a'^{-1}b'\pmod{n'}$ ; il y a $g$ classes de solutions modulo $n$.</div></div>
+            <details><summary>Exemple corrigé</summary>
+              <div class="step"><div class="n">Ex</div><div>$3x\equiv 2\pmod{5}$ ⇒ $g=1$, $3^{-1}\equiv 2$ ⇒ $x\equiv 4\pmod{5}$.</div></div>
+            </details>
+          </details>
+        </section>
+
+        <section class="grid cols-2" id="checklist">
+          <div class="card">
+            <h2>Checklist avant de rendre</h2>
+            <ul>
+              <li>J’ai écrit la <b>définition</b> ou le <b>théorème</b> utilisé.</li>
+              <li>Chaque égalité est justifiée (P1→P7, Euclide, lemme des restes).</li>
+              <li>Les <b>conditions</b> sont vérifiées (par ex. $0\le r< b$ ; $g\mid b$).</li>
+            <li>Le <strong>vocabulaire</strong> est précis : « $\pmod{n}$ », « reste », « quotient »…</li>
+              <li>Je relis les <b>signes</b> (attention aux $-$ et aux simplifications interdites).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h2>Rappels rapides (formules utiles)</h2>
+            <ul>
+              <li>$a\equiv b\pmod{n} \iff a=b+kn$ ; $a\equiv b\pmod{n} \iff \exists q,q',r:\\ a=nq+r,\\ b=nq'+r$.</li>
+              <li>Si $a\mid b$ et $a\mid c$ alors $a\mid (ub+vc)$ ; $\forall u,v\in\Z$.</li>
+              <li>$\operatorname{pgcd}(a,b)$ est le <strong>dernier reste non nul</strong> d’Euclide.</li>
+              <li>Si $g=\operatorname{pgcd}(a,n)$ et $g\mid b$ alors $ax\equiv b\pmod{n}$ a des solutions, sinon non.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="card" id="entrainement">
+          <h2>Mini‑entraînements éclair</h2>
+          <div class="control-row mb-8"><button class="btn" id="btnOpenEntrain" aria-pressed="false" type="button">Tout ouvrir</button></div>
+          <div class="step"><div class="n">1</div><div>Compléter : « $56=17\times3+5=17\times2+22$ mais la seconde n’est pas euclidienne car <input class="input mono" id="qA" size="10" placeholder=">" aria-label="Justification (ex. 22 > 17)">. » <button class="btn" onclick="checkText('qA','22 > 17')">Vérifier</button> <span id="qAr" aria-live="polite"></span></div></div>
+          <div class="step"><div class="n">2</div><div>Résoudre $5x\equiv 1\pmod{12}$. <details><summary>Correction</summary>$\operatorname{pgcd}(5,12)=1$, $5^{-1}\equiv 5\pmod{12}$ ⇒ $x\equiv 5\pmod{12}$.</details></div></div>
+          <div class="step"><div class="n">3</div><div>Déterminer $D(18)$ puis vérifier $D(9)\subset D(18)$. <details><summary>Correction</summary>$D(18)=\{-18, -9, -6, -3, -2, -1, 1, 2, 3, 6, 9, 18\}$, $D(9)=\{-9, -3, -1, 1, 3, 9\}$.</details></div></div>
+        </section>
+
+        <section class="card badbox" id="erreurs">
+          <h2>Erreurs fréquentes à éviter</h2>
+          <ul>
+            <li>Écrire $a\equiv b\pmod{n}$ sans vérifier que <strong>$n\mid(a-b)$</strong>.</li>
+            <li>« Simplifier » une congruence par un facteur <b>non inversible</b> modulo $n$.</li>
+            <li>Oublier la contrainte <b>$0\le r< b$</b> dans une division euclidienne.</li>
+            <li>Confondre <b>divise</b> et <b>est multiple de</b>.</li>
+          </ul>
+        </section>
+
+        <footer class="muted mt-22">© 2025 — Fiche mémo & méthodologie conçue par <strong>Alaeddine Ben Rhouma</strong> (Maths expertes). Tous droits réservés.</footer>
+        <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button> <button class="btn" id="toggleAll" aria-pressed="false">🧩 Tout déplier/replier</button></div>
       </div>
 
-      <section class="card section animate-in" id="exercices">
-        <h2>
-          <i data-lucide="pen-tool" class="icone-orange" style="width: 24px; height: 24px;"></i>
-          8) Exercices types
-        </h2>
-        
-        <details>
-          <summary>
-            <i data-lucide="play-circle" style="width: 20px; height: 20px;"></i>
-            <strong>Exercice 1 : Calcul de PGCD</strong>
-          </summary>
-          <p><strong>Énoncé :</strong> Calculer $\gcd(1071, 462)$ par l'algorithme d'Euclide.</p>
-          <div class="step">
-            <div class="n">1</div>
-            <div>$1071 = 462 \times 2 + 147$</div>
-          </div>
-          <div class="step">
-            <div class="n">2</div>
-            <div>$462 = 147 \times 3 + 21$</div>
-          </div>
-          <div class="step">
-            <div class="n">3</div>
-            <div>$147 = 21 \times 7 + 0$</div>
-          </div>
-          <div class="result ok">Donc $\gcd(1071, 462) = 21$</div>
-        </details>
+      <script>
+  const $=(q)=>document.querySelector(q), $$=(q)=>document.querySelectorAll(q);
+  $('#themeBtn').addEventListener('click',()=>{document.body.classList.toggle('light'); MathJax.typesetPromise?.(); });
+  $('#retypesetBtn').addEventListener('click',()=>MathJax.typesetPromise?.());
+  $('#printBtn').addEventListener('click',()=>window.print());
+  $('#toggleAll').addEventListener('click',()=>{ const anyClosed=[...$$('details')].some(d=>!d.open); $$('details').forEach(d=>d.open=anyClosed); const btn=$('#toggleAll'); if(btn){ btn.setAttribute('aria-pressed', anyClosed ? 'true' : 'false'); } });
+  window.addEventListener('beforeprint', ()=>{ $$('details').forEach(d=>d.open=true); MathJax.typesetPromise?.(); });
 
-        <details>
-          <summary>
-            <i data-lucide="play-circle" style="width: 20px; height: 20px;"></i>
-            <strong>Exercice 2 : Résolution de congruence</strong>
-          </summary>
-          <p><strong>Énoncé :</strong> Résoudre $3x \equiv 5 \pmod{7}$.</p>
-          <div class="step">
-            <div class="n">1</div>
-            <div>Chercher l'inverse de 3 modulo 7 : $3 \times 5 = 15 \equiv 1 \pmod{7}$</div>
-          </div>
-          <div class="step">
-            <div class="n">2</div>
-            <div>Multiplier par 5 : $x \equiv 5 \times 5 \equiv 25 \equiv 4 \pmod{7}$</div>
-          </div>
-          <div class="result ok">Donc $x \equiv 4 \pmod{7}$</div>
-        </details>
-      </section>
-    </main>
+  function toggleSectionDetails(sectionSelector, btnId){ const sec=document.querySelector(sectionSelector); if(!sec) return; const ds=sec.querySelectorAll('details'); if(!ds.length) return; const anyClosed=[...ds].some(d=>!d.open); ds.forEach(d=>d.open=anyClosed); const btn=document.getElementById(btnId); if(btn){ btn.setAttribute('aria-pressed', anyClosed?'true':'false'); btn.textContent = anyClosed ? 'Tout replier' : 'Tout ouvrir'; } MathJax.typesetPromise?.(); }
+  document.getElementById('btnOpenProps')?.addEventListener('click',()=>toggleSectionDetails('#props','btnOpenProps'));
+  document.getElementById('btnOpenMethodo')?.addEventListener('click',()=>toggleSectionDetails('#methodo','btnOpenMethodo'));
+  document.getElementById('btnOpenEntrain')?.addEventListener('click',()=>toggleSectionDetails('#entrainement','btnOpenEntrain'));
 
-    <div class="sticky-footer">
-      <button class="btn" onclick="scrollTo(0,0)">
-        <i data-lucide="arrow-up" style="width: 18px; height: 18px;"></i>
-        <span>Haut</span>
-      </button>
-    </div>
-  </div>
-
-  <script>
-    // Initialiser les icônes Lucide
-    lucide.createIcons();
-
-    // Gestion du thème
-    function toggleTheme() {
-      const body = document.body;
-      const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      const themeIcon = document.getElementById('theme-icon');
-      
-      body.className = newTheme;
-      localStorage.setItem('theme-fiche-arith', newTheme);
-      
-      // Changer l'icône
-      themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
-      lucide.createIcons();
-      MathJax.typesetPromise?.();
-    }
-
-    // Chargement du thème sauvegardé
-    const savedTheme = localStorage.getItem('theme-fiche-arith') || 'light';
-    document.body.className = savedTheme;
-    document.getElementById('theme-icon').setAttribute('data-lucide', savedTheme === 'dark' ? 'sun' : 'moon');
-
-    // Event listeners
-    document.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-      
-      // Boutons principaux
-      document.getElementById('themeBtn')?.addEventListener('click', toggleTheme);
-      document.getElementById('retypesetBtn')?.addEventListener('click', () => MathJax.typesetPromise?.());
-      document.getElementById('printBtn')?.addEventListener('click', () => window.print());
-
-      // Animation d'entrée progressive
-      const cards = document.querySelectorAll('.animate-in');
-      cards.forEach((card, index) => {
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, index * 200);
-      });
-
-      // Navigation fluide
-      document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const target = document.querySelector(link.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      });
-    });
-  </script>
-</body>
-</html>
+        function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+        function checkText(id,expected){ const el=$('#'+id), out=$('#'+id+'r'); if(!el) return; let ans=(el.value||'').trim(); let pattern=escRe(expected).replace(/\s\+/g,'\\s*').replace(/×/g,'[×x*]').replace(/\s/g,'\\s*').replace(/>/g,'\\s*>\\s*'); const re=new RegExp('^'+pattern+'$','i'); const ok=re.test(ans); const box=document.createElement('span'); box.className='result '+(ok?'ok':'err'); box.textContent= ok? '✅ Correct' : '❌ Réponse attendue : '+expected; if(out){out.replaceChildren(box);} }
+      </script>
+    </body>
+  </html>

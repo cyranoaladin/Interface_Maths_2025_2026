@@ -1,141 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Suites — Fiche élève (Mémo • Flash‑cards • Exercices minute ++)</title>
-  <meta name="description" content="Fiche élève Suites : mémo de formules, flash‑cards et exercices minute avec validation.">
+  <title>Suites — Fiche élève (Mémo • Flash‑cards • Exercices minute ++)</title>
+  <meta name="description"
+    content="Fiche élève Suites : mémo de formules, flash‑cards et exercices minute avec validation.">
   <link rel="canonical" href="/EDS_terminale/Suites/fiche_eleve_suites.html">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="stylesheet" href="/assets/css/site.css" />
   <style>
     :root {
-      /* Palette éducative */
-      --bleu-confiance: #2563EB;
-      --vert-reussite: #16A34A;
-      --violet-creativite: #7C3AED;
-      --orange-energie: #EA580C;
-      --jaune-lumiere: #FCD34D;
-      --rose-encouragement: #EC4899;
-      
-      /* Couleurs neutres */
-      --gris-ardoise: #475569;
-      --gris-clair: #94A3B8;
-      --blanc-pur: #FFFFFF;
-      --bleu-nuit: #0F172A;
-      --gris-tres-clair: #F8FAFC;
-      
-      /* Gradients éducatifs */
-      --gradient-apprentissage: linear-gradient(135deg, var(--bleu-confiance), var(--vert-reussite));
-      --gradient-creativite: linear-gradient(135deg, var(--violet-creativite), var(--bleu-confiance));
-      --gradient-energie: linear-gradient(135deg, var(--orange-energie), var(--jaune-lumiere));
-      
-      /* Ombres éducatives */
-      --ombre-douce: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
-      --ombre-moyenne: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
-      --ombre-forte: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
+      --bg: #0b1020;
+      --bg2: #11162a;
+      --card: #151b34;
+      --text: #eef2ff;
+      --muted: #a2b0d6;
+      --primary: #6aa6ff;
+      --accent: #22d3ee;
+      --good: #0b3d23;
+      --bad: #65121f;
+      --border: #28314f;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .25)
     }
 
-    [data-theme="light"] {
-      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-      --bg-card: rgba(255, 255, 255, 0.95);
-      --bg-secondary: rgba(248, 250, 252, 0.8);
-      --texte: var(--gris-ardoise);
-      --texte-secondaire: var(--gris-clair);
-      --bordure: rgba(226, 232, 240, 0.6);
-      --bordure-forte: rgba(226, 232, 240, 1);
-    }
-
-    [data-theme="dark"] {
-      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      --bg-card: rgba(30, 41, 59, 0.95);
-      --bg-secondary: rgba(15, 23, 42, 0.8);
-      --texte: #F1F5F9;
-      --texte-secondaire: var(--gris-clair);
-      --bordure: rgba(51, 65, 85, 0.6);
-      --bordure-forte: rgba(51, 65, 85, 1);
-    }
-
-    /* Compatibilité avec l'ancien système */
     .light {
-      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
-      --bg2: rgba(248, 250, 252, 0.8);
-      --card: rgba(255, 255, 255, 0.95);
-      --text: var(--gris-ardoise);
-      --muted: var(--gris-clair);
-      --primary: var(--bleu-confiance);
-      --accent: var(--violet-creativite);
-      --good: var(--vert-reussite);
-      --bad: #DC2626;
-      --border: rgba(226, 232, 240, 0.6);
-      --shadow: var(--ombre-douce);
+      --bg: #f6f7fb;
+      --bg2: #eef0f8;
+      --card: #fff;
+      --text: #0f172a;
+      --muted: #4b5563;
+      --primary: #3b82f6;
+      --accent: #06b6d4;
+      --good: #059669;
+      --bad: #b91c1c;
+      --border: #e5e7eb;
+      --shadow: 0 10px 30px rgba(2, 6, 23, .06)
     }
 
-    .dark {
-      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      --bg2: rgba(15, 23, 42, 0.8);
-      --card: rgba(30, 41, 59, 0.95);
-      --text: #F1F5F9;
-      --muted: var(--gris-clair);
-      --primary: var(--bleu-confiance);
-      --accent: var(--violet-creativite);
-      --good: var(--vert-reussite);
-      --bad: #DC2626;
-      --border: rgba(51, 65, 85, 0.6);
-      --shadow: var(--ombre-douce);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      height: 100%;
+    html,
+    body {
+      height: 100%
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
-      transition: all 0.3s ease;
-    }
-
-    .skip-link {
-      position: absolute;
-      top: -40px;
-      left: 6px;
-      background: var(--bleu-confiance);
-      color: white;
-      padding: 8px;
-      text-decoration: none;
-      border-radius: 4px;
-      z-index: 1000;
-    }
-
-    .skip-link:focus {
-      top: 6px;
+      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial
     }
 
     .container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 26px 18px 90px;
+      padding: 26px 18px 90px
     }
 
-    /* Header modernisé */
     header {
       position: sticky;
       top: 0;
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
-      z-index: 100;
-      padding: 1rem 0;
-      box-shadow: var(--shadow);
-      border-radius: 0 0 16px 16px;
-      margin-bottom: 2rem;
+      background: linear-gradient(180deg, var(--bg) 80%, #0000);
+      backdrop-filter: saturate(1.2);
+      z-index: 20;
+      padding-bottom: 8px
     }
 
     .toolbar {
@@ -143,623 +70,538 @@
       gap: 12px;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
-    }
-
-    .header-info {
-      flex: 1;
-    }
-
-    .header-info h1 {
-      font-size: clamp(1.4rem, 2.2vw + 0.8rem, 2.4rem);
-      margin: 8px 0;
-      background: var(--gradient-apprentissage);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      color: white;
-      background: var(--gradient-energie);
-      padding: 6px 12px;
-      border-radius: 20px;
-      margin-left: 12px;
-      font-weight: 600;
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 0.875rem;
-      margin: 4px 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      justify-content: space-between
     }
 
     .buttons {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      align-items: center
     }
 
     .btn {
       background: var(--card);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 10px 16px;
-      border-radius: 12px;
+      padding: 9px 14px;
+      border-radius: 14px;
       cursor: pointer;
       box-shadow: var(--shadow);
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-weight: 500;
-      font-size: 0.875rem;
-      transition: all 0.2s ease;
-      text-decoration: none;
+      gap: 8px
     }
 
     .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--ombre-moyenne);
-      border-color: var(--primary);
+      filter: brightness(1.05)
     }
 
-    /* Cards modernisées */
+    .badge {
+      display: inline-block;
+      font-size: .8rem;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), #7dd3fc);
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-left: 6px
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
     .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 24px;
+      border-radius: 18px;
+      padding: 18px;
       box-shadow: var(--shadow);
-      margin-bottom: 24px;
-      transition: all 0.3s ease;
+      margin: 14px 0
     }
 
-    .card:hover {
-      box-shadow: var(--ombre-moyenne);
-      transform: translateY(-2px);
-    }
-
-    /* Titres et sections */
-    h1 {
-      font-size: clamp(1.4rem, 2.2vw + 0.8rem, 2.4rem);
-      margin: 8px 0;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      margin: 0.2rem 0 1rem;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    h2::before {
-      content: '';
-      width: 4px;
-      height: 24px;
-      background: var(--gradient-apprentissage);
-      border-radius: 2px;
-    }
-
-    h3 {
-      font-size: 1.2rem;
-      margin: 0.2rem 0 0.8rem;
-      color: var(--violet-creativite);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Flash cards */
-    .flashcard {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 16px 0;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .flashcard::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--gradient-creativite);
-    }
-
-    .flashcard:hover {
-      box-shadow: var(--ombre-moyenne);
-      transform: translateY(-2px);
-    }
-
-    .flashcard.flipped {
-      background: var(--bg2);
-      border-color: var(--primary);
-    }
-
-    .flashcard-front, .flashcard-back {
-      transition: all 0.3s ease;
-    }
-
-    .flashcard-back {
-      display: none;
-    }
-
-    .flashcard.flipped .flashcard-front {
-      display: none;
-    }
-
-    .flashcard.flipped .flashcard-back {
-      display: block;
-    }
-
-    /* Exercices minute */
-    .exercise {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      margin: 12px 0;
-      border-left: 4px solid var(--violet-creativite);
-    }
-
-    .exercise-question {
-      font-weight: 600;
-      margin-bottom: 12px;
-      color: var(--text);
-    }
-
-    .exercise-input {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px 12px;
-      color: var(--text);
-      width: 200px;
-      margin-right: 12px;
-    }
-
-    .exercise-input:focus {
-      outline: 2px solid var(--primary);
-      border-color: var(--primary);
-    }
-
-    .exercise-result {
-      margin-top: 12px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-weight: 500;
-    }
-
-    .exercise-result.correct {
-      background: rgba(22, 163, 74, 0.1);
-      border: 1px solid rgba(22, 163, 74, 0.3);
-      color: var(--vert-reussite);
-    }
-
-    .exercise-result.incorrect {
-      background: rgba(220, 38, 38, 0.1);
-      border: 1px solid rgba(220, 38, 38, 0.3);
-      color: #DC2626;
-    }
-
-    /* Grilles et layouts */
     .grid {
       display: grid;
-      gap: 24px;
+      gap: 14px
     }
 
     .grid2 {
-      grid-template-columns: repeat(2, 1fr);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
     }
 
-    @media (max-width: 920px) {
+    .pill {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: var(--bg2);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border)
+    }
+
+    .local-toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .9rem;
+      margin: -4px 0 10px
+    }
+
+    .local-toc a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 2px 6px;
+      border-radius: 8px
+    }
+
+    .local-toc a[aria-current="page"] {
+      background: var(--card);
+      border: 1px solid var(--border)
+    }
+
+    .local-toc .sep {
+      opacity: .6
+    }
+
+    .hr {
+      height: 1px;
+      background: linear-gradient(90deg, #0000, #39508f, #0000);
+      margin: 12px 0
+    }
+
+    .result {
+      background: var(--bg2);
+      border: 1px dashed #3b4a77;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-top: 8px
+    }
+
+    .ok {
+      background: rgba(16, 185, 129, .12);
+      border: 1px solid rgba(16, 185, 129, .35)
+    }
+
+    .bad {
+      background: rgba(239, 68, 68, .12);
+      border: 1px solid rgba(239, 68, 68, .35)
+    }
+
+    .input {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      color: var(--text)
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace
+    }
+
+    .flash-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px
+    }
+
+    @media (max-width:980px) {
       .grid2 {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr
+      }
+
+      .flash-grid {
+        grid-template-columns: repeat(2, 1fr)
       }
     }
 
-    /* Footer flottant */
+    .flash {
+      perspective: 1000px
+    }
+
+    .flash .card3d {
+      position: relative;
+      height: 142px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transform-style: preserve-3d;
+      transition: transform .5s;
+      background: var(--card);
+      cursor: pointer
+    }
+
+    .flash .side {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      border-radius: 14px;
+      backface-visibility: hidden
+    }
+
+    .flash .back {
+      transform: rotateY(180deg);
+      background: linear-gradient(135deg, rgba(34, 211, 238, .15), rgba(59, 130, 246, .15))
+    }
+
+    .flash.flipped .card3d {
+      transform: rotateY(180deg)
+    }
+
     .sticky-footer {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 50;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .container {
-        padding: 16px 12px 60px;
+    @media print {
+
+      .buttons,
+      .sticky-footer,
+      .local-toc {
+        display: none !important
       }
-      
-      .toolbar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 16px;
+
+      body[data-print-mode="eleve"] .result {
+        display: none !important
       }
-      
-      .buttons {
-        justify-content: center;
+
+      body[data-print-mode="eleve"] input.input {
+        border: 0;
+        background: transparent
       }
-      
-      .grid {
-        grid-template-columns: 1fr;
+
+      body[data-print-mode="prof"] .result {
+        display: block !important
       }
-    }
-
-    /* Animations */
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .animate-in {
-      animation: slideInUp 0.6s ease-out;
-    }
-
-    /* Couleurs des icônes */
-    .icone-bleue { color: var(--bleu-confiance); }
-    .icone-verte { color: var(--vert-reussite); }
-    .icone-violette { color: var(--violet-creativite); }
-    .icone-orange { color: var(--orange-energie); }
-    .icone-jaune { color: var(--jaune-lumiere); }
-    .icone-rose { color: var(--rose-encouragement); }
-
-    /* Styles spécifiques pour les mémos */
-    .memo-section {
-      border-left: 4px solid var(--bleu-confiance);
-      background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05));
-    }
-
-    .memo-section h3 {
-      color: var(--bleu-confiance);
-    }
-
-    /* Styles pour les flash-cards */
-    .flashcards-section {
-      border-left: 4px solid var(--violet-creativite);
-      background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.05));
-    }
-
-    .flashcards-section h3 {
-      color: var(--violet-creativite);
-    }
-
-    /* Styles pour les exercices */
-    .exercises-section {
-      border-left: 4px solid var(--orange-energie);
-      background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.05));
-    }
-
-    .exercises-section h3 {
-      color: var(--orange-energie);
     }
   </style>
   <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [["$", "$"], ["\\(", "\\)"]],
-        displayMath: [["$$", "$$"], ["\\[", "\\]"]],
-        macros: {
-          N: "\\mathbb{N}",
-          Z: "\\mathbb{Z}",
-          Q: "\\mathbb{Q}",
-          R: "\\mathbb{R}",
-          pp: "\\mathbb{P}"
-        }
-      },
-      svg: { fontCache: 'global' }
-    };
+    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}" } }, svg: { fontCache: 'global' } };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
+
 <body class="light">
   <a class="skip-link" href="#main">Aller au contenu</a>
-  <div class="container">
+  <main id="main" class="container">
     <header>
       <div class="toolbar">
-        <div class="header-info">
-          <h1>
-            <i data-lucide="layers" class="icone-bleue" style="width: 32px; height: 32px;"></i>
-            Suites — Fiche élève
-            <span class="badge">
-              <i data-lucide="zap" style="width: 16px; height: 16px;"></i>
-              Mémo • Flash‑cards • Exercices minute
-            </span>
-          </h1>
-          <p class="muted">
-            <i data-lucide="info" class="icone-orange" style="width: 16px; height: 16px;"></i>
-            Mémo de formules, flash‑cards et exercices minute avec validation automatique
-          </p>
+        <div>
+          <h1>Suites — Fiche élève <span class="badge">Mémo • Flash‑cards • Exercices minute ++</span></h1>
+          <p class="muted">Synthèse + entraînement rapide inspirés de la page principale « Suites ».</p>
         </div>
         <div class="buttons">
-          <button class="btn" id="themeBtn">
-            <i data-lucide="moon" id="theme-icon" style="width: 18px; height: 18px;"></i>
-            <span>Thème</span>
-          </button>
-          <button class="btn" id="retypesetBtn">
-            <i data-lucide="refresh-cw" style="width: 18px; height: 18px;"></i>
-            <span>LaTeX</span>
-          </button>
-          <button class="btn" id="printBtn">
-            <i data-lucide="printer" style="width: 18px; height: 18px;"></i>
-            <span>Imprimer</span>
-          </button>
+          <button class="btn" id="themeBtn">🌓 Thème</button>
+          <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
+          <span class="btn" id="scoreBox" aria-live="polite">🧮 Score : 0/0</span>
+          <button class="btn" id="regenBtn">🎲 Régénérer</button>
+          <button class="btn" id="resetBtn">♻️ Réinitialiser</button>
+          <button class="btn" id="exportEleveBtn">📄 Export PDF — Élève</button>
+          <button class="btn" id="exportProfBtn">📄 Export PDF — Prof</button>
+          <button class="btn" id="printBtn">🖨️ Imprimer</button>
         </div>
       </div>
     </header>
 
-    <main id="main">
-      <section class="card memo-section animate-in">
-        <h2>
-          <i data-lucide="brain" class="icone-bleue" style="width: 28px; height: 28px;"></i>
-          1) Mémo — Formules essentielles
-        </h2>
-        
-        <h3>
-          <i data-lucide="function-square" style="width: 20px; height: 20px;"></i>
-          Suites arithmétiques
-        </h3>
+    <section class="card section" id="memo">
+      <h2>1) Mémo — Formules indispensables</h2>
+      <nav class="local-toc" aria-label="Sous-plan"><a href="#memo" aria-current="page">Mémo</a><span
+          class="sep">•</span><a href="#flash">À connaître</a><span class="sep">•</span><a href="#tests">Exercices
+          ++</a></nav>
+      <div class="grid">
+        <div class="pill">Arithmétique & géométrique</div>
         <ul>
-          <li><strong>Définition :</strong> $u_{n+1} = u_n + r$ où $r$ est la raison</li>
-          <li><strong>Terme général :</strong> $u_n = u_0 + nr$ ou $u_n = u_1 + (n-1)r$</li>
-          <li><strong>Somme :</strong> $S_n = \frac{n+1}{2}(u_0 + u_n) = \frac{n+1}{2}(2u_0 + nr)$</li>
+          <li><strong>Arith.</strong> $u_{n + 1}=u_n+r$ ⇒ $u_n=u_0+nr$, $\displaystyle \sum_{k = 0}^{n} u_k=\tfrac{n +
+            1}{2}(u_0+u_n)$.</li>
+          <li><strong>Géom.</strong> $u_{n + 1}=q\,u_n$ ⇒ $u_n=u_0\,q^n$, $\displaystyle \sum_{k = 0}^{n}
+            q^k=\begin{cases} n+1&(q=1)\\ \dfrac{1 - q ^ { n+ 1}}{1 - q}&(q\ne1)\end{cases}$.</li>
         </ul>
-
-        <h3>
-          <i data-lucide="trending-up" style="width: 20px; height: 20px;"></i>
-          Suites géométriques
-        </h3>
+        <div class="pill">Limites et comparaisons</div>
         <ul>
-          <li><strong>Définition :</strong> $u_{n+1} = u_n \times q$ où $q$ est la raison</li>
-          <li><strong>Terme général :</strong> $u_n = u_0 \times q^n$ ou $u_n = u_1 \times q^{n-1}$</li>
-          <li><strong>Somme :</strong> $S_n = u_0 \times \frac{1-q^{n+1}}{1-q}$ si $q \neq 1$</li>
+          <li>$q^n\to0$ si $|q|<1$ ; $q>1$ ⇒ $q^n\to+\infty$ ; $q\le-1$ ⇒ pas de limite.</li>
+          <li>Gendarmes : $v_n\le u_n\le w_n$ et $v_n,w_n\to\ell$ ⇒ $u_n\to\ell$.</li>
+          <li>F.I. : $\infty-\infty$, $0\times\infty$, $0/0$, $\infty/\infty$.</li>
         </ul>
-
-        <h3>
-          <i data-lucide="infinity" style="width: 20px; height: 20px;"></i>
-          Limites
-        </h3>
+        <div class="pill">Linéaire 1er ordre</div>
         <ul>
-          <li><strong>Suite arithmétique :</strong> $\lim_{n \to +\infty} u_n = +\infty$ si $r > 0$, $-\infty$ si $r < 0$</li>
-          <li><strong>Suite géométrique :</strong> $\lim_{n \to +\infty} u_n = +\infty$ si $|q| > 1$, $0$ si $|q| < 1$</li>
+          <li>$u_{n + 1}=a\,u_n+b$ : $u_n=a^n(u_0-u^*)+u^*$, $u^*=\dfrac{b}{1 - a}$ si $a\ne1$.</li>
         </ul>
-      </section>
+      </div>
+    </section>
 
-      <section class="card flashcards-section animate-in">
-        <h2>
-          <i data-lucide="layers" class="icone-violette" style="width: 28px; height: 28px;"></i>
-          2) Flash-cards — Entraînement rapide
-        </h2>
-        <p class="muted">
-          <i data-lucide="mouse-pointer-click" style="width: 16px; height: 16px;"></i>
-          Cliquez sur une carte pour révéler la réponse
-        </p>
-
-        <div class="flashcard" onclick="flipCard(this)">
-          <div class="flashcard-front">
-            <h4>
-              <i data-lucide="help-circle" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Formule du terme général d'une suite arithmétique ?
-            </h4>
-          </div>
-          <div class="flashcard-back">
-            <h4>
-              <i data-lucide="check-circle" class="icone-verte" style="width: 20px; height: 20px;"></i>
-              Réponse
-            </h4>
-            <p>$u_n = u_0 + nr$ ou $u_n = u_1 + (n-1)r$</p>
+    <section class="card section" id="flash">
+      <h2>2) À connaître par cœur — 12 flash‑cards</h2>
+      <nav class="local-toc" aria-label="Sous-plan"><a href="#memo">Mémo</a><span class="sep">•</span><a href="#flash"
+          aria-current="page">À connaître</a><span class="sep">•</span><a href="#tests">Exercices ++</a></nav>
+      <div class="flash-grid">
+        <!-- 12 cartes; clic pour retourner -->
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Somme géom. $\sum_{k = 0}^{n} q^k$</div>
+            <div class="side back">$\begin{cases} n+1&(q=1)\\ \dfrac{1 - q ^ { n+ 1}}{1 - q}&(q\ne1)\end{cases}$</div>
           </div>
         </div>
-
-        <div class="flashcard" onclick="flipCard(this)">
-          <div class="flashcard-front">
-            <h4>
-              <i data-lucide="help-circle" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Formule de la somme des n premiers termes d'une suite géométrique ?
-            </h4>
-          </div>
-          <div class="flashcard-back">
-            <h4>
-              <i data-lucide="check-circle" class="icone-verte" style="width: 20px; height: 20px;"></i>
-              Réponse
-            </h4>
-            <p>$S_n = u_0 \times \frac{1-q^{n+1}}{1-q}$ si $q \neq 1$</p>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Suite arith. $u_{n + 1}=u_n+r$</div>
+            <div class="side back">$u_n=u_0+nr$ ; $\sum u_k=\tfrac{n + 1}{2}(u_0+u_n)$</div>
           </div>
         </div>
-
-        <div class="flashcard" onclick="flipCard(this)">
-          <div class="flashcard-front">
-            <h4>
-              <i data-lucide="help-circle" class="icone-violette" style="width: 20px; height: 20px;"></i>
-              Condition pour qu'une suite géométrique converge vers 0 ?
-            </h4>
-          </div>
-          <div class="flashcard-back">
-            <h4>
-              <i data-lucide="check-circle" class="icone-verte" style="width: 20px; height: 20px;"></i>
-              Réponse
-            </h4>
-            <p>$|q| < 1$</p>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Suite géom. $u_{n + 1}=q u_n$</div>
+            <div class="side back">$u_n=u_0 q^n$</div>
           </div>
         </div>
-      </section>
-
-      <section class="card exercises-section animate-in">
-        <h2>
-          <i data-lucide="zap" class="icone-orange" style="width: 28px; height: 28px;"></i>
-          3) Exercices minute — Validation automatique
-        </h2>
-        <p class="muted">
-          <i data-lucide="target" style="width: 16px; height: 16px;"></i>
-          Répondez rapidement et validez vos réponses
-        </p>
-
-        <div class="exercise">
-          <div class="exercise-question">
-            <i data-lucide="calculator" class="icone-orange" style="width: 16px; height: 16px;"></i>
-            Suite arithmétique : $u_0 = 3$, $r = 5$. Calculer $u_4$.
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Linéaire $u_{n + 1}=a u_n+b$</div>
+            <div class="side back">$u_n=a^n(u_0-u^*)+u^*$, $u^*=\dfrac{b}{1 - a}$</div>
           </div>
-          <input type="number" class="exercise-input" id="ex1" placeholder="Votre réponse">
-          <button class="btn" onclick="checkAnswer(1, 23)">
-            <i data-lucide="check" style="width: 16px; height: 16px;"></i>
-            Vérifier
-          </button>
-          <div id="result1" class="exercise-result" style="display: none;"></div>
         </div>
-
-        <div class="exercise">
-          <div class="exercise-question">
-            <i data-lucide="calculator" class="icone-orange" style="width: 16px; height: 16px;"></i>
-            Suite géométrique : $u_0 = 2$, $q = 3$. Calculer $u_3$.
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">$q^n$</div>
+            <div class="side back">$|q|<1\Rightarrow q^n\to0$ ; $q>1\Rightarrow +\infty$</div>
           </div>
-          <input type="number" class="exercise-input" id="ex2" placeholder="Votre réponse">
-          <button class="btn" onclick="checkAnswer(2, 54)">
-            <i data-lucide="check" style="width: 16px; height: 16px;"></i>
-            Vérifier
-          </button>
-          <div id="result2" class="exercise-result" style="display: none;"></div>
         </div>
-
-        <div class="exercise">
-          <div class="exercise-question">
-            <i data-lucide="calculator" class="icone-orange" style="width: 16px; height: 16px;"></i>
-            Somme des 5 premiers termes de la suite arithmétique $u_0 = 1$, $r = 2$.
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">$\dfrac{1}{n ^ p}$ ($p>0$)</div>
+            <div class="side back">$\to 0$</div>
           </div>
-          <input type="number" class="exercise-input" id="ex3" placeholder="Votre réponse">
-          <button class="btn" onclick="checkAnswer(3, 25)">
-            <i data-lucide="check" style="width: 16px; height: 16px;"></i>
-            Vérifier
-          </button>
-          <div id="result3" class="exercise-result" style="display: none;"></div>
         </div>
-      </section>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">$\dfrac{an + b}{cn + d}$</div>
+            <div class="side back">$\to \dfrac{a}{c}$ si $c\ne0$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">$\sqrt{n + a}-\sqrt{n}$</div>
+            <div class="side back">$\to 0$ (rationalisation)</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Polynôme degré $p\ge1$</div>
+            <div class="side back">$\to \pm\infty$ (terme dominant)</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Comparaison</div>
+            <div class="side back">$u_n\le v_n$ et $u_n\to+\infty$ ⇒ $v_n\to+\infty$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Gendarmes</div>
+            <div class="side back">Si $v_n\le u_n\le w_n$ et $v_n,w_n\to\ell$ ⇒ $u_n\to\ell$</div>
+          </div>
+        </div>
+        <div class="flash" tabindex="0">
+          <div class="card3d">
+            <div class="side front">Bernoulli</div>
+            <div class="side back">$(1+a)^n\ge 1+na$ pour $a>0$</div>
+          </div>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:8px">Astuce : Tab puis Entrée pour retourner au clavier. Clic = recto/verso.
+      </p>
+    </section>
 
-      <section class="card animate-in">
-        <h2>
-          <i data-lucide="external-link" class="icone-rose" style="width: 28px; height: 28px;"></i>
-          4) Aller plus loin
-        </h2>
-        <ul>
-          <li>
-            <i data-lucide="book-open" class="icone-bleue" style="width: 16px; height: 16px; margin-right: 8px;"></i>
-            <a href="cours_suites.html" style="color: var(--bleu-confiance); text-decoration: none; font-weight: 600;">Cours complet sur les suites</a>
-          </li>
-          <li>
-            <i data-lucide="bookmark" class="icone-violette" style="width: 16px; height: 16px; margin-right: 8px;"></i>
-            <a href="fiche_eleve_suites_rappels_premiere.html" style="color: var(--violet-creativite); text-decoration: none; font-weight: 600;">Rappels de Première</a>
-          </li>
-        </ul>
-      </section>
-    </main>
+    <section class="card section" id="tests">
+      <h2>3) Exercices minute ++</h2>
+      <nav class="local-toc" aria-label="Sous-plan"><a href="#memo">Mémo</a><span class="sep">•</span><a href="#flash">À
+          connaître</a><span class="sep">•</span><a href="#tests" aria-current="page">Exercices ++</a>
+      </nav>
+      <p class="muted">Saisissez une expression courte. Tolérance aux espaces et au signe × (<code>x</code>,
+        <code>*</code> acceptés).
+      </p>
+      <div class="grid2">
+        <!-- Import abrégé E1–E8 -->
+        <div class="card">
+          <h3>E1 — Terme général (arith.)</h3>
+          <p>$u_{n + 1}=u_n+3$, $u_0=5$. Donner $u_n$.</p>
+          <input id="e1" class="input mono" placeholder="ex: 5+3n" oninput="checkText('e1','5+3n')" />
+          <div id="e1r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E2 — Somme arith.</h3>
+          <p>$S_n=\sum_{k = 0}^{n}(2k+1)$.</p>
+          <input id="e2" class="input mono" placeholder="ex: (n+1)^2" oninput="checkText('e2','(n+1)^2')" />
+          <div id="e2r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E3 — Somme géom.</h3>
+          <p>$S_n=\sum_{k = 0}^{n}3\cdot 2^k$.</p>
+          <input id="e3" class="input mono" placeholder="ex: 3(2^{n+1}-1)" oninput="checkText('e3','3(2^{n+1}-1)')" />
+          <div id="e3r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E4 — Limite rationnelle</h3>
+          <p>$\displaystyle \lim_{n\to+\infty} \dfrac{5n ^ 2 + 4}{4n ^ 2 + 3n}=\;$</p>
+          <input id="e4" class="input mono" placeholder="ex: 5/4" oninput="checkText('e4','5/4')" />
+          <div id="e4r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E5 — Rationalisation</h3>
+          <p>$\displaystyle \lim_{n\to+\infty}(\sqrt{n + 3}-\sqrt{n})=\;$</p>
+          <input id="e5" class="input mono" placeholder="ex: 0" oninput="checkText('e5','0')" />
+          <div id="e5r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E6 — Puissances</h3>
+          <p>$\displaystyle \lim_{n\to+\infty} q^n$ pour $|q|<1\;:\;$< /p>
+              <input id="e6" class="input mono" placeholder="ex: 0" oninput="checkText('e6','0')" />
+              <div id="e6r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E7 — Linéaire 1er ordre</h3>
+          <p>Résoudre $w_{n + 1}=\tfrac{3}{4}w_n+6$, $w_0=0$.</p>
+          <input id="e7" class="input mono" placeholder="ex: 24(1-(3/4)^n)" oninput="checkText('e7','24(1-(3/4)^n)')" />
+          <div id="e7r" class="result"></div>
+        </div>
+        <div class="card">
+          <h3>E8 — Limite de $\dfrac{u_n + 3}{u_n + 1}$</h3>
+          <p>$u_{n + 1}=\dfrac{u_n + 3}{u_n + 1}$, $u_0>0$ : $\ell=\;$</p>
+          <input id="e8" class="input mono" placeholder="ex: sqrt(3)" oninput="checkText('e8','sqrt(3)')" />
+          <div id="e8r" class="result"></div>
+        </div>
+      </div>
 
-    <div class="sticky-footer">
-      <button class="btn" onclick="scrollTo(0,0)">
-        <i data-lucide="arrow-up" style="width: 18px; height: 18px;"></i>
-        <span>Haut</span>
-      </button>
-    </div>
-  </div>
+      <div class="hr"></div>
+      <h3>Générateurs aléatoires (3)</h3>
+      <div id="randbox"></div>
+
+      <div class="hr"></div>
+      <h3>Exercices minute supplémentaires</h3>
+      <div id="extra"></div>
+    </section>
+
+    <footer class="muted">© 2025 — Fiche élève « Suites ». Tous droits réservés.</footer>
+    <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
+  </main>
 
   <script>
-    // Initialiser les icônes Lucide
-    lucide.createIcons();
+    const $ = (q) => document.querySelector(q);
+    // Thème + outils
+    try { const s = localStorage.getItem('theme'); if (s) { document.body.classList.toggle('light', s === 'light'); } else if (window.matchMedia?.('(prefers-color-scheme: light)').matches) { document.body.classList.add('light'); } } catch (e) {}
+    $('#themeBtn')?.addEventListener('click', () => { document.body.classList.toggle('light'); try { localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch (e) {} MathJax.typesetPromise?.(); });
+    $('#retypesetBtn')?.addEventListener('click', () => MathJax.typesetPromise?.());
+    $('#printBtn')?.addEventListener('click', () => window.print());
 
-    // Gestion du thème
-    function toggleTheme() {
-      const body = document.body;
-      const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      const themeIcon = document.getElementById('theme-icon');
-      
-      body.className = newTheme;
-      localStorage.setItem('theme-fiche-suites', newTheme);
-      
-      // Changer l'icône
-      themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
-      lucide.createIcons();
-      MathJax.typesetPromise?.();
-    }
-
-    // Chargement du thème sauvegardé
-    const savedTheme = localStorage.getItem('theme-fiche-suites') || 'light';
-    document.body.className = savedTheme;
-    document.getElementById('theme-icon').setAttribute('data-lucide', savedTheme === 'dark' ? 'sun' : 'moon');
-
-    // Fonction pour retourner les flash-cards
-    function flipCard(card) {
-      card.classList.toggle('flipped');
-    }
-
-    // Fonction pour vérifier les réponses
-    function checkAnswer(exerciseNum, correctAnswer) {
-      const input = document.getElementById(`ex${exerciseNum}`);
-      const result = document.getElementById(`result${exerciseNum}`);
-      const userAnswer = parseFloat(input.value);
-      
-      result.style.display = 'block';
-      
-      if (userAnswer === correctAnswer) {
-        result.className = 'exercise-result correct';
-        result.innerHTML = `
-          <i data-lucide="check-circle" style="width: 16px; height: 16px; margin-right: 8px;"></i>
-          Correct ! Excellente réponse.
-        `;
-      } else {
-        result.className = 'exercise-result incorrect';
-        result.innerHTML = `
-          <i data-lucide="x-circle" style="width: 16px; height: 16px; margin-right: 8px;"></i>
-          Incorrect. La bonne réponse est ${correctAnswer}.
-        `;
+    // Export PDF Élève / Prof
+    (function () {
+      function doPrint(mode) {
+        const body = document.body;
+        body.setAttribute('data-print-mode', mode);
+        // Optionnel : ouvrir tous les <details> si on en ajoute plus tard
+        setTimeout(() => { window.print(); body.removeAttribute('data-print-mode'); }, 20);
       }
-      
-      lucide.createIcons();
+      document.getElementById('exportEleveBtn')?.addEventListener('click', () => doPrint('eleve'));
+      document.getElementById('exportProfBtn')?.addEventListener('click', () => doPrint('prof'));
+    })();
+
+    // Validation tolérante
+    function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    window.checkText = function (id, expected) { const el = document.getElementById(id), out = document.getElementById(id + 'r'); if (!el || !out) return; const ans = (el.value || '').trim(); let pattern = escRe(expected).replace(/\\s\+/g, '\\s*').replace(/×/g, '[×x*]').replace(/\s/g, '\\s*').replace(/>/g, '\\s*>\\s*'); const re = new RegExp('^' + pattern + '$', 'i'); const ok = re.test(ans); out.className = 'result ' + (ok ? 'ok' : 'bad'); out.textContent = ok ? '✅ Correct' : '❌ Attendu : ' + expected; el.dataset.correct = ok ? '1' : '0'; updateScore(); };
+    window.checkSet = function (id, answers) { const el = document.getElementById(id), out = document.getElementById(id + 'r'); if (!el || !out) return; const norm = s => String(s || '').toLowerCase().replace(/\s+/g, ''); const ok = (answers || []).some(a => norm(el.value) === norm(a)); out.className = 'result ' + (ok ? 'ok' : 'bad'); out.textContent = ok ? '✅ Correct' : '❌ Ex. attendu : ' + ((answers && answers[0]) || ''); el.dataset.correct = ok ? '1' : '0'; updateScore(); };
+
+    // Score
+    function updateScore() { const inputs = [...document.querySelectorAll('.input')]; const tot = inputs.length; const ok = inputs.filter(i => i.dataset.correct === '1').length; const sb = document.getElementById('scoreBox'); if (sb) sb.textContent = '🧮 Score : ' + ok + '/' + tot; }
+    document.addEventListener('input', e => { if (!e.target.classList?.contains('input')) return; updateScore(); });
+    $('#resetBtn')?.addEventListener('click', () => { document.querySelectorAll('.input').forEach(inp => { inp.value = ''; inp.dataset.correct = '0'; const out = document.getElementById(inp.id + 'r'); if (out) { out.className = 'result'; out.textContent = ''; } }); updateScore(); });
+
+    // Flash-cards flip (clic ou Entrée/Espace)
+    document.querySelectorAll('.flash').forEach(fc => {
+      const toggle = () => fc.classList.toggle('flipped');
+      fc.addEventListener('click', toggle);
+      fc.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    });
+
+    // Générateurs aléatoires (3 items)
+    function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+    function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function renderRandom() {
+      const box = document.getElementById('randbox'); if (!box) return; box.innerHTML = '';
+      // R1 — Somme géométrique A * sum q^k
+      const A = choice([1, 2, 3, 5]); const q = choice([2, 3, 4]);
+      const r1 = `<div class="card"><h3>R1 — Somme géométrique</h3>
+          <p>$S_n=\\sum_{k = 0}^{n} ${A}\\cdot ${q}^k$.</p>
+          <input id="r1" class="input mono" placeholder="ex: ${A}*(1-${q}^(n+1))/(1-${q})" />
+          <div id="r1r" class="result"></div></div>`;
+      // R2 — Limite rationnelle (an+b)/(cn+d) -> a/c
+      let a = randInt(-5, 5); if (a === 0) a = 1; let c = choice([2, 3, 4, 5]); if (Math.abs(a) % c === 0) a += 1; let b = randInt(-5, 5), d = randInt(-5, 5);
+      const r2 = `<div class="card"><h3>R2 — Limite rationnelle</h3>
+          <p>$\\displaystyle \\lim_{n\\to+\\infty} \\dfrac{${a}n+${b}}{${c}n+${d}}=\;$</p>
+          <input id="r2" class="input mono" placeholder="ex: ${a}/${c}" />
+          <div id="r2r" class="result"></div></div>`;
+      // R3 — Terme dominant d'un polynôme
+      const deg = Math.random() < 0.5 ? 2 : 3; const Acoef = (Math.random() < 0.5 ? -1 : 1) * (1 + Math.floor(Math.random() * 3));
+      const b2 = (Math.floor(Math.random() * 11) - 5), c2 = (Math.floor(Math.random() * 11) - 5), d2 = (Math.floor(Math.random() * 11) - 5);
+      const poly = deg === 2 ? `${Acoef}n^2 ${b2 >= 0 ? '+' : ''}${b2}n ${c2 >= 0 ? '+' : ''}${c2}` : `${Acoef}n^3 ${b2 >= 0 ? '+' : ''}${b2}n^2 ${c2 >= 0 ? '+' : ''}${c2}n ${d2 >= 0 ? '+' : ''}${d2}`;
+      const sign = Acoef > 0 ? '+∞' : '-∞';
+      const r3 = `<div class="card"><h3>R3 — Terme dominant</h3>
+          <p>$\\displaystyle \\lim_{n\\to+\\infty} (${poly})=\;$</p>
+          <input id="r3" class="input mono" placeholder="ex: ${sign}" />
+          <div id="r3r" class="result"></div></div>`;
+      box.insertAdjacentHTML('beforeend', r1 + r2 + r3);
+      try { MathJax.typesetPromise?.([box]); } catch (e) {}
+      // Validation multi-formes
+      $('#r1')?.addEventListener('input', () => { const ans1 = `${A}*(1-${q}^(n+1))/(1-${q})`; const ans2 = `${A}*(${q}^(n+1)-1)/(${q}-1)`; checkSet('r1', [ans1, ans2]); });
+      $('#r2')?.addEventListener('input', () => checkSet('r2', [`${a}/${c}`, `(${a})/(${c})`]));
+      $('#r3')?.addEventListener('input', () => checkSet('r3', [sign, sign.replace('∞', 'inf'), sign.replace('∞', 'infty'), sign.replace('∞', 'infinity')]));
     }
 
-    // Event listeners
-    document.addEventListener('DOMContentLoaded', () => {
-      lucide.createIcons();
-      
-      // Boutons principaux
-      document.getElementById('themeBtn')?.addEventListener('click', toggleTheme);
-      document.getElementById('retypesetBtn')?.addEventListener('click', () => MathJax.typesetPromise?.());
-      document.getElementById('printBtn')?.addEventListener('click', () => window.print());
+    // Exercices minute supplémentaires (3) : rationalisation variable, gendarmes, Bernoulli
+    function renderExtras() {
+      const box = document.getElementById('extra'); if (!box) return; box.innerHTML = '';
+      // M1 — Rationalisation variable
+      const a = 1 + Math.floor(Math.random() * 6);
+      const m1 = `<div class="grid2"><div class="card"><h3>M1 — Rationalisation variable</h3>
+          <p>$\\displaystyle \\lim_{n\\to+\\infty}(\\sqrt{n + ${a}}-\\sqrt{n})=\;$</p>
+          <input id="m1" class="input mono" placeholder="ex: 0" />
+          <div id="m1r" class="result"></div></div>`;
+      // M2 — Gendarmes (exemple classique)
+      const m2 = `<div class="card"><h3>M2 — Gendarmes</h3>
+            <p>En utilisant $-\\dfrac{1}{n}\\le \\dfrac{\\sin n}{n}\\le \\dfrac{1}{n}$, donner $\\displaystyle \\lim_{n\\to+\\infty} \\dfrac{\\sin n}{n}=\;$</p>
+            <input id="m2" class="input mono" placeholder="ex: 0" />
+            <div id="m2r" class="result"></div></div>`;
+      // M3 — Bernoulli (forme à compléter)
+      const m3 = `<div class="card"><h3>M3 — Bernoulli</h3>
+            <p>Pour $a>0$ et tout $n\\in\\N$, compléter : $(1+a)^n\\ge\;$</p>
+            <input id="m3" class="input mono" placeholder="ex: 1+na" />
+            <div id="m3r" class="result"></div></div></div>`;
+      box.insertAdjacentHTML('beforeend', m1 + m2 + m3);
+      try { MathJax.typesetPromise?.([box]); } catch (e) {}
+      document.getElementById('m1')?.addEventListener('input', () => checkSet('m1', [`0`]));
+      document.getElementById('m2')?.addEventListener('input', () => checkSet('m2', [`0`]));
+      document.getElementById('m3')?.addEventListener('input', () => checkSet('m3', [`1+na`, `1 + n a`]));
+    }
 
-      // Animation d'entrée progressive
-      const cards = document.querySelectorAll('.animate-in');
-      cards.forEach((card, index) => {
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        }, index * 200);
-      });
-    });
+    $('#regenBtn')?.addEventListener('click', () => { renderRandom(); renderExtras(); updateScore(); });
+    // First render
+    renderRandom();
+    renderExtras();
+    // Mise à jour initiale du score
+    updateScore();
   </script>
 </body>
+
 </html>

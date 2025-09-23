@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Second degré — Fiche élève (Mémo • Révisions • Méthode • Conseils)</title>
     <link rel="stylesheet" href="/assets/css/site.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
       :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
       .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
@@ -33,7 +34,6 @@
       window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}",pp:"\\mathbb{P}"}},svg:{fontCache:'global'}};
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   </head>
   <body class="light">
     <a class="skip-link" href="#main">Aller au contenu</a>
@@ -45,12 +45,13 @@
             <p class="muted">À lire avant un contrôle: formules clés, méthodes pas à pas, pièges et mini‑tests rapides.</p>
           </div>
           <div class="buttons">
-            <button class="btn" id="themeBtn"><i data-lucide="moon"></i></button>
-            <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw"></i></button>
-            <button class="btn" id="printBtn"><i data-lucide="printer"></i></button>
+            <button class="btn" id="themeBtn"><i data-lucide="moon" style="width:16px;height:16px;margin-right:4px;"></i>Thème</button>
+            <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width:16px;height:16px;margin-right:4px;"></i>LaTeX</button>
+            <button class="btn" id="printBtn"><i data-lucide="printer" style="width:16px;height:16px;margin-right:4px;"></i>Imprimer</button>
           </div>
         </div>
       </header>
+
       <main id="main">
         <section class="card" id="memo">
           <h2>1) Mémo — Formules indispensables</h2>
@@ -70,6 +71,7 @@
             </ul>
           </div>
         </section>
+
         <section class="card" id="methodes">
           <h2>2) Méthodologie — Pas à pas</h2>
           <details open><summary><strong>Mettre sous forme canonique</strong></summary>
@@ -92,6 +94,7 @@
             </ol>
           </details>
         </section>
+
         <section class="card" id="quick">
           <h2>3) Révisions express — 10 minutes</h2>
           <div class="grid">
@@ -128,6 +131,7 @@
             </div>
           </div>
         </section>
+
         <section class="card" id="conseils">
           <h2>4) Conseils & erreurs fréquentes</h2>
           <details open><summary><strong>Pièges à éviter</strong></summary>
@@ -146,6 +150,7 @@
             </ul>
           </details>
         </section>
+
         <section class="card" id="liens">
           <h2>5) Aller plus loin</h2>
           <ul>
@@ -153,22 +158,25 @@
           </ul>
         </section>
       </main>
+
       <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
     </div>
+
     <script>
       const $=(q)=>document.querySelector(q);
       function fmt(x){ if(!isFinite(x)) return String(x); const s=Number(x).toFixed(6); return s.replace(/\.0+$/,'').replace(/(\.[0-9]*[1-9])0+$/,'$1'); }
-      function intervalsFR(a,b,c){ const D=b*b-4*a*c; if(D<0){return a>0?"$]-\infty;+\infty[$":"∅";} if(D===0){const x0=-b/(2*a); return a>0?`$]-\infty;${fmt(x0)}]\cup[${fmt(x0)};+\infty[$`:`∅`; } const r1=(-b-Math.sqrt(D))/(2*a), r2=(-b+Math.sqrt(D))/(2*a); const [x1,x2]=[Math.min(r1,r2),Math.max(r1,r2)]; return a>0?`$]-\infty;${fmt(x1)}]\cup[${fmt(x2)};+\infty[$`:`$[${fmt(x1)};${fmt(x2)}]$`; }
+      function intervalsFR(a,b,c){ const D=b*b-4*a*c; if(D<0){return a>0?"$]-\\infty;+\\infty[$":"∅";} if(D===0){const x0=-b/(2*a); return a>0?`$]-\\infty;${fmt(x0)}]\\cup[${fmt(x0)};+\\infty[$`:`∅`; } const r1=(-b-Math.sqrt(D))/(2*a), r2=(-b+Math.sqrt(D))/(2*a); const [x1,x2]=[Math.min(r1,r2),Math.max(r1,r2)]; return a>0?`$]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$`:`$[${fmt(x1)};${fmt(x2)}]$`; }
       function canonical(a,b,c){ const alpha=-b/(2*a); const beta=c-(b*b)/(4*a); return {alpha,beta}; }
       // UI
       $('#themeBtn')?.addEventListener('click',()=>{ document.body.classList.toggle('light'); MathJax.typesetPromise?.(); });
       $('#retypesetBtn')?.addEventListener('click',()=>MathJax.typesetPromise?.());
       $('#printBtn')?.addEventListener('click',()=>window.print());
+
       // Quick checks
       $('#btnQ1')?.addEventListener('click',()=>{
         const a=parseFloat($('#qa').value), b=parseFloat($('#qb').value), c=parseFloat($('#qc').value);
         if(!(isFinite(a)&&a!==0&&isFinite(b)&&isFinite(c))){ $('#q1out').innerHTML='<div class="result bad">Entrer a non nul, b, c.</div>'; return; }
-        const D=b*b-4*a*c; let msg=`$\Delta=${fmt(D)}$`;
+        const D=b*b-4*a*c; let msg=`$\\Delta=${fmt(D)}$`;
         if(D<0){ msg+=` — aucune racine réelle`; }
         else if(D===0){ msg+=` — racine double $x=${fmt(-b/(2*a))}$`; }
         else{ const x1=(-b-Math.sqrt(D))/(2*a), x2=(-b+Math.sqrt(D))/(2*a); msg+=` — racines $x=${fmt(x1)}, ${fmt(x2)}$`; }
@@ -184,7 +192,7 @@
         const a=parseFloat($('#sa').value), b=parseFloat($('#sb').value), c=parseFloat($('#sc').value);
         if(!(isFinite(a)&&a!==0&&isFinite(b)&&isFinite(c))){ $('#q3out').innerHTML='<div class="result bad">Entrer a non nul, b, c.</div>'; return; }
         const z=intervalsFR(a,b,c);
-        $('#q3out').innerHTML=`<div class="result ok">$f(x) \ge 0$ sur ${z}</div>`; MathJax.typesetPromise?.();
+        $('#q3out').innerHTML=`<div class="result ok">$f(x) \\ge 0$ sur ${z}</div>`; MathJax.typesetPromise?.();
       });
       $('#btnQ4')?.addEventListener('click',()=>{
         const S=parseFloat($('#rs').value), P=parseFloat($('#rp').value);
@@ -193,7 +201,9 @@
       });
     </script>
     <script>
+    if (typeof lucide !== "undefined") {
       lucide.createIcons();
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>

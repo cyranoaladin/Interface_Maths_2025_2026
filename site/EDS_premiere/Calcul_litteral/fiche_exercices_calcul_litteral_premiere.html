@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Calcul littéral — Exercices + Méthodologie (EDS Première)</title>
     <link rel="stylesheet" href="/assets/css/site.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
       :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
       .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
@@ -44,7 +45,6 @@
       window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}"}},svg:{fontCache:'global'}};
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-      <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   </head>
   <body class="light">
     <div class="container">
@@ -56,9 +56,9 @@
             <p class="pill" aria-label="périmètre de la fiche">Fiche de rappels strictement au programme de Seconde (aucune notion de Première)</p>
           </div>
           <div class="buttons">
-            <button class="btn" id="themeBtn"><i data-lucide="moon"></i> Thème</button>
-            <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw"></i> LaTeX</button>
-            <button class="btn" id="printBtn"><i data-lucide="printer"></i> Imprimer</button>
+            <button class="btn" id="themeBtn"><i data-lucide="moon" style="width:16px;height:16px;margin-right:4px;"></i>Thème</button>
+            <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width:16px;height:16px;margin-right:4px;"></i>LaTeX</button>
+            <button class="btn" id="printBtn"><i data-lucide="printer" style="width:16px;height:16px;margin-right:4px;"></i>Imprimer</button>
           </div>
         </div>
       </header>
@@ -417,7 +417,7 @@
       </section>
 
       <footer class="muted mt-22">© 2025 — Fiche conçue par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.</footer>
-      <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)"><i data-lucide="arrow-up"></i> Haut</button></div>
+      <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
     </div>
 
     <script>
@@ -426,9 +426,11 @@
       $('#retypesetBtn')?.addEventListener('click',()=>MathJax.typesetPromise?.());
       $('#printBtn')?.addEventListener('click',()=>window.print());
     </script>
-      <script>
+    <script>
+    if (typeof lucide !== "undefined") {
       lucide.createIcons();
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>
 

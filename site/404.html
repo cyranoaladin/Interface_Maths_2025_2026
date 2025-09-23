@@ -1,43 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page non trouvée</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-        .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-        h1 { color: #333; }
-        p { color: #666; }
-        .button { display: inline-block; padding: 10px 20px; margin: 10px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; }
-        .button:hover { background-color: #0056b3; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page non trouvée — Interface Maths</title>
+  <link rel="stylesheet" href="/assets/css/site.css" />
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>404 - Page non trouvée</h1>
-        <p>Désolé, la page que vous recherchez n'existe pas.</p>
-        <a href="/" class="button">Retour à l'accueil</a>
-        <button class="button" id="refreshButton"><i data-lucide="refresh-cw"></i> Actualiser</button>
-        <button class="button" id="printButton"><i data-lucide="printer"></i> Imprimer</button>
-        <button class="button" id="viewButton"><i data-lucide="eye"></i> Voir plus</button>
-        <button class="button" id="modeButton"><i data-lucide="moon"></i> Mode</button>
+  <div class="wrap">
+    <div class="card">
+      <h1>404 — Page non trouvée</h1>
+      <p>Désolé, la page demandée n’existe pas ou a été déplacée.</p>
+      <p><a class="btn" href="/">← Retour à l’accueil</a></p>
     </div>
-    <script>
-        document.getElementById('refreshButton').addEventListener('click', function() {
-            location.reload();
-        });
-        document.getElementById('printButton').addEventListener('click', function() {
-            window.print();
-        });
-        document.getElementById('viewButton').addEventListener('click', function() {
-            alert('Afficher plus d\'informations...');
-        });
-        document.getElementById('modeButton').addEventListener('click', function() {
-            alert('Changer de mode...');
-        });
-        lucide.createIcons();
-    </script>
+  </div>
+  <script>
+    if (typeof lucide !== "undefined") {
+      lucide.createIcons();
+    }
+  </script>
 </body>
 </html>
+

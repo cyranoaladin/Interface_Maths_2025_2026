@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Second degré — Cours complet (EDS Première)</title>
     <link rel="stylesheet" href="/assets/css/site.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
       :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
       .light{--bg:#f6f7fb;--bg2:#eef0f8;--card:#fff;--text:#0f172a;--muted:#4b5563;--primary:#3b82f6;--accent:#06b6d4;--good:#059669;--bad:#b91c1c;--border:#e5e7eb;--shadow:0 10px 30px rgba(2,6,23,.06)}
@@ -67,10 +68,10 @@
             <p class="pill">Polynômes du 2e degré, forme canonique, signes, variations, racines — conforme au programme de Première (EDS)</p>
           </div>
           <div class="buttons">
-            <button class="btn" id="themeBtn">🌓 Thème</button>
-            <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
-            <button class="btn" id="revealBtn" aria-pressed="false">🧩 Révélations</button>
-            <button class="btn" id="printBtn">🖨️ Imprimer</button>
+            <button class="btn" id="themeBtn"><i data-lucide="moon" style="width: 16px; height: 16px;"></i> Thème</button>
+            <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> LaTeX</button>
+            <button class="btn" id="revealBtn" aria-pressed="false"><i data-lucide="eye" style="width: 16px; height: 16px;"></i> Révélations</button>
+            <button class="btn" id="printBtn"><i data-lucide="printer" style="width: 16px; height: 16px;"></i> Imprimer</button>
           </div>
         </div>
       </header>
@@ -606,6 +607,11 @@
       function showCorr(){ const el=document.getElementById('genCorr'); if(!el) return; el.style.display='block'; MathJax.typesetPromise?.(); el.scrollIntoView({behavior:'smooth', block:'nearest'}); }
       document.getElementById('btnGen')?.addEventListener('click', generate);
       document.getElementById('btnCorr')?.addEventListener('click', showCorr);
+      
+      // Initialiser les icônes Lucide
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
     </script>
   </body>
 </html>

@@ -1,58 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Page Mathématique 2025-2026</title>
-  <meta name="description" content="Fiches élèves prêtes à l’emploi (HTML imprimable + MathJax) — EDS Première, EDS Terminale, Maths expertes." />
-  <meta name="theme-color" content="#0b1020" />
-  <meta property="og:title" content="Page Mathématique 2025-2026" />
-  <meta property="og:description" content="Fiches élèves prêtes à l’emploi (HTML imprimable + MathJax)." />
-  <meta property="og:type" content="website" />
-  <link rel="canonical" href="/" />
-  <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css" />
-  <script src="assets/js/contents.js" defer></script>
-  <script src="assets/js/theme-toggle.js" defer></script>
-  <script>
-    // En file://, PWA (manifest/SW) est restreint. En HTTP(S) ou localhost, ok.
-    if ((location.protocol === 'http:' || location.protocol === 'https:') && 'serviceWorker' in navigator) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}))
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de Test</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+    </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Aller au contenu</a>
-  <div class="wrap">
-    <header>
-      <div class="title-block">
-        <img class="logo" src="assets/img/icon.svg" alt="Logo Interface Maths" />
-        <div class="title-text">
-          <h1>Page Mathématique 2025-2026</h1>
-          <small class="subtitle"><span class="i" aria-hidden="true">🎓</span> Alaeddine BEN RHOUMA - Lycée Pierre Mendès Fraance de Tunis</small>
-        </div>
-      </div>
-      <nav aria-label="Navigation principale">
-        <button id="theme-toggle" class="btn" type="button" aria-pressed="false" aria-label="Basculer le thème">Thème</button>
-      </nav>
-    </header>
-
-    <main id="main">
-
-      <section class="card" id="auto-index">
-        <h2>Sommaire</h2>
-        <div id="auto-index-body" class="pre-wrap">
-          <small>Chargement...</small>
-        </div>
-      </section>
-    </main>
-
-    <footer class="card">
-      <small>© 2025 — Alaeddine Ben Rhouma. Licence CC BY-NC-SA 4.0.</small>
-    </footer>
-  </div>
+    <h1>Bienvenue sur la page de test</h1>
+    <p>Ceci est un paragraphe de contenu pédagogique.</p>
+    <button id="moon-btn"><i data-lucide="moon"></i> Mode Nuit</button>
+    <button id="refresh-btn"><i data-lucide="refresh-cw"></i> Actualiser</button>
+    <button id="eye-btn"><i data-lucide="eye"></i> Voir</button>
+    <button id="printer-btn"><i data-lucide="printer"></i> Imprimer</button>
+    <script>
+        console.log("Script existant.");
+        lucide.createIcons();
+    </script>
 </body>
 </html>
-

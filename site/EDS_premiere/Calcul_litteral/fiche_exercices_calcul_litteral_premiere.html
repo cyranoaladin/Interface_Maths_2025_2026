@@ -44,6 +44,7 @@
       window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}"}},svg:{fontCache:'global'}};
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+      <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   </head>
   <body class="light">
     <div class="container">
@@ -55,9 +56,9 @@
             <p class="pill" aria-label="périmètre de la fiche">Fiche de rappels strictement au programme de Seconde (aucune notion de Première)</p>
           </div>
           <div class="buttons">
-            <button class="btn" id="themeBtn">🌓 Thème</button>
-            <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
-            <button class="btn" id="printBtn">🖨️ Imprimer</button>
+            <button class="btn" id="themeBtn"><i data-lucide="moon"></i> Thème</button>
+            <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw"></i> LaTeX</button>
+            <button class="btn" id="printBtn"><i data-lucide="printer"></i> Imprimer</button>
           </div>
         </div>
       </header>
@@ -416,7 +417,7 @@
       </section>
 
       <footer class="muted mt-22">© 2025 — Fiche conçue par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.</footer>
-      <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
+      <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)"><i data-lucide="arrow-up"></i> Haut</button></div>
     </div>
 
     <script>
@@ -424,6 +425,9 @@
       $('#themeBtn')?.addEventListener('click',()=>{document.body.classList.toggle('light'); MathJax.typesetPromise?.(); });
       $('#retypesetBtn')?.addEventListener('click',()=>MathJax.typesetPromise?.());
       $('#printBtn')?.addEventListener('click',()=>window.print());
+    </script>
+      <script>
+      lucide.createIcons();
     </script>
   </body>
 </html>

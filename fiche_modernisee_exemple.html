@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calcul littéral — Exercices + Méthodologie (EDS Première)</title>
+  <link rel="stylesheet" href="/site/assets/css/site_nouveau.css" />
+  <style>
+    /* Styles spécifiques pour cette fiche */
+    .difficulty-stars {
+      color: #fbbf24;
+      font-size: 0.875rem;
+      margin-left: 8px;
+    }
+    
+    .exercise-card {
+      border-left: 4px solid var(--primary);
+      margin: 16px 0;
+      transition: all 0.3s ease;
+    }
+    
+    .exercise-card:hover {
+      border-left-color: var(--secondary);
+      transform: translateX(4px);
+    }
+    
+    .exercise-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    
+    .exercise-number {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    
+    .math-expression {
+      background: var(--bg2);
+      padding: 16px;
+      border-radius: 8px;
+      margin: 12px 0;
+      border-left: 3px solid var(--accent);
+      font-family: 'Times New Roman', serif;
+    }
+    
+    .solution-steps {
+      background: var(--gradient-card);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+    
+    .methodology-card {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+      border: 1px solid var(--accent);
+    }
+    
+    .progress-indicator {
+      display: flex;
+      gap: 4px;
+      margin: 16px 0;
+    }
+    
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: all 0.2s ease;
+    }
+    
+    .progress-dot.active {
+      background: var(--primary);
+      transform: scale(1.2);
+    }
+    
+    .progress-dot.completed {
+      background: var(--success);
+    }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]],
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+        macros: {
+          N: "\\mathbb{N}",
+          Z: "\\mathbb{Z}",
+          Q: "\\mathbb{Q}",
+          R: "\\mathbb{R}"
+        }
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-theme="dark">
+  <div class="container">
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    
+    <header>
+      <nav class="breadcrumb">
+        <a href="/">Accueil</a>
+        <span class="breadcrumb-separator">›</span>
+        <a href="/eds-premiere">EDS Première</a>
+        <span class="breadcrumb-separator">›</span>
+        <span>Calcul littéral</span>
+      </nav>
+      
+      <div class="toolbar">
+        <div class="title-section">
+          <div class="subject-icon">∫</div>
+          <div class="title-text">
+            <h1>Calcul littéral — Exercices + Méthodologie</h1>
+            <div class="subtitle">
+              <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis
+              <span class="badge">Rappels de seconde</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="buttons">
+          <button class="btn" id="themeBtn">🌓 Thème</button>
+          <button class="btn" id="retypesetBtn">🔄 LaTeX</button>
+          <button class="btn btn-primary" id="printBtn">🖨️ Imprimer</button>
+          <button class="btn" id="progressBtn">📊 Progression</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- Carte de présentation -->
+      <section class="card fade-in-up">
+        <div class="card-header">
+          <div class="card-icon">📝</div>
+          <div>
+            <h2>À propos de cette fiche</h2>
+            <p class="text-muted">Fiche de rappels strictement au programme de Seconde (aucune notion de Première)</p>
+          </div>
+        </div>
+        
+        <div class="progress-indicator">
+          <div class="progress-dot completed"></div>
+          <div class="progress-dot completed"></div>
+          <div class="progress-dot active"></div>
+          <div class="progress-dot"></div>
+          <div class="progress-dot"></div>
+        </div>
+        
+        <p><strong>Objectif :</strong> Maîtriser les techniques de calcul littéral essentielles pour la suite du programme.</p>
+      </section>
+
+      <!-- Sommaire par difficulté -->
+      <section class="card slide-in-right">
+        <div class="card-header">
+          <div class="card-icon">⭐</div>
+          <h2>Sommaire par difficulté</h2>
+        </div>
+        
+        <div class="grid cols-3">
+          <div class="pill pill-primary">
+            <span class="difficulty-stars">★</span>
+            <div>
+              <strong>Niveau 1</strong><br>
+              <small>Développer & réduire, Carrés</small>
+            </div>
+          </div>
+          <div class="pill">
+            <span class="difficulty-stars">★★</span>
+            <div>
+              <strong>Niveau 2</strong><br>
+              <small>Factoriser, Équations, Inéquations</small>
+            </div>
+          </div>
+          <div class="pill">
+            <span class="difficulty-stars">★★★</span>
+            <div>
+              <strong>Niveau 3</strong><br>
+              <small>Équations complexes, Domaines</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Plan de la fiche -->
+      <section class="grid cols-2">
+        <nav class="card methodology-card">
+          <div class="card-header">
+            <div class="card-icon">🗺️</div>
+            <h2>Plan de la fiche</h2>
+          </div>
+          
+          <ol style="margin-left: 20px;">
+            <li><a href="#dev">Développer & réduire</a></li>
+            <li><a href="#facto">Factoriser</a></li>
+            <li><a href="#equations">Équations (dont produit)</a></li>
+            <li><a href="#inequations">Inéquations</a></li>
+            <li><a href="#domaine">Domaine de définition</a></li>
+            <li><a href="#methodo">Fiche méthodologie</a></li>
+          </ol>
+          
+          <div class="pill" style="margin-top: 16px;">
+            💡 <strong>Astuce :</strong> Corrections détaillées repliées — dépliez au besoin
+          </div>
+        </nav>
+
+        <!-- Exercice 1 -->
+        <div class="card exercise-card" id="dev">
+          <div class="exercise-header">
+            <h2>Développer & réduire</h2>
+            <span class="exercise-number">Ex 1</span>
+          </div>
+          
+          <details open>
+            <summary><strong>Série — Développement (sélection)</strong> <span class="difficulty-stars">★</span></summary>
+            
+            <div class="step">
+              <div class="n">1</div>
+              <div class="step-content">
+                <p><strong>Calculer :</strong></p>
+                <div class="math-expression">
+                  $ (3x-1)(2x+4) - (x+2)(4x-5) $
+                </div>
+                
+                <details>
+                  <summary>💡 Voir la correction détaillée</summary>
+                  <div class="solution-steps">
+                    <p><strong>Étape 1 :</strong> Développons le premier produit</p>
+                    <div class="math-expression">
+                      $ (3x-1)(2x+4) = 6x^2 + 12x - 2x - 4 = 6x^2 + 10x - 4 $
+                    </div>
+                    
+                    <p><strong>Étape 2 :</strong> Développons le second produit</p>
+                    <div class="math-expression">
+                      $ (x+2)(4x-5) = 4x^2 - 5x + 8x - 10 = 4x^2 + 3x - 10 $
+                    </div>
+                    
+                    <p><strong>Étape 3 :</strong> Calculons la différence</p>
+                    <div class="math-expression">
+                      $ (6x^2 + 10x - 4) - (4x^2 + 3x - 10) = 2x^2 + 7x + 6 $
+                    </div>
+                    
+                    <div class="result result-success">
+                      <strong>Résultat final :</strong> $ 2x^2 + 7x + 6 $
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="n">2</div>
+              <div class="step-content">
+                <p><strong>Calculer :</strong></p>
+                <div class="math-expression">
+                  $ (7x+3)^2 - (3x-2)^2 $
+                </div>
+                
+                <details>
+                  <summary>💡 Voir la correction détaillée</summary>
+                  <div class="solution-steps">
+                    <p><strong>Méthode :</strong> Utilisons l'identité remarquable $a^2 - b^2 = (a+b)(a-b)$</p>
+                    
+                    <p><strong>Étape 1 :</strong> Identifions $a = 7x+3$ et $b = 3x-2$</p>
+                    
+                    <p><strong>Étape 2 :</strong> Calculons $a+b$ et $a-b$</p>
+                    <div class="math-expression">
+                      $ a + b = (7x+3) + (3x-2) = 10x + 1 $<br>
+                      $ a - b = (7x+3) - (3x-2) = 4x + 5 $
+                    </div>
+                    
+                    <p><strong>Étape 3 :</strong> Appliquons la formule</p>
+                    <div class="math-expression">
+                      $ (7x+3)^2 - (3x-2)^2 = (10x + 1)(4x + 5) $
+                    </div>
+                    
+                    <div class="result result-success">
+                      <strong>Résultat final :</strong> $ (10x + 1)(4x + 5) = 40x^2 + 54x + 5 $
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Méthodologie -->
+      <section class="card methodology-card" id="methodo">
+        <div class="card-header">
+          <div class="card-icon">🎯</div>
+          <h2>Fiche méthodologie</h2>
+        </div>
+        
+        <div class="grid cols-2">
+          <div>
+            <h3>🔧 Techniques essentielles</h3>
+            <ul>
+              <li><strong>Développement :</strong> Distributivité simple et double</li>
+              <li><strong>Factorisation :</strong> Facteur commun, identités remarquables</li>
+              <li><strong>Équations :</strong> Méthodes de résolution systématiques</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3>⚠️ Erreurs courantes</h3>
+            <div class="result result-warning">
+              <strong>Attention :</strong> $(a+b)^2 \neq a^2 + b^2$<br>
+              <strong>Correct :</strong> $(a+b)^2 = a^2 + 2ab + b^2$
+            </div>
+          </div>
+        </div>
+        
+        <details>
+          <summary><strong>📚 Identités remarquables à retenir</strong></summary>
+          <div class="math-expression">
+            $ (a+b)^2 = a^2 + 2ab + b^2 $<br>
+            $ (a-b)^2 = a^2 - 2ab + b^2 $<br>
+            $ (a+b)(a-b) = a^2 - b^2 $
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <div class="sticky-footer">
+      <button class="btn btn-success" onclick="toggleAllDetails()">📖 Tout déplier</button>
+      <button class="btn" onclick="scrollToTop()">⬆️ Haut</button>
+    </div>
+  </div>
+
+  <script>
+    // Gestion du thème
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Chargement du thème sauvegardé
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+
+    // Gestion des détails
+    function toggleAllDetails() {
+      const details = document.querySelectorAll('details');
+      const allOpen = Array.from(details).every(d => d.open);
+      details.forEach(d => d.open = !allOpen);
+      
+      const btn = event.target;
+      btn.textContent = allOpen ? '📖 Tout déplier' : '📕 Tout replier';
+    }
+
+    // Retour en haut
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Retypage MathJax
+    function retypeset() {
+      if (window.MathJax) {
+        MathJax.typesetPromise().then(() => {
+          console.log('MathJax retyped');
+        }).catch(err => console.error('MathJax error:', err));
+      }
+    }
+
+    // Progression
+    function updateProgress() {
+      const details = document.querySelectorAll('details');
+      const openDetails = document.querySelectorAll('details[open]');
+      const progress = (openDetails.length / details.length) * 100;
+      
+      const dots = document.querySelectorAll('.progress-dot');
+      const activeDots = Math.floor((progress / 100) * dots.length);
+      
+      dots.forEach((dot, index) => {
+        dot.classList.remove('active', 'completed');
+        if (index < activeDots) {
+          dot.classList.add('completed');
+        } else if (index === activeDots) {
+          dot.classList.add('active');
+        }
+      });
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('themeBtn').addEventListener('click', toggleTheme);
+      document.getElementById('retypesetBtn').addEventListener('click', retypeset);
+      document.getElementById('printBtn').addEventListener('click', () => window.print());
+      document.getElementById('progressBtn').addEventListener('click', updateProgress);
+      
+      // Animation au scroll
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in-up');
+          }
+        });
+      });
+      
+      document.querySelectorAll('.card').forEach(card => {
+        observer.observe(card);
+      });
+      
+      // Mise à jour initiale de la progression
+      updateProgress();
+    });
+  </script>
+</body>
+</html>

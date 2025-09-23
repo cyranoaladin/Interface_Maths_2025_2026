@@ -1,152 +1,781 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiche élève - Arithmétique Chapitre 1</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/lucide@latest/font/lucide.css" rel="stylesheet">
-    <style>
-        :root {
-            --blue-confiance: #2196F3; /* Bleu vif */
-            --green-reussite: #4CAF50; /* Vert */
-            --purple-creativite: #9C27B0; /* Violet */
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fiche mémo & méthodologie — Arithmétique (Maths expertes)</title>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    :root {
+      /* Palette éducative */
+      --bleu-confiance: #2563EB;
+      --vert-reussite: #16A34A;
+      --violet-creativite: #7C3AED;
+      --orange-energie: #EA580C;
+      --jaune-lumiere: #FCD34D;
+      --rose-encouragement: #EC4899;
+      
+      /* Couleurs neutres */
+      --gris-ardoise: #475569;
+      --gris-clair: #94A3B8;
+      --blanc-pur: #FFFFFF;
+      --bleu-nuit: #0F172A;
+      --gris-tres-clair: #F8FAFC;
+      
+      /* Gradients éducatifs */
+      --gradient-apprentissage: linear-gradient(135deg, var(--bleu-confiance), var(--vert-reussite));
+      --gradient-creativite: linear-gradient(135deg, var(--violet-creativite), var(--bleu-confiance));
+      --gradient-energie: linear-gradient(135deg, var(--orange-energie), var(--jaune-lumiere));
+      
+      /* Ombres éducatives */
+      --ombre-douce: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
+      --ombre-moyenne: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+      --ombre-forte: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
+    }
+
+    /* Compatibilité avec l'ancien système */
+    :root {
+      --bg: #0b1020;
+      --bg2: #11162a;
+      --card: #151b34;
+      --text: #eef2ff;
+      --muted: #a2b0d6;
+      --primary: #6aa6ff;
+      --accent: #22d3ee;
+      --good: #0b3d23;
+      --bad: #65121f;
+      --border: #28314f;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .25);
+    }
+
+    .light {
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      --bg2: rgba(248, 250, 252, 0.8);
+      --card: rgba(255, 255, 255, 0.95);
+      --text: var(--gris-ardoise);
+      --muted: var(--gris-clair);
+      --primary: var(--bleu-confiance);
+      --accent: var(--violet-creativite);
+      --good: var(--vert-reussite);
+      --bad: #DC2626;
+      --border: rgba(226, 232, 240, 0.6);
+      --shadow: var(--ombre-douce);
+    }
+
+    .dark {
+      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --bg2: rgba(15, 23, 42, 0.8);
+      --card: rgba(30, 41, 59, 0.95);
+      --text: #F1F5F9;
+      --muted: var(--gris-clair);
+      --primary: var(--bleu-confiance);
+      --accent: var(--violet-creativite);
+      --good: var(--vert-reussite);
+      --bad: #DC2626;
+      --border: rgba(51, 65, 85, 0.6);
+      --shadow: var(--ombre-douce);
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 26px 18px 90px;
+    }
+
+    /* Header modernisé */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+      border-radius: 0 0 16px 16px;
+      margin-bottom: 2rem;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-info h1 {
+      font-size: clamp(1.4rem, 2.2vw + 0.8rem, 2.4rem);
+      margin: 8px 0;
+      background: var(--gradient-apprentissage);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ombre-moyenne);
+      border-color: var(--primary);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: white;
+      background: var(--gradient-energie);
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-left: 12px;
+      font-weight: 600;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--ombre-moyenne);
+      transform: translateY(-2px);
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 2.2vw + 0.8rem, 2.4rem);
+      margin: 8px 0;
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      margin: 0.2rem 0 0.6rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h2::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: var(--gradient-apprentissage);
+      border-radius: 2px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: 0.2rem 0;
+      color: var(--violet-creativite);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .cols-2 {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    @media (max-width: 980px) {
+      .cols-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: var(--bg2);
+      padding: 12px 16px;
+      border-radius: 25px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      font-weight: 600;
+      color: var(--violet-creativite);
+    }
+
+    .section {
+      scroll-margin-top: 90px;
+    }
+
+    details {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      transition: all 0.3s ease;
+    }
+
+    details:hover {
+      box-shadow: var(--ombre-douce);
+    }
+
+    details[open] {
+      background: var(--card);
+      box-shadow: var(--ombre-douce);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      color: var(--violet-creativite);
+    }
+
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-left: 4px solid var(--bleu-confiance);
+      padding: 16px 20px;
+      margin: 16px 0;
+      background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05));
+      border-radius: 0 12px 12px 0;
+    }
+
+    .step .n {
+      flex: 0 0 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--gradient-apprentissage);
+      color: white;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    .result {
+      background: var(--bg2);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .ok {
+      background: rgba(22, 163, 74, 0.1);
+      border: 1px solid rgba(22, 163, 74, 0.3);
+      color: var(--vert-reussite);
+    }
+
+    .err {
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      color: #DC2626;
+    }
+
+    .input {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .input:focus {
+      outline: 2px solid var(--primary);
+      border-color: var(--primary);
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+
+    .hr {
+      height: 2px;
+      background: var(--gradient-apprentissage);
+      border-radius: 1px;
+      margin: 20px 0;
+      opacity: 0.3;
+    }
+
+    nav.card ol {
+      margin: 0 0 8px 18px;
+    }
+
+    .sticky-footer {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 50;
+    }
+
+    .goodbox {
+      background: rgba(22, 163, 74, 0.1);
+      border: 1px solid rgba(22, 163, 74, 0.3);
+    }
+
+    .badbox {
+      background: rgba(220, 38, 38, 0.1);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    @media print {
+      .buttons, .sticky-footer {
+        display: none !important;
+      }
+      nav.card {
+        display: none !important;
+      }
+      .grid.cols-2 {
+        grid-template-columns: 1fr !important;
+      }
+      .print-only {
+        display: block;
+      }
+    }
+
+    /* Animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    /* Couleurs des icônes */
+    .icone-bleue { color: var(--bleu-confiance); }
+    .icone-verte { color: var(--vert-reussite); }
+    .icone-violette { color: var(--violet-creativite); }
+    .icone-orange { color: var(--orange-energie); }
+    .icone-jaune { color: var(--jaune-lumiere); }
+    .icone-rose { color: var(--rose-encouragement); }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["$", "$"], ["\\(", "\\)"]],
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+        macros: {
+          N: "\\mathbb{N}",
+          Z: "\\mathbb{Z}",
+          Q: "\\mathbb{Q}",
+          R: "\\mathbb{R}",
+          pp: "\\mathbb{P}"
         }
-        .dark {
-            --blue-confiance: #64B5F6;
-            --green-reussite: #81C784;
-            --purple-creativite: #BA68C8;
-        }
-        body {
-            font-family: sans-serif;
-            @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .header-gradient {
-            background-image: linear-gradient(to right, var(--blue-confiance), var(--purple-creativite));
-        }
-        .card-shadow {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .card-shadow:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.08);
-        }
-        .lucide-icon {
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            stroke-width: 2;
-            stroke: currentColor;
-            fill: none;
-            vertical-align: middle;
-        }
-        .lucide-graduation-cap { /* Example for a specific icon */ }
-        .lucide-book-open { /* Example for a specific icon */ }
-        .lucide-lightbulb { /* Example for a specific icon */ }
-        .lucide-sun, .lucide-moon { /* Example for theme toggle icons */ }
-    </style>
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
-<body class="transition-colors duration-300">
-    <!-- Header modernisé avec gradient et icônes -->
-    <header class="header-gradient text-white p-4 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.084a1 1 0 0 0 0 1.838l8.57 3.838a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 6 0 0 0 12 0v-3.5"/></svg>
-                <h1 class="text-2xl font-bold">Maths Expertes</h1>
-            </div>
-            <nav class="hidden md:flex space-x-4">
-                <a href="#" class="hover:text-gray-200 transition-colors duration-200">Accueil</a>
-                <a href="#" class="hover:text-gray-200 transition-colors duration-200">Cours</a>
-                <a href="#" class="hover:text-gray-200 transition-colors duration-200">Exercices</a>
-                <a href="#" class="hover:text-gray-200 transition-colors duration-200">Ressources</a>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <button id="theme-toggle" class="p-2 rounded-full text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                </button>
-                <!-- Navigation mobile (simplifiée pour l'exemple statique) -->
-                <div class="md:hidden">
-                    <button class="p-2 rounded-full text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-                    </button>
-                </div>
-            </div>
+<body class="light">
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <div class="container">
+    <header>
+      <div class="toolbar">
+        <div class="header-info">
+          <h1>
+            <i data-lucide="calculator" class="icone-orange" style="width: 32px; height: 32px;"></i>
+            Fiche mémo & méthodologie — Arithmétique
+            <span class="badge">
+              <i data-lucide="target" style="width: 16px; height: 16px;"></i>
+              Maths expertes
+            </span>
+          </h1>
+          <p class="muted">
+            <i data-lucide="info" class="icone-orange" style="width: 16px; height: 16px;"></i>
+            Divisibilité, congruences, PGCD/PPCM et théorèmes fondamentaux
+          </p>
         </div>
+        <div class="buttons">
+          <button class="btn" id="themeBtn">
+            <i data-lucide="moon" id="theme-icon" style="width: 18px; height: 18px;"></i>
+            <span>Thème</span>
+          </button>
+          <button class="btn" id="retypesetBtn">
+            <i data-lucide="refresh-cw" style="width: 18px; height: 18px;"></i>
+            <span>LaTeX</span>
+          </button>
+          <button class="btn" id="printBtn">
+            <i data-lucide="printer" style="width: 18px; height: 18px;"></i>
+            <span>Imprimer</span>
+          </button>
+        </div>
+      </div>
     </header>
 
-    <main class="container mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Section principale du contenu pédagogique -->
-        <section class="md:col-span-2">
-            <h2 class="text-3xl font-semibold mb-4 text-blue-confiance dark:text-blue-confiance">Chapitre 1 : Divisibilité et Congruence</h2>
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg card-shadow mb-6">
-                <h3 class="text-2xl font-medium mb-3 text-green-reussite dark:text-green-reussite">Introduction à la divisibilité</h3>
-                <p class="text-lg leading-relaxed mb-4">Le contenu pédagogique original sera préservé ici. Ceci est un exemple de paragraphe. Nous allons explorer les concepts fondamentaux de la divisibilité, essentiels en arithmétique.</p>
-                <ul class="list-disc list-inside space-y-2 text-lg">
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open inline-block mr-2 text-blue-confiance dark:text-blue-confiance"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Définition de la divisibilité</li>
-                    <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb inline-block mr-2 text-green-reussite dark:text-green-reussite"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/><path d="M11 18v4"/><path d="M7 19h10"/></svg>Propriétés et théorèmes clés</li>
-                </ul>
-            </div>
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg card-shadow">
-                <h3 class="text-2xl font-medium mb-3 text-purple-creativite dark:text-purple-creativite">Congruence</h3>
-                <p class="text-lg leading-relaxed mb-4">Un autre paragraphe de contenu pédagogique. La congruence est une relation d'équivalence fondamentale en théorie des nombres.</p>
-                <p class="text-lg leading-relaxed">Exemple : <code class="bg-gray-100 dark:bg-gray-700 p-1 rounded">$a \equiv b \pmod{n}$</code></p>
-            </div>
-        </section>
+    <main id="main">
+      <div class="grid cols-2">
+        <div>
+          <nav class="card animate-in">
+            <h2>
+              <i data-lucide="map" class="icone-violette" style="width: 24px; height: 24px;"></i>
+              Plan de la fiche
+            </h2>
+            <ol>
+              <li><a href="#divisibilite">Divisibilité dans $\mathbb{Z}$</a></li>
+              <li><a href="#congruences">Congruences</a></li>
+              <li><a href="#pgcd">PGCD et algorithme d'Euclide</a></li>
+              <li><a href="#bezout">Théorème de Bézout</a></li>
+              <li><a href="#gauss">Théorème de Gauss</a></li>
+              <li><a href="#ppcm">PPCM</a></li>
+              <li><a href="#premiers">Nombres premiers</a></li>
+              <li><a href="#exercices">Exercices types</a></li>
+            </ol>
+          </nav>
 
-        <!-- Cards flottantes avec ombres douces -->
-        <aside class="space-y-6">
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg card-shadow">
-                <h4 class="text-xl font-semibold mb-3 text-blue-confiance dark:text-blue-confiance">Ressources Supplémentaires</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Cours détaillé sur la divisibilité</a></li>
-                    <li><a href="#" class="text-blue-600 hover:underline dark:text-blue-400">Exercices corrigés de congruence</a></li>
-                </ul>
+          <section class="card section animate-in" id="divisibilite">
+            <h2>
+              <i data-lucide="divide" class="icone-bleue" style="width: 24px; height: 24px;"></i>
+              1) Divisibilité dans $\mathbb{Z}$
+            </h2>
+            
+            <div class="pill">
+              <i data-lucide="book-open" class="icone-violette" style="width: 20px; height: 20px;"></i>
+              Définition et propriétés
             </div>
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg card-shadow">
-                <h4 class="text-xl font-semibold mb-3 text-green-reussite dark:text-green-reussite">Quiz Rapide</h4>
-                <p>Testez vos connaissances sur ce chapitre avec un quiz interactif.</p>
-                <button class="mt-4 px-4 py-2 rounded-md bg-green-reussite text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 dark:bg-green-600 dark:hover:bg-green-500">Commencer le Quiz</button>
+            
+            <p><strong>Définition :</strong> Soient $a, b \in \mathbb{Z}$ avec $a \neq 0$. On dit que $a$ divise $b$ (noté $a \mid b$) s'il existe $k \in \mathbb{Z}$ tel que $b = ka$.</p>
+            
+            <details>
+              <summary>
+                <i data-lucide="list" style="width: 20px; height: 20px;"></i>
+                <strong>Propriétés fondamentales</strong>
+              </summary>
+              <ul>
+                <li>$a \mid a$ (réflexivité)</li>
+                <li>Si $a \mid b$ et $b \mid c$, alors $a \mid c$ (transitivité)</li>
+                <li>Si $a \mid b$ et $a \mid c$, alors $a \mid (ub + vc)$ pour tous $u, v \in \mathbb{Z}$</li>
+                <li>Si $a \mid b$ et $b \mid a$, alors $|a| = |b|$</li>
+              </ul>
+            </details>
+          </section>
+
+          <section class="card section animate-in" id="congruences">
+            <h2>
+              <i data-lucide="equal" class="icone-verte" style="width: 24px; height: 24px;"></i>
+              2) Congruences
+            </h2>
+            
+            <div class="pill">
+              <i data-lucide="function-square" class="icone-violette" style="width: 20px; height: 20px;"></i>
+              Relation d'équivalence modulo n
             </div>
-        </aside>
+            
+            <p><strong>Définition :</strong> Soient $a, b \in \mathbb{Z}$ et $n \in \mathbb{N}^*$. On dit que $a$ est congru à $b$ modulo $n$ (noté $a \equiv b \pmod{n}$) si $n \mid (a - b)$.</p>
+            
+            <details>
+              <summary>
+                <i data-lucide="calculator" style="width: 20px; height: 20px;"></i>
+                <strong>Propriétés des congruences</strong>
+              </summary>
+              <ul>
+                <li><strong>Réflexivité :</strong> $a \equiv a \pmod{n}$</li>
+                <li><strong>Symétrie :</strong> Si $a \equiv b \pmod{n}$, alors $b \equiv a \pmod{n}$</li>
+                <li><strong>Transitivité :</strong> Si $a \equiv b \pmod{n}$ et $b \equiv c \pmod{n}$, alors $a \equiv c \pmod{n}$</li>
+                <li><strong>Addition :</strong> Si $a \equiv b \pmod{n}$ et $c \equiv d \pmod{n}$, alors $a + c \equiv b + d \pmod{n}$</li>
+                <li><strong>Multiplication :</strong> Si $a \equiv b \pmod{n}$ et $c \equiv d \pmod{n}$, alors $ac \equiv bd \pmod{n}$</li>
+              </ul>
+            </details>
+          </section>
+
+          <section class="card section animate-in" id="pgcd">
+            <h2>
+              <i data-lucide="git-branch" class="icone-orange" style="width: 24px; height: 24px;"></i>
+              3) PGCD et algorithme d'Euclide
+            </h2>
+            
+            <div class="pill">
+              <i data-lucide="trending-up" class="icone-violette" style="width: 20px; height: 20px;"></i>
+              Plus Grand Commun Diviseur
+            </div>
+            
+            <p><strong>Définition :</strong> Le PGCD de deux entiers $a$ et $b$ non tous deux nuls est le plus grand entier positif qui divise à la fois $a$ et $b$. On le note $\gcd(a, b)$ ou $a \wedge b$.</p>
+            
+            <details>
+              <summary>
+                <i data-lucide="repeat" style="width: 20px; height: 20px;"></i>
+                <strong>Algorithme d'Euclide</strong>
+              </summary>
+              <div class="step">
+                <div class="n">1</div>
+                <div>Effectuer la division euclidienne : $a = bq + r$ avec $0 \leq r < |b|$</div>
+              </div>
+              <div class="step">
+                <div class="n">2</div>
+                <div>Si $r = 0$, alors $\gcd(a, b) = |b|$</div>
+              </div>
+              <div class="step">
+                <div class="n">3</div>
+                <div>Sinon, $\gcd(a, b) = \gcd(b, r)$ et on recommence avec $(b, r)$</div>
+              </div>
+            </details>
+          </section>
+        </div>
+
+        <div>
+          <section class="card section animate-in" id="bezout">
+            <h2>
+              <i data-lucide="link" class="icone-rose" style="width: 24px; height: 24px;"></i>
+              4) Théorème de Bézout
+            </h2>
+            
+            <div class="pill">
+              <i data-lucide="key" class="icone-violette" style="width: 20px; height: 20px;"></i>
+              Relation de Bézout
+            </div>
+            
+            <p><strong>Théorème :</strong> Soient $a, b \in \mathbb{Z}$ non tous deux nuls. Il existe $u, v \in \mathbb{Z}$ tels que $au + bv = \gcd(a, b)$.</p>
+            
+            <details>
+              <summary>
+                <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+                <strong>Algorithme d'Euclide étendu</strong>
+              </summary>
+              <p>L'algorithme d'Euclide étendu permet de calculer les coefficients $u$ et $v$ de la relation de Bézout en remontant les étapes de l'algorithme d'Euclide.</p>
+            </details>
+          </section>
+
+          <section class="card section animate-in" id="gauss">
+            <h2>
+              <i data-lucide="shield" class="icone-jaune" style="width: 24px; height: 24px;"></i>
+              5) Théorème de Gauss
+            </h2>
+            
+            <div class="pill">
+              <i data-lucide="star" class="icone-violette" style="width: 20px; height: 20px;"></i>
+              Lemme de Gauss
+            </div>
+            
+            <p><strong>Théorème :</strong> Soient $a, b, c \in \mathbb{Z}$. Si $a \mid bc$ et $\gcd(a, b) = 1$, alors $a \mid c$.</p>
+            
+            <p><strong>Corollaire :</strong> Si $p$ est premier et $p \mid ab$, alors $p \mid a$ ou $p \mid b$.</p>
+          </section>
+
+          <section class="card section animate-in" id="ppcm">
+            <h2>
+              <i data-lucide="maximize" class="icone-bleu" style="width: 24px; height: 24px;"></i>
+              6) PPCM
+            </h2>
+            
+            <div class="pill">
+              <i data-lucide="arrow-up" class="icone-violette" style="width: 20px; height: 20px;"></i>
+              Plus Petit Commun Multiple
+            </div>
+            
+            <p><strong>Définition :</strong> Le PPCM de deux entiers $a$ et $b$ non nuls est le plus petit entier positif qui est multiple de $a$ et de $b$. On le note $\text{lcm}(a, b)$ ou $a \vee b$.</p>
+            
+            <p><strong>Relation fondamentale :</strong> $\gcd(a, b) \times \text{lcm}(a, b) = |ab|$</p>
+          </section>
+
+          <section class="card section animate-in" id="premiers">
+            <h2>
+              <i data-lucide="gem" class="icone-rose" style="width: 24px; height: 24px;"></i>
+              7) Nombres premiers
+            </h2>
+            
+            <div class="pill">
+              <i data-lucide="diamond" class="icone-violette" style="width: 20px; height: 20px;"></i>
+              Définition et propriétés
+            </div>
+            
+            <p><strong>Définition :</strong> Un nombre premier est un entier naturel $p \geq 2$ qui admet exactement deux diviseurs positifs : 1 et $p$.</p>
+            
+            <details>
+              <summary>
+                <i data-lucide="layers" style="width: 20px; height: 20px;"></i>
+                <strong>Théorème fondamental de l'arithmétique</strong>
+              </summary>
+              <p>Tout entier $n \geq 2$ se décompose de manière unique (à l'ordre près) en produit de nombres premiers :</p>
+              <p>$$n = p_1^{a_1} \times p_2^{a_2} \times \cdots \times p_k^{a_k}$$</p>
+              <p>où les $p_i$ sont des nombres premiers distincts et les $a_i$ sont des entiers strictement positifs.</p>
+            </details>
+          </section>
+        </div>
+      </div>
+
+      <section class="card section animate-in" id="exercices">
+        <h2>
+          <i data-lucide="pen-tool" class="icone-orange" style="width: 24px; height: 24px;"></i>
+          8) Exercices types
+        </h2>
+        
+        <details>
+          <summary>
+            <i data-lucide="play-circle" style="width: 20px; height: 20px;"></i>
+            <strong>Exercice 1 : Calcul de PGCD</strong>
+          </summary>
+          <p><strong>Énoncé :</strong> Calculer $\gcd(1071, 462)$ par l'algorithme d'Euclide.</p>
+          <div class="step">
+            <div class="n">1</div>
+            <div>$1071 = 462 \times 2 + 147$</div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>$462 = 147 \times 3 + 21$</div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>$147 = 21 \times 7 + 0$</div>
+          </div>
+          <div class="result ok">Donc $\gcd(1071, 462) = 21$</div>
+        </details>
+
+        <details>
+          <summary>
+            <i data-lucide="play-circle" style="width: 20px; height: 20px;"></i>
+            <strong>Exercice 2 : Résolution de congruence</strong>
+          </summary>
+          <p><strong>Énoncé :</strong> Résoudre $3x \equiv 5 \pmod{7}$.</p>
+          <div class="step">
+            <div class="n">1</div>
+            <div>Chercher l'inverse de 3 modulo 7 : $3 \times 5 = 15 \equiv 1 \pmod{7}$</div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>Multiplier par 5 : $x \equiv 5 \times 5 \equiv 25 \equiv 4 \pmod{7}$</div>
+          </div>
+          <div class="result ok">Donc $x \equiv 4 \pmod{7}$</div>
+        </details>
+      </section>
     </main>
 
-    <footer class="bg-gray-800 text-white p-4 text-center mt-8 dark:bg-gray-950">
-        <p>&copy; 2025 Maths Expertes - Tous droits réservés</p>
-    </footer>
+    <div class="sticky-footer">
+      <button class="btn" onclick="scrollTo(0,0)">
+        <i data-lucide="arrow-up" style="width: 18px; height: 18px;"></i>
+        <span>Haut</span>
+      </button>
+    </div>
+  </div>
 
-    <script>
-        const themeToggle = document.getElementById("theme-toggle");
-        const htmlElement = document.documentElement;
+  <script>
+    // Initialiser les icônes Lucide
+    lucide.createIcons();
 
-        // Set initial theme based on system preference or saved preference
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const savedTheme = localStorage.getItem("theme");
+    // Gestion du thème
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.classList.contains('dark') ? 'dark' : 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const themeIcon = document.getElementById('theme-icon');
+      
+      body.className = newTheme;
+      localStorage.setItem('theme-fiche-arith', newTheme);
+      
+      // Changer l'icône
+      themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
+      lucide.createIcons();
+      MathJax.typesetPromise?.();
+    }
 
-        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-            htmlElement.classList.add("dark");
-            themeToggle.innerHTML = 
-                `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>`;
-        } else {
-            htmlElement.classList.remove("dark");
-            themeToggle.innerHTML = 
-                `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
-        }
+    // Chargement du thème sauvegardé
+    const savedTheme = localStorage.getItem('theme-fiche-arith') || 'light';
+    document.body.className = savedTheme;
+    document.getElementById('theme-icon').setAttribute('data-lucide', savedTheme === 'dark' ? 'sun' : 'moon');
 
-        themeToggle.addEventListener("click", () => {
-            if (htmlElement.classList.contains("dark")) {
-                htmlElement.classList.remove("dark");
-                localStorage.setItem("theme", "light");
-                themeToggle.innerHTML = 
-                    `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
-            } else {
-                htmlElement.classList.add("dark");
-                localStorage.setItem("theme", "dark");
-                themeToggle.innerHTML = 
-                    `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>`;
-            }
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      
+      // Boutons principaux
+      document.getElementById('themeBtn')?.addEventListener('click', toggleTheme);
+      document.getElementById('retypesetBtn')?.addEventListener('click', () => MathJax.typesetPromise?.());
+      document.getElementById('printBtn')?.addEventListener('click', () => window.print());
+
+      // Animation d'entrée progressive
+      const cards = document.querySelectorAll('.animate-in');
+      cards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 200);
+      });
+
+      // Navigation fluide
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>

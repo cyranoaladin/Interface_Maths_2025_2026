@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interface Maths — Votre compagnon d'apprentissage</title>
+  <style>
+    :root {
+      --primary: #9945FF;
+      --secondary: #14F195;
+      --accent: #3B82F6;
+      --bg-dark: #0f172a;
+      --bg-light: #f8fafc;
+      --card-dark: #1e293b;
+      --card-light: #ffffff;
+      --text-dark: #f1f5f9;
+      --text-light: #0f172a;
+      --text-muted-dark: #94a3b8;
+      --text-muted-light: #475569;
+      --border-dark: #334155;
+      --border-light: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+      --gradient-card: linear-gradient(135deg, rgba(153, 69, 255, 0.1), rgba(20, 241, 149, 0.1));
+    }
+
+    [data-theme="light"] {
+      --bg: var(--bg-light);
+      --card: var(--card-light);
+      --text: var(--text-light);
+      --text-muted: var(--text-muted-light);
+      --border: var(--border-light);
+    }
+
+    [data-theme="dark"], :root {
+      --bg: var(--bg-dark);
+      --card: var(--card-dark);
+      --text: var(--text-dark);
+      --text-muted: var(--text-muted-dark);
+      --border: var(--border-dark);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    .header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .logo-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-text p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: -4px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      background: var(--gradient-primary);
+      color: white;
+      border-color: transparent;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-card);
+      opacity: 0.5;
+      z-index: -1;
+    }
+
+    .hero h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Navigation Cards */
+    .nav-section {
+      padding: 3rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      color: var(--text);
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .nav-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+
+    .nav-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary);
+    }
+
+    .nav-card-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .nav-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .nav-card p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .nav-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .chapter-count {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .nav-arrow {
+      color: var(--primary);
+      font-size: 1.2rem;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-card:hover .nav-arrow {
+      transform: translateX(4px);
+    }
+
+    /* Tools Section */
+    .tools-section {
+      background: var(--gradient-card);
+      padding: 3rem 0;
+      margin: 3rem 0;
+      border-radius: 24px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .tool-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .tool-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .tool-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .tool-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 4rem;
+    }
+
+    .footer p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .hero {
+        padding: 2rem 0;
+      }
+      
+      .hero-stats {
+        gap: 1rem;
+      }
+      
+      .nav-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">∫</div>
+          <div class="logo-text">
+            <h1>Interface Maths</h1>
+            <p>Lycée Pierre Mendès France</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="theme-toggle" onclick="toggleTheme()">🌓 Thème</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h2 class="fade-in-up">Bienvenue dans votre espace mathématiques</h2>
+        <p class="fade-in-up">Découvrez des ressources, des méthodes et des outils pour réussir en mathématiques. Votre professeur a préparé tout ce dont vous avez besoin pour progresser.</p>
+        
+        <div class="hero-stats fade-in-up">
+          <div class="stat">
+            <div class="stat-number" id="fiches-count">0</div>
+            <div class="stat-label">Fiches disponibles</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Niveaux</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Possibilités</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="nav-section">
+      <div class="container">
+        <h2 class="section-title">Choisissez votre niveau</h2>
+        <div class="nav-grid">
+          <div class="nav-card" onclick="navigateToLevel('eds-premiere')">
+            <div class="nav-card-icon">📊</div>
+            <h3>EDS Première</h3>
+            <p>Spécialité mathématiques en classe de Première. Découvrez les fondamentaux et consolidez vos bases.</p>
+            <div class="nav-card-footer">
+              <span class="chapter-count" id="premiere-count">0 chapitres</span>
+              <span class="nav-arrow">→</span>
+            </div>
+          </div>
+
+          <div class="nav-card" onclick="navigateToLevel('eds-terminale')">
+            <div class="nav-card-icon">📈</div>
+            <h3>EDS Terminale</h3>
+            <p>Spécialité mathématiques en Terminale. Approfondissez vos connaissances et préparez le baccalauréat.</p>
+            <div class="nav-card-footer">
+              <span class="chapter-count" id="terminale-count">0 chapitres</span>
+              <span class="nav-arrow">→</span>
+            </div>
+          </div>
+
+          <div class="nav-card" onclick="navigateToLevel('maths-expertes')">
+            <div class="nav-card-icon">🎯</div>
+            <h3>Mathématiques Expertes</h3>
+            <p>Option mathématiques expertes. Explorez les mathématiques avancées et préparez les études supérieures.</p>
+            <div class="nav-card-footer">
+              <span class="chapter-count" id="expertes-count">0 chapitres</span>
+              <span class="nav-arrow">→</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tools-section">
+      <div class="container">
+        <h2 class="section-title" style="color: var(--text);">Outils d'aide et d'accompagnement</h2>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-icon">📝</div>
+            <h4>Fiches méthodes</h4>
+            <p>Méthodes détaillées et exemples pour maîtriser chaque notion</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">🔍</div>
+            <h4>Exercices corrigés</h4>
+            <p>Entraînez-vous avec des exercices variés et leurs corrections détaillées</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">💡</div>
+            <h4>Cours interactifs</h4>
+            <p>Explorez les concepts avec des supports visuels et interactifs</p>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">📚</div>
+            <h4>Ressources complémentaires</h4>
+            <p>Documents, liens et outils pour approfondir vos connaissances</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 Interface Maths - Lycée Pierre Mendès France. Créé avec ❤️ pour vous accompagner dans votre réussite.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+
+    // Navigation functions
+    function navigateToLevel(level) {
+      // Animation de transition
+      const card = event.currentTarget;
+      card.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        window.location.href = `#${level}`;
+        // Ici on pourrait rediriger vers une page spécifique
+        loadLevelContent(level);
+      }, 150);
+    }
+
+    // Load content from API
+    async function loadContents() {
+      try {
+        const response = await fetch('/api/contents', { credentials: 'include' });
+        if (!response.ok) {
+          // Fallback si l'API n'est pas disponible
+          updateCountsWithFallback();
+          return;
+        }
+        
+        const data = await response.json();
+        
+        // Update counts
+        const premiereCount = data.eds_premiere?.length || 0;
+        const terminaleCount = data.eds_terminale?.length || 0;
+        const expertesCount = data.maths_expertes?.length || 0;
+        const totalFiches = premiereCount + terminaleCount + expertesCount;
+        
+        document.getElementById('premiere-count').textContent = `${premiereCount} chapitres`;
+        document.getElementById('terminale-count').textContent = `${terminaleCount} chapitres`;
+        document.getElementById('expertes-count').textContent = `${expertesCount} chapitres`;
+        document.getElementById('fiches-count').textContent = totalFiches;
+        
+      } catch (error) {
+        console.error('Erreur lors du chargement:', error);
+        updateCountsWithFallback();
+      }
+    }
+
+    function updateCountsWithFallback() {
+      // Valeurs par défaut basées sur la structure actuelle
+      document.getElementById('premiere-count').textContent = '2 chapitres';
+      document.getElementById('terminale-count').textContent = '1 chapitre';
+      document.getElementById('expertes-count').textContent = '1 chapitre';
+      document.getElementById('fiches-count').textContent = '8';
+    }
+
+    function loadLevelContent(level) {
+      // Cette fonction sera développée pour afficher le contenu spécifique
+      console.log(`Chargement du niveau: ${level}`);
+    }
+
+    // Animation on scroll
+    function animateOnScroll() {
+      const elements = document.querySelectorAll('.nav-card, .tool-card');
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.classList.add('fade-in-up');
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      loadContents();
+      animateOnScroll();
+      window.addEventListener('scroll', animateOnScroll);
+    });
+  </script>
+</body>
+</html>

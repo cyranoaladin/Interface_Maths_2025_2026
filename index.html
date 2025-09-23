@@ -1,103 +1,872 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portail Maths — Accueil</title>
+  <title>Interface Maths — Réussissez en mathématiques avec confiance</title>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
-    :root{--bg:#0b1020;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--link:#7dd3fc;--border:#28314f}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    .wrap{max-width:1100px;margin:0 auto;padding:22px}
-    header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px}
-    nav a{color:var(--link);text-decoration:none;margin:0 8px}
-    .btn{background:#151b34;border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:10px}
-    .card{background:#151b34;border:1px solid var(--border);border-radius:16px;padding:16px;margin:14px 0}
-    h1{margin:8px 0}
-    h2{margin:0 0 8px 0}
-    h3{margin:10px 0 6px 0;color:var(--muted)}
-    ul{margin:0 0 0 18px}
-    small{color:var(--muted)}
+    :root {
+      /* Palette éducative */
+      --bleu-confiance: #2563EB;
+      --vert-reussite: #16A34A;
+      --violet-creativite: #7C3AED;
+      --orange-energie: #EA580C;
+      --jaune-lumiere: #FCD34D;
+      --rose-encouragement: #EC4899;
+      
+      /* Couleurs neutres */
+      --gris-ardoise: #475569;
+      --gris-clair: #94A3B8;
+      --blanc-pur: #FFFFFF;
+      --bleu-nuit: #0F172A;
+      --gris-tres-clair: #F8FAFC;
+      
+      /* Gradients éducatifs */
+      --gradient-apprentissage: linear-gradient(135deg, var(--bleu-confiance), var(--vert-reussite));
+      --gradient-creativite: linear-gradient(135deg, var(--violet-creativite), var(--bleu-confiance));
+      --gradient-energie: linear-gradient(135deg, var(--orange-energie), var(--jaune-lumiere));
+      
+      /* Ombres éducatives */
+      --ombre-douce: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
+      --ombre-moyenne: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+      --ombre-forte: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
+    }
+
+    [data-theme="light"] {
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-secondary: rgba(248, 250, 252, 0.8);
+      --texte: var(--gris-ardoise);
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(226, 232, 240, 0.6);
+      --bordure-forte: rgba(226, 232, 240, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --bg-card: rgba(30, 41, 59, 0.95);
+      --bg-secondary: rgba(15, 23, 42, 0.8);
+      --texte: #F1F5F9;
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(51, 65, 85, 0.6);
+      --bordure-forte: rgba(51, 65, 85, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--texte);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    body[data-theme="light"] {
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-secondary: rgba(248, 250, 252, 0.8);
+      --texte: var(--gris-ardoise);
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(226, 232, 240, 0.6);
+      --bordure-forte: rgba(226, 232, 240, 1);
+    }
+
+    body[data-theme="dark"] {
+      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --bg-card: rgba(30, 41, 59, 0.95);
+      --bg-secondary: rgba(15, 23, 42, 0.8);
+      --texte: #F1F5F9;
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(51, 65, 85, 0.6);
+      --bordure-forte: rgba(51, 65, 85, 1);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    /* Header modernisé */
+    .header {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 2rem 0;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gradient-apprentissage);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .main-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      background: var(--gradient-apprentissage);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--texte-secondaire);
+      margin-bottom: 2rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--gradient-apprentissage);
+      color: white;
+      box-shadow: var(--ombre-douce);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ombre-forte);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--texte);
+      border: 1px solid var(--bordure);
+      box-shadow: var(--ombre-douce);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ombre-moyenne);
+      border-color: var(--bleu-confiance);
+    }
+
+    .btn-theme {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--bordure);
+      color: var(--texte);
+      padding: 0.75rem;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: var(--ombre-douce);
+      z-index: 100;
+    }
+
+    .btn-theme:hover {
+      transform: scale(1.05);
+    }
+
+    /* Statistiques */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bordure);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: var(--ombre-douce);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--ombre-moyenne);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .stat-icon.blue { background: var(--bleu-confiance); }
+    .stat-icon.green { background: var(--vert-reussite); }
+    .stat-icon.purple { background: var(--violet-creativite); }
+    .stat-icon.orange { background: var(--orange-energie); }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--texte);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--texte-secondaire);
+      font-weight: 500;
+    }
+
+    /* Cartes de niveaux */
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .level-card {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: var(--ombre-douce);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .level-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--ombre-forte);
+    }
+
+    .level-card.premiere {
+      border-color: var(--violet-creativite);
+    }
+
+    .level-card.terminale {
+      border-color: var(--bleu-confiance);
+    }
+
+    .level-card.expertes {
+      border-color: var(--orange-energie);
+    }
+
+    .level-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .level-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .level-icon.premiere { background: var(--gradient-creativite); }
+    .level-icon.terminale { background: var(--gradient-apprentissage); }
+    .level-icon.expertes { background: var(--gradient-energie); }
+
+    .level-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--texte);
+    }
+
+    .level-badge {
+      background: var(--gradient-apprentissage);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-left: auto;
+    }
+
+    .level-description {
+      color: var(--texte-secondaire);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .level-content {
+      margin-bottom: 1.5rem;
+    }
+
+    .level-content ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .level-content li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      color: var(--texte-secondaire);
+    }
+
+    .level-content li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--vert-reussite);
+      border-radius: 50%;
+    }
+
+    .level-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .level-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bleu-confiance);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .level-link:hover {
+      color: var(--violet-creativite);
+      transform: translateX(4px);
+    }
+
+    /* Outils pédagogiques */
+    .tools {
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient-creativite);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--texte-secondaire);
+      font-size: 1.125rem;
+      margin-bottom: 3rem;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--bordure);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: var(--ombre-douce);
+      transition: all 0.3s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--ombre-moyenne);
+      border-color: var(--bleu-confiance);
+    }
+
+    .tool-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .tool-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--texte);
+      margin-bottom: 0.5rem;
+    }
+
+    .tool-description {
+      color: var(--texte-secondaire);
+      font-size: 0.875rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--bordure);
+      color: var(--texte-secondaire);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+      
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .levels {
+        grid-template-columns: 1fr;
+      }
+      
+      .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .btn-theme {
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    /* Couleurs des icônes */
+    .icone-bleue { color: var(--bleu-confiance); }
+    .icone-verte { color: var(--vert-reussite); }
+    .icone-violette { color: var(--violet-creativite); }
+    .icone-orange { color: var(--orange-energie); }
+    .icone-jaune { color: var(--jaune-lumiere); }
+    .icone-rose { color: var(--rose-encouragement); }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <div>
-        <h1>Portail Maths — Bienvenue</h1>
-        <small>Lycée Pierre Mendès France — maths.labomaths.tn</small>
+<body data-theme="light">
+  <!-- Bouton de thème -->
+  <button class="btn-theme" id="themeBtn">
+    <i data-lucide="moon" id="theme-icon" style="width: 20px; height: 20px;"></i>
+  </button>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header animate-in">
+      <div class="logo">
+        <div class="logo-icon">
+          <i data-lucide="calculator" style="width: 28px; height: 28px;"></i>
+        </div>
+        <div>
+          <h1 class="main-title">Interface Maths</h1>
+          <p class="subtitle">Réussissez en mathématiques avec confiance</p>
+        </div>
       </div>
-      <div>
-        <a class="btn" href="#login">Connexion</a>
+      
+      <div class="cta-buttons">
+        <a href="#levels" class="btn btn-primary">
+          <i data-lucide="rocket" style="width: 20px; height: 20px;"></i>
+          Commencer l'aventure
+        </a>
+        <a href="#tools" class="btn btn-secondary">
+          <i data-lucide="brain" style="width: 20px; height: 20px;"></i>
+          Découvrir les outils
+        </a>
       </div>
     </header>
 
-    <nav>
-      <a href="#eds-premiere">EDS Première</a> |
-      <a href="#eds-terminale">EDS Terminale</a> |
-      <a href="#maths-expertes">Maths expertes</a> |
-      <a href="site/">Aperçu (site)</a>
-    </nav>
-
-    <section class="card">
-      <p>Choisissez une rubrique. Le sommaire est généré automatiquement depuis le contenu disponible.</p>
+    <!-- Statistiques -->
+    <section class="stats animate-in">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <i data-lucide="file-text" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div class="stat-number" id="fiches-count">12</div>
+        <div class="stat-label">Fiches d'aide</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <i data-lucide="users" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div class="stat-number">3</div>
+        <div class="stat-label">Niveaux d'apprentissage</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon purple">
+          <i data-lucide="award" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Réussite possible</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon orange">
+          <i data-lucide="clock" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Disponibilité</div>
+      </div>
     </section>
 
-    <section id="eds-premiere" class="card">
-      <h2>EDS Première</h2>
-      <ul id="eds_premiere-list"></ul>
+    <!-- Message motivant -->
+    <section class="animate-in" style="text-align: center; margin-bottom: 4rem;">
+      <p style="font-size: 1.25rem; color: var(--texte-secondaire); max-width: 600px; margin: 0 auto;">
+        <i data-lucide="heart" style="width: 20px; height: 20px; color: var(--rose-encouragement); margin-right: 8px;"></i>
+        Chaque niveau est conçu pour vous accompagner progressivement vers la réussite. 
+        <strong>Choisissez votre parcours</strong> et commencez dès maintenant !
+      </p>
     </section>
 
-    <section id="eds-terminale" class="card">
-      <h2>EDS Terminale</h2>
-      <ul id="eds_terminale-list"></ul>
+    <!-- Cartes de niveaux -->
+    <section id="levels" class="levels animate-in">
+      <div class="level-card premiere">
+        <div class="level-header">
+          <div class="level-icon premiere">
+            <i data-lucide="bar-chart-3" style="width: 28px; height: 28px;"></i>
+          </div>
+          <div>
+            <h2 class="level-title">EDS Première</h2>
+            <span class="level-badge" id="premiere-count">2 chapitres</span>
+          </div>
+        </div>
+        <p class="level-description">
+          Découvrez les fondamentaux avec des cours interactifs et des exercices progressifs. 
+          Parfait pour construire des bases solides en mathématiques.
+        </p>
+        <div class="level-content" id="eds-premiere-content">
+          <ul>
+            <li>Calcul littéral et identités remarquables</li>
+            <li>Second degré et paraboles</li>
+            <li>Exercices corrigés détaillés</li>
+          </ul>
+        </div>
+        <div class="level-action">
+          <a href="site/EDS_premiere/" class="level-link">
+            Explorer EDS Première
+            <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="level-card terminale">
+        <div class="level-header">
+          <div class="level-icon terminale">
+            <i data-lucide="trending-up" style="width: 28px; height: 28px;"></i>
+          </div>
+          <div>
+            <h2 class="level-title">EDS Terminale</h2>
+            <span class="level-badge" id="terminale-count">1 chapitre</span>
+          </div>
+        </div>
+        <p class="level-description">
+          Approfondissez vos connaissances avec des concepts avancés. 
+          Préparez-vous efficacement pour le baccalauréat.
+        </p>
+        <div class="level-content" id="eds-terminale-content">
+          <ul>
+            <li>Suites numériques et récurrence</li>
+            <li>Limites et continuité</li>
+            <li>Préparation au baccalauréat</li>
+          </ul>
+        </div>
+        <div class="level-action">
+          <a href="site/EDS_terminale/" class="level-link">
+            Explorer EDS Terminale
+            <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="level-card expertes">
+        <div class="level-header">
+          <div class="level-icon expertes">
+            <i data-lucide="target" style="width: 28px; height: 28px;"></i>
+          </div>
+          <div>
+            <h2 class="level-title">Mathématiques Expertes</h2>
+            <span class="level-badge" id="expertes-count">1 chapitre</span>
+          </div>
+        </div>
+        <p class="level-description">
+          Relevez le défi avec des mathématiques de haut niveau. 
+          Pour les passionnés qui visent l'excellence.
+        </p>
+        <div class="level-content" id="maths-expertes-content">
+          <ul>
+            <li>Arithmétique et congruences</li>
+            <li>Divisibilité et nombres premiers</li>
+            <li>Défis mathématiques avancés</li>
+          </ul>
+        </div>
+        <div class="level-action">
+          <a href="site/Maths_expertes/" class="level-link">
+            Explorer Maths Expertes
+            <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+          </a>
+        </div>
+      </div>
     </section>
 
-    <section id="maths-expertes" class="card">
-      <h2>Maths expertes</h2>
-      <ul id="maths_expertes-list"></ul>
+    <!-- Outils pédagogiques -->
+    <section id="tools" class="tools animate-in">
+      <h2 class="section-title">Vos outils de réussite</h2>
+      <p class="section-subtitle">
+        Des ressources conçues pour vous accompagner à chaque étape de votre apprentissage
+      </p>
+      
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-icon" style="background: var(--gradient-apprentissage);">
+            <i data-lucide="lightbulb" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="tool-title">Méthodes</h3>
+          <p class="tool-description">Techniques et astuces pour résoudre efficacement les exercices</p>
+        </div>
+        
+        <div class="tool-card">
+          <div class="tool-icon" style="background: var(--gradient-creativite);">
+            <i data-lucide="search" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="tool-title">Exercices</h3>
+          <p class="tool-description">Entraînements progressifs avec niveaux de difficulté</p>
+        </div>
+        
+        <div class="tool-card">
+          <div class="tool-icon" style="background: var(--vert-reussite);">
+            <i data-lucide="check-circle" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="tool-title">Corrections</h3>
+          <p class="tool-description">Solutions détaillées étape par étape</p>
+        </div>
+        
+        <div class="tool-card">
+          <div class="tool-icon" style="background: var(--gradient-energie);">
+            <i data-lucide="book-open" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="tool-title">Ressources</h3>
+          <p class="tool-description">Cours complets et fiches de révision</p>
+        </div>
+        
+        <div class="tool-card">
+          <div class="tool-icon" style="background: var(--violet-creativite);">
+            <i data-lucide="target" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="tool-title">Suivi</h3>
+          <p class="tool-description">Progression personnalisée et objectifs</p>
+        </div>
+        
+        <div class="tool-card">
+          <div class="tool-icon" style="background: var(--rose-encouragement);">
+            <i data-lucide="heart" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="tool-title">Accompagnement</h3>
+          <p class="tool-description">Soutien bienveillant et encouragements</p>
+        </div>
+      </div>
     </section>
 
-    <section id="login" class="card">
-      <h2>Connexion</h2>
-      <p>À venir: connexion élève/enseignant (avec rôles et base d’élèves). Pour l’instant, cette section est un placeholder.</p>
-    </section>
-
-    <footer class="card">
-      <small>© 2025 — Portail Maths. Tous droits réservés.</small>
+    <!-- Footer -->
+    <footer class="footer">
+      <p>
+        <i data-lucide="graduation-cap" style="width: 16px; height: 16px; margin-right: 8px;"></i>
+        © 2025 Interface Maths — Lycée Pierre Mendès France, Tunis
+      </p>
+      <p style="margin-top: 0.5rem;">
+        Créé avec <i data-lucide="heart" style="width: 14px; height: 14px; color: var(--rose-encouragement);"></i> 
+        pour la réussite de nos élèves
+      </p>
     </footer>
   </div>
 
   <script>
-    async function loadContents(){
-      try{
-        const res = await fetch('/api/contents',{credentials:'include'});
+    // Initialiser les icônes Lucide
+    lucide.createIcons();
+
+    // Gestion du thème
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const themeIcon = document.getElementById('theme-icon');
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme-interface-maths', newTheme);
+      
+      // Changer l'icône
+      themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
+      lucide.createIcons();
+    }
+
+    // Chargement du thème sauvegardé
+    const savedTheme = localStorage.getItem('theme-interface-maths') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+    document.getElementById('theme-icon').setAttribute('data-lucide', savedTheme === 'dark' ? 'sun' : 'moon');
+
+    // Chargement dynamique du contenu
+    async function loadContents() {
+      try {
+        const res = await fetch('/api/contents', { credentials: 'include' });
         const data = await res.json();
-        renderList('eds_premiere', data.eds_premiere);
-        renderList('eds_terminale', data.eds_terminale);
-        renderList('maths_expertes', data.maths_expertes);
-      }catch(e){console.error(e);}
+        
+        // Mettre à jour les compteurs
+        updateCounter('premiere-count', data.eds_premiere, 'chapitre');
+        updateCounter('terminale-count', data.eds_terminale, 'chapitre');
+        updateCounter('expertes-count', data.maths_expertes, 'chapitre');
+        
+        // Mettre à jour le contenu des cartes
+        updateLevelContent('eds-premiere-content', data.eds_premiere);
+        updateLevelContent('eds-terminale-content', data.eds_terminale);
+        updateLevelContent('maths-expertes-content', data.maths_expertes);
+        
+        // Mettre à jour le compteur total de fiches
+        const totalFiches = (data.eds_premiere?.length || 0) + 
+                           (data.eds_terminale?.length || 0) + 
+                           (data.maths_expertes?.length || 0);
+        document.getElementById('fiches-count').textContent = totalFiches;
+        
+      } catch (e) {
+        console.log('API non disponible, utilisation des valeurs par défaut');
+      }
     }
-    function renderList(prefix, chapters){
-      const root = document.getElementById(prefix+'-list');
-      if(!root) return; root.innerHTML = '';
-      (chapters||[]).forEach(ch=>{
-        const li = document.createElement('li');
-        const h3 = document.createElement('h3');
-        h3.textContent = ch.chapter === '_racine' ? 'Racine' : ch.chapter;
-        li.appendChild(h3);
-        const ul = document.createElement('ul');
-        (ch.pages||[]).forEach(p=>{
-          const li2 = document.createElement('li');
-          const a = document.createElement('a');
-          a.href = p.url; a.textContent = p.title || p.url; a.style.color = '#7dd3fc';
-          li2.appendChild(a); ul.appendChild(li2);
+
+    function updateCounter(elementId, chapters, unit) {
+      const element = document.getElementById(elementId);
+      if (element && chapters) {
+        const count = chapters.length;
+        element.textContent = `${count} ${unit}${count > 1 ? 's' : ''}`;
+      }
+    }
+
+    function updateLevelContent(elementId, chapters) {
+      const element = document.getElementById(elementId);
+      if (element && chapters && chapters.length > 0) {
+        const ul = element.querySelector('ul');
+        ul.innerHTML = '';
+        
+        chapters.forEach(chapter => {
+          if (chapter.pages && chapter.pages.length > 0) {
+            chapter.pages.forEach(page => {
+              const li = document.createElement('li');
+              li.textContent = page.title || page.url;
+              ul.appendChild(li);
+            });
+          }
         });
-        li.appendChild(ul); root.appendChild(li);
-      });
-      if(!root.childElementCount){ const li=document.createElement('li'); li.textContent='Aucun contenu disponible.'; root.appendChild(li); }
+      }
     }
-    loadContents();
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      
+      // Bouton thème
+      document.getElementById('themeBtn')?.addEventListener('click', toggleTheme);
+      
+      // Navigation fluide
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+      
+      // Animation d'entrée progressive
+      const elements = document.querySelectorAll('.animate-in');
+      elements.forEach((element, index) => {
+        setTimeout(() => {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, index * 200);
+      });
+      
+      // Charger le contenu dynamique
+      loadContents();
+    });
   </script>
 </body>
 </html>
-

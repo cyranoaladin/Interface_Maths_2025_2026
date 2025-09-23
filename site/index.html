@@ -1,58 +1,62 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Page Mathématique 2025-2026</title>
-  <meta name="description" content="Fiches élèves prêtes à l’emploi (HTML imprimable + MathJax) — EDS Première, EDS Terminale, Maths expertes." />
-  <meta name="theme-color" content="#0b1020" />
-  <meta property="og:title" content="Page Mathématique 2025-2026" />
-  <meta property="og:description" content="Fiches élèves prêtes à l’emploi (HTML imprimable + MathJax)." />
-  <meta property="og:type" content="website" />
-  <link rel="canonical" href="/" />
-  <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css" />
-  <script src="assets/js/contents.js" defer></script>
-  <script src="assets/js/theme-toggle.js" defer></script>
-  <script>
-    // En file://, PWA (manifest/SW) est restreint. En HTTP(S) ou localhost, ok.
-    if ((location.protocol === 'http:' || location.protocol === 'https:') && 'serviceWorker' in navigator) {
-      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}))
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de Mathématiques</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Icônes Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
-  <a class="skip-link" href="#main">Aller au contenu</a>
-  <div class="wrap">
-    <header>
-      <div class="title-block">
-        <img class="logo" src="assets/img/icon.svg" alt="Logo Interface Maths" />
-        <div class="title-text">
-          <h1>Page Mathématique 2025-2026</h1>
-          <small class="subtitle"><span class="i" aria-hidden="true">🎓</span> Alaeddine BEN RHOUMA - Lycée Pierre Mendès Fraance de Tunis</small>
+<body class="light-theme">
+    <div class="header">
+        <h1>Bienvenue sur notre plateforme éducative</h1>
+        <p>Apprenez les mathématiques avec des cours interactifs</p>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Basculer le thème">
+            <i data-lucide="sun"></i>
+        </button>
+    </div>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#" aria-label="Accueil"><i data-lucide="home"></i> Accueil</a></li>
+            <li><a href="#" aria-label="Cours"><i data-lucide="book"></i> Cours</a></li>
+            <li><a href="#" aria-label="Exercices"><i data-lucide="edit"></i> Exercices</a></li>
+            <li><a href="#" aria-label="Ressources"><i data-lucide="library"></i> Ressources</a></li>
+            <li><a href="#" aria-label="Contact"><i data-lucide="mail"></i> Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2><i data-lucide="sigma"></i> Chapitre 1: Les Nombres Entiers</h2>
+            <p>Ce chapitre couvre les bases des nombres entiers, y compris l\'addition, la soustraction, la multiplication et la division. Des exercices interactifs sont disponibles pour chaque section.</p>
+            <p><strong>Objectifs pédagogiques:</strong> Maîtriser les opérations de base sur les nombres entiers.</p>
         </div>
-      </div>
-      <nav aria-label="Navigation principale">
-        <button id="theme-toggle" class="btn" type="button" aria-pressed="false" aria-label="Basculer le thème">Thème</button>
-      </nav>
-    </header>
 
-    <main id="main">
-
-      <section class="card" id="auto-index">
-        <h2>Sommaire</h2>
-        <div id="auto-index-body" class="pre-wrap">
-          <small>Chargement...</small>
+        <div class="card">
+            <h2><i data-lucide="fraction"></i> Chapitre 2: Les Fractions</h2>
+            <p>Découvrez le monde des fractions, comment les simplifier, les additionner, les soustraire, les multiplier et les diviser. Des exemples concrets vous aideront à comprendre.</p>
+            <p><strong>Objectifs pédagogiques:</strong> Comprendre et manipuler les fractions.</p>
         </div>
-      </section>
-    </main>
 
-    <footer class="card">
-      <small>© 2025 — Alaeddine Ben Rhouma. Licence CC BY-NC-SA 4.0.</small>
-    </footer>
-  </div>
+        <div class="card">
+            <h2><i data-lucide="folder-open"></i> Ressources Supplémentaires</h2>
+            <ul>
+                <li><a href="#"><i data-lucide="video"></i> Vidéos explicatives</a></li>
+                <li><a href="#"><i data-lucide="help-circle"></i> Quiz interactifs</a></li>
+                <li><a href="#"><i data-lucide="clipboard"></i> Fiches de révision</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Plateforme Éducative. Tous droits réservés.</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
-

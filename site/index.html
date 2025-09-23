@@ -1,62 +1,609 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cours de Mathématiques</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Icônes Lucide -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interface Maths — Fiches élèves et cours interactifs</title>
+  <meta name="description" content="Fiches élèves prêtes à l'emploi (HTML imprimable + MathJax) — EDS Première, EDS Terminale, Maths expertes." />
+  <meta name="theme-color" content="#2563EB" />
+  <meta property="og:title" content="Interface Maths — Fiches élèves et cours interactifs" />
+  <meta property="og:description" content="Fiches élèves prêtes à l'emploi (HTML imprimable + MathJax)." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="/" />
+  <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    :root {
+      /* Palette éducative */
+      --bleu-confiance: #2563EB;
+      --vert-reussite: #16A34A;
+      --violet-creativite: #7C3AED;
+      --orange-energie: #EA580C;
+      --jaune-lumiere: #FCD34D;
+      --rose-encouragement: #EC4899;
+      
+      /* Couleurs neutres */
+      --gris-ardoise: #475569;
+      --gris-clair: #94A3B8;
+      --blanc-pur: #FFFFFF;
+      --bleu-nuit: #0F172A;
+      --gris-tres-clair: #F8FAFC;
+      
+      /* Gradients éducatifs */
+      --gradient-apprentissage: linear-gradient(135deg, var(--bleu-confiance), var(--vert-reussite));
+      --gradient-creativite: linear-gradient(135deg, var(--violet-creativite), var(--bleu-confiance));
+      --gradient-energie: linear-gradient(135deg, var(--orange-energie), var(--jaune-lumiere));
+      
+      /* Ombres éducatives */
+      --ombre-douce: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
+      --ombre-moyenne: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+      --ombre-forte: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
+    }
+
+    [data-theme="light"] {
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-secondary: rgba(248, 250, 252, 0.8);
+      --texte: var(--gris-ardoise);
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(226, 232, 240, 0.6);
+      --bordure-forte: rgba(226, 232, 240, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --bg-card: rgba(30, 41, 59, 0.95);
+      --bg-secondary: rgba(15, 23, 42, 0.8);
+      --texte: #F1F5F9;
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(51, 65, 85, 0.6);
+      --bordure-forte: rgba(51, 65, 85, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--texte);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+
+    body[data-theme="light"] {
+      --bg: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-secondary: rgba(248, 250, 252, 0.8);
+      --texte: var(--gris-ardoise);
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(226, 232, 240, 0.6);
+      --bordure-forte: rgba(226, 232, 240, 1);
+    }
+
+    body[data-theme="dark"] {
+      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --bg-card: rgba(30, 41, 59, 0.95);
+      --bg-secondary: rgba(15, 23, 42, 0.8);
+      --texte: #F1F5F9;
+      --texte-secondaire: var(--gris-clair);
+      --bordure: rgba(51, 65, 85, 0.6);
+      --bordure-forte: rgba(51, 65, 85, 1);
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 6px;
+      background: var(--bleu-confiance);
+      color: white;
+      padding: 8px;
+      text-decoration: none;
+      border-radius: 4px;
+      z-index: 1000;
+    }
+
+    .skip-link:focus {
+      top: 6px;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    /* Header modernisé */
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 0;
+    }
+
+    .title-block {
+      margin-bottom: 2rem;
+    }
+
+    .title-block h1 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      background: var(--gradient-apprentissage);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--gradient-apprentissage);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--texte-secondaire);
+      margin-bottom: 1rem;
+    }
+
+    .description {
+      color: var(--texte-secondaire);
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Bouton de thème */
+    .theme-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--bordure);
+      color: var(--texte);
+      padding: 0.75rem;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: var(--ombre-douce);
+      z-index: 100;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: var(--ombre-moyenne);
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--bleu-confiance);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav a:hover {
+      background: var(--bg-secondary);
+      transform: translateY(-2px);
+    }
+
+    /* Cards principales */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--bordure);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--ombre-douce);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--ombre-moyenne);
+      transform: translateY(-4px);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--texte);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card h2::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: var(--gradient-apprentissage);
+      border-radius: 2px;
+    }
+
+    /* Listes de contenu */
+    .content-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .content-list li {
+      margin: 0.5rem 0;
+    }
+
+    .content-list a {
+      color: var(--bleu-confiance);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+
+    .content-list a:hover {
+      background: var(--bg-secondary);
+      transform: translateX(4px);
+    }
+
+    /* Grilles de contenu */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--bordure);
+      color: var(--texte-secondaire);
+      margin-top: 3rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .wrap {
+        padding: 1rem;
+      }
+      
+      .nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+      
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    /* Couleurs des icônes */
+    .icone-bleue { color: var(--bleu-confiance); }
+    .icone-verte { color: var(--vert-reussite); }
+    .icone-violette { color: var(--violet-creativite); }
+    .icone-orange { color: var(--orange-energie); }
+    .icone-jaune { color: var(--jaune-lumiere); }
+    .icone-rose { color: var(--rose-encouragement); }
+  </style>
+  <script>
+    // En file://, PWA (manifest/SW) est restreint. En HTTP(S) ou localhost, ok.
+    if ((location.protocol === 'http:' || location.protocol === 'https:') && 'serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}))
+    }
+  </script>
 </head>
-<body class="light-theme">
-    <div class="header">
-        <h1>Bienvenue sur notre plateforme éducative</h1>
-        <p>Apprenez les mathématiques avec des cours interactifs</p>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Basculer le thème">
-            <i data-lucide="sun"></i>
-        </button>
-    </div>
+<body data-theme="light">
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  
+  <!-- Bouton de thème -->
+  <button class="theme-toggle" id="themeBtn" aria-label="Basculer le thème">
+    <i data-lucide="moon" id="theme-icon" style="width: 20px; height: 20px;"></i>
+  </button>
+
+  <div class="wrap">
+    <header>
+      <div class="title-block">
+        <h1>
+          <div class="logo-icon">
+            <i data-lucide="calculator" style="width: 28px; height: 28px;"></i>
+          </div>
+          Interface Maths 2025-2026
+        </h1>
+        <p class="subtitle">Fiches élèves et cours interactifs</p>
+        <p class="description">
+          <i data-lucide="graduation-cap" class="icone-bleue" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+          Ressources pédagogiques prêtes à l'emploi (HTML imprimable + MathJax) — EDS Première, EDS Terminale, Maths expertes
+        </p>
+      </div>
+    </header>
 
     <nav class="nav">
-        <ul>
-            <li><a href="#" aria-label="Accueil"><i data-lucide="home"></i> Accueil</a></li>
-            <li><a href="#" aria-label="Cours"><i data-lucide="book"></i> Cours</a></li>
-            <li><a href="#" aria-label="Exercices"><i data-lucide="edit"></i> Exercices</a></li>
-            <li><a href="#" aria-label="Ressources"><i data-lucide="library"></i> Ressources</a></li>
-            <li><a href="#" aria-label="Contact"><i data-lucide="mail"></i> Contact</a></li>
-        </ul>
+      <a href="#eds-premiere">
+        <i data-lucide="bar-chart-3" class="icone-violette" style="width: 18px; height: 18px;"></i>
+        EDS Première
+      </a>
+      <a href="#eds-terminale">
+        <i data-lucide="trending-up" class="icone-bleue" style="width: 18px; height: 18px;"></i>
+        EDS Terminale
+      </a>
+      <a href="#maths-expertes">
+        <i data-lucide="target" class="icone-orange" style="width: 18px; height: 18px;"></i>
+        Maths expertes
+      </a>
+      <a href="../">
+        <i data-lucide="home" class="icone-verte" style="width: 18px; height: 18px;"></i>
+        Accueil principal
+      </a>
     </nav>
 
-    <div class="container">
-        <div class="card">
-            <h2><i data-lucide="sigma"></i> Chapitre 1: Les Nombres Entiers</h2>
-            <p>Ce chapitre couvre les bases des nombres entiers, y compris l\'addition, la soustraction, la multiplication et la division. Des exercices interactifs sont disponibles pour chaque section.</p>
-            <p><strong>Objectifs pédagogiques:</strong> Maîtriser les opérations de base sur les nombres entiers.</p>
-        </div>
+    <main id="main">
+      <div class="content-grid">
+        <section id="eds-premiere" class="card animate-in">
+          <h2>
+            <i data-lucide="book-open" class="icone-violette" style="width: 24px; height: 24px;"></i>
+            EDS Première
+          </h2>
+          <ul class="content-list" id="eds_premiere-list">
+            <li>
+              <i data-lucide="loader" class="icone-bleue" style="width: 16px; height: 16px;"></i>
+              Chargement du contenu...
+            </li>
+          </ul>
+        </section>
 
-        <div class="card">
-            <h2><i data-lucide="fraction"></i> Chapitre 2: Les Fractions</h2>
-            <p>Découvrez le monde des fractions, comment les simplifier, les additionner, les soustraire, les multiplier et les diviser. Des exemples concrets vous aideront à comprendre.</p>
-            <p><strong>Objectifs pédagogiques:</strong> Comprendre et manipuler les fractions.</p>
-        </div>
+        <section id="eds-terminale" class="card animate-in">
+          <h2>
+            <i data-lucide="trending-up" class="icone-bleue" style="width: 24px; height: 24px;"></i>
+            EDS Terminale
+          </h2>
+          <ul class="content-list" id="eds_terminale-list">
+            <li>
+              <i data-lucide="loader" class="icone-bleue" style="width: 16px; height: 16px;"></i>
+              Chargement du contenu...
+            </li>
+          </ul>
+        </section>
 
-        <div class="card">
-            <h2><i data-lucide="folder-open"></i> Ressources Supplémentaires</h2>
-            <ul>
-                <li><a href="#"><i data-lucide="video"></i> Vidéos explicatives</a></li>
-                <li><a href="#"><i data-lucide="help-circle"></i> Quiz interactifs</a></li>
-                <li><a href="#"><i data-lucide="clipboard"></i> Fiches de révision</a></li>
-            </ul>
-        </div>
-    </div>
+        <section id="maths-expertes" class="card animate-in">
+          <h2>
+            <i data-lucide="target" class="icone-orange" style="width: 24px; height: 24px;"></i>
+            Maths expertes
+          </h2>
+          <ul class="content-list" id="maths_expertes-list">
+            <li>
+              <i data-lucide="loader" class="icone-bleue" style="width: 16px; height: 16px;"></i>
+              Chargement du contenu...
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
 
-    <div class="footer">
-        <p>&copy; 2025 Plateforme Éducative. Tous droits réservés.</p>
-    </div>
+    <footer class="footer">
+      <p>
+        <i data-lucide="graduation-cap" style="width: 16px; height: 16px; margin-right: 8px;"></i>
+        © 2025 Interface Maths — Lycée Pierre Mendès France, Tunis
+      </p>
+      <p style="margin-top: 0.5rem;">
+        Créé avec <i data-lucide="heart" style="width: 14px; height: 14px; color: var(--rose-encouragement);"></i> 
+        pour la réussite de nos élèves
+      </p>
+    </footer>
+  </div>
 
-    <script src="script.js"></script>
-    <script>
+  <script>
+    // Initialiser les icônes Lucide
+    lucide.createIcons();
+
+    // Gestion du thème
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const themeIcon = document.getElementById('theme-icon');
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme-site-index', newTheme);
+      
+      // Changer l'icône
+      themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
+      lucide.createIcons();
+    }
+
+    // Chargement du thème sauvegardé
+    const savedTheme = localStorage.getItem('theme-site-index') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+    document.getElementById('theme-icon').setAttribute('data-lucide', savedTheme === 'dark' ? 'sun' : 'moon');
+
+    // Chargement dynamique du contenu (compatible avec l'API existante)
+    async function loadContents() {
+      try {
+        const res = await fetch('/api/contents', { credentials: 'include' });
+        const data = await res.json();
+        
+        renderList('eds_premiere', data.eds_premiere);
+        renderList('eds_terminale', data.eds_terminale);
+        renderList('maths_expertes', data.maths_expertes);
+      } catch (e) {
+        console.log('API non disponible, affichage du contenu par défaut');
+        
+        // Contenu par défaut si l'API n'est pas disponible
+        renderDefaultContent();
+      }
+    }
+
+    function renderList(prefix, chapters) {
+      const root = document.getElementById(prefix + '-list');
+      if (!root) return;
+      
+      root.innerHTML = '';
+      
+      if (!chapters || chapters.length === 0) {
+        const li = document.createElement('li');
+        li.innerHTML = '<i data-lucide="info" class="icone-orange" style="width: 16px; height: 16px; margin-right: 8px;"></i>Aucun contenu disponible.';
+        root.appendChild(li);
         lucide.createIcons();
-    </script>
+        return;
+      }
+      
+      chapters.forEach(ch => {
+        const li = document.createElement('li');
+        const h3 = document.createElement('h3');
+        h3.textContent = ch.chapter === '_racine' ? 'Racine' : ch.chapter;
+        h3.style.color = 'var(--violet-creativite)';
+        h3.style.fontSize = '1.1rem';
+        h3.style.fontWeight = '600';
+        h3.style.margin = '1rem 0 0.5rem 0';
+        li.appendChild(h3);
+        
+        const ul = document.createElement('ul');
+        ul.style.marginLeft = '1rem';
+        
+        (ch.pages || []).forEach(p => {
+          const li2 = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = p.url;
+          a.innerHTML = `<i data-lucide="file-text" class="icone-bleue" style="width: 16px; height: 16px;"></i>${p.title || p.url}`;
+          li2.appendChild(a);
+          ul.appendChild(li2);
+        });
+        
+        li.appendChild(ul);
+        root.appendChild(li);
+      });
+      
+      lucide.createIcons();
+    }
+
+    function renderDefaultContent() {
+      // Contenu par défaut pour EDS Première
+      const edsPremiereList = document.getElementById('eds_premiere-list');
+      edsPremiereList.innerHTML = `
+        <li><h3 style="color: var(--violet-creativite); font-size: 1.1rem; font-weight: 600; margin: 1rem 0 0.5rem 0;">Second Degré</h3>
+          <ul style="margin-left: 1rem;">
+            <li><a href="EDS_premiere/Second_Degre/cours_second_degre.html"><i data-lucide="file-text" class="icone-bleue" style="width: 16px; height: 16px;"></i>Cours complet</a></li>
+            <li><a href="EDS_premiere/Second_Degre/fiche_eleve_second_degre.html"><i data-lucide="bookmark" class="icone-bleue" style="width: 16px; height: 16px;"></i>Fiche élève</a></li>
+          </ul>
+        </li>
+        <li><h3 style="color: var(--violet-creativite); font-size: 1.1rem; font-weight: 600; margin: 1rem 0 0.5rem 0;">Calcul Littéral</h3>
+          <ul style="margin-left: 1rem;">
+            <li><a href="EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"><i data-lucide="calculator" class="icone-bleue" style="width: 16px; height: 16px;"></i>Fiche exercices</a></li>
+          </ul>
+        </li>
+      `;
+      
+      // Contenu par défaut pour EDS Terminale
+      const edsTerminaleList = document.getElementById('eds_terminale-list');
+      edsTerminaleList.innerHTML = `
+        <li><h3 style="color: var(--violet-creativite); font-size: 1.1rem; font-weight: 600; margin: 1rem 0 0.5rem 0;">Suites</h3>
+          <ul style="margin-left: 1rem;">
+            <li><a href="EDS_terminale/Suites/cours_suites.html"><i data-lucide="file-text" class="icone-bleue" style="width: 16px; height: 16px;"></i>Cours suites</a></li>
+            <li><a href="EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"><i data-lucide="bookmark" class="icone-bleue" style="width: 16px; height: 16px;"></i>Rappels Première</a></li>
+          </ul>
+        </li>
+      `;
+      
+      // Contenu par défaut pour Maths Expertes
+      const mathsExpertesList = document.getElementById('maths_expertes-list');
+      mathsExpertesList.innerHTML = `
+        <li><h3 style="color: var(--violet-creativite); font-size: 1.1rem; font-weight: 600; margin: 1rem 0 0.5rem 0;">Arithmétique</h3>
+          <ul style="margin-left: 1rem;">
+            <li><a href="Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html"><i data-lucide="file-text" class="icone-bleue" style="width: 16px; height: 16px;"></i>Divisibilité et congruence</a></li>
+            <li><a href="Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/fiche_eleve_arith_chap1.html"><i data-lucide="bookmark" class="icone-bleue" style="width: 16px; height: 16px;"></i>Fiche élève</a></li>
+          </ul>
+        </li>
+      `;
+      
+      lucide.createIcons();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      
+      // Bouton thème
+      document.getElementById('themeBtn')?.addEventListener('click', toggleTheme);
+      
+      // Navigation fluide
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+      
+      // Animation d'entrée progressive
+      const elements = document.querySelectorAll('.animate-in');
+      elements.forEach((element, index) => {
+        setTimeout(() => {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }, index * 200);
+      });
+      
+      // Charger le contenu
+      loadContents();
+    });
+  </script>
 </body>
 </html>

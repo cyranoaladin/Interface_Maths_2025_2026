@@ -1,9 +1,9 @@
 import { Card } from "../ui/Card";
 export default function QuickAccess(){
   const items=[
-    { title:'EDS Première', desc:'Ressources + Progression', href:'/premiere' },
-    { title:'EDS Terminale', desc:'Ressources + Progression', href:'/terminale' },
-    { title:'Maths expertes', desc:'Ressources + Progression', href:'/expertes' },
+    { title:'EDS Première', desc:'Ressources + Progression', href:'/site/EDS_premiere/index.html' },
+    { title:'EDS Terminale', desc:'Ressources + Progression', href:'/site/EDS_terminale/index.html' },
+    { title:'Maths expertes', desc:'Ressources + Progression', href:'/site/Maths_expertes/index.html' },
   ];
   return(<section className="py-14 px-6 bg-gradient-to-b from-slate-50 to-white"><div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6">{items.map((it)=> (
     <a key={it.title} href={it.href} className="block">

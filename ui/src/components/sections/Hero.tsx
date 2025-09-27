@@ -9,9 +9,9 @@ export default function Hero(){
           <p className="text-lg mb-4">Ressources et progressions pour les élèves de Première et Terminale spécialité mathématiques.</p>
           <Citations />
           <div className="flex gap-3 mt-6">
-            <Button variant="primary">Première</Button>
-            <Button variant="primary">Terminale</Button>
-            <Button variant="primary">Maths expertes</Button>
+            <Button variant="primary"><a href="/site/EDS_premiere/index.html">Première</a></Button>
+            <Button variant="primary"><a href="/site/EDS_terminale/index.html">Terminale</a></Button>
+            <Button variant="primary"><a href="/site/Maths_expertes/index.html">Maths expertes</a></Button>
           </div>
         </div>
         <div>

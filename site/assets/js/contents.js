@@ -212,7 +212,7 @@
         const sub = document.createElement('small'); sub.className = 'small subdesc'; sub.textContent = description; a.appendChild(sub);
         a.appendChild(badges);
         const star = document.createElement('button'); star.type = 'button'; star.className = 'star-btn'; star.setAttribute('aria-label', 'Ajouter aux favoris'); star.setAttribute('aria-pressed', favSet.has(it.url) ? 'true' : 'false');
-        const icon = document.createElement('i'); icon.setAttribute('aria-hidden', 'true'); icon.setAttribute('data-lucide', 'star');
+        const icon = document.createElement('i'); icon.setAttribute('aria-hidden', 'true'); icon.setAttribute('data-lucide', 'heart');
         star.appendChild(icon);
         star.addEventListener('click', (e) => {
           e.preventDefault();

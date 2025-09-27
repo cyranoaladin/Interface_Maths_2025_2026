@@ -40,7 +40,7 @@
     }
     const target = document.getElementById('timeline');
     if (target) {
-      if (!items.length) { target.innerHTML = ''; }
+      if (!items.length) { target.innerHTML = '<small>Explore tes ressources, et tes progrès s\'afficheront ici !</small>'; }
       else {
         const div = document.createElement('div'); div.className = 'timeline alt';
         items.forEach((it, idx) => {

@@ -68,6 +68,18 @@
               <p></p>
               <cite></cite>
             </blockquote>
+            <div class="formula-ticker neon" aria-hidden="true">
+              <span class="item">∑</span>
+              <span class="ticker">
+                <span>
+                  ∑
+                  ∫
+                  π
+                  f(x)
+                  √
+                </span>
+              </span>
+            </div>
             <p class="mt-8">Cours complets, exercices corrigés, fiches de méthode et progressions annuelles — organisés
               par niveau (Première, Terminale et Maths expertes) pour réussir sereinement le cycle terminal.</p>
             <div class="cta-row">
@@ -192,20 +204,21 @@
               </linearGradient>
             </defs>
             <circle cx="8" cy="8" r="7" fill="url(#gF)" opacity="0.6" />
-          </svg> © 2025 — Interface Maths • <span id="footer-quote">« Les mathématiques sont la poésie des sciences. » — Novalis</span></small>
+          </svg> © 2025 — Interface Maths • <span id="footer-quote">« Les mathématiques sont la poésie des sciences. » —
+            Novalis</span></small>
       </div>
     </footer>
   </div>
   <script src="assets/js/progression.js" defer></script>
   <script>
-    (function(){
-      const QUOTES=[
+    (function () {
+      const QUOTES = [
         '« Les mathématiques sont la poésie des sciences. » — Novalis',
         '« La mathématique est la clé et la porte des sciences. » — Roger Bacon',
         '« Les nombres gouvernent le monde. » — Pythagore'
       ];
-      const t=document.getElementById('footer-quote');
-      if(t){ t.textContent = QUOTES[Math.floor(Math.random()*QUOTES.length)]; }
+      const t = document.getElementById('footer-quote');
+      if (t) { t.textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)]; }
     })();
   </script>
 </body>

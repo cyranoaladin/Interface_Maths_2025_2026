@@ -255,6 +255,7 @@
   if (tabAll) { tabAll.addEventListener('click', () => { favoritesOnly = false; setTab(); render(fullGroups || {}); updateSuggestions(); }); }
   if (tabFav) { tabFav.addEventListener('click', () => { favoritesOnly = true; setTab(); render(fullGroups || {}); updateSuggestions(); }); }
   setTab();
+  if (location.hash && /favoris/i.test(location.hash)) { favoritesOnly = true; setTab(); }
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       typeFilter = ''; tagFilter = ''; query = '';

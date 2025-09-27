@@ -99,7 +99,12 @@ body::after {
   opacity: .35
 }
 
-.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 24px;
+  align-items: center
+}
 
 .wrap {
   max-width: 1200px;
@@ -126,6 +131,12 @@ nav a {
   text-decoration: none;
   margin: 0 8px
 }
+
+/* Premium nav */
+.site-nav{display:flex;align-items:center;gap:12px}
+.site-nav .nav-link{padding:6px 10px;border-radius:10px;border:1px solid transparent}
+.site-nav .nav-link:hover{background:rgba(255,255,255,.45);border-color:var(--border)}
+.site-nav .nav-sep{display:inline-block;width:1px;height:22px;background:rgba(0,0,0,.06);margin:0 6px}
 
 .btn {
   display: inline-flex;

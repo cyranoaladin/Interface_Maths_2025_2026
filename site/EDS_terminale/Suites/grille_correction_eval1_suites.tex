@@ -1,0 +1,75 @@
+% filepath: /home/alaeddine/Documents/Interface__Maths_2025_2026/Interface_Maths_2025_2026/site/EDS_terminale/Suites/grille_correction_eval1_suites.tex
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs} % Pour des tableaux plus professionnels
+\usepackage{xcolor}   % Pour la couleur
+\usepackage{colortbl} % Pour colorer les cellules du tableau
+\usepackage{tcolorbox} % Ajout du package manquant
+
+\geometry{margin=2.5cm}
+
+% Commande pour une case à cocher vide
+\newcommand{\checkbox}{\framebox(10,10){}}
+
+\begin{document}
+
+\begin{tcolorbox}[title=Conseils pratiques]
+\begin{itemize}
+    \item Toujours vérifier la présence des trois étapes de la récurrence : initialisation, hérédité, conclusion.
+    \item Valoriser une rédaction claire et des calculs exacts.
+    \item Tolérer les petites erreurs numériques si la démarche est correcte.
+    \item Si un élève écrit seulement le résultat final sans justification : donner au maximum 50\% des points.
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{l c c}
+\toprule
+\textbf{Élément attendu} & \textbf{Points} & \textbf{Atteint ?} \\
+\midrule
+\rowcolor{gray!15}
+\multicolumn{3}{c}{\textbf{Exercice 1 (5 points)}} \\
+Calcul correct de $u_1$ & 0,5 & \checkbox \\
+Calcul correct de $u_2$ & 0,5 & \checkbox \\
+Initialisation de la récurrence claire & 0,5 & \checkbox \\
+Calcul de $u_{n+2} - u_{n+1}$ correct & 1,5 & \checkbox \\
+Utilisation correcte de l'hypothèse de récurrence & 1,5 & \checkbox \\
+Conclusion de la récurrence bien rédigée & 0,5 & \checkbox \\
+\midrule
+\rowcolor{gray!15}
+\multicolumn{3}{c}{\textbf{Exercice 2 (5 points)}} \\
+Calcul correct de $v_1, v_2, v_3$ & 1,5 & \checkbox \\
+Initialisation correcte & 0,5 & \checkbox \\
+Hérédité démontrée (calcul juste) & 2,5 & \checkbox \\
+Conclusion rédigée & 0,5 & \checkbox \\
+\midrule
+\rowcolor{gray!15}
+\multicolumn{3}{c}{\textbf{Exercice 3 (5 points)}} \\
+Calcul correct de $w_1, w_2$ & 1 & \checkbox \\
+Initialisation correcte & 0,5 & \checkbox \\
+Hérédité démontrée (calcul juste) & 3 & \checkbox \\
+Conclusion rédigée & 0,5 & \checkbox \\
+\midrule
+\rowcolor{gray!15}
+\multicolumn{3}{c}{\textbf{Exercice 4 (5 points)}} \\
+Calcul correct de $p_1, p_2, p_3$ & 1,5 & \checkbox \\
+Initialisation correcte & 0,5 & \checkbox \\
+Hérédité démontrée (calcul juste) & 2,5 & \checkbox \\
+Conclusion rédigée & 0,5 & \checkbox \\
+\bottomrule
+\addlinespace[5pt]
+\multicolumn{1}{r}{\textbf{Total :}} & \textbf{20} & \\
+\end{tabular}
+\end{center}
+
+\end{document}

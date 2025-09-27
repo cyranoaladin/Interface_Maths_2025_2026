@@ -4,6 +4,22 @@ const ASSETS = [
   '/index.html',
   '/assets/css/site.css',
   '/assets/js/contents.js',
+  '/assets/js/theme-toggle.js',
+  '/assets/js/icons.js',
+  '/assets/js/hero.js',
+  '/assets/js/neon-toggle.js',
+  '/assets/js/levels.js',
+  '/assets/js/progression.js',
+  '/assets/contents.json',
+  '/assets/contents.static.js',
+  '/EDS_premiere/index.html',
+  '/EDS_terminale/index.html',
+  '/Maths_expertes/index.html',
+  '/mentions.html',
+  '/credits.html',
+  '/EDS_premiere/Progression/index.html',
+  '/EDS_terminale/Progression/index.html',
+  '/Maths_expertes/Progression/index.html',
 ]
 self.addEventListener('install', e => {
   // Pre-cache core assets and activate new SW immediately

@@ -4,6 +4,10 @@
   "groups": {
     "EDS Première": [
       {
+        "title": "Progression — EDS Première (2025–2026)",
+        "url": "EDS_premiere/Progression/index.html"
+      },
+      {
         "title": "Calcul littéral — Exercices + Méthodologie (EDS Première)",
         "url": "EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
       },
@@ -18,6 +22,10 @@
     ],
     "EDS Terminale": [
       {
+        "title": "Progression — EDS Terminale (2025–2026)",
+        "url": "EDS_terminale/Progression/index.html"
+      },
+      {
         "title": "Fiche élève — Généralités sur les suites (Rappels de Première) — EDS Terminale",
         "url": "EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html"
       },
@@ -27,6 +35,10 @@
       }
     ],
     "Maths expertes": [
+      {
+        "title": "Progression — Maths expertes (2025–2026)",
+        "url": "Maths_expertes/Progression/index.html"
+      },
       {
         "title": "Arithmétique - Partie 1 : Divisibilité et congruences",
         "url": "Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html"
@@ -49,6 +61,24 @@
       "url": "404.html",
       "file": "404.html",
       "name": "404.html"
+    },
+    {
+      "title": "Progression — EDS Première (2025–2026)",
+      "url": "EDS_premiere/Progression/index.html",
+      "file": "EDS_premiere/Progression/index.html",
+      "name": "index.html"
+    },
+    {
+      "title": "Progression — EDS Terminale (2025–2026)",
+      "url": "EDS_terminale/Progression/index.html",
+      "file": "EDS_terminale/Progression/index.html",
+      "name": "index.html"
+    },
+    {
+      "title": "Progression — Maths expertes (2025–2026)",
+      "url": "Maths_expertes/Progression/index.html",
+      "file": "Maths_expertes/Progression/index.html",
+      "name": "index.html"
     },
     {
       "title": "Calcul littéral — Exercices + Méthodologie (EDS Première)",

@@ -34,6 +34,34 @@
   --ds-shadow-glow: 0 0 16px rgba(0, 240, 255, 0.35);
 }
 
+/* Palette alt: Énergie & Créativité */
+html[data-theme="energie"]:root {
+  --bg: #121212;
+  --card: #1f1f33;
+  --text: #F5F5F5;
+  --muted: #BDBDBD;
+  --link: #6A0DAD;
+  --border: #2a2a40;
+  --accent: #FFD700;
+  --color-primary-blue: #6A0DAD;
+  --color-primary-violet: #6A0DAD;
+  --color-primary-cyan: #FFD700;
+}
+
+/* Palette alt: Pureté & Minimalisme */
+html[data-theme="pure"]:root {
+  --bg: #212121;
+  --card: #2a2a2a;
+  --text: #FFFFFF;
+  --muted: #E0E0E0;
+  --link: #174D8C;
+  --border: #2f2f2f;
+  --accent: #4DFFC9;
+  --color-primary-blue: #174D8C;
+  --color-primary-violet: #174D8C;
+  --color-primary-cyan: #4DFFC9;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0b1020;

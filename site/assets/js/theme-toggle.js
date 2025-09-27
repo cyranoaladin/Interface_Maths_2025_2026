@@ -4,12 +4,13 @@
   const btn = document.getElementById('theme-toggle');
 
   function apply(theme){
-    if (theme === 'dark' || theme === 'light'){
+    if (theme === 'dark' || theme === 'light' || theme === 'energie' || theme === 'pure'){
       root.setAttribute('data-theme', theme);
       try { localStorage.setItem(KEY, theme); } catch(_) {}
       if (btn){
         btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-        btn.textContent = theme === 'dark' ? 'Thème: sombre' : 'Thème: clair';
+        const label = theme === 'dark' ? 'Thème: sombre' : theme === 'light' ? 'Thème: clair' : theme === 'energie' ? 'Thème: énergie' : 'Thème: pur';
+        btn.textContent = label;
       }
     } else {
       root.removeAttribute('data-theme');
@@ -28,8 +29,10 @@
 
   if (btn){
     btn.addEventListener('click', function(){
+      const order = ['dark','light','energie','pure'];
       const current = root.getAttribute('data-theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      const next = current === 'dark' ? 'light' : 'dark';
+      const idx = Math.max(0, order.indexOf(current));
+      const next = order[(idx + 1) % order.length];
       apply(next);
     });
   }

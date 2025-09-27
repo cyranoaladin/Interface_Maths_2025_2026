@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.2.0...v1.2.1) (2025-09-27)
+
+
+### Bug Fixes
+
+* resolve merge conflict in site/index.html (lucide init + nav FR) ([286edf1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/286edf12b94d3fcc0fd821ba72ebaf6df94117e0))
+
 ## [1.2.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.1.0...v1.2.0) (2025-09-20)
 
 

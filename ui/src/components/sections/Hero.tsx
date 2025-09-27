@@ -1,5 +1,5 @@
 import { Button } from "../ui/Button";
-import Citations from "./Citations";
+import CitationRotative from '../CitationRotative';
 export default function Hero() {
   return (
     <section className="text-white py-16 px-6 bg-[radial-gradient(60vmax_60vmax_at_80%_-10%,rgba(6,182,212,.25),transparent_60%),linear-gradient(135deg,rgba(15,23,42,.94),rgba(124,58,237,.45))]">
@@ -21,7 +21,8 @@ export default function Hero() {
             <Button variant="primary">
               <a href="/site/Maths_expertes/index.html">Maths expertes</a>
             </Button>
-          </div>
+                    <CitationRotative />
+        </div>
         </div>
         <div>
           <img

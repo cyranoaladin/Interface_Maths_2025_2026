@@ -68,16 +68,17 @@
               <p></p>
               <cite></cite>
             </blockquote>
-            <p class="mt-8">Cours complets, exercices corrigés, fiches de méthode et progressions annuelles — organisés par niveau (Première, Terminale et Maths expertes) pour réussir sereinement le cycle terminal.</p>
+            <p class="mt-8">Cours complets, exercices corrigés, fiches de méthode et progressions annuelles — organisés
+              par niveau (Première, Terminale et Maths expertes) pour réussir sereinement le cycle terminal.</p>
             <div class="cta-row">
               <a class="btn btn--primary" href="EDS_premiere/index.html"><i aria-hidden="true"
                   data-lucide="book-open"></i>
-                📘 Spécialité Maths – Première</a>
+                🚀 Spécialité Maths – Première</a>
               <a class="btn btn--primary" href="EDS_terminale/index.html"><i aria-hidden="true"
                   data-lucide="book-open"></i>
-                📗 Spécialité Maths – Terminale</a>
+                🚀 Spécialité Maths – Terminale</a>
               <a class="btn btn--primary" href="Maths_expertes/index.html"><i aria-hidden="true"
-                  data-lucide="sparkles"></i> 📕 Maths expertes</a>
+                  data-lucide="sparkles"></i> 🚀 Maths expertes</a>
             </div>
           </div>
           <div aria-hidden="true">
@@ -138,14 +139,15 @@
           </a>
           <a class="card-link" href="Maths_expertes/index.html">
             <i aria-hidden="true" data-lucide="brain"></i>
-            <strong>Maths expertes</strong><br><small>Ressources et exercices avancés</small>
+            <strong>Maths expertes</strong><br><small>Ressources approfondies et exercices avancés</small>
           </a>
         </div>
       </section>
 
       <section class="block sommaire" id="auto-index">
         <h2>📚 Sommaire des chapitres</h2>
-        <p class="small mt-6">Explorez tous les chapitres étudiés en spécialité mathématiques. Chaque ressource est organisée en cours complets, exercices, fiches de révision et évaluations.</p>
+        <p class="small mt-6">Explorez tous les chapitres étudiés en spécialité mathématiques. Chaque ressource est
+          organisée en cours complets, exercices, fiches de révision et évaluations.</p>
         <div class="mt-8">
           <div class="tabs" role="tablist" aria-label="Affichage du sommaire">
             <button id="tab-all" class="tab" role="tab" aria-selected="true">Tous</button>
@@ -190,11 +192,22 @@
               </linearGradient>
             </defs>
             <circle cx="8" cy="8" r="7" fill="url(#gF)" opacity="0.6" />
-          </svg> © 2025 — Interface Maths • « Les mathématiques sont la poésie des sciences. »</small>
+          </svg> © 2025 — Interface Maths • <span id="footer-quote">« Les mathématiques sont la poésie des sciences. » — Novalis</span></small>
       </div>
     </footer>
   </div>
   <script src="assets/js/progression.js" defer></script>
+  <script>
+    (function(){
+      const QUOTES=[
+        '« Les mathématiques sont la poésie des sciences. » — Novalis',
+        '« La mathématique est la clé et la porte des sciences. » — Roger Bacon',
+        '« Les nombres gouvernent le monde. » — Pythagore'
+      ];
+      const t=document.getElementById('footer-quote');
+      if(t){ t.textContent = QUOTES[Math.floor(Math.random()*QUOTES.length)]; }
+    })();
+  </script>
 </body>
 
 </html>

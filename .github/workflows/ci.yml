@@ -2,7 +2,7 @@ name: CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch: {}
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version: "3.x"
       - name: Install html5validator
         run: |
           python -m pip install --upgrade pip
@@ -61,7 +61,7 @@ jobs:
         if: ${{ steps.detect.outputs.present == 'true' }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install deps
         if: ${{ steps.detect.outputs.present == 'true' }}
         run: |
@@ -72,4 +72,3 @@ jobs:
         run: |
           cd apps/frontend
           npm run lint
-

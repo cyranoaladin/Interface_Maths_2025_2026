@@ -194,7 +194,6 @@
         const tags = computeTags(it);
         tags.forEach(t => { const b = document.createElement('span'); b.className = 'badge tag-' + normalize(t); const ti = document.createElement('i'); ti.setAttribute('data-lucide', tagIcon(t)); ti.setAttribute('aria-hidden', 'true'); b.appendChild(ti); b.appendChild(document.createTextNode(' ' + t)); badges.appendChild(b); });
         // Academic description based on tag/type
-        const tags = computeTags(it);
         const description = (() => {
           const t = normalize(it.title);
           if (tags.includes('Analyse')) {

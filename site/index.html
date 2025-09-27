@@ -11,13 +11,13 @@
   <meta property="og:title" content="Interface Maths — 2025–2026" />
   <meta property="og:description" content="Ressources imprimables avec une interface moderne." />
   <meta property="og:type" content="website" />
-  <link rel="canonical" href="/" />
+  <link rel="canonical" href="/index.html" />
   <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preload" href="assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest" defer></script>
   <script src="assets/js/icons.js" defer></script>
   <script src="assets/js/hero.js" defer></script>
@@ -34,7 +34,7 @@
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
   <div class="wrap">
-    <header>
+    <header class="header-sticky" data-crumbs="Accueil,/index.html">
       <div class="title-block">
         <img class="logo" src="assets/img/icon.svg" alt="Interface Maths logo" />
         <img class="logo" src="assets/img/logo_pmf.svg" alt="Lycée Pierre Mendès France logo" />
@@ -59,7 +59,7 @@
     <main id="main">
 
       <section class="block hero" id="hero">
-        <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center">
+        <div class="hero-grid">
           <div>
             <h1 class="h1" style="margin:0 0 12px">Apprenez les mathématiques avec clarté</h1>
             <blockquote id="hero-quote" cite="">

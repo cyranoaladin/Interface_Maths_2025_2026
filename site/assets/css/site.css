@@ -99,6 +99,8 @@ body::after {
   opacity: .35
 }
 
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}
+
 .wrap {
   max-width: 1200px;
   margin: 0 auto;

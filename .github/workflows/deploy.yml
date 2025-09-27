@@ -2,10 +2,10 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [ main ]
-    tags: [ 'v*.*.*' ]
+    branches: [main]
+    tags: ["v*.*.*"]
   release:
-    types: [ published ]
+    types: [published]
   workflow_dispatch: {}
 
 concurrency:
@@ -29,7 +29,7 @@ jobs:
         if: ${{ hashFiles('apps/frontend/package.json') != '' }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Build frontend (if present)
         if: ${{ hashFiles('apps/frontend/package.json') != '' }}
@@ -50,7 +50,7 @@ jobs:
       - name: Setup Node (for site index)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Generate contents index (assets/contents.json)
         run: |

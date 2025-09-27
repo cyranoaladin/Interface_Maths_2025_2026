@@ -97,17 +97,21 @@
 - Normalisation et typage:
 
 ```js
-function normalize(str){
-  return (str||'').toString().normalize('NFD').replace(/\p{Diacritic}+/gu,'').toLowerCase();
+function normalize(str) {
+  return (str || "")
+    .toString()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}+/gu, "")
+    .toLowerCase();
 }
-function computeType(it){
+function computeType(it) {
   const t = normalize(it.title);
-  if(/\bcours\b/.test(t)) return 'Cours';
-  if(/(\bfiche\b|mémo|méthodo)/.test(t)) return 'Fiche';
-  if(/exercices?/.test(t)) return 'Exercices';
-  if(/(éval|evaluation|corrigé|corrige)/.test(t)) return 'Éval';
-  if(/article|note/.test(t)) return 'Article';
-  return '';
+  if (/\bcours\b/.test(t)) return "Cours";
+  if (/(\bfiche\b|mémo|méthodo)/.test(t)) return "Fiche";
+  if (/exercices?/.test(t)) return "Exercices";
+  if (/(éval|evaluation|corrigé|corrige)/.test(t)) return "Éval";
+  if (/article|note/.test(t)) return "Article";
+  return "";
 }
 ```
 
@@ -118,8 +122,8 @@ function computeType(it){
 - Correction automatique des liens relatifs (contexte « page de niveau »):
 
 ```js
-const raw = (it.url || '').replace(/^\/+/, '');
-link.href = /^https?:\/\//.test(raw) ? raw : ('../' + raw);
+const raw = (it.url || "").replace(/^\/+/, "");
+link.href = /^https?:\/\//.test(raw) ? raw : "../" + raw;
 ```
 
 ### 5.3 Progression (timeline + grille) — `assets/js/progression.js`

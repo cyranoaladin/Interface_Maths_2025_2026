@@ -88,7 +88,7 @@
 
 ---
 
-## 5) Logique métier (JS)
+## 5) Logique métier (JS) — comportements interactifs et attentes utilisateur
 
 ### 5.1 Sommaire d’accueil — `assets/js/contents.js`
 
@@ -115,6 +115,13 @@ function computeType(it) {
 }
 ```
 
+- Champs et interactions attendues (utilisateur):
+  - Recherche: l’utilisateur peut taper une requête (accent-insensible). Au-delà de 2 caractères, une liste de suggestions s’affiche (jusqu’à 8), chaque suggestion mène vers l’URL de la ressource (nouvel onglet).
+  - Filtres chips: deux groupes (« Type », « Thème »). Un clic active/désactive la puce; l’état `aria-pressed` est tenu à jour. Les résultats se mettent à jour en direct.
+  - Favoris: l’icône cœur dans chaque carte bascule l’état favori (persisté dans `localStorage` clé `favorites`). Le filtre « Mes favoris » (onglet) restreint l’affichage aux favoris.
+  - Réinitialisation: le bouton « Réinitialiser les filtres » vide la recherche, désactive tous les chips, réinitialise l’onglet « Tous » et recalcule la grille.
+  - Ancre `#favoris`: si l’URL contient `#favoris`, l’onglet « Mes favoris » est pré‑activé au chargement.
+
 ### 5.2 Listes de niveau — `assets/js/levels.js`
 
 - Rôle: afficher les ressources d’une rubrique (Première/Terminale/Maths expertes) avec recherche/filtre/favoris.
@@ -126,10 +133,26 @@ const raw = (it.url || "").replace(/^\/+/, "");
 link.href = /^https?:\/\//.test(raw) ? raw : "../" + raw;
 ```
 
+- Interactions attendues (utilisateur):
+  - Recherche intra‑niveau: champ `#level-search` filtre les cartes du niveau courant (mêmes règles de normalisation).
+  - Filtres: chips par type et thème disponibles (mêmes comportements et états qu’en accueil).
+  - Réinitialisation: `#level-reset-filters` remet la vue à zéro.
+  - Navigation: chaque carte ouvre la ressource correspondante. Les cœurs de favoris sont disponibles et persistent inter‑pages (même `localStorage`).
+
 ### 5.3 Progression (timeline + grille) — `assets/js/progression.js`
 
 - Rôle: scanner les tables de chapitres dans la page Progression, construire timeline alternée et grille.
-- UX: si aucune entrée détectée, ne pas afficher de placeholder intrusif sur l’accueil.
+- UX et attentes:
+  - Timeline: jalons alternés (gauche/droite) avec lien d’ancrage vers la ligne du tableau d’origine. Icône, titre, durée, badges (Cours/Fiche/Exercices) affichés.
+  - Grille: cartes numérotées avec durées et liens vers les ressources.
+  - Si vide: afficher un message engageant « Explore tes ressources, et tes progrès s’afficheront ici ! » (sur les pages progression), ne rien afficher d’intrusif sur l’accueil.
+
+### 5.4 Thèmes et mode néon — `assets/js/theme-toggle.js`, `assets/js/neon-toggle.js`
+
+- `theme-toggle.js` gère un cycle de thèmes via l’attribut `html[data-theme]` (persisté dans `localStorage`):
+  - Ordre: `dark` → `light` → `energie` → `pure` (palettes alternatives documentées en §3 et §11).
+  - Le libellé du bouton est mis à jour: « Thème: sombre/clair/énergie/pur ».
+- `neon-toggle.js` ajoute un glow discret en activant `html[data-neon="on"]`.
 
 ---
 
@@ -143,6 +166,11 @@ link.href = /^https?:\/\//.test(raw) ? raw : "../" + raw;
   - Bouton ⭐ sur chaque carte (persistance locale)
 - Voir la progression:
   - Rubrique → bouton « Progression » → timeline + grille
+
+Cas d’usage concrets:
+- « Où trouver une fiche de révision sur les suites ? » → Accueil → rechercher « suites » → filtrer Type « Fiche » → ouvrir « Fiche élève — Suites numériques ».
+- « Comment réviser le second degré ? » → Accueil → Sommaire → carte « Cours complet — Second degré » (description: « Polynômes, égalités et méthodes ») → ajouter aux favoris pour accès rapide.
+- « Naviguer la progression de Terminale » → Terminale → Progression → jalons et badges pour accéder aux ressources de la séquence.
 
 ---
 
@@ -158,7 +186,16 @@ link.href = /^https?:\/\//.test(raw) ? raw : "../" + raw;
 - Icônes:
   - Lucide via CDN, initialisé par `assets/js/icons.js`
 - Thèmes & mode néon:
-  - `theme-toggle.js`, `neon-toggle.js` (attributs `html[data-theme]`, `html[data-neon]`)
+  - `theme-toggle.js`, `neon-toggle.js` (attributs `html[data-theme]`, `html[data-neon]`). Deux palettes alternatives: « Énergie & Créativité » (fond #121212, violet #6A0DAD, accent #FFD700) et « Pureté & Minimalisme » (fond #212121, marine #174D8C, accent #4DFFC9).
+
+### 7.1 Données et contenus
+- Indexation: mettre à jour `assets/contents.json` (et `assets/contents.static.js`) lors d’ajouts/suppressions.
+- Nommage: titres de cartes explicites (« Cours complet — Second degré », « Fiche élève — Suites numériques », « Exercices corrigés — Calcul littéral ») pour de bonnes descriptions automatiques.
+
+### 7.2 Accessibilité et i18n
+- Langue: attribut `lang="fr"` sur toutes les pages, textes en français uniquement (tests E2E bloquants).
+- Focus: styles visibles pour tabulation (`:focus-visible`), labels pour champs.
+- Icônes: Lucide (SVG) initialisées par `assets/js/icons.js`.
 
 Installation locale rapide (serveur statique):
 
@@ -181,6 +218,13 @@ curl http://localhost/api/tree
 
 - Unitaires (Vitest, jsdom): composants DOM génériques, rendu `contents.js` (fallback statique), classes attendues
 - E2E (Playwright): navigation (Accueil → Première → Ressources → Progression → Retour), recherche/filtre/favoris, timeline, accessibilité (axe-core), langue française
+
+Scénarios E2E détaillés attendus:
+- Navigation: Accueil → carte « Spécialité Maths – Terminale » → bouton « Progression » (nav header) → retour « Accueil ».
+- Recherche et suggestions: saisir « cours », attendre les suggestions, cliquer sur une suggestion, vérifier l’ouverture.
+- Filtres et reset: activer un chip Type, activer un chip Thème, cliquer « Réinitialiser les filtres », vérifier état.
+- Favoris: activer le cœur, recharger la page, vérifier persistance.
+- FR only: vérifier absence de mots anglais dans les pages `lang="fr"`.
 
 Commandes:
 
@@ -214,3 +258,19 @@ Exemples de vérifications à exiger:
 - Contributions: PR bienvenues pour améliorer l’accessibilité, la lisibilité, la qualité des contenus et des tests
 
 Lien licence: <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr>
+
+---
+
+## 11) Annexes — Design tokens alternatifs (palettes)
+
+### 11.1 Énergie & Créativité
+- Fond: `#121212`, Carte: `#1f1f33`
+- Texte: `#F5F5F5`, Muted: `#BDBDBD`
+- Titre/Accent: Violet `#6A0DAD`, Accent doré `#FFD700`
+- Usage: sites dynamiques, engageants; bon contraste avec cœurs/focus dorés.
+
+### 11.2 Pureté & Minimalisme
+- Fond: `#212121`, Carte: `#2a2a2a`
+- Texte: `#FFFFFF`, Muted: `#E0E0E0`
+- Titre/Accent: Marine `#174D8C`, Accent menthe `#4DFFC9`
+- Usage: rendu sobre, professionnel, focus sur lisibilité et structure.

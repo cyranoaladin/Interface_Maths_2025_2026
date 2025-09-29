@@ -11,7 +11,8 @@
     "test:unit": "vitest run tests/unit",
     "test:e2e": "playwright test",
     "test": "npm run test:unit && npm run test:e2e",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "css:build": "postcss site/assets/css/site.css -o site/assets/css/site.min.css"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.9.1",
@@ -24,6 +25,10 @@
     "@semantic-release/github": "^10.0.4",
     "@semantic-release/commit-analyzer": "^12.0.0",
     "@semantic-release/release-notes-generator": "^13.0.0",
-    "conventional-changelog-conventionalcommits": "^7.0.2"
+    "conventional-changelog-conventionalcommits": "^7.0.2",
+    "postcss": "^8.4.38",
+    "postcss-import": "^16.1.0",
+    "cssnano": "^6.1.2",
+    "autoprefixer": "^10.4.20"
   }
 }

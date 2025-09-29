@@ -22,7 +22,7 @@ function showUpdateToast() {
     try {
       const regs = await navigator.serviceWorker.getRegistrations();
       regs.forEach(r => r.waiting && r.waiting.postMessage({ type: 'SKIP_WAITING' }));
-    } catch(_){}
+    } catch (_) {}
     location.reload();
   };
 }
@@ -30,4 +30,3 @@ function showUpdateToast() {
 navigator.serviceWorker && navigator.serviceWorker.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'RELOAD') location.reload();
 });
-

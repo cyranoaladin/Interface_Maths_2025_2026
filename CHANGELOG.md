@@ -1,3 +1,10 @@
+## [1.7.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.6.0...v1.7.0) (2025-09-29)
+
+
+### Features
+
+* **contenus:** normaliser titres/descriptions (contents.json); hubs Évaluations & Programme; i18n micro-copies; nav mise à jour ([33ab473](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/33ab4732b2540820d4e96939cfe743b60e4fc8ff))
+
 ## [1.6.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.5.0...v1.6.0) (2025-09-29)
 
 

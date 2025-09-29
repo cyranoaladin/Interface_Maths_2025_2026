@@ -223,7 +223,7 @@
           writeFavorites(favSet);
           star.setAttribute('aria-pressed', favSet.has(it.url) ? 'true' : 'false');
           render(fullGroups || {});
-          if (!has && window.celebrateAddFav) { try { window.celebrateAddFav(); } catch(_){} }
+          if (!has && window.celebrateAddFav) { try { window.celebrateAddFav(); } catch (_) {} }
         });
         card.appendChild(a);
         card.appendChild(star);

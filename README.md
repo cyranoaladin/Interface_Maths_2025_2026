@@ -280,3 +280,42 @@ Lien licence: <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr>
 - Texte: `#FFFFFF`, Muted: `#E0E0E0`
 - Titre/Accent: Marine `#174D8C`, Accent menthe `#4DFFC9`
 - Usage: rendu sobre, professionnel, focus sur lisibilité et structure.
+
+---
+
+## 12) EDS Première — Épreuve anticipée de mathématiques (à partir de 2027)
+
+### Épreuve Anticipée de Maths : Le Bac en Première
+
+À partir de 2027, une nouvelle épreuve de maths apparaît pour tous les élèves de Première. Voici l’essentiel pour bien se préparer.
+
+### C’est quoi ?
+
+- Une épreuve écrite passée en fin de Première, comme le bac de français.
+- Elle valide un niveau commun en mathématiques (bases, raisonnement, résolution de problèmes), quel que soit le choix de spécialité en Terminale.
+
+### Le programme évalué
+
+- Si vous suivez la spécialité mathématiques: l’épreuve porte sur tout le programme de Spécialité Maths de Première.
+- Si vous n’êtes pas en spécialité mathématiques: l’épreuve porte sur le programme de mathématiques intégré à l’Enseignement Scientifique.
+
+### Comment se déroule l’épreuve ?
+
+- Durée: 2 heures, sur 20 points, coefficient 2.
+- Calculatrice: interdite pendant toute l’épreuve.
+- Deux parties distinctes:
+  - Partie 1 (6 pts): automatismes sous forme de QCM (calcul rapide, conversions, propriétés de base…).
+  - Partie 2 (14 pts): 2 ou 3 exercices indépendants pour évaluer connaissances et compétences de raisonnement.
+
+### Bien se préparer avec nos ressources
+
+- Fiches de révision ciblées (bases, méthodes, pièges courants).
+- Exercices d’entraînement thématiques (avec corrections détaillées).
+- Quiz « automatismes » (format QCM) pour progresser par petites séances.
+
+Ressources officielles (sujets exemples):
+
+- Sujet 0 (spécialité maths) — Doc 65500: [eduscol.education.fr/document/65500/download](https://eduscol.education.fr/document/65500/download)
+- Sujet 0 (spécialité maths) — Doc 65502: [eduscol.education.fr/document/65502/download](https://eduscol.education.fr/document/65502/download)
+
+Conseil: alternez les séances « automatismes » (rapides) et les exercices de raisonnement (plus longs). Fixez‑vous des objectifs simples: 15–20 min par jour suffisent pour gagner en confiance.

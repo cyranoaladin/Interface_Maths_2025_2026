@@ -16,7 +16,9 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
   <link rel="stylesheet" href="/assets/css/site.css?v=4" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
   <script src="/assets/js/lucide.min.js" defer></script>
   <script src="assets/js/icons.js" defer></script>
   <script src="assets/js/hero.js" defer></script>
@@ -36,34 +38,50 @@
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
   <div class="wrap">
-    <header class="header-sticky" data-crumbs="Accueil,/index.html">
-      <div class="title-block">
-        <img class="logo" src="assets/img/icon.svg" width="32" height="32" loading="eager" alt="Interface Maths logo" />
-        <img class="logo" src="assets/img/logo_pmf.svg" width="32" height="32" loading="lazy"
-          alt="Lycée Pierre Mendès France logo" />
-        <div class="title-text">
-          <h1>Interface Maths</h1>
-          <small class="subtitle"><span class="i" aria-hidden="true">🎓</span> Lycée Pierre Mendès France —
-            Tunis</small>
+    <!-- Héros minimal : titre centré -->
+    <header class="site-hero">
+      <div class="container" style="text-align:center">
+        <div class="branding">
+          <div class="badge" aria-hidden="true">PMF</div>
+          <h1 class="site-title">Interface Maths</h1>
+          <p class="site-subtitle">Lycée Pierre Mendès France — Tunis</p>
         </div>
       </div>
-      <nav aria-label="Navigation principale" class="site-nav">
-        <a class="nav-link" href="index.html">Accueil</a>
-        <a class="nav-link" href="#auto-index">Ressources</a>
-        <a class="nav-link" href="#timeline">Mon parcours</a>
-        <a class="nav-link" href="#favoris">Mes favoris <span id="fav-count" class="badge-count"
-            aria-label="Nombre de favoris">0</span></a>
-        <a class="nav-link" href="parents.html">Parents</a>
-        <a class="nav-link" href="evaluations.html">Évaluations</a>
-        <a class="nav-link" href="programme-epreuves.html">Programme & Épreuves</a>
-        <a class="nav-link" href="credits.html">À propos</a>
-        <span class="nav-sep" aria-hidden="true"></span>
-        <button id="neon-toggle" class="btn" type="button" aria-pressed="false"
-          aria-label="Activer le mode néon">Néon</button>
-        <button id="theme-toggle" class="btn" type="button" aria-pressed="false"
-          aria-label="Basculer le thème">Thème</button>
-      </nav>
     </header>
+    <!-- Barre de navigation séparée -->
+    <div class="nav-wrapper">
+      <nav class="site-nav" aria-label="Navigation principale">
+        <a class="nav-item" href="/index.html">Accueil</a>
+        <a class="nav-item" href="#auto-index">Ressources</a>
+        <a class="nav-item" href="#timeline">Mon parcours</a>
+        <a class="nav-item" href="#favoris">Mes favoris <span class="badge-dot" data-fav-badge></span></a>
+        <a class="nav-item" href="/evaluations.html">Évaluations</a>
+        <a class="nav-item" href="/programme-epreuves.html">Programme &amp; Épreuves</a>
+        <a class="nav-item" href="/parents.html">Parents</a>
+        <a class="nav-item" href="/credits.html">À propos</a>
+        <button class="nav-cta" id="theme-toggle" type="button" aria-pressed="false">Thème</button>
+      </nav>
+    </div>
+
+    <!-- Hero discret avec CTA -->
+    <section class="section container">
+      <div class="card">
+        <div class="grid">
+          <div class="col-6">
+            <h2>Préparez la suite avec succès</h2>
+            <p>Tous les cours, fiches, exercices et évaluations pour progresser sereinement en Première, Terminale et
+              Maths expertes.</p>
+            <div class="actions" style="display:flex;gap:10px;margin-top:10px;">
+              <a class="btn" href="#auto-index">Parcourir les ressources</a>
+              <a class="btn" href="#timeline">Voir la progression</a>
+            </div>
+          </div>
+          <div class="col-6">
+            <img src="/assets/img/hero-geom.svg" alt="" width="720" height="420" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
 
     <main id="main">
 

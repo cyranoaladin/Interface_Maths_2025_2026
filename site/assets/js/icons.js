@@ -2,11 +2,17 @@
   function updateFavBadge() {
     try {
       const favBadge = document.getElementById('fav-count');
-      if (!favBadge) return;
+      const favDot = document.querySelector('[data-fav-badge]');
       const raw = localStorage.getItem('favorites');
       const n = raw ? (JSON.parse(raw) || []).length : 0;
-      favBadge.textContent = String(n);
-      favBadge.style.display = n > 0 ? 'inline-block' : 'none';
+      if (favBadge) {
+        favBadge.textContent = String(n);
+        favBadge.style.display = n > 0 ? 'inline-block' : 'none';
+      }
+      if (favDot) {
+        favDot.textContent = n > 0 ? String(n) : '';
+        favDot.style.display = n > 0 ? 'inline-block' : 'none';
+      }
     } catch (_) {}
   }
   function init() {

@@ -1,44 +1,64 @@
 :root {
-  /* Couleurs de base (sombre) — viser AA */
-  --bg: #0f1115;
-  --panel: #151823;
-  --text: #e9edf1;
-  --muted: #c6ccd6;
+  /* Fond sombre premium */
+  --bg: #0e1220;
+  /* bleu-gris profond */
+  --bg-2: #12182a;
+  /* panneau */
+  --panel: #12182a;
+  --panel-2: #161d33;
 
-  /* Accents (désaturés) */
+  /* Texte */
+  --text: #eaf0f7;
+  --text-muted: #c7d0de;
+
+  /* Accents (désaturés, non criards) */
   --accent: #8aa3ff;
   /* bleu doux */
   --accent-2: #b495ff;
-  /* violet désaturé */
-  --accent-3: #79d6e2;
+  /* violet doux */
+  --accent-3: #74d0e0;
   /* cyan doux */
 
   /* États */
-  --ok: #4cc38a;
+  --ok: #46c28d;
   --warn: #f5a524;
-  --danger: #ef6767;
+  --danger: #ee6666;
 
-  /* Bordures/ombres */
-  --border: #2a2f3a;
-  --shadow: 0 10px 30px rgba(0, 0, 0, .25);
+  /* Traits & ombres */
+  --border: #223054;
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, .35);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, .25);
+  --shadow-sm: 0 8px 18px rgba(0, 0, 0, .18);
 
-  /* Typo */
+  /* Typographies */
   --ff-title: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
   --ff-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  /* Échelles typographiques */
-  --fs-h1: clamp(2.75rem, 4vw, 3rem);
-  --fs-h2: clamp(1.75rem, 2.8vw, 2rem);
+  /* Échelle typographique & mesures (AA) */
+  --fs-h1: clamp(2.6rem, 4.2vw, 3.2rem);
+  --fs-h2: clamp(1.7rem, 3vw, 2.1rem);
   --fs-body: 18px;
-  --lh-body: 1.6;
+  --lh-body: 1.62;
   --max-ch: 72ch;
 
-  /* Rayons & espacement */
-  --radius: 18px;
+  /* Rayons & espacements */
+  --radius-xl: 26px;
+  --radius-lg: 18px;
+  --radius: 14px;
   --pad: 16px;
+  --gap: 24px;
+
+  /* Verre dépoli */
+  --glass-bg: rgba(20, 27, 46, .6);
+  --glass-brd: rgba(255, 255, 255, .08);
+
+  /* Dégradés subtils pour hero/cartes */
+  --grad-hero: radial-gradient(1200px 650px at 80% -10%, rgba(116, 208, 224, .18) 0%, rgba(180, 149, 255, .12) 35%, rgba(138, 163, 255, .10) 60%, transparent 100%),
+    radial-gradient(900px 480px at 10% 110%, rgba(138, 163, 255, .18) 0%, rgba(116, 208, 224, .12) 40%, transparent 75%);
 
   /* Compat mapping avec l'ancien thème */
   --card: var(--panel);
+  --muted: var(--text-muted);
   --color-primary-blue: var(--accent);
   --color-primary-violet: var(--accent-2);
   --color-primary-cyan: var(--accent-3);

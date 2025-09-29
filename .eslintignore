@@ -1,0 +1,5 @@
+**/*.min.js
+site/assets/js/lucide.min.js
+ui/**
+apps/**
+**/node_modules/**

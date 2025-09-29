@@ -74,7 +74,20 @@
         const sub = document.createElement('small'); sub.className = 'small'; sub.textContent = type ? ('Ressource — ' + type) : 'Ressource'; link.appendChild(sub);
         link.appendChild(badges);
         const star = document.createElement('button'); star.type = 'button'; star.className = 'star-btn'; star.setAttribute('aria-pressed', fav.has(it.url) ? 'true' : 'false'); const i = document.createElement('i'); i.setAttribute('data-lucide', 'star'); i.setAttribute('aria-hidden', 'true'); star.appendChild(i);
-        star.addEventListener('click', (e) => { e.preventDefault(); const has = fav.has(it.url); if (has) fav.delete(it.url); else fav.add(it.url); writeFav(fav); star.setAttribute('aria-pressed', fav.has(it.url) ? 'true' : 'false'); });
+        star.addEventListener('click', (e) => {
+          e.preventDefault();
+          const has = fav.has(it.url);
+          if (has) {
+            fav.delete(it.url);
+          } else {
+            fav.add(it.url);
+          }
+          writeFav(fav);
+          star.setAttribute('aria-pressed', fav.has(it.url) ? 'true' : 'false');
+          if (!has && typeof window !== 'undefined' && window.celebrateAddFav) {
+            try { window.celebrateAddFav(); } catch {}
+          }
+        });
         const container = document.createElement('div'); container.className = 'card resource-card' + (type ? (' type-' + typeSlug) : ''); container.appendChild(link); container.appendChild(star);
         cardsEl.appendChild(container);
       });

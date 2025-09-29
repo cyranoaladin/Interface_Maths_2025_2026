@@ -5,8 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interface Maths — Lycée PMF</title>
-  <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
   <link rel="stylesheet" href="/assets/css/tokens.css">
   <link rel="stylesheet" href="/assets/css/main.css">
   <meta name="description"
@@ -381,14 +380,22 @@
           <p class="pill">Synthèse basée sur « Cours Les Suites », « Cours_limites », « Cours_RPR »</p>
         </div>
         <div class="buttons">
-          <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon"></i> Thème</button>
-          <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> LaTeX</button>
-          <button class="btn" id="revealBtn" aria-pressed="false"><i data-lucide="eye" style="width: 16px; height: 16px;"></i> Révélations</button>
-          <button class="btn" id="printBtn"><i data-lucide="printer" style="width: 16px; height: 16px;"></i> Imprimer</button>
-          <button class="btn" id="exportEleveBtn"><i data-lucide="file-text" style="width: 16px; height: 16px;"></i> Export PDF — Élève</button>
-          <button class="btn" id="exportProfBtn"><i data-lucide="file-text" style="width: 16px; height: 16px;"></i> Export PDF — Prof</button>
-          <span class="btn" id="scoreBox" aria-live="polite"><i data-lucide="calculator" style="width: 16px; height: 16px;"></i> Score : 0/0</span>
-          <button class="btn" id="resetBtn"><i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i> Réinitialiser</button>
+          <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon"></i>
+            Thème</button>
+          <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+            LaTeX</button>
+          <button class="btn" id="revealBtn" aria-pressed="false"><i data-lucide="eye"
+              style="width: 16px; height: 16px;"></i> Révélations</button>
+          <button class="btn" id="printBtn"><i data-lucide="printer" style="width: 16px; height: 16px;"></i>
+            Imprimer</button>
+          <button class="btn" id="exportEleveBtn"><i data-lucide="file-text" style="width: 16px; height: 16px;"></i>
+            Export PDF — Élève</button>
+          <button class="btn" id="exportProfBtn"><i data-lucide="file-text" style="width: 16px; height: 16px;"></i>
+            Export PDF — Prof</button>
+          <span class="btn" id="scoreBox" aria-live="polite"><i data-lucide="calculator"
+              style="width: 16px; height: 16px;"></i> Score : 0/0</span>
+          <button class="btn" id="resetBtn"><i data-lucide="rotate-ccw" style="width: 16px; height: 16px;"></i>
+            Réinitialiser</button>
 
         </div>
       </div>
@@ -1303,7 +1310,7 @@
 
       // Régénérer une fois avec l'extension en place
       try { window.generateRandomExercises(); } catch (e) {}
-      
+
       // Initialiser les icônes Lucide
       if (typeof lucide !== 'undefined') {
         lucide.createIcons();

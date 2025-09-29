@@ -12,7 +12,7 @@
     "test:e2e": "playwright test",
     "test": "npm run test:unit && npm run test:e2e",
     "release": "semantic-release",
-    "lint": "eslint site/assets/js --ext .js",
+    "lint": "eslint site/assets/js --ext .js --ignore-pattern **/*.min.js --ignore-pattern site/assets/js/lucide.min.js",
     "css:build": "postcss site/assets/css/site.css -o site/assets/css/site.min.css"
   },
   "devDependencies": {

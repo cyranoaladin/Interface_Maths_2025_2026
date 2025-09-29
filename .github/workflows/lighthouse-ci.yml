@@ -1,0 +1,28 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [ main, feat/refonte-premium ]
+  workflow_dispatch: {}
+
+jobs:
+  lhci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Lighthouse CI
+        run: |
+          npm i -g @lhci/cli@0.13.x
+
+      - name: Run LHCI (config file)
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          lhci autorun --config=lighthouserc.json

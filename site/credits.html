@@ -6,8 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interface Maths — Lycée PMF</title>
   <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
-  <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
   <link rel="stylesheet" href="/assets/css/tokens.css">
   <link rel="stylesheet" href="/assets/css/main.css">
 </head>
@@ -38,31 +37,31 @@
       <button class="nav-cta" id="theme-toggle" type="button" aria-pressed="false">Thème</button>
     </nav>
   </div>
-    <main id="main">
-      <section class="card">
-        <p>Icônes: Lucide Icons. Police: Inter/Poppins (auto-hébergement recommandé). Thème et code: Alaeddine Ben
-          Rhouma.</p>
-      </section>
-    </main>
-    <footer class="card">
-      <div class="footer-row">
-        <div class="footer-links">
-          <a href="index.html">Accueil</a>
-          <a href="mentions.html">Mentions légales</a>
-        </div>
-        <small>© 2025 — Alaeddine Ben Rhouma</small>
+  <main id="main">
+    <section class="card">
+      <p>Icônes: Lucide Icons. Police: Inter/Poppins (auto-hébergement recommandé). Thème et code: Alaeddine Ben
+        Rhouma.</p>
+    </section>
+  </main>
+  <footer class="card">
+    <div class="footer-row">
+      <div class="footer-links">
+        <a href="index.html">Accueil</a>
+        <a href="mentions.html">Mentions légales</a>
       </div>
-    </footer>
+      <small>© 2025 — Alaeddine Ben Rhouma</small>
+    </div>
+  </footer>
   </div>
-    <script>
-  const btn = document.getElementById('theme-toggle');
-  btn?.addEventListener('click', () => {
-    const root = document.documentElement;
-    const light = root.getAttribute('data-theme') === 'light';
-    root.setAttribute('data-theme', light ? 'dark' : 'light');
-    btn.setAttribute('aria-pressed', String(!light));
-  });
-</script>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const light = root.getAttribute('data-theme') === 'light';
+      root.setAttribute('data-theme', light ? 'dark' : 'light');
+      btn.setAttribute('aria-pressed', String(!light));
+    });
+  </script>
 </body>
 
 </html>

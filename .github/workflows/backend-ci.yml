@@ -2,8 +2,8 @@ name: backend-ci
 
 on:
   push:
-    branches: [ main, master ]
-    tags: [ 'v*.*.*' ]
+    branches: [main, master]
+    tags: ["v*.*.*"]
   pull_request:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -37,4 +37,3 @@ jobs:
 
       - name: Run tests (pytest with coverage)
         run: pytest --cov=app --cov-report=term-missing --cov-fail-under=85
-

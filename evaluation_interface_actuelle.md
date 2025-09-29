@@ -52,4 +52,3 @@ Le projet dispose d'une base technique solide, mais souffre d'un manque de trava
 - **Améliorer la navigation** avec un menu plus intuitif.
 - **Harmoniser le design** des fiches d'exercices.
 - **Ajouter des éléments interactifs** pour rendre l'apprentissage plus ludique.
-

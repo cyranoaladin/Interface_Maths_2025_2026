@@ -1,19 +1,19 @@
-/* Base theme — default light */
+/* Base theme — premium dark */
 :root {
-  --bg: #f6f7fb;
-  --card: #fff;
-  --text: #0f172a;
-  --muted: #4b5563;
-  --link: #0ea5e9;
-  --border: #e5e7eb;
-  --accent: #06b6d4;
-  --color-primary-blue: #2563eb;
-  --color-primary-violet: #7c3aed;
-  --color-primary-cyan: #06b6d4;
-  --color-bg-dark: #0f172a;
-  --color-bg-light: #1e293b;
-  --color-bg-mid: #111827;
-  --color-card-glassy: rgba(30, 30, 47, 0.9);
+  --bg: #1A1A2E;
+  --card: #2A2A4A;
+  --text: #F0F0F0;
+  --muted: #64748B;
+  --link: #6B38FB;
+  --border: #38385a;
+  --accent: #00F0FF;
+  --color-primary-blue: #6B38FB;
+  --color-primary-violet: #6B38FB;
+  --color-primary-cyan: #00F0FF;
+  --color-bg-dark: #1A1A2E;
+  --color-bg-light: #F9FAFB;
+  --color-bg-mid: #2A2A4A;
+  --color-card-glassy: rgba(42, 42, 74, 0.9);
   --ds-tag-analyse: #22c55e;
   --ds-tag-algebre: #3b82f6;
   --ds-tag-proba: #f97316;
@@ -27,11 +27,39 @@
   --ds-sp-xl: 48px;
   --ds-sp-xxl: 64px;
   --ds-radius-soft: 20px;
-  --ds-radius-card: 24px;
+  --ds-radius-card: 15px;
   --ds-radius-section: 28px;
   --ds-radius-full: 9999px;
-  --ds-shadow-default: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --ds-shadow-glow: 0 0 12px rgba(6, 182, 212, 0.6);
+  --ds-shadow-default: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --ds-shadow-glow: 0 0 16px rgba(0, 240, 255, 0.35);
+}
+
+/* Palette alt: Énergie & Créativité */
+html[data-theme="energie"]:root {
+  --bg: #121212;
+  --card: #1f1f33;
+  --text: #F5F5F5;
+  --muted: #BDBDBD;
+  --link: #6A0DAD;
+  --border: #2a2a40;
+  --accent: #FFD700;
+  --color-primary-blue: #6A0DAD;
+  --color-primary-violet: #6A0DAD;
+  --color-primary-cyan: #FFD700;
+}
+
+/* Palette alt: Pureté & Minimalisme */
+html[data-theme="pure"]:root {
+  --bg: #212121;
+  --card: #2a2a2a;
+  --text: #FFFFFF;
+  --muted: #E0E0E0;
+  --link: #174D8C;
+  --border: #2f2f2f;
+  --accent: #4DFFC9;
+  --color-primary-blue: #174D8C;
+  --color-primary-violet: #174D8C;
+  --color-primary-cyan: #4DFFC9;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -63,7 +91,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 17px/1.6 Inter, Poppins, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Atkinson Hyperlegible";
+  font: 17px/1.6 Roboto, Open Sans, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial;
   position: relative;
   min-height: 100%
 }
@@ -86,8 +114,8 @@ body::after {
 
 body::before {
   background:
-    radial-gradient(80vmax 80vmax at 15% 10%, rgba(14, 165, 233, .12), transparent 60%),
-    radial-gradient(60vmax 60vmax at 85% -10%, rgba(34, 211, 238, .10), transparent 55%)
+    radial-gradient(100vmax 70vmax at 20% 0%, rgba(0, 240, 255, .10), transparent 60%),
+    radial-gradient(90vmax 70vmax at 90% -10%, rgba(107, 56, 251, .12), transparent 55%)
 }
 
 body::after {
@@ -97,6 +125,13 @@ body::after {
   background-size: 24px 24px;
   mix-blend-mode: multiply;
   opacity: .35
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 24px;
+  align-items: center
 }
 
 .wrap {
@@ -114,8 +149,8 @@ header {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 16px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .45), rgba(255, 255, 255, .15));
-  backdrop-filter: saturate(140%) blur(8px);
+  background: linear-gradient(180deg, rgba(26, 26, 46, .65), rgba(26, 26, 46, .25));
+  backdrop-filter: saturate(140%) blur(10px);
   border-bottom: 1px solid var(--border)
 }
 
@@ -123,6 +158,33 @@ nav a {
   color: var(--link);
   text-decoration: none;
   margin: 0 8px
+}
+
+/* Premium nav */
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px
+}
+
+.site-nav .nav-link {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent
+}
+
+.site-nav .nav-link:hover {
+  background: rgba(107, 56, 251, .08);
+  border-color: var(--border);
+  box-shadow: 0 0 8px rgba(0, 240, 255, .25)
+}
+
+.site-nav .nav-sep {
+  display: inline-block;
+  width: 1px;
+  height: 22px;
+  background: rgba(0, 0, 0, .06);
+  margin: 0 6px
 }
 
 .btn {
@@ -146,10 +208,10 @@ nav a {
 
 /* Button variants */
 .btn--primary {
-  background: linear-gradient(135deg, var(--color-primary-blue), var(--color-primary-violet));
+  background: linear-gradient(135deg, var(--color-primary-blue), var(--color-primary-cyan));
   color: #fff;
   border-color: transparent;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, .2)
+  text-shadow: 0 0 10px rgba(0, 240, 255, .35)
 }
 
 .btn--primary:hover {
@@ -172,8 +234,13 @@ nav a {
   border-radius: var(--ds-radius-card);
   padding: 24px;
   margin: 16px 0;
-  box-shadow: 0 8px 24px rgba(2, 6, 23, .06), 0 1px 0 rgba(255, 255, 255, .06) inset;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, .16), 0 1px 0 rgba(255, 255, 255, 0) inset;
   backdrop-filter: saturate(120%) blur(6px)
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .35), 0 0 18px rgba(0, 240, 255, .25)
 }
 
 small {
@@ -396,6 +463,65 @@ small {
 
 #hero .cta-row .btn {
   background: linear-gradient(135deg, rgba(255, 255, 255, .06), rgba(0, 0, 0, .06));
+}
+
+/* Hero ticker neon */
+.formula-ticker {
+  margin-top: 8px;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center
+}
+
+.formula-ticker .item {
+  font-weight: 700;
+  letter-spacing: .5px
+}
+
+.neon {
+  color: var(--text);
+  text-shadow: 0 0 6px rgba(0, 240, 255, .35), 0 0 18px rgba(107, 56, 251, .25)
+}
+
+.ticker {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.6em;
+  vertical-align: bottom
+}
+
+.ticker>span {
+  display: block;
+  white-space: pre;
+  line-height: 1.6em;
+  animation: scrollY 8s linear infinite
+}
+
+@keyframes scrollY {
+
+  0%,
+  20% {
+    transform: translateY(0)
+  }
+
+  25%,
+  45% {
+    transform: translateY(-1.6em)
+  }
+
+  50%,
+  70% {
+    transform: translateY(-3.2em)
+  }
+
+  75%,
+  95% {
+    transform: translateY(-4.8em)
+  }
+
+  100% {
+    transform: translateY(0)
+  }
 }
 
 /* Accessibility: focus styles */
@@ -1071,21 +1197,4 @@ html[data-theme="light"] {
   }
 }
 
-/* Note: To self-host fonts, drop WOFF2 files in assets/fonts/ and keep these @font-face rules. */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../fonts/Inter-Variable.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../fonts/Poppins-Variable.woff2') format('woff2');
-}
-
-/* End fonts */
+/* Fonts self-hosting option disabled: remove 404s until WOFF2 files are provided */

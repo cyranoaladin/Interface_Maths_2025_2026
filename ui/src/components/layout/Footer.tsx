@@ -1,0 +1,13 @@
+export default function Footer() {
+  return (
+    <footer className="mt-16 border-t border-slate-200 bg-gradient-to-t from-slate-900 to-slate-800 text-slate-200">
+      <div className="max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
+        <div className="flex gap-4 text-sm">
+          <a href="/mentions.html">Mentions légales</a>
+          <a href="/credits.html">Crédits</a>
+        </div>
+        <small>« Les mathématiques sont la poésie des sciences. » — Karl Weierstrass</small>
+      </div>
+    </footer>
+  );
+}

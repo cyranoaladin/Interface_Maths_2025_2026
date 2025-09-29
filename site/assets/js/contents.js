@@ -194,7 +194,6 @@
         const tags = computeTags(it);
         tags.forEach(t => { const b = document.createElement('span'); b.className = 'badge tag-' + normalize(t); const ti = document.createElement('i'); ti.setAttribute('data-lucide', tagIcon(t)); ti.setAttribute('aria-hidden', 'true'); b.appendChild(ti); b.appendChild(document.createTextNode(' ' + t)); badges.appendChild(b); });
         // Academic description based on tag/type
-        const tags = computeTags(it);
         const description = (() => {
           const t = normalize(it.title);
           if (tags.includes('Analyse')) {
@@ -213,7 +212,7 @@
         const sub = document.createElement('small'); sub.className = 'small subdesc'; sub.textContent = description; a.appendChild(sub);
         a.appendChild(badges);
         const star = document.createElement('button'); star.type = 'button'; star.className = 'star-btn'; star.setAttribute('aria-label', 'Ajouter aux favoris'); star.setAttribute('aria-pressed', favSet.has(it.url) ? 'true' : 'false');
-        const icon = document.createElement('i'); icon.setAttribute('aria-hidden', 'true'); icon.setAttribute('data-lucide', 'star');
+        const icon = document.createElement('i'); icon.setAttribute('aria-hidden', 'true'); icon.setAttribute('data-lucide', 'heart');
         star.appendChild(icon);
         star.addEventListener('click', (e) => {
           e.preventDefault();
@@ -256,6 +255,7 @@
   if (tabAll) { tabAll.addEventListener('click', () => { favoritesOnly = false; setTab(); render(fullGroups || {}); updateSuggestions(); }); }
   if (tabFav) { tabFav.addEventListener('click', () => { favoritesOnly = true; setTab(); render(fullGroups || {}); updateSuggestions(); }); }
   setTab();
+  if (location.hash && /favoris/i.test(location.hash)) { favoritesOnly = true; setTab(); }
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
       typeFilter = ''; tagFilter = ''; query = '';

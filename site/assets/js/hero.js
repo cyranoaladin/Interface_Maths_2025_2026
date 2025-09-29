@@ -1,11 +1,9 @@
 (function () {
   const QUOTES = [
-    { t: "Les mathématiques sont la poésie des sciences.", a: "— Karl Weierstrass" },
-    { t: "Ce n’est pas que je sois si intelligent ; je reste plus longtemps sur les problèmes.", a: "— Albert Einstein" },
     { t: "Rien ne se fait sans un peu d’enthousiasme.", a: "— Henri Poincaré" },
-    { t: "La chance sourit aux esprits préparés.", a: "— Louis Pasteur" },
-    { t: "La véritable découverte ne consiste pas à chercher de nouveaux paysages, mais à avoir de nouveaux yeux.", a: "— Marcel Proust" },
-    { t: "Les mathématiques sont l’alphabet avec lequel Dieu a écrit l’univers.", a: "— Galilée" }
+    { t: "Les mathématiques sont la poésie des sciences.", a: "— Novalis" },
+    { t: "La mathématique est la clé et la porte des sciences.", a: "— Roger Bacon" },
+    { t: "Les nombres gouvernent le monde.", a: "— Pythagore" }
   ];
   function pick() { return QUOTES[Math.floor(Math.random() * QUOTES.length)]; }
   function init() {

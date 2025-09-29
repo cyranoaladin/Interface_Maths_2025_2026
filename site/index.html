@@ -11,14 +11,13 @@
   <meta property="og:title" content="Interface Maths — 2025–2026" />
   <meta property="og:description" content="Ressources imprimables avec une interface moderne." />
   <meta property="og:type" content="website" />
-  <link rel="canonical" href="/" />
+  <link rel="canonical" href="/index.html" />
   <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preload" href="assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css" />
-  <script src="https://cdn.jsdelivr.net/npm/lucide@latest" defer></script>
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
+  <script src="/assets/js/lucide.min.js" defer></script>
   <script src="assets/js/icons.js" defer></script>
   <script src="assets/js/hero.js" defer></script>
   <script src="assets/js/contents.js" defer></script>
@@ -34,21 +33,23 @@
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
   <div class="wrap">
-    <header>
+    <header class="header-sticky" data-crumbs="Accueil,/index.html">
       <div class="title-block">
         <img class="logo" src="assets/img/icon.svg" alt="Interface Maths logo" />
         <img class="logo" src="assets/img/logo_pmf.svg" alt="Lycée Pierre Mendès France logo" />
         <div class="title-text">
-          <h1>Interface Maths 2025–2026</h1>
+          <h1>Interface Maths</h1>
           <small class="subtitle"><span class="i" aria-hidden="true">🎓</span> Lycée Pierre Mendès France —
             Tunis</small>
         </div>
       </div>
-      <nav aria-label="Navigation principale">
-        <a class="btn" href="EDS_premiere/Progression/index.html"><i aria-hidden="true"
-            data-lucide="list-checks"></i><span>Progression 1re</span></a>
-        <a class="btn" href="EDS_terminale/Progression/index.html"><i aria-hidden="true"
-            data-lucide="list-checks"></i><span>Progression Tle</span></a>
+      <nav aria-label="Navigation principale" class="site-nav">
+        <a class="nav-link" href="index.html">Accueil</a>
+        <a class="nav-link" href="#auto-index">Ressources</a>
+        <a class="nav-link" href="#timeline">Mon parcours</a>
+        <a class="nav-link" href="#favoris">Mes favoris</a>
+        <a class="nav-link" href="credits.html">À propos</a>
+        <span class="nav-sep" aria-hidden="true"></span>
         <button id="neon-toggle" class="btn" type="button" aria-pressed="false"
           aria-label="Activer le mode néon">Néon</button>
         <button id="theme-toggle" class="btn" type="button" aria-pressed="false"
@@ -59,19 +60,32 @@
     <main id="main">
 
       <section class="block hero" id="hero">
-        <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center">
+        <div class="hero-grid">
           <div>
-            <h1 class="h1" style="margin:0 0 12px">Apprenez les mathématiques avec clarté</h1>
+            <h1 class="h1" style="margin:0 0 12px">Préparez la suite avec succès : Terminale, Spécialité Maths.</h1>
             <blockquote id="hero-quote" cite="">
               <p></p>
               <cite></cite>
             </blockquote>
-            <p class="mt-8">Ressources et progressions pour accompagner les élèves en spécialité mathématiques au lycée.
-              Accès rapide, recherche accent‑insensible et favoris — en un seul endroit.</p>
+            <div class="formula-ticker neon" aria-hidden="true">
+              <span class="item">∑</span>
+              <span class="ticker">
+                <span>
+                  ∑
+                  ∫
+                  π
+                  f(x)
+                  √
+                </span>
+              </span>
+            </div>
+            <p class="mt-8">Tous les cours, exos, fiches et conseils pour booster votre réussite.</p>
             <div class="cta-row">
-              <a class="btn btn--primary" href="EDS_premiere/index.html"><i aria-hidden="true" data-lucide="route"></i>
+              <a class="btn btn--primary" href="EDS_premiere/index.html"><i aria-hidden="true"
+                  data-lucide="book-open"></i>
                 Première</a>
-              <a class="btn btn--primary" href="EDS_terminale/index.html"><i aria-hidden="true" data-lucide="route"></i>
+              <a class="btn btn--primary" href="EDS_terminale/index.html"><i aria-hidden="true"
+                  data-lucide="book-open"></i>
                 Terminale</a>
               <a class="btn btn--primary" href="Maths_expertes/index.html"><i aria-hidden="true"
                   data-lucide="sparkles"></i> Maths expertes</a>
@@ -115,6 +129,7 @@
                 <text x="420" y="88" font-size="26" fill="#06b6d4">∫</text>
                 <text x="260" y="54" font-size="24" fill="#22c55e">π</text>
                 <text x="440" y="270" font-size="22" fill="#2563eb">√</text>
+                <text x="120" y="120" font-size="20" fill="#7c3aed">f(x)</text>
               </g>
             </svg>
           </div>
@@ -122,26 +137,27 @@
       </section>
 
       <section class="block quick" aria-labelledby="levels-title">
-        <h2 id="levels-title">⚡ Accès rapide</h2>
+        <h2 id="levels-title">⚡ Accès direct</h2>
         <div class="grid cols-3 mt-8">
           <a class="card-link" href="EDS_premiere/index.html">
             <i aria-hidden="true" data-lucide="graduation-cap"></i>
-            <strong>EDS Première</strong><br><small>Cartes ressources + progression</small>
+            <strong>Spécialité Maths – Première</strong><br><small>Cours, fiches et progression annuelle</small>
           </a>
           <a class="card-link" href="EDS_terminale/index.html">
             <i aria-hidden="true" data-lucide="graduation-cap"></i>
-            <strong>EDS Terminale</strong><br><small>Cartes ressources + progression</small>
+            <strong>Spécialité Maths – Terminale</strong><br><small>Cours, fiches et progression annuelle</small>
           </a>
           <a class="card-link" href="Maths_expertes/index.html">
             <i aria-hidden="true" data-lucide="brain"></i>
-            <strong>Maths expertes</strong><br><small>Cartes ressources (progression à venir)</small>
+            <strong>Maths expertes</strong><br><small>Ressources approfondies et exercices avancés</small>
           </a>
         </div>
       </section>
 
       <section class="block sommaire" id="auto-index">
-        <h2>📚 Sommaire des chapitres</h2>
-        <p class="small mt-6">Cours et exercices étudiés en spécialité mathématiques.</p>
+        <h2>📚 Les chapitres</h2>
+        <p class="small mt-6">Explorez tous les chapitres étudiés en spécialité mathématiques. Chaque ressource est
+          organisée en cours complets, exercices, fiches de révision et évaluations.</p>
         <div class="mt-8">
           <div class="tabs" role="tablist" aria-label="Affichage du sommaire">
             <button id="tab-all" class="tab" role="tab" aria-selected="true">Tous</button>
@@ -165,14 +181,14 @@
       </section>
 
       <section class="block progress" aria-labelledby="timeline-title">
-        <h2 id="timeline-title">🗺️ Progressions</h2>
+        <h2 id="timeline-title">🗺️ Ma progression</h2>
         <div id="timeline" class="mt-8"></div>
         <div class="mt-10" id="chapters-grid"></div>
       </section>
     </main>
 
     <footer class="block footer-block">
-  <div class="footer-row">
+      <div class="footer-row">
         <div class="footer-links">
           <a href="mentions.html">Mentions légales</a>
           <a href="credits.html">Crédits</a>
@@ -186,11 +202,23 @@
               </linearGradient>
             </defs>
             <circle cx="8" cy="8" r="7" fill="url(#gF)" opacity="0.6" />
-          </svg> © 2025 — Interface Maths • « Les mathématiques sont la poésie des sciences. »</small>
+          </svg> © 2025 — Interface Maths • <span id="footer-quote">« Les mathématiques sont la poésie des sciences. » —
+            Novalis</span></small>
       </div>
     </footer>
   </div>
   <script src="assets/js/progression.js" defer></script>
+  <script>
+    (function () {
+      const QUOTES = [
+        '« Les mathématiques sont la poésie des sciences. » — Novalis',
+        '« La mathématique est la clé et la porte des sciences. » — Roger Bacon',
+        '« Les nombres gouvernent le monde. » — Pythagore'
+      ];
+      const t = document.getElementById('footer-quote');
+      if (t) { t.textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)]; }
+    })();
+  </script>
 </body>
 
 </html>

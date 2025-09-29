@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.8.0...v1.8.1) (2025-09-29)
+
+
+### Performance Improvements
+
+* **assets:** fonts.css local (Poppins/Inter, swap); lazy images + width/height; PostCSS build pipeline (cssnano) ([4256809](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/4256809a725f142c4e5ec4a9c62b22577fb6c61a))
+
 ## [1.8.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.7.0...v1.8.0) (2025-09-29)
 
 

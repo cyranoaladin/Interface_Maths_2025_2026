@@ -12,14 +12,31 @@
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
   <div class="wrap">
-    <header>
-      <div class="title-block">
-        <img class="logo" src="assets/img/icon.svg" alt="Logo Interface Maths" />
-        <div class="title-text">
-          <h1>Mentions légales</h1>
+    <!-- Bandeau héros minimal avec titre centré, seul -->
+    <header class="site-hero">
+      <div class="container">
+        <div class="branding">
+          <div class="badge">PMF</div>
+          <h1 class="site-title">Interface&nbsp;Maths</h1>
+          <p class="site-subtitle">Lycée Pierre Mendès France — Tunis</p>
         </div>
       </div>
     </header>
+
+    <!-- Barre de navigation séparée, en dessous du titre -->
+    <div class="nav-wrapper">
+      <nav class="site-nav" aria-label="Navigation principale">
+        <a class="nav-item" href="/index.html">Accueil</a>
+        <a class="nav-item" href="/ressources.html">Ressources</a>
+        <a class="nav-item" href="/progression.html">Mon parcours</a>
+        <a class="nav-item" href="/favoris.html">Mes favoris <span class="badge-dot" data-fav-badge></span></a>
+        <a class="nav-item" href="/evaluations.html">Évaluations</a>
+        <a class="nav-item" href="/programme-epreuves.html">Programme &amp; Épreuves</a>
+        <a class="nav-item" href="/parents.html">Parents</a>
+        <a class="nav-item" href="/apropos.html">À propos</a>
+        <button class="nav-cta" id="theme-toggle" type="button" aria-pressed="false">Thème</button>
+      </nav>
+    </div>
     <main id="main">
       <section class="card">
         <p>Ce site est un site éducatif non commercial. Contenus © Alaeddine Ben Rhouma — Licence CC BY-NC-SA 4.0.</p>
@@ -35,6 +52,15 @@
       </div>
     </footer>
   </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const light = root.getAttribute('data-theme') === 'light';
+      root.setAttribute('data-theme', light ? 'dark' : 'light');
+      btn.setAttribute('aria-pressed', String(!light));
+    });
+  </script>
 </body>
 
 </html>

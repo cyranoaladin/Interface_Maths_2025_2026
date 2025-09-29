@@ -4,7 +4,10 @@
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Fiche mémo & méthodologie — Arithmétique (Maths expertes)</title>
-      <link rel="stylesheet" href="/assets/css/site.css" />
+      <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
+      <link rel="preload" href="/assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
+      <link rel="stylesheet" href="/assets/css/tokens.css">
+      <link rel="stylesheet" href="/assets/css/main.css">
       <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
       <style>
         :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
@@ -68,7 +71,7 @@
               <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © Propriété intellectuelle</small>
             </div>
             <div class="buttons">
-              <button class="btn" id="themeBtn"><i data-lucide="moon" style="width: 16px; height: 16px;"></i> Thème</button>
+              <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon" style="width: 16px; height: 16px;"></i> Thème</button>
               <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> LaTeX</button>
               <button class="btn" id="printBtn"><i data-lucide="printer" style="width: 16px; height: 16px;"></i> Imprimer</button>
             </div>
@@ -237,7 +240,6 @@
 
       <script>
   const $=(q)=>document.querySelector(q), $$=(q)=>document.querySelectorAll(q);
-  $('#themeBtn').addEventListener('click',()=>{document.body.classList.toggle('light'); MathJax.typesetPromise?.(); });
   $('#retypesetBtn').addEventListener('click',()=>MathJax.typesetPromise?.());
   $('#printBtn').addEventListener('click',()=>window.print());
   $('#toggleAll').addEventListener('click',()=>{ const anyClosed=[...$$('details')].some(d=>!d.open); $$('details').forEach(d=>d.open=anyClosed); const btn=$('#toggleAll'); if(btn){ btn.setAttribute('aria-pressed', anyClosed ? 'true' : 'false'); } });
@@ -255,6 +257,19 @@
         if (typeof lucide !== 'undefined') {
           lucide.createIcons();
         }
+      </script>
+      <script>
+        const btn = document.getElementById('theme-toggle');
+        btn?.addEventListener('click', () => {
+          const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+          if (isDark) {
+            document.documentElement.setAttribute('data-theme', 'light');
+            btn.setAttribute('aria-pressed', 'false');
+          } else {
+            document.documentElement.removeAttribute('data-theme');
+            btn.setAttribute('aria-pressed', 'true');
+          }
+        });
       </script>
     </body>
   </html>

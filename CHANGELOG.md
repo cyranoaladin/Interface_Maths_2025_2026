@@ -1,3 +1,10 @@
+## [1.10.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.9.2...v1.10.0) (2025-09-29)
+
+
+### Features
+
+* refonte complète de l'interface utilisateur ([40f4cff](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/40f4cff748b7c01886682e253b0d3e9ccca56da3))
+
 ## [1.9.2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.9.1...v1.9.2) (2025-09-29)
 
 

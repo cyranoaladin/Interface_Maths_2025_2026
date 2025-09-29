@@ -168,6 +168,7 @@ link.href = /^https?:\/\//.test(raw) ? raw : "../" + raw;
   - Rubrique → bouton « Progression » → timeline + grille
 
 Cas d’usage concrets:
+
 - « Où trouver une fiche de révision sur les suites ? » → Accueil → rechercher « suites » → filtrer Type « Fiche » → ouvrir « Fiche élève — Suites numériques ».
 - « Comment réviser le second degré ? » → Accueil → Sommaire → carte « Cours complet — Second degré » (description: « Polynômes, égalités et méthodes ») → ajouter aux favoris pour accès rapide.
 - « Naviguer la progression de Terminale » → Terminale → Progression → jalons et badges pour accéder aux ressources de la séquence.
@@ -189,10 +190,12 @@ Cas d’usage concrets:
   - `theme-toggle.js`, `neon-toggle.js` (attributs `html[data-theme]`, `html[data-neon]`). Deux palettes alternatives: « Énergie & Créativité » (fond #121212, violet #6A0DAD, accent #FFD700) et « Pureté & Minimalisme » (fond #212121, marine #174D8C, accent #4DFFC9).
 
 ### 7.1 Données et contenus
+
 - Indexation: mettre à jour `assets/contents.json` (et `assets/contents.static.js`) lors d’ajouts/suppressions.
 - Nommage: titres de cartes explicites (« Cours complet — Second degré », « Fiche élève — Suites numériques », « Exercices corrigés — Calcul littéral ») pour de bonnes descriptions automatiques.
 
 ### 7.2 Accessibilité et i18n
+
 - Langue: attribut `lang="fr"` sur toutes les pages, textes en français uniquement (tests E2E bloquants).
 - Focus: styles visibles pour tabulation (`:focus-visible`), labels pour champs.
 - Icônes: Lucide (SVG) initialisées par `assets/js/icons.js`.
@@ -220,6 +223,7 @@ curl http://localhost/api/tree
 - E2E (Playwright): navigation (Accueil → Première → Ressources → Progression → Retour), recherche/filtre/favoris, timeline, accessibilité (axe-core), langue française
 
 Scénarios E2E détaillés attendus:
+
 - Navigation: Accueil → carte « Spécialité Maths – Terminale » → bouton « Progression » (nav header) → retour « Accueil ».
 - Recherche et suggestions: saisir « cours », attendre les suggestions, cliquer sur une suggestion, vérifier l’ouverture.
 - Filtres et reset: activer un chip Type, activer un chip Thème, cliquer « Réinitialiser les filtres », vérifier état.
@@ -264,12 +268,14 @@ Lien licence: <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr>
 ## 11) Annexes — Design tokens alternatifs (palettes)
 
 ### 11.1 Énergie & Créativité
+
 - Fond: `#121212`, Carte: `#1f1f33`
 - Texte: `#F5F5F5`, Muted: `#BDBDBD`
 - Titre/Accent: Violet `#6A0DAD`, Accent doré `#FFD700`
 - Usage: sites dynamiques, engageants; bon contraste avec cœurs/focus dorés.
 
 ### 11.2 Pureté & Minimalisme
+
 - Fond: `#212121`, Carte: `#2a2a2a`
 - Texte: `#FFFFFF`, Muted: `#E0E0E0`
 - Titre/Accent: Marine `#174D8C`, Accent menthe `#4DFFC9`

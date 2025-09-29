@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.9.1...v1.9.2) (2025-09-29)
+
+
+### Bug Fixes
+
+* **ci:** deduplicate workflow keys; single deploy job; bcrypt_sha256 + 72-byte truncate ([6350d4d](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/6350d4dd4439325ff4a1d9fd701c934fc3b5bc69))
+
 ## [1.9.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.9.0...v1.9.1) (2025-09-29)
 
 ## [1.9.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.8.1...v1.9.0) (2025-09-29)

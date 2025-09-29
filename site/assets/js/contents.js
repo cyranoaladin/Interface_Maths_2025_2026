@@ -270,10 +270,10 @@
     });
   }
 
-  function updateCount(n){
+  function updateCount(n) {
     const el = document.getElementById('results-count');
     if (!el) return;
-    el.textContent = n===1 ? '1 résultat' : (n + ' résultats');
+    el.textContent = n === 1 ? '1 résultat' : (n + ' résultats');
   }
 
   function groupTree(node) {

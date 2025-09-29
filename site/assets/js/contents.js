@@ -104,6 +104,7 @@
     TAGS.forEach(tag => {
       const b = document.createElement('button');
       b.type = 'button';
+      b.setAttribute('role', 'button');
       b.className = 'chip';
       b.textContent = tag;
       b.dataset.tag = tag;
@@ -124,6 +125,7 @@
     TYPES.forEach(tp => {
       const b = document.createElement('button');
       b.type = 'button';
+      b.setAttribute('role', 'button');
       b.className = 'chip';
       b.textContent = tp;
       b.dataset.type = tp;
@@ -221,6 +223,7 @@
           writeFavorites(favSet);
           star.setAttribute('aria-pressed', favSet.has(it.url) ? 'true' : 'false');
           render(fullGroups || {});
+          if (!has && window.celebrateAddFav) { try { window.celebrateAddFav(); } catch(_){} }
         });
         card.appendChild(a);
         card.appendChild(star);

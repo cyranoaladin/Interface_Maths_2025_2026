@@ -1,0 +1,45 @@
+:root {
+  /* Couleurs de base (sombre) — viser AA */
+  --bg: #0f1115;
+  --panel: #151823;
+  --text: #e9edf1;
+  --muted: #c6ccd6;
+
+  /* Accents (désaturés) */
+  --accent: #8aa3ff;
+  /* bleu doux */
+  --accent-2: #b495ff;
+  /* violet désaturé */
+  --accent-3: #79d6e2;
+  /* cyan doux */
+
+  /* États */
+  --ok: #4cc38a;
+  --warn: #f5a524;
+  --danger: #ef6767;
+
+  /* Bordures/ombres */
+  --border: #2a2f3a;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .25);
+
+  /* Typo */
+  --ff-title: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ff-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Échelles typographiques */
+  --fs-h1: clamp(2.75rem, 4vw, 3rem);
+  --fs-h2: clamp(1.75rem, 2.8vw, 2rem);
+  --fs-body: 18px;
+  --lh-body: 1.6;
+  --max-ch: 72ch;
+
+  /* Rayons & espacement */
+  --radius: 18px;
+  --pad: 16px;
+
+  /* Compat mapping avec l'ancien thème */
+  --card: var(--panel);
+  --color-primary-blue: var(--accent);
+  --color-primary-violet: var(--accent-2);
+  --color-primary-cyan: var(--accent-3);
+}

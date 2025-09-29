@@ -23,6 +23,7 @@
   <script src="assets/js/contents.js" defer></script>
   <script src="assets/js/neon-toggle.js" defer></script>
   <script src="assets/js/theme-toggle.js" defer></script>
+  <script src="assets/js/onboarding.js" defer></script>
   <script>
     if ((location.protocol === 'http:' || location.protocol === 'https:') && 'serviceWorker' in navigator) {
       window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
@@ -169,8 +170,8 @@
           <input id="search-input" class="search-input mt-6" type="search" placeholder="🔎 Rechercher…"
             aria-describedby="levels-title" />
           <div id="filters" class="mt-6">
-            <div id="type-filters" class="chips" aria-label="Filtres par type"></div>
-            <div id="tag-filters" class="chips mt-6" aria-label="Filtres thématiques"></div>
+            <div id="type-filters" class="chips" role="group" aria-label="Filtres par type"></div>
+            <div id="tag-filters" class="chips mt-6" role="group" aria-label="Filtres thématiques"></div>
             <div class="mt-6">
               <button id="reset-filters" type="button" class="btn btn--secondary">Effacer la recherche et les
                 filtres</button>
@@ -178,7 +179,7 @@
             <div id="search-suggestions" class="mt-6" aria-live="polite"></div>
           </div>
         </div>
-        <div class="mt-6 small" id="results-count" aria-live="polite"></div>
+        <output class="mt-6 small" id="results-count" aria-live="polite">0 résultat</output>
         <div id="auto-index-body" class="pre-wrap mt-8">
           <small>Chargement…</small>
         </div>

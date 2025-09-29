@@ -1,26 +1,42 @@
 <!doctype html>
 <html lang="fr">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Évaluations</title>
-  <link rel="stylesheet" href="/assets/css/site.css?v=4">
+  <meta charset="utf-8" />
+  <title>Interface Maths — Lycée PMF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 
 <body>
-  <header class="header-sticky" data-crumbs="Accueil,/index.html|Évaluations,/evaluations.html">
-    <div class="title-text">
-      <h1>Évaluations</h1>
+  <!-- Bandeau héros minimal avec titre centré, seul -->
+  <header class="site-hero">
+    <div class="container">
+      <div class="branding">
+        <div class="badge">PMF</div>
+        <h1 class="site-title">Interface&nbsp;Maths</h1>
+        <p class="site-subtitle">Lycée Pierre Mendès France — Tunis</p>
+      </div>
     </div>
-    <nav aria-label="Navigation principale" class="site-nav">
-      <a class="nav-link" href="index.html">Accueil</a>
-      <a class="nav-link" aria-current="page" href="evaluations.html">Évaluations</a>
-      <a class="nav-link" href="programme-epreuves.html">Programme & Épreuves</a>
-    </nav>
   </header>
 
-  <main class="wrap">
+  <!-- Barre de navigation séparée, en dessous du titre -->
+  <div class="nav-wrapper">
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a class="nav-item" href="/index.html">Accueil</a>
+      <a class="nav-item" href="/ressources.html">Ressources</a>
+      <a class="nav-item" href="/progression.html">Mon parcours</a>
+      <a class="nav-item" href="/favoris.html">Mes favoris <span class="badge-dot" data-fav-badge></span></a>
+      <a class="nav-item" href="/evaluations.html">Évaluations</a>
+      <a class="nav-item" href="/programme-epreuves.html">Programme &amp; Épreuves</a>
+      <a class="nav-item" href="/parents.html">Parents</a>
+      <a class="nav-item" href="/apropos.html">À propos</a>
+      <button class="nav-cta" id="theme-toggle" type="button" aria-pressed="false">Thème</button>
+    </nav>
+  </div>
+    <main id="main">
     <section class="card">
       <h2>Première — EDS</h2>
       <ul>
@@ -42,8 +58,18 @@
   </main>
 
   <footer class="block footer-block">
-    <div class="footer-row"><small>© 2025 — CC BY-NC-SA 4.0</small></div>
+    <div class="footer-row"><small>© 2025 — Alaeddine Ben Rhouma</small></div>
   </footer>
+  </div>
+    <script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const light = root.getAttribute('data-theme') === 'light';
+    root.setAttribute('data-theme', light ? 'dark' : 'light');
+    btn.setAttribute('aria-pressed', String(!light));
+  });
+</script>
 </body>
 
 </html>

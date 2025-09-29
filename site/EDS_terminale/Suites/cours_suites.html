@@ -4,10 +4,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Suites — Cours, limites et récurrence (EDS Terminale)</title>
+  <title>Interface Maths — Lycée PMF</title>
+  <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
   <meta name="description"
     content="Cours complet sur les suites (définitions, arithmétique et géométrique, variations, bornes, limites, récurrence)." />
-  <link rel="stylesheet" href="/assets/css/site.css" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     :root {
@@ -378,7 +381,7 @@
           <p class="pill">Synthèse basée sur « Cours Les Suites », « Cours_limites », « Cours_RPR »</p>
         </div>
         <div class="buttons">
-          <button class="btn" id="themeBtn"><i data-lucide="moon" style="width: 16px; height: 16px;"></i> Thème</button>
+          <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon"></i> Thème</button>
           <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> LaTeX</button>
           <button class="btn" id="revealBtn" aria-pressed="false"><i data-lucide="eye" style="width: 16px; height: 16px;"></i> Révélations</button>
           <button class="btn" id="printBtn"><i data-lucide="printer" style="width: 16px; height: 16px;"></i> Imprimer</button>
@@ -401,7 +404,7 @@
         <li>Limites (définitions rigoureuses, comparaisons, opérations, arithm./géom.)</li>
         <li>Convergence des suites monotones</li>
         <li>Entraînements</li>
-        <li>Banque d’exercices (autocorrigés)</li>
+        <li>Banque d'exercices (autocorrigés)</li>
       </ol>
     </section>
 
@@ -418,7 +421,7 @@
           <li><a href="#limites">5. Limites de suites</a></li>
           <li><a href="#monotones">6. Convergence des suites monotones</a></li>
           <li><a href="#entrainements">7. Entraînements</a></li>
-          <li><a href="#banque">8. Banque d’exercices (autocorrigés)</a></li>
+          <li><a href="#banque">8. Banque d'exercices (autocorrigés)</a></li>
         </ol>
         <p class="muted">Les preuves et corrections détaillées sont repliées — dépliez au besoin.</p>
       </nav>
@@ -962,10 +965,10 @@
       </details>
     </section>
 
-    <!-- BANQUE D’EXERCICES AUTOCORRIGÉS -->
+    <!-- BANQUE D'EXERCICES AUTOCORRIGÉS -->
     <section class="card section" id="banque">
-      <h2>8. Banque d’exercices (autocorrigés)</h2>
-      <p class="muted">Saisissez votre réponse puis laissez l’auto‑correcteur valider (✔️/❌). Tolérance aux espaces et
+      <h2>8. Banque d'exercices (autocorrigés)</h2>
+      <p class="muted">Saisissez votre réponse puis laissez l'auto‑correcteur valider (✔️/❌). Tolérance aux espaces et
         au signe × (x, * acceptés). Évitez les phrases : privilégiez des expressions mathématiques simples.</p>
 
       <details open>
@@ -1075,9 +1078,9 @@
       </details>
 
       <details>
-        <summary><strong>Conseils d’utilisation</strong></summary>
+        <summary><strong>Conseils d'utilisation</strong></summary>
         <ul>
-          <li>Écrivez les puissances avec l’exposant entre accolades si besoin : <code>2^{n+1}</code> (la saisie
+          <li>Écrivez les puissances avec l'exposant entre accolades si besoin : <code>2^{n+1}</code> (la saisie
             <code>2^n</code> est tolérée ici).
           </li>
           <li>Pour les racines, utilisez <code>sqrt(·)</code> : ex. <code>sqrt(3)</code>.</li>
@@ -1098,7 +1101,7 @@
       if (savedTheme) { document.body.classList.toggle('light', savedTheme === 'light'); }
       else if (window.matchMedia?.('(prefers-color-scheme: light)').matches) { document.body.classList.add('light'); }
     } catch (e) {}
-    $('#themeBtn')?.addEventListener('click', () => {
+    $('#theme-toggle')?.addEventListener('click', () => {
       document.body.classList.toggle('light');
       try { localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch (e) {}
       MathJax.typesetPromise?.();

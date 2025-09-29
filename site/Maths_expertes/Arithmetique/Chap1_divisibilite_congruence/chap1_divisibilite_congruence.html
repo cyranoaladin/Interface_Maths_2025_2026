@@ -4,8 +4,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Arithmétique - Partie 1 : Divisibilité et congruences</title>
-  <link rel="stylesheet" href="/assets/css/site.css" />
+  <title>Interface Maths — Lycée PMF</title>
+  <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     :root {
@@ -301,7 +304,7 @@
             Propriété intellectuelle • Raccourcis : <kbd>Ctrl</kbd>+<kbd>B</kbd> (Tableau), <kbd>?</kbd> (Aide)</small>
         </div>
         <div class="buttons">
-          <button class="btn" id="themeBtn"><i data-lucide="moon" style="width:16px;height:16px;margin-right:4px;"></i>Thème</button>
+          <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon"></i> Thème</button>
           <button class="btn" id="boardBtn">🖥️ Tableau</button>
           <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width:16px;height:16px;margin-right:4px;"></i>LaTeX</button>
           <button class="btn" id="revealBtn"><i data-lucide="eye" style="width:16px;height:16px;margin-right:4px;"></i>Révélations</button>
@@ -828,7 +831,7 @@ print("PGCD:", g)
     // ===== UI top =====
     // Initial theme from localStorage ou préférence système
     try { const savedTheme = localStorage.getItem('theme'); if (savedTheme) { if (savedTheme === 'light') { document.body.classList.add('light'); } else { document.body.classList.remove('light'); } } else if (window.matchMedia?.('(prefers-color-scheme: light)').matches) { document.body.classList.add('light'); } } catch (e) {}
-    $('#themeBtn').addEventListener('click', () => { document.body.classList.toggle('light'); try { localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch (e) {} MathJax.typesetPromise?.(); });
+    $('#theme-toggle').addEventListener('click', () => { document.body.classList.toggle('light'); try { localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch (e) {} MathJax.typesetPromise?.(); });
     $('#boardBtn').addEventListener('click', () => { document.body.classList.toggle('board'); MathJax.typesetPromise?.(); });
     $('#retypesetBtn').addEventListener('click', () => MathJax.typesetPromise?.());
     $('#printBtn').addEventListener('click', () => window.print());

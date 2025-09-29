@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Interface Maths — Lycée PMF</title>
+  <title>Interface Maths — 2025–2026</title>
   <meta name="description"
     content="Ressources de mathématiques modernes — EDS Première, EDS Terminale, Maths expertes." />
   <meta name="theme-color" content="#0b1020" />
@@ -37,51 +37,52 @@
 
 <body>
   <a class="skip-link" href="#main">Aller au contenu</a>
-  <!-- Bandeau héros minimal avec titre centré, seul -->
-  <header class="site-hero">
-    <div class="container">
-      <div class="branding">
-        <div class="badge">PMF</div>
-        <h1 class="site-title">Interface&nbsp;Maths</h1>
-        <p class="site-subtitle">Lycée Pierre Mendès France — Tunis</p>
+  <div class="wrap">
+    <!-- Héros minimal : titre centré -->
+    <header class="site-hero">
+      <div class="container" style="text-align:center">
+        <div class="branding">
+          <div class="badge" aria-hidden="true">PMF</div>
+          <h1 class="site-title">Interface Maths</h1>
+          <p class="site-subtitle">Lycée Pierre Mendès France — Tunis</p>
+        </div>
       </div>
+    </header>
+    <!-- Barre de navigation séparée -->
+    <div class="nav-wrapper">
+      <nav class="site-nav" aria-label="Navigation principale">
+        <a class="nav-item" href="/index.html">Accueil</a>
+        <a class="nav-item" href="#auto-index">Ressources</a>
+        <a class="nav-item" href="#timeline">Mon parcours</a>
+        <a class="nav-item" href="#favoris">Mes favoris <span class="badge-dot" data-fav-badge></span></a>
+        <a class="nav-item" href="/evaluations.html">Évaluations</a>
+        <a class="nav-item" href="/programme-epreuves.html">Programme &amp; Épreuves</a>
+        <a class="nav-item" href="/parents.html">Parents</a>
+        <a class="nav-item" href="/credits.html">À propos</a>
+        <button class="nav-cta" id="theme-toggle" type="button" aria-pressed="false">Thème</button>
+      </nav>
     </div>
-  </header>
 
-  <!-- Barre de navigation séparée, en dessous du titre -->
-  <div class="nav-wrapper">
-    <nav class="site-nav" aria-label="Navigation principale">
-      <a class="nav-item" href="/index.html">Accueil</a>
-      <a class="nav-item" href="/ressources.html">Ressources</a>
-      <a class="nav-item" href="/progression.html">Mon parcours</a>
-      <a class="nav-item" href="/favoris.html">Mes favoris <span class="badge-dot" data-fav-badge></span></a>
-      <a class="nav-item" href="/evaluations.html">Évaluations</a>
-      <a class="nav-item" href="/programme-epreuves.html">Programme &amp; Épreuves</a>
-      <a class="nav-item" href="/parents.html">Parents</a>
-      <a class="nav-item" href="/apropos.html">À propos</a>
-      <button class="nav-cta" id="theme-toggle" type="button" aria-pressed="false">Thème</button>
-    </nav>
-  </div>
-
-  <section class="section container">
-    <div class="card">
-      <div class="grid">
-        <div class="col-6">
-          <h2>Préparez la suite avec succès</h2>
-          <p>Tous les cours, fiches, exercices et évaluations pour progresser sereinement en Première, Terminale et Maths expertes.</p>
-          <div class="actions" style="display:flex;gap:10px;margin-top:10px;">
-            <a class="btn" href="/ressources.html">Parcourir les ressources</a>
-            <a class="btn" href="/progression.html">Voir la progression</a>
+    <!-- Hero discret avec CTA -->
+    <section class="section container">
+      <div class="card">
+        <div class="grid">
+          <div class="col-6">
+            <h2>Préparez la suite avec succès</h2>
+            <p>Tous les cours, fiches, exercices et évaluations pour progresser sereinement en Première, Terminale et
+              Maths expertes.</p>
+            <div class="actions" style="display:flex;gap:10px;margin-top:10px;">
+              <a class="btn" href="#auto-index">Parcourir les ressources</a>
+              <a class="btn" href="#timeline">Voir la progression</a>
+            </div>
+          </div>
+          <div class="col-6">
+            <img src="/assets/img/hero-geom.svg" alt="" width="720" height="420" loading="lazy">
           </div>
         </div>
-        <div class="col-6">
-          <img src="/assets/img/hero-geom.svg" alt="" width="720" height="420" loading="lazy">
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <main class="page">
     <main id="main">
 
       <section class="block hero" id="hero">
@@ -247,15 +248,6 @@
       if (t) { t.textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)]; }
     })();
   </script>
-  <script>
-  const btn = document.getElementById('theme-toggle');
-  btn?.addEventListener('click', () => {
-    const root = document.documentElement;
-    const light = root.getAttribute('data-theme') === 'light';
-    root.setAttribute('data-theme', light ? 'dark' : 'light');
-    btn.setAttribute('aria-pressed', String(!light));
-  });
-</script>
 </body>
 
 </html>

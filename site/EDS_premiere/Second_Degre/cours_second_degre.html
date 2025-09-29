@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Second degré — Cours complet (EDS Première)</title>
-    <link rel="stylesheet" href="/assets/css/site.css" />
+    <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/assets/css/tokens.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
       :root{--bg:#0b1020;--bg2:#11162a;--card:#151b34;--text:#eef2ff;--muted:#a2b0d6;--primary:#6aa6ff;--accent:#22d3ee;--good:#0b3d23;--bad:#65121f;--border:#28314f;--shadow:0 10px 30px rgba(0,0,0,.25)}
@@ -68,8 +71,8 @@
             <p class="pill">Polynômes du 2e degré, forme canonique, signes, variations, racines — conforme au programme de Première (EDS)</p>
           </div>
           <div class="buttons">
-            <button class="btn" id="themeBtn"><i data-lucide="moon" style="width:16px;height:16px;margin-right:4px;"></i>Thème</button>
-            <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width:16px;height:16px;margin-right:4px;"></i>LaTeX</button>
+            <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon"></i> Thème</button>
+            <button class="btn" onclick="MathJax.typesetPromise()">Repaint</button>
             <button class="btn" id="revealBtn" aria-pressed="false"><i data-lucide="eye" style="width:16px;height:16px;margin-right:4px;"></i>Révélations</button>
             <button class="btn" id="printBtn"><i data-lucide="printer" style="width:16px;height:16px;margin-right:4px;"></i>Imprimer</button>
           </div>
@@ -374,7 +377,7 @@
       const $=(q)=>document.querySelector(q), $$=(q)=>document.querySelectorAll(q);
       // Thème
       try{ const savedTheme=localStorage.getItem('theme'); if(savedTheme){ if(savedTheme==='light'){ document.body.classList.add('light'); } else { document.body.classList.remove('light'); } } else if(window.matchMedia?.('(prefers-color-scheme: light)').matches){ document.body.classList.add('light'); } }catch(e){}
-      $('#themeBtn')?.addEventListener('click',()=>{ document.body.classList.toggle('light'); try{ localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark'); }catch(e){} MathJax.typesetPromise?.(); });
+      $('#theme-toggle')?.addEventListener('click',()=>{ document.body.classList.toggle('light'); try{ localStorage.setItem('theme', document.body.classList.contains('light')?'light':'dark'); }catch(e){} MathJax.typesetPromise?.(); });
       // Outils
       $('#retypesetBtn')?.addEventListener('click',()=>MathJax.typesetPromise?.());
       $('#printBtn')?.addEventListener('click',()=>window.print());

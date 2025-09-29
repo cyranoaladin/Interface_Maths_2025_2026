@@ -69,6 +69,15 @@
       </div>
     </footer>
   </div>
+  <script>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const light = root.getAttribute('data-theme') === 'light';
+    root.setAttribute('data-theme', light ? 'dark' : 'light');
+    btn.setAttribute('aria-pressed', String(!light));
+  });
+</script>
 </body>
 
 </html>

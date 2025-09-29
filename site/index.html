@@ -14,8 +14,7 @@
   <link rel="canonical" href="/index.html" />
   <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
+
   <link rel="stylesheet" href="/assets/css/tokens.css" />
   <link rel="stylesheet" href="/assets/css/site.css?v=4" />
   <link rel="stylesheet" href="/assets/css/main.css" />
@@ -68,7 +67,8 @@
       <div class="grid">
         <div class="col-6">
           <h2>Préparez la suite avec succès</h2>
-          <p>Tous les cours, fiches, exercices et évaluations pour progresser sereinement en Première, Terminale et Maths expertes.</p>
+          <p>Tous les cours, fiches, exercices et évaluations pour progresser sereinement en Première, Terminale et
+            Maths expertes.</p>
           <div class="actions" style="display:flex;gap:10px;margin-top:10px;">
             <a class="btn" href="/ressources.html">Parcourir les ressources</a>
             <a class="btn" href="/progression.html">Voir la progression</a>
@@ -233,29 +233,29 @@
             Novalis</span></small>
       </div>
     </footer>
-  </div>
-  <script src="assets/js/progression.js" defer></script>
-  <script src="assets/js/sw-update.js" defer></script>
-  <script>
-    (function () {
-      const QUOTES = [
-        '« Les mathématiques sont la poésie des sciences. » — Novalis',
-        '« La mathématique est la clé et la porte des sciences. » — Roger Bacon',
-        '« Les nombres gouvernent le monde. » — Pythagore'
-      ];
-      const t = document.getElementById('footer-quote');
-      if (t) { t.textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)]; }
-    })();
-  </script>
-  <script>
-  const btn = document.getElementById('theme-toggle');
-  btn?.addEventListener('click', () => {
-    const root = document.documentElement;
-    const light = root.getAttribute('data-theme') === 'light';
-    root.setAttribute('data-theme', light ? 'dark' : 'light');
-    btn.setAttribute('aria-pressed', String(!light));
-  });
-</script>
+    </div>
+    <script src="assets/js/progression.js" defer></script>
+    <script src="assets/js/sw-update.js" defer></script>
+    <script>
+      (function () {
+        const QUOTES = [
+          '« Les mathématiques sont la poésie des sciences. » — Novalis',
+          '« La mathématique est la clé et la porte des sciences. » — Roger Bacon',
+          '« Les nombres gouvernent le monde. » — Pythagore'
+        ];
+        const t = document.getElementById('footer-quote');
+        if (t) { t.textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)]; }
+      })();
+    </script>
+    <script>
+      const btn = document.getElementById('theme-toggle');
+      btn?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const light = root.getAttribute('data-theme') === 'light';
+        root.setAttribute('data-theme', light ? 'dark' : 'light');
+        btn.setAttribute('aria-pressed', String(!light));
+      });
+    </script>
 </body>
 
 </html>

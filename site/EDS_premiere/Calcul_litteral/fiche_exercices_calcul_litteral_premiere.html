@@ -1,399 +1,651 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Interface Maths — Lycée PMF</title>
-    <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/assets/fonts/Poppins-Variable.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="/assets/css/tokens.css">
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script>
-      window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["\\[","\\]"]],macros:{N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",R:"\\mathbb{R}"}},svg:{fontCache:'global'}};
-    </script>
-    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-  </head>
-  <body class="light">
-    <div class="container">
-      <header>
-        <div class="toolbar">
-          <div>
-            <h1>Calcul littéral — Exercices + Méthodologie <span class="badge">Rappels de seconde</span></h1>
-            <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • © 2025</small>
-            <p class="pill" aria-label="périmètre de la fiche">Fiche de rappels strictement au programme de Seconde (aucune notion de Première)</p>
-          </div>
-          <div class="buttons">
-            <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon" style="width: 16px; height: 16px;"></i> Thème</button>
-            <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> LaTeX</button>
-            <button class="btn" id="printBtn"><i data-lucide="printer" style="width:16px;height:16px;margin-right:4px;"></i>Imprimer</button>
-          </div>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interface Maths — Lycée PMF</title>
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script>
+    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}" } }, svg: { fontCache: 'global' } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body class="light">
+  <div class="container">
+    <header>
+      <div class="toolbar">
+        <div>
+          <h1>Calcul littéral — Exercices + Méthodologie <span class="badge">Rappels de seconde</span></h1>
+          <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • ©
+            2025</small>
+          <p class="pill" aria-label="périmètre de la fiche">Fiche de rappels strictement au programme de Seconde
+            (aucune notion de Première)</p>
         </div>
-      </header>
+        <div class="buttons">
+          <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon"
+              style="width: 16px; height: 16px;"></i> Thème</button>
+          <button class="btn" id="retypesetBtn"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i>
+            LaTeX</button>
+          <button class="btn" id="printBtn"><i data-lucide="printer"
+              style="width:16px;height:16px;margin-right:4px;"></i>Imprimer</button>
+        </div>
+      </div>
+    </header>
 
-      <section class="card" id="sommaire-difficulte">
-        <h2>Sommaire par difficulté</h2>
-        <ul>
-          <li>★ : <a href="#ex1">Ex 1 — Développer & réduire</a>, <a href="#ex4">Ex 4 — Carrés</a></li>
-          <li>★★ : <a href="#ex2">Ex 2 — Factoriser</a>, <a href="#ex3">Ex 3 — Équations-produit</a>, <a href="#ex5">Ex 5 — Équations — divers</a>, <a href="#ex8">Ex 8 — Inéquations (produits/polynômes)</a>, <a href="#ex9">Ex 9 — Inéquations (quotients)</a>, <a href="#ex10">Ex 10 — Domaines</a></li>
-          <li>★★★ : <a href="#ex6">Ex 6 — Équations avec fractions</a>, <a href="#ex7">Ex 7 — Équations supplémentaires</a></li>
-        </ul>
-      </section>
+    <section class="card" id="sommaire-difficulte">
+      <h2>Sommaire par difficulté</h2>
+      <ul>
+        <li>★ : <a href="#ex1">Ex 1 — Développer & réduire</a>, <a href="#ex4">Ex 4 — Carrés</a></li>
+        <li>★★ : <a href="#ex2">Ex 2 — Factoriser</a>, <a href="#ex3">Ex 3 — Équations-produit</a>, <a href="#ex5">Ex 5
+            — Équations — divers</a>, <a href="#ex8">Ex 8 — Inéquations (produits/polynômes)</a>, <a href="#ex9">Ex 9 —
+            Inéquations (quotients)</a>, <a href="#ex10">Ex 10 — Domaines</a></li>
+        <li>★★★ : <a href="#ex6">Ex 6 — Équations avec fractions</a>, <a href="#ex7">Ex 7 — Équations
+            supplémentaires</a></li>
+      </ul>
+    </section>
 
-      <section class="grid cols-2">
-        <nav class="card">
-          <h2>Plan</h2>
-          <div class="hr"></div>
-          <ol>
-            <li><a href="#dev">Développer & réduire</a></li>
-            <li><a href="#facto">Factoriser</a></li>
-            <li><a href="#equations">Équations (dont produit)</a></li>
-            <li><a href="#inequations">Inéquations</a></li>
-            <li><a href="#domaine">Domaine de définition</a></li>
-            <li><a href="#methodo">Fiche méthodologie</a></li>
-          </ol>
-          <p class="muted">Corrections détaillées repliées — dépliez au besoin.</p>
-        </nav>
+    <section class="grid cols-2">
+      <nav class="card">
+        <h2>Plan</h2>
+        <div class="hr"></div>
+        <ol>
+          <li><a href="#dev">Développer & réduire</a></li>
+          <li><a href="#facto">Factoriser</a></li>
+          <li><a href="#equations">Équations (dont produit)</a></li>
+          <li><a href="#inequations">Inéquations</a></li>
+          <li><a href="#domaine">Domaine de définition</a></li>
+          <li><a href="#methodo">Fiche méthodologie</a></li>
+        </ol>
+        <p class="muted">Corrections détaillées repliées — dépliez au besoin.</p>
+      </nav>
 
-        <div class="card" id="dev">
-          <h2>Développer & réduire <span id="ex1"></span></h2>
-          <details open>
-            <summary><strong>Série — Développement (sélection)</strong></summary>
-            <div class="step"><div class="n">1</div><div>$ (3x-1)(2x+4) - (x+2)(4x-5) $
-              <details><summary>Correction</summary>
-                $ (3x-1)(2x+4)=6x^2+12x-2x-4=6x^2+10x-4 $.<br/>
-                $ (x+2)(4x-5)=4x^2-5x+8x-10=4x^2+3x-10 $.<br/>
+      <div class="card" id="dev">
+        <h2>Développer & réduire <span id="ex1"></span></h2>
+        <details open>
+          <summary><strong>Série — Développement (sélection)</strong></summary>
+          <div class="step">
+            <div class="n">1</div>
+            <div>$ (3x-1)(2x+4) - (x+2)(4x-5) $
+              <details>
+                <summary>Correction</summary>
+                $ (3x-1)(2x+4)=6x^2+12x-2x-4=6x^2+10x-4 $.<br />
+                $ (x+2)(4x-5)=4x^2-5x+8x-10=4x^2+3x-10 $.<br />
                 Différence: $(6x^2+10x-4)-(4x^2+3x-10)=2x^2+7x+6$.
               </details>
-            </div></div>
-            <div class="step"><div class="n">2</div><div>$ (7x+3)^2 - (3x-2)^2 $
-              <details><summary>Correction</summary>
-                Forme $a^2-b^2=(a-b)(a+b)$.<br/>
-                $a=7x+3,\ b=3x-2$. Alors $a-b=4x+5$, $a+b=10x+1$.<br/>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>$ (7x+3)^2 - (3x-2)^2 $
+              <details>
+                <summary>Correction</summary>
+                Forme $a^2-b^2=(a-b)(a+b)$.<br />
+                $a=7x+3,\ b=3x-2$. Alors $a-b=4x+5$, $a+b=10x+1$.<br />
                 Résultat: $(4x+5)(10x+1)=40x^2+54x+5$.
               </details>
-            </div></div>
-            <div class="step"><div class="n">3</div><div>$ (5x-1)^2 - 4 $
-              <details><summary>Correction</summary>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>$ (5x-1)^2 - 4 $
+              <details>
+                <summary>Correction</summary>
                 $a=5x-1,\ 4=2^2$. $a^2-2^2=(a-2)(a+2)=(5x-3)(5x+1)$.
               </details>
-            </div></div>
-            <div class="step"><div class="n">4</div><div>$ 4(3x-4)^2 - 3(x-5)^2 $
-              <details><summary>Correction</summary>
-                Écrire sous forme $A^2-B^2$ : $[2(3x-4)]^2-[\sqrt{3}(x-5)]^2$.<br/>
-                Donc $(2(3x-4)-\sqrt{3}(x-5))(2(3x-4)+\sqrt{3}(x-5))$.<br/>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">4</div>
+            <div>$ 4(3x-4)^2 - 3(x-5)^2 $
+              <details>
+                <summary>Correction</summary>
+                Écrire sous forme $A^2-B^2$ : $[2(3x-4)]^2-[\sqrt{3}(x-5)]^2$.<br />
+                Donc $(2(3x-4)-\sqrt{3}(x-5))(2(3x-4)+\sqrt{3}(x-5))$.<br />
                 Remarque: on peut aussi développer/réduire si l'on préfère éviter les racines.
               </details>
-            </div></div>
-          </details>
-        </div>
-      </section>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
 
-      <section class="card" id="facto">
-        <h2>Factoriser <span id="ex2"></span></h2>
-        <details open>
-          <summary><strong>Série — Factorisation (sélection)</strong></summary>
-          <div class="step"><div class="n">1</div><div>$ (3x-1)(2x+4)-(3x-1)(4x-5) $
-            <details><summary>Correction</summary>
+    <section class="card" id="facto">
+      <h2>Factoriser <span id="ex2"></span></h2>
+      <details open>
+        <summary><strong>Série — Factorisation (sélection)</strong></summary>
+        <div class="step">
+          <div class="n">1</div>
+          <div>$ (3x-1)(2x+4)-(3x-1)(4x-5) $
+            <details>
+              <summary>Correction</summary>
               Mise en évidence $(3x-1)$: $(3x-1)\big[(2x+4)-(4x-5)\big]=(3x-1)(-2x+9)$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">2</div><div>$ 9x^2-1+(3x-1)(5x+3) $
-            <details><summary>Correction</summary>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>$ 9x^2-1+(3x-1)(5x+3) $
+            <details>
+              <summary>Correction</summary>
               $9x^2-1=(3x-1)(3x+1)$. Donc $ (3x-1)(3x+1+5x+3)=(3x-1)(8x+4)=4(3x-1)(2x+1)$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">3</div><div>$ (7x+3)^2-(3x-2)^2$
-            <details><summary>Correction</summary>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>$ (7x+3)^2-(3x-2)^2$
+            <details>
+              <summary>Correction</summary>
               Différence de deux carrés: $(4x+5)(10x+1)$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">4</div><div>$ (5x-1)^2-4=(5x-3)(5x+1)$.</div></div>
-          <div class="step"><div class="n">5</div><div>$ 4(3x-4)^2-9(x-5)^2 = \big(2(3x-4)-3(x-5)\big)\big(2(3x-4)+3(x-5)\big)$.</div></div>
-          <div class="step"><div class="n">6</div><div>$ (x-4)^2-9=(x-7)(x-1)$.</div></div>
-          <div class="step"><div class="n">7</div><div>$ (x+1)^2-2=(x+1-\sqrt2)(x+1+\sqrt2)$ (sur $\R$).</div></div>
-          <div class="step"><div class="n">8</div><div>$ 9(x-6)^2+16$ n'est pas factorisable sur $\R$ (somme de deux carrés non nuls).</div></div>
-        </details>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">4</div>
+          <div>$ (5x-1)^2-4=(5x-3)(5x+1)$.</div>
+        </div>
+        <div class="step">
+          <div class="n">5</div>
+          <div>$ 4(3x-4)^2-9(x-5)^2 = \big(2(3x-4)-3(x-5)\big)\big(2(3x-4)+3(x-5)\big)$.</div>
+        </div>
+        <div class="step">
+          <div class="n">6</div>
+          <div>$ (x-4)^2-9=(x-7)(x-1)$.</div>
+        </div>
+        <div class="step">
+          <div class="n">7</div>
+          <div>$ (x+1)^2-2=(x+1-\sqrt2)(x+1+\sqrt2)$ (sur $\R$).</div>
+        </div>
+        <div class="step">
+          <div class="n">8</div>
+          <div>$ 9(x-6)^2+16$ n'est pas factorisable sur $\R$ (somme de deux carrés non nuls).</div>
+        </div>
+      </details>
 
-        <details>
-          <summary><strong>Factorisations sans discriminant (rappels de seconde)</strong></summary>
-          <div class="step"><div class="n">1</div><div>Reconnaître un carré parfait: $x^2+6x+9=(x+3)^2$.</div></div>
-          <div class="step"><div class="n">2</div><div>Différence de deux carrés: $x^2-9=(x-3)(x+3)$.</div></div>
-          <div class="step"><div class="n">3</div><div>Mise en évidence: $(3x-1)(2x+4)-(3x-1)(4x-5)=(3x-1)(-2x+9)$.</div></div>
-          <div class="step"><div class="n">4</div><div>Cas simple factorisable à coefficients entiers: $x^2+4x+3=(x+1)(x+3)$.</div></div>
-          <p class="muted">Remarque: pas d'usage du discriminant en rappels de seconde; on se limite aux identités remarquables et aux factorisations évidentes.</p>
-        </details>
-      </section>
+      <details>
+        <summary><strong>Factorisations sans discriminant (rappels de seconde)</strong></summary>
+        <div class="step">
+          <div class="n">1</div>
+          <div>Reconnaître un carré parfait: $x^2+6x+9=(x+3)^2$.</div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>Différence de deux carrés: $x^2-9=(x-3)(x+3)$.</div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>Mise en évidence: $(3x-1)(2x+4)-(3x-1)(4x-5)=(3x-1)(-2x+9)$.</div>
+        </div>
+        <div class="step">
+          <div class="n">4</div>
+          <div>Cas simple factorisable à coefficients entiers: $x^2+4x+3=(x+1)(x+3)$.</div>
+        </div>
+        <p class="muted">Remarque: pas d'usage du discriminant en rappels de seconde; on se limite aux identités
+          remarquables et aux factorisations évidentes.</p>
+      </details>
+    </section>
 
-      <section class="card" id="equations">
-        <h2>Équations (produit, carrés, divers)</h2>
-        <details open>
-          <summary><strong>A. Équations-produit</strong> (se ramener à un produit nul) <span id="ex3"></span></summary>
-          <div class="step"><div class="n">1</div><div>$(3x+1)(5x-3)=0$ 
-            <details><summary>Correction</summary>
-              $3x+1=0 \Rightarrow x=-\tfrac13$ ; $5x-3=0 \Rightarrow x=\tfrac35$.<br/>Solution: $\{-\tfrac13,\tfrac35\}$.
+    <section class="card" id="equations">
+      <h2>Équations (produit, carrés, divers)</h2>
+      <details open>
+        <summary><strong>A. Équations-produit</strong> (se ramener à un produit nul) <span id="ex3"></span></summary>
+        <div class="step">
+          <div class="n">1</div>
+          <div>$(3x+1)(5x-3)=0$
+            <details>
+              <summary>Correction</summary>
+              $3x+1=0 \Rightarrow x=-\tfrac13$ ; $5x-3=0 \Rightarrow x=\tfrac35$.<br />Solution:
+              $\{-\tfrac13,\tfrac35\}$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">2</div><div>$(3-x)(4-x)(10-x)=0$ 
-            <details><summary>Correction</summary>
-              $3-x=0\Rightarrow x=3$ ; $4-x=0\Rightarrow x=4$ ; $10-x=0\Rightarrow x=10$.<br/>Solution: $\{3,4,10\}$.
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>$(3-x)(4-x)(10-x)=0$
+            <details>
+              <summary>Correction</summary>
+              $3-x=0\Rightarrow x=3$ ; $4-x=0\Rightarrow x=4$ ; $10-x=0\Rightarrow x=10$.<br />Solution: $\{3,4,10\}$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">3</div><div>$(x+\tfrac13)^2 = 4\,(x-\tfrac13)^2$
-            <details><summary>Correction</summary>
-              Écrire $4(x-\tfrac13)^2=[2(x-\tfrac13)]^2$ et utiliser $a^2-b^2=(a-b)(a+b)$.<br/>
-              $(x+\tfrac13)^2 - [2(x-\tfrac13)]^2 = \big(x+\tfrac13 - 2(x-\tfrac13)\big)\,\big(x+\tfrac13 + 2(x-\tfrac13)\big)=0$.<br/>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>$(x+\tfrac13)^2 = 4\,(x-\tfrac13)^2$
+            <details>
+              <summary>Correction</summary>
+              Écrire $4(x-\tfrac13)^2=[2(x-\tfrac13)]^2$ et utiliser $a^2-b^2=(a-b)(a+b)$.<br />
+              $(x+\tfrac13)^2 - [2(x-\tfrac13)]^2 = \big(x+\tfrac13 - 2(x-\tfrac13)\big)\,\big(x+\tfrac13 +
+              2(x-\tfrac13)\big)=0$.<br />
               Facteurs: $1-x$ et $3x-\tfrac13$. Donc $x=1$ ou $x=\tfrac{1}{9}$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">4</div><div>$-x(5-x)+3(x-5)^2=x^2-25$
-            <details><summary>Correction</summary>
-              Développer à gauche: $-5x+x^2+3(x^2-10x+25)=4x^2-35x+75$.<br/>
-              Égaliser à droite: $4x^2-35x+75=x^2-25 \Rightarrow 3x^2-35x+100=0$.<br/>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">4</div>
+          <div>$-x(5-x)+3(x-5)^2=x^2-25$
+            <details>
+              <summary>Correction</summary>
+              Développer à gauche: $-5x+x^2+3(x^2-10x+25)=4x^2-35x+75$.<br />
+              Égaliser à droite: $4x^2-35x+75=x^2-25 \Rightarrow 3x^2-35x+100=0$.<br />
               $\Delta=35^2-4\cdot3\cdot100=25$; solutions $x=\dfrac{35\pm5}{6}\in\{5,\tfrac{20}{3}\}$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">5</div><div>$(x+1)(x+2)-(x+1)(x+5)=0$
-            <details><summary>Correction</summary>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">5</div>
+          <div>$(x+1)(x+2)-(x+1)(x+5)=0$
+            <details>
+              <summary>Correction</summary>
               Mise en évidence $(x+1)$: $(x+1)\big[(x+2)-(x+5)\big]=(x+1)(-3)=0 \Rightarrow x=-1$.
             </details>
-          </div></div>
-        </details>
+          </div>
+        </div>
+      </details>
 
-        <details>
-          <summary><strong>B. Carrés (équations quadratiques simples)</strong> <span id="ex4"></span></summary>
-          <div class="step"><div class="n">1</div><div>$3x^2-1=0$ 
-            <details><summary>Correction</summary>
+      <details>
+        <summary><strong>B. Carrés (équations quadratiques simples)</strong> <span id="ex4"></span></summary>
+        <div class="step">
+          <div class="n">1</div>
+          <div>$3x^2-1=0$
+            <details>
+              <summary>Correction</summary>
               $x^2=\tfrac13 \Rightarrow x=\pm\dfrac{1}{\sqrt3}=\pm\dfrac{\sqrt3}{3}$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">2</div><div>$0{,}04x^2=1$ 
-            <details><summary>Correction</summary>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>$0{,}04x^2=1$
+            <details>
+              <summary>Correction</summary>
               $x^2=25 \Rightarrow x=\pm5$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">3</div><div>$7x^2=\tfrac{1}{15}$ 
-            <details><summary>Correction</summary>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>$7x^2=\tfrac{1}{15}$
+            <details>
+              <summary>Correction</summary>
               $x^2=\tfrac{1}{105} \Rightarrow x=\pm\dfrac{1}{\sqrt{105}}$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">4</div><div>$(x+1)^2+(x-1)^2=6$ 
-            <details><summary>Correction</summary>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">4</div>
+          <div>$(x+1)^2+(x-1)^2=6$
+            <details>
+              <summary>Correction</summary>
               $x^2+2x+1+x^2-2x+1=6 \Rightarrow 2x^2+2=6 \Rightarrow x^2=2 \Rightarrow x=\pm\sqrt2$.
             </details>
-          </div></div>
-        </details>
+          </div>
+        </div>
+      </details>
 
-        <details>
-          <summary><strong>C. Divers (exemples de la série)</strong> <span id="ex5"></span></summary>
-          <div class="step"><div class="n">1</div><div>$2(4x-3)+4(1-2x)=2(3x+7)-4(2x+5)$
-            <details><summary>Correction</summary>
+      <details>
+        <summary><strong>C. Divers (exemples de la série)</strong> <span id="ex5"></span></summary>
+        <div class="step">
+          <div class="n">1</div>
+          <div>$2(4x-3)+4(1-2x)=2(3x+7)-4(2x+5)$
+            <details>
+              <summary>Correction</summary>
               G: $8x-6+4-8x=-2$ ; D: $6x+14-8x-20=-2x-6$. Égalité $-2=-2x-6 \Rightarrow -2x=4 \Rightarrow x=-2$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">2</div><div>$\dfrac{2x+1}{3}-\dfrac{2-3x}{12}=\dfrac{3-x}{8}$
-            <details><summary>Correction</summary>
-              PPCM $24$. $8(2x+1)-2(2-3x)=3(3-x)$ \Rightarrow $16x+8-4+6x=9-3x$ \Rightarrow $22x+4=9-3x$ \Rightarrow $25x=5$ \Rightarrow $x=\tfrac15$.
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>$\dfrac{2x+1}{3}-\dfrac{2-3x}{12}=\dfrac{3-x}{8}$
+            <details>
+              <summary>Correction</summary>
+              PPCM $24$. $8(2x+1)-2(2-3x)=3(3-x)$ \Rightarrow $16x+8-4+6x=9-3x$ \Rightarrow $22x+4=9-3x$ \Rightarrow
+              $25x=5$ \Rightarrow $x=\tfrac15$.
             </details>
-          </div></div>
-        </details>
+          </div>
+        </div>
+      </details>
 
-        <details>
-          <summary><strong>D. Équations avec fractions</strong> <span id="ex6"></span></summary>
-          <div class="step"><div class="n">1</div><div>$\dfrac{2x+1}{3}-1=\dfrac{2-3x}{2}$
-            <details><summary>Correction</summary>
-              Multiplier par $6$: $2(2x+1)-6=3(2-3x)$ $\Rightarrow$ $4x-4=6-9x$ $\Rightarrow$ $13x=10$ $\Rightarrow$ $x=\tfrac{10}{13}$.
+      <details>
+        <summary><strong>D. Équations avec fractions</strong> <span id="ex6"></span></summary>
+        <div class="step">
+          <div class="n">1</div>
+          <div>$\dfrac{2x+1}{3}-1=\dfrac{2-3x}{2}$
+            <details>
+              <summary>Correction</summary>
+              Multiplier par $6$: $2(2x+1)-6=3(2-3x)$ $\Rightarrow$ $4x-4=6-9x$ $\Rightarrow$ $13x=10$ $\Rightarrow$
+              $x=\tfrac{10}{13}$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">2</div><div>$\dfrac{3x-5}{8}-\dfrac{2x-1}{3}=\dfrac{3-x}{12}$
-            <details><summary>Correction</summary>
-              Multiplier par $24$: $3(3x-5)-8(2x-1)=2(3-x)$ $\Rightarrow$ $9x-15-16x+8=6-2x$ $\Rightarrow$ $-7x-7=6-2x$ $\Rightarrow$ $-5x=13$ $\Rightarrow$ $x=-\tfrac{13}{5}$.
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>$\dfrac{3x-5}{8}-\dfrac{2x-1}{3}=\dfrac{3-x}{12}$
+            <details>
+              <summary>Correction</summary>
+              Multiplier par $24$: $3(3x-5)-8(2x-1)=2(3-x)$ $\Rightarrow$ $9x-15-16x+8=6-2x$ $\Rightarrow$ $-7x-7=6-2x$
+              $\Rightarrow$ $-5x=13$ $\Rightarrow$ $x=-\tfrac{13}{5}$.
             </details>
-          </div></div>
-          <div class="step"><div class="n">3</div><div>$\dfrac{3x-1}{2}+\dfrac{2x+1}{3}=2x+\dfrac{x-1}{6}$
-            <details><summary>Correction</summary>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>$\dfrac{3x-1}{2}+\dfrac{2x+1}{3}=2x+\dfrac{x-1}{6}$
+            <details>
+              <summary>Correction</summary>
               Multiplier par $6$: $3(3x-1)+2(2x+1)=12x+(x-1)$ $\Rightarrow$ $13x-1=13x-1$ (identité). Solution: $\R$.
             </details>
-          </div></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary><strong>E. Équations supplémentaires</strong> <span id="ex7"></span></summary>
+        <div class="step">
+          <div class="n">1</div>
+          <div>$(2x-4)(x+1)-(4x-8)(2x+3)=0$
+            <details>
+              <summary>Correction</summary>
+              Factoriser $(2x-4)=2(x-2)$ et $(4x-8)=4(x-2)$. Mise en évidence $(x-2)$:
+              $(x-2)[2(x+1)-4(2x+3)]=-(3x+5)(x-2)$.\nSolutions: $x=2$ ou $x=-\tfrac{5}{3}$.
+            </details>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>$(7x-4)^2-2(4-7x)(3x+2)=0$
+            <details>
+              <summary>Correction</summary>
+              $4-7x=-(7x-4)$ $\Rightarrow$ $(7x-4)[(7x-4)+2(3x+2)]=(7x-4)(13x)=0$. Solutions: $x=\tfrac{4}{7}$ ou $x=0$.
+            </details>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>$4(x+3)^2-9(x-1)^2=0$
+            <details>
+              <summary>Correction</summary>
+              Différence de carrés: $[2(x+3)-3(x-1)]\,[2(x+3)+3(x-1)]=(-x+9)(5x+3)=0$. Solutions: $x=9$ ou
+              $x=-\tfrac{3}{5}$.
+            </details>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">4</div>
+          <div>$4x^2=3$
+            <details>
+              <summary>Correction</summary>
+              $x=\pm\dfrac{\sqrt{3}}{2}$.
+            </details>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">5</div>
+          <div>$(4x^2-1)^2-9(2x+1)^2=0$
+            <details>
+              <summary>Correction</summary>
+              Poser $A=4x^2-1$, $B=3(2x+1)$. $A^2-B^2=(A-B)(A+B)$.<br />
+              $A-B=4x^2-1-6x-3=2(2x+1)(x-2)$ ; $A+B=4x^2-1+6x+3=2(2x+1)(x+1)$.<br />
+              Solutions: $x\in\{-\tfrac12,\,2,\,-1\}$ (avec multiplicité pour $-\tfrac12$).
+            </details>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="grid cols-2" id="inequations">
+      <div class="card">
+        <h2>Inéquations</h2>
+        <details open>
+          <summary><strong>A. Produits/Polynômes</strong> <span id="ex8"></span></summary>
+          <div class="step">
+            <div class="n">1</div>
+            <div>$(3x+1)(-2x+5)\le0$
+              <details>
+                <summary>Correction</summary>
+                Zéros: $x=-\tfrac13$ et $x=\tfrac52$. Tableau de signes (coefficients opposés). Solution:
+                $[-\tfrac13,\tfrac52]$.
+              </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>$(x-2)(3x+5)(3-7x)<0$ <details>
+                <summary>Correction</summary>
+                Zéros: $2, -\tfrac53, \tfrac{3}{7}$. Ordre: $-\tfrac53 < \tfrac{3}{7} < 2$. Produits alternent de signe:
+                  solution=réunion des intervalles où le signe est négatif. </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>$(x+3)^2-(x-1)^2\le0$
+              <details>
+                <summary>Correction</summary>
+                $[(x+3)-(x-1)][(x+3)+(x-1)]=(4)(2x+2)=8(x+1)\le0 \Rightarrow x\le-1$.
+              </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">4</div>
+            <div>$(3x+2)^2-(x-1)^2\le0$
+              <details>
+                <summary>Correction</summary>
+                $(3x+2-(x-1))(3x+2+(x-1))=(2x+3)(4x+1)\le0 \Rightarrow x\in\left[-\tfrac{3}{2},-\tfrac{1}{4}\right]$.
+              </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">5</div>
+            <div>$(5x+1)^2+9\le0$ — aucune solution (toujours $>0$).</div>
+          </div>
+          <div class="step">
+            <div class="n">6</div>
+            <div>$(3x^2+1)(9-2x)>0$
+              <details>
+                <summary>Correction</summary>
+                $3x^2+1>0$ pour tout $x$ ; inégalité équivalente à $9-2x>0$ donc $x<\tfrac{9}{2}$. </details>
+            </div>
+          </div>
         </details>
 
         <details>
-          <summary><strong>E. Équations supplémentaires</strong> <span id="ex7"></span></summary>
-          <div class="step"><div class="n">1</div><div>$(2x-4)(x+1)-(4x-8)(2x+3)=0$
-            <details><summary>Correction</summary>
-              Factoriser $(2x-4)=2(x-2)$ et $(4x-8)=4(x-2)$. Mise en évidence $(x-2)$: $(x-2)[2(x+1)-4(2x+3)]=-(3x+5)(x-2)$.\nSolutions: $x=2$ ou $x=-\tfrac{5}{3}$.
-            </details>
-          </div></div>
-          <div class="step"><div class="n">2</div><div>$(7x-4)^2-2(4-7x)(3x+2)=0$
-            <details><summary>Correction</summary>
-              $4-7x=-(7x-4)$ $\Rightarrow$ $(7x-4)[(7x-4)+2(3x+2)]=(7x-4)(13x)=0$. Solutions: $x=\tfrac{4}{7}$ ou $x=0$.
-            </details>
-          </div></div>
-          <div class="step"><div class="n">3</div><div>$4(x+3)^2-9(x-1)^2=0$
-            <details><summary>Correction</summary>
-              Différence de carrés: $[2(x+3)-3(x-1)]\,[2(x+3)+3(x-1)]=(-x+9)(5x+3)=0$. Solutions: $x=9$ ou $x=-\tfrac{3}{5}$.
-            </details>
-          </div></div>
-          <div class="step"><div class="n">4</div><div>$4x^2=3$
-            <details><summary>Correction</summary>
-              $x=\pm\dfrac{\sqrt{3}}{2}$.
-            </details>
-          </div></div>
-          <div class="step"><div class="n">5</div><div>$(4x^2-1)^2-9(2x+1)^2=0$
-            <details><summary>Correction</summary>
-              Poser $A=4x^2-1$, $B=3(2x+1)$. $A^2-B^2=(A-B)(A+B)$.<br/>
-              $A-B=4x^2-1-6x-3=2(2x+1)(x-2)$ ; $A+B=4x^2-1+6x+3=2(2x+1)(x+1)$.<br/>
-              Solutions: $x\in\{-\tfrac12,\,2,\,-1\}$ (avec multiplicité pour $-\tfrac12$).
-            </details>
-          </div></div>
+          <summary><strong>B. Quotients</strong> <span id="ex9"></span></summary>
+          <div class="step">
+            <div class="n">1</div>
+            <div>$\dfrac{x-1}{x+1} > 2$
+              <details>
+                <summary>Correction</summary>
+                $\dfrac{x-1}{x+1}-2>0 \iff \dfrac{x-1-2x-2}{x+1}>0 \iff \dfrac{-x-3}{x+1}>0$. Zéros: $x=-3$ ; interdit:
+                $x\ne-1$. Tableau de signes: solution $(-3,-1)$.
+              </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>$\dfrac{3x-2}{5-3x}\ge 1$
+              <details>
+                <summary>Correction</summary>
+                $\dfrac{3x-2}{5-3x}-1\ge0 \iff \dfrac{3x-2-(5-3x)}{5-3x}=\dfrac{6x-7}{5-3x}\ge0$. Zéros:
+                $x=\tfrac{7}{6}$ ; interdit: $x\ne \tfrac{5}{3}$. Tableau de signes.
+              </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>$\dfrac{2x+1}{x+2} > x$
+              <details>
+                <summary>Correction</summary>
+                $\dfrac{2x+1}{x+2}-x>0 \iff \dfrac{1-x^2}{x+2}>0 \iff \dfrac{(1-x)(1+x)}{x+2}<0$. Points critiques:
+                  $-2,-1,1$. Solution: $]-\infty;-2[\cup]-1;1[$. </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">4</div>
+            <div>$\dfrac{5x+3}{3x+5} \\le \\dfrac{3x+5}{5x+3}$
+              <details>
+                <summary>Correction</summary>
+                Étudier $\dfrac{(5x+3)^2-(3x+5)^2}{(3x+5)(5x+3)}\le0$. Numérateur $=16(x-1)(x+1)$.\nSolution:
+                $(-\tfrac{5}{3},-1]\cup(-\tfrac{3}{5},1]$ (domaines exclus : $x\ne-\tfrac{5}{3},-\tfrac{3}{5}$).
+              </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">5</div>
+            <div>$\dfrac{7x-2}{4x^2-1}\\le0$
+              <details>
+                <summary>Correction</summary>
+                Points: $x=\tfrac{2}{7}$, $x=\pm\tfrac{1}{2}$ (interdits pour le dénominateur). Solution:
+                $(-\infty,-\tfrac12)\cup[\tfrac{2}{7},\tfrac12)$.
+              </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">6</div>
+            <div>$\\dfrac{4x^3-9x}{x^2-16}\\ge0$
+              <details>
+                <summary>Correction</summary>
+                $\dfrac{x(2x-3)(2x+3)}{(x-4)(x+4)}\ge0$. Solution:
+                $]-4;-\tfrac{3}{2}]\cup\{0\}\cup\{\tfrac{3}{2}\}\cup]4;+\infty[$.
+              </details>
+            </div>
+          </div>
         </details>
-      </section>
+      </div>
 
-      <section class="grid cols-2" id="inequations">
-        <div class="card">
-          <h2>Inéquations</h2>
-          <details open>
-            <summary><strong>A. Produits/Polynômes</strong> <span id="ex8"></span></summary>
-            <div class="step"><div class="n">1</div><div>$(3x+1)(-2x+5)\le0$
-              <details><summary>Correction</summary>
-                Zéros: $x=-\tfrac13$ et $x=\tfrac52$. Tableau de signes (coefficients opposés). Solution: $[-\tfrac13,\tfrac52]$.
-              </details>
-            </div></div>
-            <div class="step"><div class="n">2</div><div>$(x-2)(3x+5)(3-7x)<0$
-              <details><summary>Correction</summary>
-                Zéros: $2, -\tfrac53, \tfrac{3}{7}$. Ordre: $-\tfrac53 < \tfrac{3}{7} < 2$. Produits alternent de signe: solution = réunion des intervalles où le signe est négatif.
-              </details>
-            </div></div>
-            <div class="step"><div class="n">3</div><div>$(x+3)^2-(x-1)^2\le0$
-              <details><summary>Correction</summary>
-                $[(x+3)-(x-1)][(x+3)+(x-1)]=(4)(2x+2)=8(x+1)\le0 \Rightarrow x\le-1$.
-              </details>
-            </div></div>
-            <div class="step"><div class="n">4</div><div>$(3x+2)^2-(x-1)^2\le0$
-              <details><summary>Correction</summary>
-                $(3x+2-(x-1))(3x+2+(x-1))=(2x+3)(4x+1)\le0 \Rightarrow x\in\left[-\tfrac{3}{2},-\tfrac{1}{4}\right]$.
-              </details>
-            </div></div>
-            <div class="step"><div class="n">5</div><div>$(5x+1)^2+9\le0$ — aucune solution (toujours $>0$).</div></div>
-            <div class="step"><div class="n">6</div><div>$(3x^2+1)(9-2x)>0$ 
-              <details><summary>Correction</summary>
-                $3x^2+1>0$ pour tout $x$ ; inégalité équivalente à $9-2x>0$ donc $x<\tfrac{9}{2}$.
-              </details>
-            </div></div>
-          </details>
-
-          <details>
-            <summary><strong>B. Quotients</strong> <span id="ex9"></span></summary>
-            <div class="step"><div class="n">1</div><div>$\dfrac{x-1}{x+1} > 2$
-              <details><summary>Correction</summary>
-                $\dfrac{x-1}{x+1}-2>0 \iff \dfrac{x-1-2x-2}{x+1}>0 \iff \dfrac{-x-3}{x+1}>0$. Zéros: $x=-3$ ; interdit: $x\ne-1$. Tableau de signes: solution $(-3,-1)$.
-              </details>
-            </div></div>
-            <div class="step"><div class="n">2</div><div>$\dfrac{3x-2}{5-3x}\ge 1$
-              <details><summary>Correction</summary>
-                $\dfrac{3x-2}{5-3x}-1\ge0 \iff \dfrac{3x-2-(5-3x)}{5-3x}=\dfrac{6x-7}{5-3x}\ge0$. Zéros: $x=\tfrac{7}{6}$ ; interdit: $x\ne \tfrac{5}{3}$. Tableau de signes.
-              </details>
-            </div></div>
-            <div class="step"><div class="n">3</div><div>$\dfrac{2x+1}{x+2} > x$
-              <details><summary>Correction</summary>
-                $\dfrac{2x+1}{x+2}-x>0 \iff \dfrac{1-x^2}{x+2}>0 \iff \dfrac{(1-x)(1+x)}{x+2}<0$. Points critiques: $-2,-1,1$. Solution: $]-\infty;-2[\cup]-1;1[$.
-              </details>
-            </div></div>
-            <div class="step"><div class="n">4</div><div>$\dfrac{5x+3}{3x+5} \\le \\dfrac{3x+5}{5x+3}$
-              <details><summary>Correction</summary>
-                Étudier $\dfrac{(5x+3)^2-(3x+5)^2}{(3x+5)(5x+3)}\le0$. Numérateur $=16(x-1)(x+1)$.\nSolution: $(-\tfrac{5}{3},-1]\cup(-\tfrac{3}{5},1]$ (domaines exclus : $x\ne-\tfrac{5}{3},-\tfrac{3}{5}$).
-              </details>
-            </div></div>
-            <div class="step"><div class="n">5</div><div>$\dfrac{7x-2}{4x^2-1}\\le0$
-              <details><summary>Correction</summary>
-                Points: $x=\tfrac{2}{7}$, $x=\pm\tfrac{1}{2}$ (interdits pour le dénominateur). Solution: $(-\infty,-\tfrac12)\cup[\tfrac{2}{7},\tfrac12)$.
-              </details>
-            </div></div>
-            <div class="step"><div class="n">6</div><div>$\\dfrac{4x^3-9x}{x^2-16}\\ge0$
-              <details><summary>Correction</summary>
-                $\dfrac{x(2x-3)(2x+3)}{(x-4)(x+4)}\ge0$. Solution: $]-4;-\tfrac{3}{2}]\cup\{0\}\cup\{\tfrac{3}{2}\}\cup]4;+\infty[$.
-              </details>
-            </div></div>
-          </details>
-        </div>
-
-        <div class="card" id="domaine">
-          <h2>Domaine de définition <span id="ex10"></span></h2>
-          <details open>
-            <summary><strong>Domaines (sélection)</strong></summary>
-            <div class="step"><div class="n">1</div><div>$f(x)=\dfrac{1}{x}+x$ 
-              <details><summary>Correction</summary>
+      <div class="card" id="domaine">
+        <h2>Domaine de définition <span id="ex10"></span></h2>
+        <details open>
+          <summary><strong>Domaines (sélection)</strong></summary>
+          <div class="step">
+            <div class="n">1</div>
+            <div>$f(x)=\dfrac{1}{x}+x$
+              <details>
+                <summary>Correction</summary>
                 Interdire $x=0$. Domaine: $\R\setminus\{0\}$.
               </details>
-            </div></div>
-            <div class="step"><div class="n">2</div><div>$f(x)=\dfrac{1}{x^2-1}$ 
-              <details><summary>Correction</summary>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>$f(x)=\dfrac{1}{x^2-1}$
+              <details>
+                <summary>Correction</summary>
                 Interdire $x=\pm1$. Domaine: $\R\setminus\{-1,1\}$.
               </details>
-            </div></div>
-            <div class="step"><div class="n">3</div><div>$f(x)=\dfrac{3x+7}{1-x}$ 
-              <details><summary>Correction</summary>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <div>$f(x)=\dfrac{3x+7}{1-x}$
+              <details>
+                <summary>Correction</summary>
                 Interdire $x=1$. Domaine: $\R\setminus\{1\}$.
               </details>
-            </div></div>
-            <div class="step"><div class="n">4</div><div>$f(x)=\dfrac{1-x}{\sqrt{x-1}}$ 
-              <details><summary>Correction</summary>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">4</div>
+            <div>$f(x)=\dfrac{1-x}{\sqrt{x-1}}$
+              <details>
+                <summary>Correction</summary>
                 Exiger $x-1>0$ (dénominateur non nul et réel): $x>1$. Domaine: $]1;+\infty[$.
               </details>
-            </div></div>
-            <div class="step"><div class="n">5</div><div>$f(x)=\sqrt{x^2-10x+21}$ 
-              <details><summary>Correction</summary>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">5</div>
+            <div>$f(x)=\sqrt{x^2-10x+21}$
+              <details>
+                <summary>Correction</summary>
                 $(x-3)(x-7)\ge0 \Rightarrow x\le3$ ou $x\ge7$. Domaine: $]-\infty;3] \cup [7;+\infty[$.
               </details>
-            </div></div>
-            <div class="step"><div class="n">6</div><div>$f(x)=\sqrt{\dfrac{2-x}{x+5}}$ 
-              <details><summary>Correction</summary>
-                Exiger $\dfrac{2-x}{x+5}\ge0$ et $x\ne-5$. Zéros/points interdits: $x=2$ (numérateur), $x=-5$ (dénominateur). Tableau de signes: $]-\infty;-5[\cup[2;+\infty[$.
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">6</div>
+            <div>$f(x)=\sqrt{\dfrac{2-x}{x+5}}$
+              <details>
+                <summary>Correction</summary>
+                Exiger $\dfrac{2-x}{x+5}\ge0$ et $x\ne-5$. Zéros/points interdits: $x=2$ (numérateur), $x=-5$
+                (dénominateur). Tableau de signes: $]-\infty;-5[\cup[2;+\infty[$.
               </details>
-            </div></div>
-          </details>
-        </div>
-      </section>
-
-      <section class="card" id="methodo">
-        <h2>Fiche méthodologie — Calcul littéral</h2>
-        <ul>
-          <li><strong>Développer</strong>: distributivité et identités remarquables $(a\pm b)^2$, $(a-b)(a+b)$.</li>
-          <li><strong>Réduire</strong>: regrouper les termes de même degré, ordonner par puissances de $x$.</li>
-          <li><strong>Factoriser</strong>: mise en évidence, différence de deux carrés, reconnaissance de carrés parfaits (pas de discriminant en rappels de seconde).</li>
-          <li><strong>Équations</strong>: formes simples (ex. $x^2=c$), équations-produit (se ramener à un produit nul).</li>
-          <li><strong>Inéquations</strong>: premier degré; produits/quotients factorizables; tableau de signes.</li>
-          <li><strong>Domaine</strong>: interdire les dénominateurs nuls; radicands $\ge 0$.</li>
-        </ul>
-
-        <details open>
-          <summary><strong>Méthodes rapides — Inéquations (tableaux de signes)</strong></summary>
-          <div class="step"><div class="n">1</div><div>
-            Produit $(x-a)(x-b)$ avec $a<b$. Zéros $a,b$. Le signe alterne entre chaque zéro (en partant du signe du coefficient dominant).<br/>
-            <table class="table-simple">
-              <tr><th>x</th><th>(-∞,a)</th><th>a</th><th>(a,b)</th><th>b</th><th>(b,+∞)</th></tr>
-              <tr><td>(x-a)(x-b)</td><td>+</td><td>0</td><td>−</td><td>0</td><td>+</td></tr>
-            </table>
-          </div></div>
-          <div class="step"><div class="n">2</div><div>
-            Quotient $\dfrac{U(x)}{V(x)}$: zéros de $U$, zéros interdits de $V$;  alterner le signe par intervalles délimités par ces points. Inclure/exclure selon $\le/\ge$ ou $</>$ et selon $V\ne0$.
-          </div></div>
-          <div class="step"><div class="n">3</div><div>
-            Carré $W(x)^2\ge0$: toujours vrai. $W(x)^2\le0$: équivaut à $W(x)=0$.
-          </div></div>
+            </div>
+          </div>
         </details>
-      </section>
+      </div>
+    </section>
 
-      <footer class="muted mt-22">© 2025 — Fiche conçue par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.</footer>
-      <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
-    </div>
+    <section class="card" id="methodo">
+      <h2>Fiche méthodologie — Calcul littéral</h2>
+      <ul>
+        <li><strong>Développer</strong>: distributivité et identités remarquables $(a\pm b)^2$, $(a-b)(a+b)$.</li>
+        <li><strong>Réduire</strong>: regrouper les termes de même degré, ordonner par puissances de $x$.</li>
+        <li><strong>Factoriser</strong>: mise en évidence, différence de deux carrés, reconnaissance de carrés parfaits
+          (pas de discriminant en rappels de seconde).</li>
+        <li><strong>Équations</strong>: formes simples (ex. $x^2=c$), équations-produit (se ramener à un produit nul).
+        </li>
+        <li><strong>Inéquations</strong>: premier degré; produits/quotients factorizables; tableau de signes.</li>
+        <li><strong>Domaine</strong>: interdire les dénominateurs nuls; radicands $\ge 0$.</li>
+      </ul>
 
-    <script>
-      const $=(q)=>document.querySelector(q), $$=(q)=>document.querySelectorAll(q);
-      $('#retypesetBtn').addEventListener('click',()=>MathJax.typesetPromise?.());
-      $('#printBtn').addEventListener('click',()=>window.print());
-    </script>
-    <script>
+      <details open>
+        <summary><strong>Méthodes rapides — Inéquations (tableaux de signes)</strong></summary>
+        <div class="step">
+          <div class="n">1</div>
+          <div>
+            Produit $(x-a)(x-b)$ avec $a
+            <b$. Zéros $a,b$. Le signe alterne entre chaque zéro (en partant du signe du coefficient dominant).<br />
+            <table class="table-simple">
+              <tr>
+                <th>x</th>
+                <th>(-∞,a)</th>
+                <th>a</th>
+                <th>(a,b)</th>
+                <th>b</th>
+                <th>(b,+∞)</th>
+              </tr>
+              <tr>
+                <td>(x-a)(x-b)</td>
+                <td>+</td>
+                <td>0</td>
+                <td>−</td>
+                <td>0</td>
+                <td>+</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>
+            Quotient $\dfrac{U(x)}{V(x)}$: zéros de $U$, zéros interdits de $V$; alterner le signe par intervalles
+            délimités par ces points. Inclure/exclure selon $\le/\ge$ ou $</>$ et selon $V\ne0$.
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <div>
+            Carré $W(x)^2\ge0$: toujours vrai. $W(x)^2\le0$: équivaut à $W(x)=0$.
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <footer class="muted mt-22">© 2025 — Fiche conçue par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.
+    </footer>
+    <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
+  </div>
+
+  <script>
+    const $ = (q) => document.querySelector(q), $$ = (q) => document.querySelectorAll(q);
+    $('#retypesetBtn').addEventListener('click', () => MathJax.typesetPromise?.());
+    $('#printBtn').addEventListener('click', () => window.print());
+  </script>
+  <script>
     if (typeof lucide !== "undefined") {
       lucide.createIcons();
     }
@@ -412,5 +664,5 @@
     });
   </script>
 </body>
-</html>
 
+</html>

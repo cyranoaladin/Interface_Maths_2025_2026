@@ -1,3 +1,10 @@
+## [1.8.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.7.0...v1.8.0) (2025-09-29)
+
+
+### Features
+
+* **PWA:** versionnage cache v20250929-01, skipWaiting/clients.claim, sw-client toast ‘Mettre à jour’ ([c22cc92](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/c22cc9236c5b3057f5c5b1c844afb262cabf9c98))
+
 ## [1.7.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.6.0...v1.7.0) (2025-09-29)
 
 

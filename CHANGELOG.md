@@ -1,3 +1,10 @@
+## [1.11.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.10.1...v1.11.0) (2025-09-29)
+
+
+### Features
+
+* refonte premium complète (a11y, PWA update, CI LHCI, sécurité Nginx) ([3c415ec](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/3c415ecedf24bfd480e7c3e1970112169e602d82))
+
 ## [1.10.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.10.0...v1.10.1) (2025-09-29)
 
 ## [1.10.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.9.2...v1.10.0) (2025-09-29)

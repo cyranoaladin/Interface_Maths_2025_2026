@@ -1,4 +1,4 @@
-const CACHE_NAME = 'maths-site-v3'
+const CACHE_NAME = 'maths-site-v4'
 const ASSETS = [
   '/',
   '/index.html',

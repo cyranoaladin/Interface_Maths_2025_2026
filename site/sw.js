@@ -1,4 +1,4 @@
-const CACHE_NAME = 'maths-site-v4';
+const CACHE_NAME = 'v20250929-01';
 const ASSETS = [
   '/',
   '/index.html',
@@ -10,6 +10,8 @@ const ASSETS = [
   '/assets/js/neon-toggle.js',
   '/assets/js/levels.js',
   '/assets/js/progression.js',
+  '/assets/js/sw-client.js',
+  '/assets/js/sw-update.js',
   '/assets/contents.json',
   '/assets/contents.static.js',
   '/EDS_premiere/index.html',
@@ -32,6 +34,9 @@ self.addEventListener('activate', e => {
     caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))))
   );
   self.clients.claim();
+});
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);

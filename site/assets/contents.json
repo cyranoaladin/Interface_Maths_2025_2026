@@ -11,7 +11,11 @@
         "titre": "Article — Progression : organisation annuelle",
         "description": "Objectifs : visualiser l’enchaînement des chapitres et leur durée estimée. Prérequis : aucun. Bénéfice : planifier son travail et anticiper les évaluations.",
         "url": "EDS_premiere/Progression/index.html",
-        "tags": ["progression","organisation","chapitres"]
+        "tags": [
+          "progression",
+          "organisation",
+          "chapitres"
+        ]
       },
       {
         "title": "Article — Épreuve anticipée (Première) : infos et sujets",
@@ -25,7 +29,11 @@
         "titre": "Exercices — Calcul littéral : entraînement guidé",
         "description": "Objectifs : automatiser les manipulations algébriques. Prérequis : identités remarquables. Bénéfice : gagner en rapidité pour les évaluations.",
         "url": "EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html",
-        "tags": ["algèbre","identités","méthode"]
+        "tags": [
+          "algèbre",
+          "identités",
+          "méthode"
+        ]
       },
       {
         "id": "cours-second-degre-premiere",
@@ -35,7 +43,11 @@
         "titre": "Cours — Second degré : formes et racines",
         "description": "Objectifs : comprendre forme canonique, factorisée et développée. Prérequis : produits remarquables. Bénéfice : résoudre équations et problèmes d’optimisation.",
         "url": "EDS_premiere/Second_Degre/cours_second_degre.html",
-        "tags": ["polynômes","forme canonique","optimisation"]
+        "tags": [
+          "polynômes",
+          "forme canonique",
+          "optimisation"
+        ]
       },
       {
         "id": "fiche-second-degre-premiere",
@@ -45,7 +57,11 @@
         "titre": "Fiche — Second degré : mémo & révisions",
         "description": "Objectifs : retenir l’essentiel (formules, méthodes). Prérequis : cours du chapitre. Bénéfice : réviser efficacement avant DS.",
         "url": "EDS_premiere/Second_Degre/fiche_eleve_second_degre.html",
-        "tags": ["mémo","révision","méthode"]
+        "tags": [
+          "mémo",
+          "révision",
+          "méthode"
+        ]
       }
     ],
     "EDS Terminale": [

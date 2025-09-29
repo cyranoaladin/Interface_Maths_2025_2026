@@ -4,4 +4,3 @@ window.i18n = {
   rmFav: "Retirer des favoris",
   noResult: "Aucun résultat. Essayez “suites”, “dérivation”, “second degré”…"
 };
-

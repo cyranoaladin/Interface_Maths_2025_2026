@@ -1,3 +1,10 @@
+## [1.6.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.5.0...v1.6.0) (2025-09-29)
+
+
+### Features
+
+* **UX:** compteur résultats live, reset clair, badge favoris live, confetti (1/jour), onboarding modal; tokens.css (AA) ([63e69d9](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/63e69d970d07e8771f3d129a537c44717d6d281e))
+
 ## [1.5.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.4.0...v1.5.0) (2025-09-29)
 
 

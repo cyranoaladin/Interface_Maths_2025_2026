@@ -59,4 +59,4 @@ self.addEventListener('fetch', e => {
       return r;
     }))
   );
-})
+});

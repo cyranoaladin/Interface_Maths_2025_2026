@@ -1,6 +1,2 @@
-# Dépendances de sécurité et hash
 passlib>=1.7.4
-# Version connue comme stable avec passlib (évite les régressions 4.1.x)
 bcrypt==4.0.1
-
-# (Ajoute ici le reste de tes deps si tu en as)

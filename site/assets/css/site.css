@@ -1197,21 +1197,4 @@ html[data-theme="light"] {
   }
 }
 
-/* Note: To self-host fonts, drop WOFF2 files in assets/fonts/ and keep these @font-face rules. */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../fonts/Inter-Variable.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../fonts/Poppins-Variable.woff2') format('woff2');
-}
-
-/* End fonts */
+/* Fonts self-hosting option disabled: remove 404s until WOFF2 files are provided */

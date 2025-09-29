@@ -3,3 +3,6 @@ site/assets/js/lucide.min.js
 ui/**
 apps/**
 **/node_modules/**
+
+# Allow ESLint to lint the frontend
+!apps/frontend/src/**

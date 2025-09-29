@@ -47,7 +47,9 @@
         <a class="nav-link" href="index.html">Accueil</a>
         <a class="nav-link" href="#auto-index">Ressources</a>
         <a class="nav-link" href="#timeline">Mon parcours</a>
-        <a class="nav-link" href="#favoris">Mes favoris</a>
+        <a class="nav-link" href="#favoris">Mes favoris <span id="fav-count" class="badge-count"
+            aria-label="Nombre de favoris">0</span></a>
+        <a class="nav-link" href="parents.html">Parents</a>
         <a class="nav-link" href="credits.html">À propos</a>
         <span class="nav-sep" aria-hidden="true"></span>
         <button id="neon-toggle" class="btn" type="button" aria-pressed="false"
@@ -170,11 +172,12 @@
             <div id="type-filters" class="chips" aria-label="Filtres par type"></div>
             <div id="tag-filters" class="chips mt-6" aria-label="Filtres thématiques"></div>
             <div class="mt-6">
-              <button id="reset-filters" type="button" class="btn btn--secondary">Réinitialiser les filtres</button>
+              <button id="reset-filters" type="button" class="btn btn--secondary">Effacer la recherche et les filtres</button>
             </div>
             <div id="search-suggestions" class="mt-6" aria-live="polite"></div>
           </div>
         </div>
+        <div class="mt-6 small" id="results-count" aria-live="polite"></div>
         <div id="auto-index-body" class="pre-wrap mt-8">
           <small>Chargement…</small>
         </div>
@@ -208,6 +211,7 @@
     </footer>
   </div>
   <script src="assets/js/progression.js" defer></script>
+  <script src="assets/js/sw-update.js" defer></script>
   <script>
     (function () {
       const QUOTES = [

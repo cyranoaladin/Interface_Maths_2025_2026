@@ -230,8 +230,13 @@
       frag.appendChild(section);
     }
     container.innerHTML = '';
-    if (!frag.childNodes.length) { container.innerHTML = '<small>Aucun contenu détecté.</small>'; return; }
+    if (!frag.childNodes.length) { container.innerHTML = '<small>Aucun contenu détecté.</small>'; updateCount(0); return; }
     container.appendChild(frag);
+    // mettre à jour le compteur
+    try {
+      const numCards = container.querySelectorAll('.resource-card').length;
+      updateCount(numCards);
+    } catch {}
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
       try { window.lucide.createIcons(); } catch {}
     }
@@ -263,6 +268,12 @@
       buildTypeChips(); buildTagChips(); setTab();
       render(fullGroups || {}); updateSuggestions();
     });
+  }
+
+  function updateCount(n){
+    const el = document.getElementById('results-count');
+    if (!el) return;
+    el.textContent = n===1 ? '1 résultat' : (n + ' résultats');
   }
 
   function groupTree(node) {

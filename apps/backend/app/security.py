@@ -15,7 +15,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .users import User
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Use bcrypt_sha256 to support passwords > 72 bytes safely
+pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
 
 # OAuth2 scheme expects /auth/token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
@@ -32,11 +33,13 @@ def get_secret_key() -> str:
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    # bcrypt family limits to 72 bytes; truncate defensively
+    return pwd_context.verify(plain_password[:72], hashed_password)
 
 
 def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+    # truncate to 72 bytes to avoid backend errors
+    return pwd_context.hash(password[:72])
 
 
 def create_access_token(data: dict, expires_minutes: Optional[int] = None) -> str:
@@ -73,4 +76,3 @@ def require_teacher(user: User = Depends(get_current_user)) -> User:
     if user.role != "teacher":
         raise HTTPException(status_code=403, detail="Insufficient permissions")
     return user
-

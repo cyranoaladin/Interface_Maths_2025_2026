@@ -1,3 +1,10 @@
+## [1.4.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.3.0...v1.4.0) (2025-09-29)
+
+
+### Features
+
+* **UI+a11y:** focus visibles, page Parents, compteur résultats, libellé reset, bouton MAJ SW ([b2e88e9](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/b2e88e9a0c23b198fbb1c6a7172394245eb3f44d))
+
 ## [1.3.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.2.1...v1.3.0) (2025-09-29)
 
 

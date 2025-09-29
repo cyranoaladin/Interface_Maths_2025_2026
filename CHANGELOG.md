@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.4.0...v1.5.0) (2025-09-29)
+
+
+### Features
+
+* **VPS:** headers Nginx (CSP/XFO/nosniff/referrer) + workflow deploy SSH/rsync; fonts [@font-face](https://github.com/font-face) avec swap ([0066daf](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/0066daf80e1400b8d7d281b982764c7789e93dc8))
+
 ## [1.4.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.3.0...v1.4.0) (2025-09-29)
 
 

@@ -1,3 +1,24 @@
+## [1.3.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.2.1...v1.3.0) (2025-09-29)
+
+
+### Features
+
+* **EDS Première:** carte dédiée ‘Article — Épreuve anticipée’ + page/precache; suppression du bloc texte inline ([9820158](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/9820158171847b1affd6121a0beaed505f1cd91a))
+* **EDS Première:** section Épreuve anticipée (simple et motivant) + liens Eduscol ([69f7d2d](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/69f7d2de4c808bbb1a4ce71cd964f337f5e0f64e))
+* **theme:** add alternate palettes (Énergie & Créativité, Pureté & Minimalisme) with theme cycler ([3c24100](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/3c24100b23b1e245ccda803547868a319d523ee2))
+* **ui:** add CitationRotative with citations.json; integrate into Hero ([bed41a0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/bed41a045bd3a71bd98b2c3cdaccdcfbc9238b32))
+* **ui:** scaffold premium React structure (layout/ui/sections/pages), routing, fonts, tokens; add hero mesh; tests setup (Vitest + RTL) with first Button test ([8bdfc0f](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/8bdfc0f6c4bacce4d6726d019683119a8b00031b))
+* **ui:** ticker néon Hero, coeur favoris, message progression vide engageant ([d0a7ef6](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/d0a7ef6f45c651d0e103517a00c7403ac575a0a0))
+
+
+### Bug Fixes
+
+* **cache:** versionner site.css (v=4) + SW v4 pour purger 404 des polices; EDS Première section visible ([cb9a50a](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/cb9a50aa8e2cb8e13cdad97b89c4c3cce0c8acd9))
+* **cache:** versionner site.css (v=4) sur toutes les pages HTML ([e7ec0c1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/e7ec0c14e371fe11f8aa64e1d36f0640d3e83ed7))
+* **CSP:** retirer frame-ancestors des meta CSP (ignorer par Chrome) ([bbc39dd](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/bbc39ddc9c99aa91e6911b48cb9bc841de6ae294))
+* **fonts:** retirer preloads Inter/Poppins inexistants pour éviter 404 ([130db4c](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/130db4c0f60b656ed203bb66623731a6757c3b35))
+* **fonts:** supprimer [@font-face](https://github.com/font-face) Inter/Poppins tant que les WOFF2 ne sont pas fournis (évite 404) ([a2d2c56](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/a2d2c565fef244db209298e0197413c74bccff61))
+
 ## [1.2.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.2.0...v1.2.1) (2025-09-27)
 
 

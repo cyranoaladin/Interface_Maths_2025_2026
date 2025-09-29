@@ -1,3 +1,10 @@
+## [1.9.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.8.1...v1.9.0) (2025-09-29)
+
+
+### Features
+
+* **analytics:** Plausible avec respect DNT (script conditionnel) ([5cd4fcd](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/5cd4fcdf61cf3beab32b4737dcc567b3e77ba96b))
+
 ## [1.8.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.8.0...v1.8.1) (2025-09-29)
 
 

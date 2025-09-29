@@ -18,6 +18,7 @@ const ASSETS = [
   '/mentions.html',
   '/credits.html',
   '/EDS_premiere/Progression/index.html',
+  '/EDS_premiere/Epreuve_Anticipee/index.html',
   '/EDS_terminale/Progression/index.html',
   '/Maths_expertes/Progression/index.html',
 ];

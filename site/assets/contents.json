@@ -8,6 +8,10 @@
         "url": "EDS_premiere/Progression/index.html"
       },
       {
+        "title": "Article — Épreuve anticipée (Première) : infos et sujets", 
+        "url": "EDS_premiere/Epreuve_Anticipee/index.html"
+      },
+      {
         "title": "Calcul littéral — Exercices + Méthodologie (EDS Première)",
         "url": "EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html"
       },
@@ -66,6 +70,12 @@
       "title": "Progression — EDS Première (2025–2026)",
       "url": "EDS_premiere/Progression/index.html",
       "file": "EDS_premiere/Progression/index.html",
+      "name": "index.html"
+    },
+    {
+      "title": "Article — Épreuve anticipée (Première) : infos et sujets",
+      "url": "EDS_premiere/Epreuve_Anticipee/index.html",
+      "file": "EDS_premiere/Epreuve_Anticipee/index.html",
       "name": "index.html"
     },
     {

@@ -2,12 +2,16 @@
 <html lang="fr">
 
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Interface Maths — Lycée PMF</title>
   <meta name="description"
     content="Ressources de mathématiques modernes — EDS Première, EDS Terminale, Maths expertes." />
   <meta name="theme-color" content="#0b1020" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <meta property="og:title" content="Interface Maths — 2025–2026" />
   <meta property="og:description" content="Ressources imprimables avec une interface moderne." />
   <meta property="og:type" content="website" />
@@ -35,9 +39,13 @@
 </head>
 
 <body>
+<a class="sr-only focus:not-sr-only" href="#contenu">Aller au contenu</a>
+<main id="contenu">
   <a class="skip-link" href="#main">Aller au contenu</a>
   <!-- Bandeau héros minimal avec titre centré, seul -->
   <header class="site-hero">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <div class="container">
       <div class="branding">
         <div class="badge">PMF</div>
@@ -75,13 +83,13 @@
           </div>
         </div>
         <div class="col-6">
-          <img src="/assets/img/hero-geom.svg" alt="" width="720" height="420" loading="lazy">
+          <img loading="lazy" src="/assets/img/hero-geom.svg" alt="" width="720" height="420" loading="lazy">
         </div>
       </div>
     </div>
   </section>
 
-  <main class="page">
+  <main id="contenu" class="page">
     <main id="main">
 
       <section class="block hero" id="hero">
@@ -256,6 +264,7 @@
         btn.setAttribute('aria-pressed', String(!light));
       });
     </script>
+</main>
 </body>
 
 </html>

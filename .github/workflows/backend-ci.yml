@@ -27,6 +27,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest-cov
 
+      - name: Ensure bcrypt/passlib pins
+        run: |
+          pip install "bcrypt==4.0.1" "passlib>=1.7.4"
+
       - name: Prepare OUTPUTS_DIR
         run: |
           mkdir -p "$RUNNER_TEMP/outputs"

@@ -1,5 +1,13 @@
 **/*.min.js
 site/assets/js/lucide.min.js
 ui/**
+
+# Ignore tout apps/ puis ré-inclus le frontend
 apps/**
+!apps/
+!apps/frontend/
+!apps/frontend/**
+!apps/frontend/src/**
+apps/frontend/dist/**
+
 **/node_modules/**

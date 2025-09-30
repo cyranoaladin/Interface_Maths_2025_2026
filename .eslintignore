@@ -1,14 +1,13 @@
 **/*.min.js
 site/assets/js/lucide.min.js
 ui/**
+
+# Ignore tout apps/ puis ré-inclus le frontend
 apps/**
-**/node_modules/**
-
-# Allow ESLint to lint the frontend
-!apps/frontend/src/**
-
-# Allow ESLint to lint the frontend
+!apps/
 !apps/frontend/
 !apps/frontend/**
 !apps/frontend/src/**
 apps/frontend/dist/**
+
+**/node_modules/**

@@ -7,7 +7,6 @@ export default [
       '**/*.min.js',
       '**/lucide.min.js',
       'ui/**',
-      'apps/**',
       '**/node_modules/**'
     ],
     languageOptions: {

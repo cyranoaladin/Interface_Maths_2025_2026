@@ -1,0 +1,5 @@
+node_modules/**
+dist/**
+
+# Ne pas ignorer la source
+!src/**

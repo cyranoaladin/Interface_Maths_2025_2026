@@ -45,6 +45,7 @@ jobs:
           args: >-
             --no-progress 
             --exclude-path "apps/frontend/node_modules/**,apps/frontend/dist/**" 
+          --remap '^/$' "file://${{ github.workspace }}/site/index.html"
             --exclude "https://cdn.jsdelivr.net/.*"  --exclude "https://maths.labomaths.tn/.*"  --remap '^/(.*)$' "file://${{ github.workspace }}/site/$1" 
             --accept 200,206,301,302,303,307,308,429 
             --timeout 20 --retry-wait-time 2 --max-redirects 5 --max-retries 2 

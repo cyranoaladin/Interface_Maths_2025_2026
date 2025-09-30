@@ -1344,19 +1344,4 @@ html[data-theme="light"] {
   }
 }
 
-/* Fonts (@font-face) — activées si les WOFF2 sont présents dans assets/fonts */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../fonts/Inter-Variable.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('../fonts/Poppins-Variable.woff2') format('woff2');
-}
+/* Fonts désactivées (évite 404 si WOFF2 non fournis). On s'appuie sur la pile système. */

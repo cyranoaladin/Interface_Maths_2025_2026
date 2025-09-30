@@ -6,3 +6,9 @@ apps/**
 
 # Allow ESLint to lint the frontend
 !apps/frontend/src/**
+
+# Allow ESLint to lint the frontend
+!apps/frontend/
+!apps/frontend/**
+!apps/frontend/src/**
+apps/frontend/dist/**

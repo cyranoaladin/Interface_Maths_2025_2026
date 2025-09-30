@@ -47,7 +47,7 @@ jobs:
             --exclude-path "apps/frontend/node_modules/**,apps/frontend/dist/**" 
             --exclude "https://cdn.jsdelivr.net/.*" 
             --accept 200,206,301,302,303,307,308,429 
-            --timeout 20 --retry-wait-time 2 --max-redirects 5 --retry-count 2 
+            --timeout 20 --retry-wait-time 2 --max-redirects 5 --max-retries 2 
             site/
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

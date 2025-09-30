@@ -1,5 +1,5 @@
-node_modules/**
-dist/**
-
-# Ne pas ignorer la source
-!src/**
+**/*.min.js
+site/assets/js/lucide.min.js
+ui/**
+apps/frontend/dist/**
+**/node_modules/**

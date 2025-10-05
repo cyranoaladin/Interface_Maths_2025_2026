@@ -1,3 +1,10 @@
+## [1.12.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.11.0...v1.12.0) (2025-10-05)
+
+
+### Features
+
+* **student-dashboard:** add student UI with resources, bilans, change password; fix groups/my; UI polish and CSV exports; cleanup endpoints ([cee0fbd](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/cee0fbd72835958bc098c8dbf45535ed2173f25b))
+
 ## [1.11.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.10.1...v1.11.0) (2025-09-29)
 
 

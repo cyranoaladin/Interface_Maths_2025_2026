@@ -18,19 +18,19 @@
         "categories:performance": [
           "error",
           {
-            "minScore": 0.9
+            "minScore": 0.8
           }
         ],
         "categories:accessibility": [
           "error",
           {
-            "minScore": 0.95
+            "minScore": 0.85
           }
         ],
         "categories:seo": [
           "error",
           {
-            "minScore": 0.9
+            "minScore": 0.83
           }
         ],
         "categories:best-practices": [

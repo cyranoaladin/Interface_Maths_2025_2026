@@ -53,7 +53,7 @@ async def seed_test_student(code: str, _: User = Depends(require_teacher), db: S
 
     email = f"eleve.test.{code.lower()}@example.com"
     full_name = f"Élève Test {code}"
-    password = create_student(db, email=email, full_name=full_name, group_codes=[code])
+    create_student(db, email=email, full_name=full_name, group_codes=[code])
 
     # fetch created/updated user
     user = db.query(User).filter_by(email=email).one()

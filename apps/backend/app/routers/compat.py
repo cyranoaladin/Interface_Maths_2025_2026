@@ -5,9 +5,9 @@ from pydantic import BaseModel, EmailStr
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..security import create_access_token, verify_password, get_current_user, get_secret_key
+from ..security import create_access_token, verify_password, get_secret_key
 from ..users import User, UserRead
-from jose import jwt, JWTError
+from jose import jwt
 from ..security import ALGORITHM
 import os
 
@@ -28,7 +28,8 @@ COOKIE_NAME = "auth_token"
 async def compat_login(request: Request, response: Response, db: Session = Depends(get_db)):
     # Accept both JSON and form
     content_type = request.headers.get("content-type", "")
-    email = ""; password = ""
+    email = ""
+    password = ""
     if "application/json" in content_type:
         data = await request.json()
         email = (data.get("email") or data.get("username") or "").strip()

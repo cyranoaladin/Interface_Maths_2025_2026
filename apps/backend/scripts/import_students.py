@@ -13,7 +13,6 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from sqlalchemy.orm import Session
-
 from apps.backend.app.db import engine
 from apps.backend.app.users import create_student
 from apps.backend.app.config import settings

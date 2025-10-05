@@ -62,3 +62,21 @@ async def change_password(
     user.hashed_password = get_password_hash(new_password)
     db.commit()
     return {"ok": True}
+
+
+# Teacher-only: reset a student's password to a known temporary value
+@router.post("/reset-student-password")
+async def reset_student_password(
+    email: str = Body(..., embed=True),
+    _: User = Depends(require_teacher),
+    db: Session = Depends(get_db),
+):
+    if not email or "@" not in email:
+        raise HTTPException(status_code=422, detail="Invalid email")
+    user = db.query(User).filter(User.email == email.lower()).one_or_none()
+    if not user or user.role != "student":
+        raise HTTPException(status_code=404, detail="Student not found")
+    temp_password = "password123"
+    user.hashed_password = get_password_hash(temp_password)
+    db.commit()
+    return {"ok": True, "temp_password": temp_password}

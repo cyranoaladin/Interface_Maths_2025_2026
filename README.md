@@ -1,4 +1,4 @@
-# Interface Maths 2025–2026 — Dossier technique complet (Audit + Amélioration)
+# Interface Maths 2025–2026 — Guide complet (Structure, Métier, Installation, Tests, Déploiement)
 
 [![backend-ci](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml)
 [![deploy](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml/badge.svg)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml)
@@ -88,7 +88,7 @@
 
 ---
 
-## 5) Logique métier (JS) — comportements interactifs et attentes utilisateur
+## 5) Logique métier (JS) — comportements et attentes utilisateur
 
 ### 5.1 Sommaire d’accueil — `assets/js/contents.js`
 

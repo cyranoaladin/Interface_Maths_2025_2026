@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Se connecter — Interface Maths</title>
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+
+<body>
+  <header class="site-hero">
+    <div class="container branding">
+      <div class="badge">PMF</div>
+      <h1 class="site-title">Connexion</h1>
+      <p class="site-subtitle">Accédez à votre espace</p>
+    </div>
+  </header>
+
+  <div class="nav-wrapper">
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a class="nav-item" href="/content/index.html">Accueil</a>
+      <a class="nav-item" href="/content/ressources.html">Ressources</a>
+      <a class="nav-item" href="/content/parents.html">Parents</a>
+    </nav>
+  </div>
+
+  <main class="page container" style="max-width:520px">
+    <div class="card">
+      <h2>Se connecter</h2>
+      <form id="login-form" action="/api/v1/login-form" method="post">
+        <label for="email">Adresse e‑mail</label>
+        <input id="email" name="email" type="email" required class="search-input" autocomplete="username" />
+        <div class="mt-8"></div>
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" required class="search-input"
+          autocomplete="current-password" />
+        <div class="mt-8"></div>
+        <button type="submit" class="btn btn--primary">Connexion</button>
+        <output id="login-msg" class="small mt-6" aria-live="polite"></output>
+      </form>
+    </div>
+  </main>
+
+  <script type="module" src="/assets/js/auth.js"></script>
+</body>
+
+</html>

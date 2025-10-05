@@ -145,6 +145,19 @@ def create_student(db: Session, email: str, full_name: str, group_codes: List[st
 
     existing = db.query(User).filter_by(email=email).one_or_none()
     if existing:
+        # Ensure groups are attached even if the user already exists
+        for code in group_codes:
+            grp = db.query(Group).filter_by(code=code).one_or_none()
+            if not grp:
+                grp = Group(code=code, name=code)
+                db.add(grp)
+                db.flush()
+            if grp not in existing.groups:
+                existing.groups.append(grp)
+        # Update full name if missing or placeholder
+        if not existing.full_name or existing.full_name == existing.email:
+            existing.full_name = full_name
+        db.commit()
         return ""
     password = token_urlsafe(10)
     user = User(email=email, full_name=full_name, role="student", hashed_password=get_password_hash(password))

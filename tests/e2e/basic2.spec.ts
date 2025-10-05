@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/content/index.html');
   // Purge SW et caches pour un état propre
   await page.evaluate(async () => {
     try {
@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('accueil: titre, recherche, favoris', async ({ page }) => {
-  await page.goto('/index.html');
+  await page.goto('/content/index.html');
   await expect(page.locator('header.site-hero h1.site-title')).toHaveText(/Interface\s*Maths/i);
   await page.getByLabel(/Rechercher une fiche/i).fill('suites');
   await expect(page.locator('#results-count')).toContainText(/résultat/);

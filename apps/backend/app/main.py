@@ -6,16 +6,23 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
+from starlette.responses import FileResponse
 
 from .config import settings
 from .models import DirNode
 from .tree import build_tree
 from .routers.auth import router as auth_router
+from .routers.groups import router as groups_router
+from .routers.testing import router as testing_router
+from .routers.compat import router as compat_router
 
 app = FastAPI(title="Maths Portal API")
 
 # Routers
 app.include_router(auth_router)
+app.include_router(groups_router)
+app.include_router(testing_router)
+app.include_router(compat_router)
 
 # CORS (optional)
 if settings.CORS_ORIGINS:
@@ -31,6 +38,36 @@ if settings.CORS_ORIGINS:
 if settings.SERVE_STATIC:
     content_root = str(settings.CONTENT_ROOT)
     app.mount(settings.STATIC_BASE_URL, StaticFiles(directory=content_root), name="content")
+    # Also expose absolute /assets for pages that reference absolute paths
+    app.mount("/assets", StaticFiles(directory=str(Path(content_root) / "assets")), name="assets")
+
+    # Serve favicon to avoid 403 noise
+    @app.get("/favicon.ico", include_in_schema=False)
+    async def favicon():
+        # Prefer site/favicon.ico if exists, else return 404
+        path = Path(content_root) / "favicon.ico"
+        if path.is_file():
+            return FileResponse(path)
+        # Fallback to SVG icon if available
+        svg = Path(content_root) / "assets" / "img" / "icon.svg"
+        if svg.is_file():
+            return FileResponse(svg)
+        raise HTTPException(status_code=404, detail="Not found")
+
+    # Service Worker and manifest at absolute paths
+    @app.get("/sw.js", include_in_schema=False)
+    async def sw():
+        path = Path(content_root) / "sw.js"
+        if path.is_file():
+            return FileResponse(path)
+        raise HTTPException(status_code=404, detail="Not found")
+
+    @app.get("/manifest.webmanifest", include_in_schema=False)
+    async def manifest():
+        path = Path(content_root) / "manifest.webmanifest"
+        if path.is_file():
+            return FileResponse(path)
+        raise HTTPException(status_code=404, detail="Not found")
 
 
 @lru_cache(maxsize=1)
@@ -67,4 +104,3 @@ async def api_subtree(subpath: str):
         raise HTTPException(status_code=404, detail="Dossier introuvable")
     rel = abs_dir.relative_to(root).as_posix()
     return build_tree(str(root), rel)
-

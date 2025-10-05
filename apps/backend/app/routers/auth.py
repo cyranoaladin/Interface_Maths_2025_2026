@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Body
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..security import create_access_token, verify_password, get_current_user, require_teacher
+from ..security import create_access_token, verify_password, get_current_user, require_teacher, get_password_hash
 from ..users import User, UserRead, GroupRead
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -47,3 +47,18 @@ async def list_users_teacher_only(_: User = Depends(require_teacher), db: Sessio
     users = db.query(User).order_by(User.id.asc()).all()
     return [UserRead(id=u.id, email=u.email, full_name=u.full_name, role=u.role) for u in users]
 
+
+@router.post("/change-password")
+async def change_password(
+    new_password: str = Body(..., embed=True, alias="new_password"),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    if not new_password or len(new_password) < 8:
+        raise HTTPException(status_code=422, detail="Password too short")
+    user = db.get(User, current_user.id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user.hashed_password = get_password_hash(new_password)
+    db.commit()
+    return {"ok": True}

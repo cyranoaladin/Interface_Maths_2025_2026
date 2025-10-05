@@ -3,13 +3,13 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/e2e',
   webServer: {
-    command: 'npx http-server site -p 8000 -c-1',
-    url: 'http://localhost:8000/index.html',
+    command: 'bash -lc "cd apps/backend && . .venv/bin/activate && TESTING=1 SERVE_STATIC=1 uvicorn app.main:app --host 127.0.0.1 --port 8008"',
+    url: 'http://127.0.0.1:8008/content/index.html',
     reuseExistingServer: true,
-    timeout: 60_000
+    timeout: 90_000
   },
   use: {
-    baseURL: 'http://localhost:8000',
+    baseURL: 'http://127.0.0.1:8008',
     headless: true,
   },
   reporter: 'list',

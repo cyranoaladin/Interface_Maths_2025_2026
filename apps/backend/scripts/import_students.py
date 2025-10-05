@@ -4,13 +4,19 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 from typing import List
+import sys
+
+# Ensure repo root on sys.path so that 'apps.backend.app.*' imports work
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from sqlalchemy.orm import Session
 
-from app.db import engine
-from app.users import create_student
-from app.config import settings
-
+from apps.backend.app.db import engine
+from apps.backend.app.users import create_student
+from apps.backend.app.config import settings
 
 """
 Import students from a CSV and generate provisional passwords.
@@ -68,8 +74,7 @@ def import_students(csv_path: str) -> Path:
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Import students from CSV")
+    parser = argparse.ArgumentParser(description="Import students from a CSV")
     parser.add_argument("csv_path", help="Path to CSV file")
     args = parser.parse_args()
     import_students(args.csv_path)
-

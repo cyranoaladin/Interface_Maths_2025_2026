@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nettoyage SW & caches — Interface Maths</title>
+  <style>
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      margin: 24px;
+      line-height: 1.6
+    }
+
+    .ok {
+      color: #16a34a
+    }
+
+    .warn {
+      color: #b45309
+    }
+
+    .err {
+      color: #dc2626
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 5px;
+      border-radius: 6px
+    }
+  </style>
+  <script>
+    async function cleanup() {
+      const log = (m, cls = '') => {
+        const p = document.createElement('p'); p.textContent = m; if (cls) p.className = cls; document.getElementById('out').appendChild(p);
+      };
+      try {
+        log('Nettoyage en cours…');
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map(r => r.unregister()));
+          log(`Service Workers: ${regs.length} désenregistré(s)`, 'ok');
+        } else { log('Service Workers non supportés', 'warn'); }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k => caches.delete(k)));
+          log(`Caches supprimés: ${keys.join(', ') || 'aucun'}`, 'ok');
+        }
+        try { localStorage.clear(); log('localStorage vidé', 'ok'); } catch { log('localStorage: échec', 'err'); }
+        try { sessionStorage.clear(); log('sessionStorage vidé', 'ok'); } catch { log('sessionStorage: échec', 'err'); }
+        try {
+          // Supprimer IndexedDB si disponible
+          const hasDB = typeof indexedDB !== 'undefined' && indexedDB && typeof indexedDB.databases === 'function';
+          if (hasDB) {
+            const dbs = await indexedDB.databases();
+            for (const db of (dbs || [])) {
+              await new Promise(res => { const req = indexedDB.deleteDatabase(db.name); req.onsuccess = req.onerror = req.onblocked = () => res(); });
+            }
+            log(`IndexedDB: ${((dbs || []).length)} base(s) supprimée(s)`, 'ok');
+          }
+        } catch { log('IndexedDB: échec ou non supporté', 'warn'); }
+        log('Terminé. Rechargez la page principale.', 'ok');
+      } catch (e) { console.error(e); log('Erreur: ' + e.message, 'err'); }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('run').addEventListener('click', cleanup);
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Nettoyage Service Worker & caches</h1>
+  <p>Cet outil vide les caches (<code>caches</code>), <code>localStorage</code>, <code>sessionStorage</code>, IndexedDB
+    et désenregistre les Service Workers pour ce domaine.</p>
+  <p>
+    <button id="run">Nettoyer maintenant</button>
+    <a href="/index.html" style="margin-left:12px">Retour à l’accueil</a>
+  </p>
+  <div id="out" aria-live="polite"></div>
+</body>
+
+</html>
+

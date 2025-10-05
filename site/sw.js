@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v20250929-01';
+const CACHE_NAME = 'v20250929-02';
 const ASSETS = [
   '/',
   '/index.html',
@@ -12,11 +12,15 @@ const ASSETS = [
   '/assets/js/progression.js',
   '/assets/js/sw-client.js',
   '/assets/js/sw-update.js',
+  '/assets/js/auth.js',
+  '/assets/js/dashboard.js',
   '/assets/contents.json',
   '/assets/contents.static.js',
   '/EDS_premiere/index.html',
   '/EDS_terminale/index.html',
   '/Maths_expertes/index.html',
+  '/login.html',
+  '/dashboard.html',
   '/mentions.html',
   '/credits.html',
   '/EDS_premiere/Progression/index.html',

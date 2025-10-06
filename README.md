@@ -1,321 +1,235 @@
-# Interface Maths 2025–2026 — Guide complet (Structure, Métier, Installation, Tests, Déploiement)
+## Interface Maths 2025–2026 — Guide complet et auto‑déployable (Structure, Métier, Installation, Tests, Déploiement)
 
 [![backend-ci](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml)
 [![deploy](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml/badge.svg)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml)
-[![docker-image](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-docker.yml/badge.svg?branch=main)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-docker.yml)
 [![Latest Tag](https://img.shields.io/github/v/tag/cyranoaladin/Interface_Maths_2025_2026?sort=semver)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/tags)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-> Site pédagogique (pas commercial) destiné aux élèves/parents/enseignants : ressources en spécialité mathématiques (Première, Terminale, Maths expertes), progressions annuelles, interface premium moderne et 100% en français.
+> Portail pédagogique complet (élèves, parents, enseignants) — Ressources Première/Terminale/Maths expertes, tableaux de bord, bilans d’évaluations, import CSV, authentification sécurisée, déploiement VPS en une commande.
 
 ---
 
-## 1) Introduction (vision et public)
+## 1) Vue d’ensemble — objectifs et public
 
-- Objectif: proposer un espace clair, accueillant et motivant pour les élèves, rassurant pour les parents, efficace pour les enseignants.
-- Références UI: Linear, Vercel, Stripe, Notion (sobriété, spacing généreux, lisibilité, hiérarchie nette).
-- Langue: intégralement en français (aucun bouton/texte anglais).
-
----
-
-## 2) Architecture du projet
-
-- Racine utile: `Interface_Maths_2025_2026/site/` (tout le site public se trouve ici).
-- Sous-dossiers majeurs:
-  - `assets/css/site.css` — Design system et styles globaux
-  - `assets/js/` — Logique métier (sommaire, listes de niveau, progression, icônes, thèmes)
-  - `assets/contents.json` et `assets/contents.static.js` — Index statiques des contenus
-  - `EDS_premiere/`, `EDS_terminale/`, `Maths_expertes/` — Rubriques et pages Progression
-  - `manifest.webmanifest`, `sw.js` — PWA (service worker actif en HTTP/HTTPS)
+- Offrir un espace clair et moderne, 100% en français, pour consulter les ressources, suivre la progression, visualiser les bilans d’évaluations (élève) et gérer les groupes (enseignant).
+- Frontend statique soigné (HTML/CSS/JS), Backend API FastAPI (Python) avec SQLite et SQLAlchemy, authentification JWT.
+- Déploiement VPS reproductible: base (re)construite automatiquement grâce à un bootstrap en un script.
 
 ---
 
-## 3) Charte graphique (design tokens)
+## 2) Architecture (monorepo simple)
 
-- Typographies:
-  - Titres (H1): Poppins SemiBold 48px
-  - H2: Inter Medium 32px — H3: Inter Medium 24px
-  - Corps: Inter 16px — Small: Inter 14px
-- Couleurs:
-  - Primaires: Bleu `#2563eb`, Violet `#7c3aed`, Cyan `#06b6d4`
-  - Arrière-plans: `--bg`, `--card`, `--text`, `--muted`, `--border`, `--accent` (clair/sombre + override `html[data-theme]`)
-- Thèmes et effets:
-  - Radius: cartes 24px, sections 28px
-  - Ombres: `--ds-shadow-default`, glow premium au hover `--ds-shadow-glow`
-  - Spacings: XS 8px → XXL 64px (respiration large)
-- Tags disciplinaires (badges):
-  - Analyse `#22c55e`, Probabilités `#f97316`, Géométrie `#8b5cf6`, Arithmétique `#ec4899`, Algèbre `#3b82f6`, Trigonométrie `#eab308`
+- `site/` — Site public (HTML/CSS/JS). Sert aussi de racine de contenu pour les pages et ressources.
+- `apps/backend/` — API FastAPI (Python 3.12), SQLite via SQLAlchemy, JWT, endpoints groupes/utilisateurs, scripts d’import/seed.
+- `apps/frontend/` — Build vite/vue-tsc (expose des assets packagés recopiés vers `site/assets/`).
+- `tests/` — Tests E2E Playwright (et tests unitaires JS/TS si présents).
+- `deploy/` — Script de déploiement unique `deploy_all.sh` + exemples infra.
 
----
+Schéma:
 
-## 4) Structure de l’interface
-
-### 4.1 Hero (Accueil)
-
-- Titre: « Interface Maths 2025–2026 »
-- Sous-titre: « Ressources et progressions pour accompagner les élèves en spécialité mathématiques au lycée. »
-- Citation inspirante (italique, rotation automatique — mathématiciens)
-- Illustration: mesh gradient premium (violet/cyan/bleu) + formes géométriques/symboles (π, ∑, ∫)
-- CTAs: « Première », « Terminale », « Maths expertes »
-
-### 4.2 Accès rapide
-
-- 3 grandes cartes modernes (icônes Lucide, fond contrasté, hover lumineux)
-- Libellés sobres:
-  - EDS Première → Ressources + Progression
-  - EDS Terminale → Ressources + Progression
-  - Maths expertes → Ressources + Progression
-
-### 4.3 Sommaire (chapitres et ressources)
-
-- Grille responsive: 3 colonnes (desktop), 2 (tablette), 1 (mobile)
-- Cartes premium (radius 24px, ombre, glow au hover)
-- Contenu carte: grande icône Lucide colorée (par type), titre, description courte académique, badges tags, ⭐ favori flottant
-- Filtres: chips par type (Cours, Fiche, Exercices, Éval, Article) et par thème (Analyse, Algèbre, Géométrie, Probabilités, Trigonométrie, Arithmétique)
-- Recherche: accent-insensible, suggestions (autosuggest) avec groupe de rubrique
-
-### 4.4 Timeline progression
-
-- Ligne centrale lumineuse (dégradé violet/bleu/cyan)
-- Jalons alternés gauche/droite: icône (∑, ∞, ∫…), titre, durée (semaines), badges ressources liés
-- Vue alternative grille: cartes numérotées avec durées et liens
-
-### 4.5 Footer
-
-- Fond contrasté, gradient léger
-- Liens: « Mentions légales », « Crédits »
-- Mini-citation: « Les mathématiques sont la poésie des sciences. » — Karl Weierstrass
-
----
-
-## 5) Logique métier (JS) — comportements et attentes utilisateur
-
-### 5.1 Sommaire d’accueil — `assets/js/contents.js`
-
-- Rôle: charger/regrouper `assets/contents.json`/`assets/contents.static.js` (ou `/api/tree` si présent), rendre les cartes filtrables, suggestions et favoris.
-- Ordre de chargement (robuste): `contents.static.js` (priorité `file://`) → `contents.json` → API `/api/tree`.
-- Normalisation et typage:
-
-```js
-function normalize(str) {
-  return (str || "")
-    .toString()
-    .normalize("NFD")
-    .replace(/\p{Diacritic}+/gu, "")
-    .toLowerCase();
-}
-function computeType(it) {
-  const t = normalize(it.title);
-  if (/\bcours\b/.test(t)) return "Cours";
-  if (/(\bfiche\b|mémo|méthodo)/.test(t)) return "Fiche";
-  if (/exercices?/.test(t)) return "Exercices";
-  if (/(éval|evaluation|corrigé|corrige)/.test(t)) return "Éval";
-  if (/article|note/.test(t)) return "Article";
-  return "";
-}
+```
+Interface_Maths_2025_2026/
+  site/                       # HTML, CSS, JS (public)
+  apps/
+    backend/
+      app/                    # FastAPI (routers, sécurité, db)
+      data/app.db             # SQLite (créée auto)
+      outputs/                # Exports CSV et journaux applicatifs
+      scripts/                # import/export/seed/bootstrap
+    frontend/                 # build vite (assets → site/assets)
+  tests/                      # E2E Playwright
+  deploy/deploy_all.sh        # Déploiement VPS one‑shot
 ```
 
-- Champs et interactions attendues (utilisateur):
-  - Recherche: l’utilisateur peut taper une requête (accent-insensible). Au-delà de 2 caractères, une liste de suggestions s’affiche (jusqu’à 8), chaque suggestion mène vers l’URL de la ressource (nouvel onglet).
-  - Filtres chips: deux groupes (« Type », « Thème »). Un clic active/désactive la puce; l’état `aria-pressed` est tenu à jour. Les résultats se mettent à jour en direct.
-  - Favoris: l’icône cœur dans chaque carte bascule l’état favori (persisté dans `localStorage` clé `favorites`). Le filtre « Mes favoris » (onglet) restreint l’affichage aux favoris.
-  - Réinitialisation: le bouton « Réinitialiser les filtres » vide la recherche, désactive tous les chips, réinitialise l’onglet « Tous » et recalcule la grille.
-  - Ancre `#favoris`: si l’URL contient `#favoris`, l’onglet « Mes favoris » est pré‑activé au chargement.
+---
 
-### 5.2 Listes de niveau — `assets/js/levels.js`
+## 3) Backend — Modèle, Auth, Endpoints, Scripts
 
-- Rôle: afficher les ressources d’une rubrique (Première/Terminale/Maths expertes) avec recherche/filtre/favoris.
-- Sources: `../assets/contents.json` puis fallback `../assets/contents.static.js` (support `file://`).
-- Correction automatique des liens relatifs (contexte « page de niveau »):
+- Framework: FastAPI (+ Starlette). ORM: SQLAlchemy 2.x. DB: SQLite (fichier géré par défaut).
+- Utilisateurs: `User { id, email, full_name, role: teacher|student, hashed_password, is_active, created_at }`
+- Groupes: `Group { id, code, name }` + table d’association `user_groups` (un élève peut être dans plusieurs groupes).
+- Authentification: JWT (HS256), `OAuth2PasswordBearer`; hash mots de passe via `passlib` (bcrypt_sha256).
 
-```js
-const raw = (it.url || "").replace(/^\/+/, "");
-link.href = /^https?:\/\//.test(raw) ? raw : "../" + raw;
-```
+Endpoints principaux:
 
-- Interactions attendues (utilisateur):
-  - Recherche intra‑niveau: champ `#level-search` filtre les cartes du niveau courant (mêmes règles de normalisation).
-  - Filtres: chips par type et thème disponibles (mêmes comportements et états qu’en accueil).
-  - Réinitialisation: `#level-reset-filters` remet la vue à zéro.
-  - Navigation: chaque carte ouvre la ressource correspondante. Les cœurs de favoris sont disponibles et persistent inter‑pages (même `localStorage`).
+- `POST /auth/token` — login standard OAuth2 (username=email, password)
+- `GET /auth/me` — profil courant
+- `POST /auth/change-password` — changer son mot de passe
+- `POST /auth/reset-student-password` — enseignant → réinitialise un élève sur « password123 »
+- `GET /groups/` — liste des groupes (enseignant)
+- `GET /groups/{code}/students` — élèves d’un groupe (enseignant)
+- `GET /groups/my` — groupes associés à l’utilisateur courant (élève/enseignant)
+- `GET /api/v1/session` — session compat (utilisée par le frontend `auth.js`)
 
-### 5.3 Progression (timeline + grille) — `assets/js/progression.js`
+Scripts disponibles (apps/backend/scripts/):
 
-- Rôle: scanner les tables de chapitres dans la page Progression, construire timeline alternée et grille.
-- UX et attentes:
-  - Timeline: jalons alternés (gauche/droite) avec lien d’ancrage vers la ligne du tableau d’origine. Icône, titre, durée, badges (Cours/Fiche/Exercices) affichés.
-  - Grille: cartes numérotées avec durées et liens vers les ressources.
-  - Si vide: afficher un message engageant « Explore tes ressources, et tes progrès s’afficheront ici ! » (sur les pages progression), ne rien afficher d’intrusif sur l’accueil.
+- `convert_ert_csv.py` — convertit CSV ERT bruts en CSV standard `email,full_name,groups` (séparateur adapté)
+- `import_students.py` — import en base (crée élèves + associe groupes) et produit un CSV des mots de passe provisoires
+- `seed_real_teacher.py` — crée l’enseignant réel et l’attache aux groupes (local)
+- `bootstrap_prod.py` — bootstrap prod: schéma DB, groupes, enseignant (via env)
 
-### 5.4 Thèmes et mode néon — `assets/js/theme-toggle.js`, `assets/js/neon-toggle.js`
+Bootstrap automatique au démarrage:
 
-- `theme-toggle.js` gère un cycle de thèmes via l’attribut `html[data-theme]` (persisté dans `localStorage`):
-  - Ordre: `dark` → `light` → `energie` → `pure` (palettes alternatives documentées en §3 et §11).
-  - Le libellé du bouton est mis à jour: « Thème: sombre/clair/énergie/pur ».
-- `neon-toggle.js` ajoute un glow discret en activant `html[data-neon="on"]`.
+- Si `AUTO_BOOTSTRAP=1`, l’API crée le schéma et s’assure des groupes par défaut (T‑EDS‑3, P‑EDS‑6, MX‑1).
 
 ---
 
-## 6) Guide d’utilisation — Élève
+## 4) Frontend — Pages, Composants, Tableaux de bord
 
-- Trouver un chapitre:
-  - Accueil → Sommaire → utiliser la recherche (ex: « suites ») ou les chips par thème
-- Filtrer les ressources:
-  - Chips « Type » (Cours, Fiche, Exercices, Éval, Article) et « Thèmes » (Analyse, Algèbre, …)
-- Ajouter aux favoris:
-  - Bouton ⭐ sur chaque carte (persistance locale)
-- Voir la progression:
-  - Rubrique → bouton « Progression » → timeline + grille
+- Pages publiques: `index.html`, rubriques `EDS_premiere/`, `EDS_terminale/`, `Maths_expertes/`, progression, mentions, etc.
+- Tableaux de bord:
+  - Élève (`site/student.html`, `assets/js/student.js`):
+    - « Ressources » (cartes EDS Première), « Changer mon mot de passe », bilans d’évaluations (lecture JSON et rendu stylé, filtrage par élève)
+  - Enseignant (`site/dashboard.html`, `assets/js/dashboard.js`):
+    - Liste des groupes → table des élèves (nom nettoyé, email)
+    - Actions: « Voir bilan » (rendu carte détaillée), « Réinitialiser » (mot de passe)
 
-Cas d’usage concrets:
+Rendu des bilans (EDS Première, Second Degré):
 
-- « Où trouver une fiche de révision sur les suites ? » → Accueil → rechercher « suites » → filtrer Type « Fiche » → ouvrir « Fiche élève — Suites numériques ».
-- « Comment réviser le second degré ? » → Accueil → Sommaire → carte « Cours complet — Second degré » (description: « Polynômes, égalités et méthodes ») → ajouter aux favoris pour accès rapide.
-- « Naviguer la progression de Terminale » → Terminale → Progression → jalons et badges pour accéder aux ressources de la séquence.
+- Source JSON: `site/EDS_premiere/Second_Degre/bilans_eval1second_degre.json`
+- Filtrage: par email (si présent) ou par nom complet normalisé
+- Mise en page: carte avec titre « Évaluation n°1 — Fonctions de second degré et forme canonique », date, mention, sections Points forts / Axes d’amélioration / Conseils / Appréciation / tableau des exercices.
 
 ---
 
-## 7) Guide technique — Développeurs
+## 5) Données élèves — Import/Export (CSV)
 
-- Composants pages:
-  - Hero, Accès rapide, Sommaire (accueil)
-  - Listes de ressources (par niveau)
-  - Progression (timeline + grille)
-  - Footer
-- Tokens & styles:
-  - Voir `assets/css/site.css` (variables, thèmes, radius/ombres, utilitaires)
-- Icônes:
-  - Lucide via CDN, initialisé par `assets/js/icons.js`
-- Thèmes & mode néon:
-  - `theme-toggle.js`, `neon-toggle.js` (attributs `html[data-theme]`, `html[data-neon]`). Deux palettes alternatives: « Énergie & Créativité » (fond #121212, violet #6A0DAD, accent #FFD700) et « Pureté & Minimalisme » (fond #212121, marine #174D8C, accent #4DFFC9).
-
-### 7.1 Données et contenus
-
-- Indexation: mettre à jour `assets/contents.json` (et `assets/contents.static.js`) lors d’ajouts/suppressions.
-- Nommage: titres de cartes explicites (« Cours complet — Second degré », « Fiche élève — Suites numériques », « Exercices corrigés — Calcul littéral ») pour de bonnes descriptions automatiques.
-
-### 7.2 Accessibilité et i18n
-
-- Langue: attribut `lang="fr"` sur toutes les pages, textes en français uniquement (tests E2E bloquants).
-- Focus: styles visibles pour tabulation (`:focus-visible`), labels pour champs.
-- Icônes: Lucide (SVG) initialisées par `assets/js/icons.js`.
-
-Installation locale rapide (serveur statique):
+- Conversion (CSV ERT → standard):
 
 ```bash
-python3 -m http.server --directory Interface_Maths_2025_2026/site 8000
-# http://127.0.0.1:8000/
+python3 apps/backend/scripts/convert_ert_csv.py <src_ert.csv> apps/backend/outputs/students_P-EDS-6.csv P-EDS-6
+python3 apps/backend/scripts/convert_ert_csv.py <src_ert.csv> apps/backend/outputs/students_T-EDS-3.csv T-EDS-3
+python3 apps/backend/scripts/convert_ert_csv.py <src_ert.csv> apps/backend/outputs/students_MX-1.csv MX-1
 ```
 
-Stack Docker (optionnelle):
+- Import en base:
 
 ```bash
-docker compose -f deploy/docker/docker-compose.yml up -d --build
-curl http://localhost/content/index.html
-curl http://localhost/api/tree
+python3 apps/backend/scripts/import_students.py apps/backend/outputs/students_P-EDS-6.csv
+python3 apps/backend/scripts/import_students.py apps/backend/outputs/students_T-EDS-3.csv
+python3 apps/backend/scripts/import_students.py apps/backend/outputs/students_MX-1.csv
+```
+
+- Exports générés: `apps/backend/outputs/new_students_<timestamp>.csv` (mots de passe provisoires) et `apps/backend/outputs/export_students.csv` (séparateur `;`, compatible Excel FR).
+
+---
+
+## 6) Configuration (env) — Local & Prod
+
+Variables importantes:
+
+- `DATABASE_URL` (défaut: SQLite dans `apps/backend/data/app.db`)
+- `CONTENT_ROOT` (défaut: `site/`)
+- `STATIC_BASE_URL` (défaut: `/content`)
+- `SERVE_STATIC` (dev: `true` pour servir `site/` via FastAPI; prod: `false`, Nginx sert `site/`)
+- `SECRET_KEY` (JWT, prod: valeur longue et secrète)
+- `AUTO_BOOTSTRAP` (`1` pour créer schéma + groupes au démarrage)
+- `TEACHER_EMAIL`, `TEACHER_PASSWORD` (utilisés par `bootstrap_prod.py`)
+
+Exemple `.env.production` (VPS):
+
+```
+AUTO_BOOTSTRAP=1
+CONTENT_ROOT=/opt/interface_maths/site
+STATIC_BASE_URL=/content
+SERVE_STATIC=false
+DATABASE_URL=sqlite:////opt/interface_maths/apps/backend/data/app.db
+SECRET_KEY=change-me-long-and-random
+TEACHER_EMAIL=alaeddine.benrhouma@ert.tn
+TEACHER_PASSWORD=secret
 ```
 
 ---
 
-## 8) Tests — Unitaires & E2E
+## 7) Installation locale (avec API) et jeux d’essai
 
-- Unitaires (Vitest, jsdom): composants DOM génériques, rendu `contents.js` (fallback statique), classes attendues
-- E2E (Playwright): navigation (Accueil → Première → Ressources → Progression → Retour), recherche/filtre/favoris, timeline, accessibilité (axe-core), langue française
+Créer venv backend et installer dépendances:
 
-Scénarios E2E détaillés attendus:
+```bash
+python3 -m venv apps/backend/.venv
+. apps/backend/.venv/bin/activate
+pip install -U pip
+pip install -r apps/backend/requirements.txt
+```
 
-- Navigation: Accueil → carte « Spécialité Maths – Terminale » → bouton « Progression » (nav header) → retour « Accueil ».
-- Recherche et suggestions: saisir « cours », attendre les suggestions, cliquer sur une suggestion, vérifier l’ouverture.
-- Filtres et reset: activer un chip Type, activer un chip Thème, cliquer « Réinitialiser les filtres », vérifier état.
-- Favoris: activer le cœur, recharger la page, vérifier persistance.
-- FR only: vérifier absence de mots anglais dans les pages `lang="fr"`.
+Build frontend et copier assets:
+
+```bash
+cd apps/frontend && npm ci || npm install && npm run build
+cd ../.. && mkdir -p site/assets && rsync -a apps/frontend/dist/assets/ site/assets/
+```
+
+Démarrer l’API en dev (sert aussi `site/`):
+
+```bash
+SERVE_STATIC=1 uvicorn apps.backend.app.main:app --host 127.0.0.1 --port 8008
+```
+
+Jeux d’essai (optionnels): endpoint de test `POST /testing/ensure-teacher` (quand `TESTING=1`) — crée un enseignant et lie les groupes par défaut.
+
+---
+
+## 8) Tests — Unitaires & End‑to‑End
+
+- E2E Playwright: 8 scénarios couvrent navigation, filtres, favoris, FR‑only, accessibilité, dashboard enseignant.
+- Unitaires backend (pytest): sécurité, endpoints principaux, arborescence de contenu.
 
 Commandes:
 
 ```bash
-npm run test:unit
 npx playwright install chromium
 npm run test:e2e
+. apps/backend/.venv/bin/activate && pytest -q apps/backend
 ```
 
-Exemples de vérifications à exiger:
+---
 
-- Boutons CTA mènent aux bonnes pages
-- Chaque carte contient un titre + description + tags
-- Bouton « Réinitialiser les filtres » remet recherche + chips à zéro
-- Aucune chaîne anglaise dans les pages `lang="fr"`
+## 9) Déploiement VPS (one‑shot script)
+
+Sur le VPS (Ubuntu), une fois le dépôt synchronisé dans `/opt/interface_maths`:
+
+```bash
+cd /opt/interface_maths
+bash deploy/deploy_all.sh
+```
+
+Ce script:
+
+- Crée la venv, installe le backend
+- Build le frontend et publie les assets vers `site/assets/`
+- Bootstrape la base (schéma + groupes + enseignant réel via `TEACHER_EMAIL`/`TEACHER_PASSWORD`)
+- Crée/active un service systemd `interface-maths` (API sur `127.0.0.1:8000`)
+- Configure Nginx pour servir `site/` en `/content` et reverse‑proxy `/(api|auth|groups|api/v1)` vers l’API
+
+Accès:
+
+- Site: `http://<votre_domaine>/content/index.html`
+- Connexion enseignant: `alaeddine.benrhouma@ert.tn` / `secret` (modifiez ensuite dans l’UI)
+
+Reconstruction totale (disaster recovery):
+
+```bash
+rm -f /opt/interface_maths/apps/backend/data/app.db
+cd /opt/interface_maths
+. apps/backend/.venv/bin/activate
+set -a; . .env.production; set +a
+python3 apps/backend/scripts/bootstrap_prod.py
+sudo systemctl restart interface-maths
+```
 
 ---
 
-## 9) Sécurité & bonnes pratiques
+## 10) Sécurité, qualité, accessibilité
 
-- 0 secret en clair, chargements externes en HTTPS
-- `manifest.webmanifest` + `sw.js` actifs uniquement via HTTP/HTTPS
-- Mettre à jour `assets/contents.json`/`assets/contents.static.js` après ajout/suppression de fiches
-- Nommage de fichiers explicites (permalien stable)
-
----
-
-## 10) Contributeurs & licence
-
-- Projet pédagogique sous licence **CC BY-NC-SA 4.0** (Crédit, Pas d’usage commercial, Partage à l’identique)
-- Contributions: PR bienvenues pour améliorer l’accessibilité, la lisibilité, la qualité des contenus et des tests
-
-Lien licence: <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr>
+- Hash mots de passe (bcrypt_sha256), JWT HS256 (clé secrète en prod), rôles `teacher`/`student`.
+- ESLint/Prettier (frontend), Flake8 (backend), Playwright (E2E), pytest (backend).
+- Accessibilité: FR‑only, focus visibles, labels, Lighthouse CI (perf/a11y/SEO) — seuils configurables.
 
 ---
 
-## 11) Annexes — Design tokens alternatifs (palettes)
+## 11) Licence & contributions
 
-### 11.1 Énergie & Créativité
+- Licence **CC BY‑NC‑SA 4.0** (crédit, pas d’usage commercial, partage à l’identique).
+- Contributions bienvenues (accessibilité, contenus, UX, tests, déploiement).
 
-- Fond: `#121212`, Carte: `#1f1f33`
-- Texte: `#F5F5F5`, Muted: `#BDBDBD`
-- Titre/Accent: Violet `#6A0DAD`, Accent doré `#FFD700`
-- Usage: sites dynamiques, engageants; bon contraste avec cœurs/focus dorés.
-
-### 11.2 Pureté & Minimalisme
-
-- Fond: `#212121`, Carte: `#2a2a2a`
-- Texte: `#FFFFFF`, Muted: `#E0E0E0`
-- Titre/Accent: Marine `#174D8C`, Accent menthe `#4DFFC9`
-- Usage: rendu sobre, professionnel, focus sur lisibilité et structure.
-
----
-
-## 12) EDS Première — Épreuve anticipée de mathématiques (à partir de 2027)
-
-### Épreuve Anticipée de Maths : Le Bac en Première
-
-À partir de 2027, une nouvelle épreuve de maths apparaît pour tous les élèves de Première. Voici l’essentiel pour bien se préparer.
-
-### C’est quoi ?
-
-- Une épreuve écrite passée en fin de Première, comme le bac de français.
-- Elle valide un niveau commun en mathématiques (bases, raisonnement, résolution de problèmes), quel que soit le choix de spécialité en Terminale.
-
-### Le programme évalué
-
-- Si vous suivez la spécialité mathématiques: l’épreuve porte sur tout le programme de Spécialité Maths de Première.
-- Si vous n’êtes pas en spécialité mathématiques: l’épreuve porte sur le programme de mathématiques intégré à l’Enseignement Scientifique.
-
-### Comment se déroule l’épreuve ?
-
-- Durée: 2 heures, sur 20 points, coefficient 2.
-- Calculatrice: interdite pendant toute l’épreuve.
-- Deux parties distinctes:
-  - Partie 1 (6 pts): automatismes sous forme de QCM (calcul rapide, conversions, propriétés de base…).
-  - Partie 2 (14 pts): 2 ou 3 exercices indépendants pour évaluer connaissances et compétences de raisonnement.
-
-### Bien se préparer avec nos ressources
-
-- Fiches de révision ciblées (bases, méthodes, pièges courants).
-- Exercices d’entraînement thématiques (avec corrections détaillées).
-- Quiz « automatismes » (format QCM) pour progresser par petites séances.
-
-Ressources officielles (sujets exemples):
-
-- Sujet 0 (spécialité maths) — Doc 65500: [eduscol.education.fr/document/65500/download](https://eduscol.education.fr/document/65500/download)
-- Sujet 0 (spécialité maths) — Doc 65502: [eduscol.education.fr/document/65502/download](https://eduscol.education.fr/document/65502/download)
-
-Conseil: alternez les séances « automatismes » (rapides) et les exercices de raisonnement (plus longs). Fixez‑vous des objectifs simples: 15–20 min par jour suffisent pour gagner en confiance.
+Lien: <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr>

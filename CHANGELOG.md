@@ -1,3 +1,10 @@
+## [1.13.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.12.4...v1.13.0) (2025-10-06)
+
+
+### Features
+
+* **deploy:** add one-shot deploy script + prod bootstrap; fix startup auto-bootstrap ([f12a54c](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/f12a54ceb475f8ee4ec0eaddc31e6c17a80af3f1))
+
 ## [1.12.4](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.12.3...v1.12.4) (2025-10-05)
 
 ## [1.12.3](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.12.2...v1.12.3) (2025-10-05)

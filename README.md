@@ -1,4 +1,4 @@
-## Interface Maths 2025–2026 — Dossier technique complet et autosuffisant
+# Interface Maths 2025–2026 — Dossier technique complet et autosuffisant
 
 [![backend-ci](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml)
 [![deploy](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml/badge.svg)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml)
@@ -27,7 +27,7 @@
 
 Schéma:
 
-```
+```text
 Interface_Maths_2025_2026/
   site/                       # HTML, CSS, JS (public)
   apps/
@@ -167,7 +167,7 @@ Variables importantes:
 
 Exemple `.env.production` (VPS):
 
-```
+```ini
 AUTO_BOOTSTRAP=1
 CONTENT_ROOT=/opt/interface_maths/site
 STATIC_BASE_URL=/content

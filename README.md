@@ -1,11 +1,11 @@
-## Interface Maths 2025–2026 — Guide complet et auto‑déployable (Structure, Métier, Installation, Tests, Déploiement)
+## Interface Maths 2025–2026 — Dossier technique complet et autosuffisant
 
 [![backend-ci](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml/badge.svg?branch=main)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/backend-ci.yml)
 [![deploy](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml/badge.svg)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/actions/workflows/deploy.yml)
 [![Latest Tag](https://img.shields.io/github/v/tag/cyranoaladin/Interface_Maths_2025_2026?sort=semver)](https://github.com/cyranoaladin/Interface_Maths_2025_2026/tags)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-> Portail pédagogique complet (élèves, parents, enseignants) — Ressources Première/Terminale/Maths expertes, tableaux de bord, bilans d’évaluations, import CSV, authentification sécurisée, déploiement VPS en une commande.
+> Portail pédagogique complet (élèves, parents, enseignants) — Ressources Première/Terminale/Maths expertes, tableaux de bord, bilans d’évaluations, import CSV, authentification sécurisée, déploiement VPS en une commande. Auteur: **Alaeddine Ben Rhouma**.
 
 ---
 
@@ -61,6 +61,29 @@ Endpoints principaux:
 - `GET /groups/my` — groupes associés à l’utilisateur courant (élève/enseignant)
 - `GET /api/v1/session` — session compat (utilisée par le frontend `auth.js`)
 
+Exemples cURL:
+
+```bash
+# Login (OAuth2)
+curl -s -X POST http://localhost:8000/auth/token \
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -d 'username=alaeddine.benrhouma@ert.tn&password=secret'
+
+# Garder le token dans une variable
+TOKEN="$(curl -s -X POST http://localhost:8000/auth/token -H 'content-type: application/x-www-form-urlencoded' -d 'username=alaeddine.benrhouma@ert.tn&password=secret' | jq -r .access_token)"
+
+# Lister les groupes (enseignant)
+curl -s http://localhost:8000/groups/ -H "authorization: Bearer $TOKEN" | jq
+
+# Lister les élèves d’un groupe
+curl -s http://localhost:8000/groups/T-EDS-3/students -H "authorization: Bearer $TOKEN" | jq
+
+# Réinitialiser un mot de passe élève
+curl -s -X POST http://localhost:8000/auth/reset-student-password \
+  -H "authorization: Bearer $TOKEN" -H 'content-type: application/json' \
+  -d '{"email":"eleve.x@example.com"}'
+```
+
 Scripts disponibles (apps/backend/scripts/):
 
 - `convert_ert_csv.py` — convertit CSV ERT bruts en CSV standard `email,full_name,groups` (séparateur adapté)
@@ -90,6 +113,16 @@ Rendu des bilans (EDS Première, Second Degré):
 - Filtrage: par email (si présent) ou par nom complet normalisé
 - Mise en page: carte avec titre « Évaluation n°1 — Fonctions de second degré et forme canonique », date, mention, sections Points forts / Axes d’amélioration / Conseils / Appréciation / tableau des exercices.
 
+Structure JS/CSS:
+
+- `site/assets/js/contents.js` — sommaire d’accueil (chargement des contenus, filtres, recherche, favoris)
+- `site/assets/js/levels.js` — listes de niveau (Première/Terminale/Maths expertes)
+- `site/assets/js/progression.js` — timeline + grille à partir des tableaux de progression
+- `site/assets/js/student.js` — tableau de bord élève (bilans, changement mot de passe)
+- `site/assets/js/dashboard.js` — tableau de bord enseignant (groupes, élèves, bilans, reset)
+- `site/assets/js/theme-toggle.js` / `neon-toggle.js` — thèmes et effets visuels
+- `site/assets/css/site.css` — design system (tokens, dark/light, composants)
+
 ---
 
 ## 5) Données élèves — Import/Export (CSV)
@@ -111,6 +144,12 @@ python3 apps/backend/scripts/import_students.py apps/backend/outputs/students_MX
 ```
 
 - Exports générés: `apps/backend/outputs/new_students_<timestamp>.csv` (mots de passe provisoires) et `apps/backend/outputs/export_students.csv` (séparateur `;`, compatible Excel FR).
+
+Mapping officiel des groupes:
+
+- « EDS Première » → `P-EDS-6`
+- « EDS Terminale » → `T-EDS-3`
+- « Maths expertes » → `MX-1`
 
 ---
 
@@ -138,6 +177,11 @@ SECRET_KEY=change-me-long-and-random
 TEACHER_EMAIL=alaeddine.benrhouma@ert.tn
 TEACHER_PASSWORD=secret
 ```
+
+Notes:
+
+- En dev, `SERVE_STATIC=1` fait servir `site/` par FastAPI; en prod, Nginx sert les fichiers et reverse‑proxy l’API.
+- `OUTPUTS_DIR` par défaut: `apps/backend/outputs/` (exports CSV des imports et bootstrap pour audit).
 
 ---
 
@@ -167,6 +211,11 @@ SERVE_STATIC=1 uvicorn apps.backend.app.main:app --host 127.0.0.1 --port 8008
 
 Jeux d’essai (optionnels): endpoint de test `POST /testing/ensure-teacher` (quand `TESTING=1`) — crée un enseignant et lie les groupes par défaut.
 
+API d’arborescence `/api/tree`:
+
+- `GET /api/tree` — retourne l’arborescence des `.html` sous `CONTENT_ROOT` (par défaut `site/`).
+- `GET /api/tree/{subpath}` — sous‑arbre d’un répertoire.
+
 ---
 
 ## 8) Tests — Unitaires & End‑to‑End
@@ -181,6 +230,10 @@ npx playwright install chromium
 npm run test:e2e
 . apps/backend/.venv/bin/activate && pytest -q apps/backend
 ```
+
+Qualité & audits:
+
+- Lighthouse CI: assertions perf/a11y/SEO via `lighthouserc.json` (seuils ajustables en CI).
 
 ---
 
@@ -217,6 +270,22 @@ python3 apps/backend/scripts/bootstrap_prod.py
 sudo systemctl restart interface-maths
 ```
 
+Sauvegarde & restauration SQLite:
+
+- Sauvegarde:
+
+```bash
+sqlite3 /opt/interface_maths/apps/backend/data/app.db ".backup 'app-backup-$(date +%F).db'"
+```
+
+- Restauration:
+
+```bash
+sudo systemctl stop interface-maths
+cp app-backup-YYYY-MM-DD.db /opt/interface_maths/apps/backend/data/app.db
+sudo systemctl start interface-maths
+```
+
 ---
 
 ## 10) Sécurité, qualité, accessibilité
@@ -224,6 +293,16 @@ sudo systemctl restart interface-maths
 - Hash mots de passe (bcrypt_sha256), JWT HS256 (clé secrète en prod), rôles `teacher`/`student`.
 - ESLint/Prettier (frontend), Flake8 (backend), Playwright (E2E), pytest (backend).
 - Accessibilité: FR‑only, focus visibles, labels, Lighthouse CI (perf/a11y/SEO) — seuils configurables.
+
+Audit sécurité & debug:
+
+- Secrets: `SECRET_KEY` obligatoire en prod (32+ caractères randomisés).
+- JWT: HS256, expiration configurable (`ACCESS_TOKEN_EXPIRE_MINUTES`).
+- Hash: `bcrypt_sha256`, mots de passe tronqués à 72 octets.
+- Rôles: `teacher` (accès admin aux groupes/élèves), `student`.
+- Endpoints de test: protégés par `TESTING=1`.
+- Logs: Uvicorn `--log-level info` (augmenter en `debug` pour tracer), Nginx access/error logs.
+- Exports d’audit: `apps/backend/outputs/` (credentials provisoires, imports).
 
 ---
 
@@ -233,3 +312,5 @@ sudo systemctl restart interface-maths
 - Contributions bienvenues (accessibilité, contenus, UX, tests, déploiement).
 
 Lien: <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr>
+
+— Document rédigé par **Alaeddine Ben Rhouma**.

@@ -59,3 +59,11 @@ async def seed_test_student(code: str, _: User = Depends(require_teacher), db: S
     user = db.query(User).filter_by(email=email).one()
     # Note: password is returned only via outputs file for security; not in API
     return UserRead(id=user.id, email=user.email, full_name=user.full_name, role=user.role)
+
+    full_name = f"Élève Test {code}"
+    create_student(db, email=email, full_name=full_name, group_codes=[code])
+
+    # fetch created/updated user
+    user = db.query(User).filter_by(email=email).one()
+    # Note: password is returned only via outputs file for security; not in API
+    return UserRead(id=user.id, email=user.email, full_name=user.full_name, role=user.role)

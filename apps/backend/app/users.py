@@ -173,3 +173,16 @@ def create_student(db: Session, email: str, full_name: str, group_codes: List[st
         user.groups.append(grp)
     db.commit()
     return password
+
+    db.add(user)
+    # Attach groups
+    for code in group_codes:
+        grp = db.query(Group).filter_by(code=code).one_or_none()
+        if not grp:
+            # create on the fly
+            grp = Group(code=code, name=code)
+            db.add(grp)
+            db.flush()
+        user.groups.append(grp)
+    db.commit()
+    return password

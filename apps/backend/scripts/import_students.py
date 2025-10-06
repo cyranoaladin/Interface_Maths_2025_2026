@@ -77,3 +77,7 @@ if __name__ == "__main__":
     parser.add_argument("csv_path", help="Path to CSV file")
     args = parser.parse_args()
     import_students(args.csv_path)
+
+    parser.add_argument("csv_path", help="Path to CSV file")
+    args = parser.parse_args()
+    import_students(args.csv_path)

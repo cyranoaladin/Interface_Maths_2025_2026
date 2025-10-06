@@ -9,6 +9,9 @@ from starlette.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 
 from .config import settings
+from .db import Base, engine
+from .users import Group
+import os
 from .models import DirNode
 from .tree import build_tree
 from .routers.auth import router as auth_router
@@ -69,6 +72,29 @@ if settings.SERVE_STATIC:
             return FileResponse(path)
         raise HTTPException(status_code=404, detail="Not found")
 
+
+@app.on_event("startup")
+async def on_startup_create_schema_and_bootstrap():
+    # Always ensure schema exists (no-op if already created)
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception:
+        pass
+    # Optional: auto-bootstrap groups in production when AUTO_BOOTSTRAP=1
+    if os.getenv("AUTO_BOOTSTRAP") == "1":
+        from sqlalchemy.orm import Session
+        from .users import Group
+        with Session(bind=engine) as db:
+            defaults = [
+                ("T-EDS-3", "Terminale EDS Maths — Groupe 3"),
+                ("P-EDS-6", "Première EDS Maths — Groupe 6"),
+                ("MX-1", "Maths expertes — Groupe 1"),
+            ]
+            for code, name in defaults:
+                g = db.query(Group).filter_by(code=code).one_or_none()
+                if not g:
+                    db.add(Group(code=code, name=name))
+            db.commit()
 
 @lru_cache(maxsize=1)
 def get_full_tree_cached() -> DirNode:

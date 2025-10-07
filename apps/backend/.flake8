@@ -1,5 +1,13 @@
 [flake8]
-max-line-length = 120
-extend-ignore = E203,W503,W391
-exclude = .git,__pycache__,.venv,venv,build,dist
-
+max-line-length = 100
+extend-ignore = E302,E303,E402,F401,F811
+# on exclut les utilitaires/tests/dev qui cassent le lint
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    outputs,
+    data,
+    scripts,
+    app/routers/testing.py

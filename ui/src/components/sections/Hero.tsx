@@ -1,5 +1,6 @@
-import { Button } from "../ui/Button";
 import CitationRotative from '../CitationRotative';
+import { Button } from "../ui/Button";
+import Citations from './Citations';
 export default function Hero() {
   return (
     <section className="text-white py-16 px-6 bg-[radial-gradient(60vmax_60vmax_at_80%_-10%,rgba(6,182,212,.25),transparent_60%),linear-gradient(135deg,rgba(15,23,42,.94),rgba(124,58,237,.45))]">
@@ -13,16 +14,16 @@ export default function Hero() {
           <Citations />
           <div className="flex gap-3 mt-6">
             <Button variant="primary">
-              <a href="/site/EDS_premiere/index.html">Première</a>
+              <a href="/content/EDS_premiere/index.html">Première</a>
             </Button>
             <Button variant="primary">
-              <a href="/site/EDS_terminale/index.html">Terminale</a>
+              <a href="/content/EDS_terminale/index.html">Terminale</a>
             </Button>
             <Button variant="primary">
-              <a href="/site/Maths_expertes/index.html">Maths expertes</a>
+              <a href="/content/Maths_expertes/index.html">Maths expertes</a>
             </Button>
-                    <CitationRotative />
-        </div>
+            <CitationRotative />
+          </div>
         </div>
         <div>
           <img

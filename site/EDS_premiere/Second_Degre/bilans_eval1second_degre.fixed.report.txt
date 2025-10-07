@@ -1,0 +1,8 @@
+JSON source: 26
+Élèves CSV: 27
+Matchés: 23
+Emails ajoutés: 23
+Noms normalisés: 23
+Ajouts (placeholders): 4
+Manquants après fusion: 0
+

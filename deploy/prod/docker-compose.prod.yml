@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    # Build from the repository; you can also replace by a pre-built image tag
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: interface-maths/backend:prod
+    environment:
+      # Serve static via system Nginx only
+      SERVE_STATIC: "false"
+      STATIC_BASE_URL: /content
+      CONTENT_ROOT: /site
+      # CORS for production domain
+      CORS_ORIGINS: '["https://maths.labomaths.tn"]'
+      # Database (override in .env if you use Postgres)
+      # DATABASE_URL: sqlite:////tmp/app.db
+      # Testing must be disabled in production
+      TESTING: "0"
+    volumes:
+      # Mount the pre-built static site in read-only
+      - /var/www/maths:/site:ro
+    ports:
+      # Expose ASGI only to localhost; Nginx will proxy /api to this port
+      - "127.0.0.1:8001:8000"
+    restart: unless-stopped
+
+networks:
+  default:
+    name: maths_portal_default

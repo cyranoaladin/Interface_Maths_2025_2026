@@ -7,6 +7,7 @@ services:
       CONTENT_ROOT: /site
       STATIC_BASE_URL: /content
       SERVE_STATIC: "false"
+      TESTING: "1"
       # Avoid default_db_url path logic; use a temp SQLite path inside the container
       DATABASE_URL: sqlite:////tmp/app.db
       # Persist generated outputs (credentials, imports) to a dedicated volume

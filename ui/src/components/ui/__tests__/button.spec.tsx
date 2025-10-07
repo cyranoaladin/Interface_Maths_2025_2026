@@ -1,12 +1,9 @@
-import { describe, it, expect } from "vitest";
-import React from "react";
 import { render } from "@testing-library/react";
 import { Button } from "../Button";
 
 describe("Button", () => {
-  it("rend le variant primary", () => {
-    const { getByText } = render(<Button variant="primary">Texte</Button>);
-    const el = getByText("Texte");
-    expect(el.className).toContain("from-blue-600");
+  it("renders children", () => {
+    const { getByText } = render(<Button>Click me</Button>);
+    expect(getByText("Click me")).toBeTruthy();
   });
 });

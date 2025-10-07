@@ -1,40 +1,34 @@
+# Node / Vite
+ui/node_modules/
+ui/dist/
+ui/.vite/
+ui/.cache/
+ui/.turbo/
+ui/coverage/
+
 # Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.so
-*.egg-info/
-.dist/
-build/
-dist/
-
-# Virtual environments
-.venv/
-venv/
-**/.venv/
-**/venv/
+**/__pycache__/
+**/*.pyc
 apps/backend/.venv/
+apps/backend/outputs/
+apps/backend/data/*.db
+.pytest_cache/
+.coverage
 
-# Environment files
-.env
+# Env / secrets
 *.env
+.env*
+deploy/**/env*.*
+deploy/**/.env*
 
-# OS files
+# Logs / OS / IDE
+*.log
 .DS_Store
-Thumbs.db
-
-# Editors/IDE
 .vscode/
 .idea/
 
-# Frontend artifacts
-apps/frontend/node_modules/
-apps/frontend/dist/
-
-# Backend generated data/outputs (never commit secrets)
-apps/backend/data/
-apps/backend/outputs/
-
-# Root node modules (do not commit)
-node_modules/
+# Site backups / temporaires
+site/**/*.bak*
+site/**/*~ 
+site/**/*.merge
+site/**/*.tmp

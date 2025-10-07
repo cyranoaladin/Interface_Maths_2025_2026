@@ -74,11 +74,8 @@ async function showResourcesForGroup(g) {
 
 async function showBilans() {
   // Première EDS: charger JSON Second Degré si présent
-  const url = withBase('/EDS_premiere/Second_Degre/bilans_eval1second_degre.json');
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('not found');
-    const data = await res.json();
+    const data = await loadSecondDegreBilans();
     // Une seule carte pour cette évaluation si le fichier existe
     const card = `<a class="card-link" href="#" id="eval-second-degre">Évaluation n°1 — Fonctions de second degré et forme canonique</a>`;
     setPanel('Bilans — Première EDS', `<div class="grid cols-3">${card}</div>`);
@@ -96,6 +93,19 @@ async function showBilans() {
   } catch {
     setPanel('Bilans', '<p>Aucun bilan disponible pour votre niveau.</p>');
   }
+}
+
+async function loadSecondDegreBilans() {
+  // Essaie d'abord le checked, sinon retombe sur le raw
+  const checked = withBase('/EDS_premiere/Second_Degre/bilans_eval1second_degre.checked.json');
+  const raw = withBase('/EDS_premiere/Second_Degre/bilans_eval1second_degre.json');
+  try {
+    const r1 = await fetch(checked);
+    if (r1.ok) return await r1.json();
+  } catch {}
+  const r2 = await fetch(raw);
+  if (!r2.ok) throw new Error('not found');
+  return await r2.json();
 }
 
 function setPanel(title, html) {

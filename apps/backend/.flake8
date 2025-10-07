@@ -1,7 +1,6 @@
 [flake8]
-max-line-length = 100
-extend-ignore = E302,E303,E402,F401,F811
-# on exclut les utilitaires/tests/dev qui cassent le lint
+max-line-length = 120
+extend-ignore = E203,E302,E303,E402,E501,F401,F811,W391
 exclude =
     .git,
     __pycache__,

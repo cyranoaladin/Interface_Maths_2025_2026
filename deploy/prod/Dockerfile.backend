@@ -1,7 +1,7 @@
 FROM python:3.11-slim-bookworm
 WORKDIR /code
 COPY apps/backend/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -c constraints.txt
 COPY apps/backend/ .
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 CMD python -c "import urllib.request,sys; u=urllib.request.urlopen('http://127.0.0.1:8000/api/v1/ping', timeout=3); sys.exit(0 if u.status==200 else 1)"
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

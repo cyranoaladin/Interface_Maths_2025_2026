@@ -1,22 +1,6 @@
 FROM python:3.11-slim-bookworm
-
 WORKDIR /code
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
-
-# Install minimal system deps
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
-    ca-certificates && rm -rf /var/lib/apt/lists/*
-
-# Install Python deps first (cache-friendly)
-COPY apps/backend/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Copy backend app
-COPY apps/backend/ ./
-
-EXPOSE 8000
-
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY apps/backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+COPY apps/backend/ .
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

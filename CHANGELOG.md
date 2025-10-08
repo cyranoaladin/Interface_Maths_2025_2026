@@ -1,3 +1,10 @@
+## [1.13.9](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.13.8...v1.13.9) (2025-10-08)
+
+
+### Bug Fixes
+
+* **js:** add robust dashboard.v2.js to fix display bugs ([f045096](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/f0450961f01d19199d6cb848ae0f3cffc83376a0))
+
 ## [1.13.8](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.13.7...v1.13.8) (2025-10-07)
 
 ## [1.13.7](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.13.6...v1.13.7) (2025-10-07)

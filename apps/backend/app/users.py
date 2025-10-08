@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .schemas.groups import GroupPublic
 
 from dataclasses import dataclass
 from typing import List, Optional
@@ -223,3 +224,8 @@ def create_student(db: Session, email: str, full_name: str, group_codes: List[st
         user.groups.append(grp)
     db.commit()
     return password
+
+
+
+# Backward-compat for legacy imports
+GroupRead = GroupPublic

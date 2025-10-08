@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from ..db import get_db
 from ..security import create_access_token, verify_password, get_current_user, require_teacher, get_password_hash
-from ..users import User, GroupRead, UserPublic
+from ..users import User, GroupPublic, UserPublic
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -38,9 +38,9 @@ async def read_me(current_user: User = Depends(get_current_user)):
     )
 
 
-@router.get("/me/groups", response_model=List[GroupRead])
+@router.get("/me/groups", response_model=List[GroupPublic])
 async def read_my_groups(current_user: User = Depends(get_current_user)):
-    return [GroupRead(id=g.id, code=g.code, name=g.name) for g in current_user.groups]
+    return [GroupPublic(id=g.id, code=g.code, name=g.name) for g in current_user.groups]
 
 
 # Example teacher-only endpoint

@@ -5,7 +5,7 @@ COPY apps/backend/constraints.txt ./
 RUN pip install --no-cache-dir -r requirements.txt -c constraints.txt
 COPY apps/backend/ .
 COPY scripts/preflight.py /code/preflight.py
-RUN python /code/preflight.py
+RUN SECRET_KEY=build-preflight DATABASE_URL="postgresql+psycopg://u:p@localhost:5432/db" python /code/preflight.py
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 CMD python -c "import urllib.request,sys; u=urllib.request.urlopen('http://127.0.0.1:8000/api/v1/ping', timeout=3); sys.exit(0 if u.status==200 else 1)"
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 

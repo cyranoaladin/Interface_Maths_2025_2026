@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from ..db import get_db
 from ..security import create_access_token, verify_password, get_current_user, require_teacher, get_password_hash
-from ..users import User, UserRead, GroupRead
+from ..users import User, GroupRead, UserPublic
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -26,13 +26,15 @@ async def login_for_access_token(
     return {"access_token": token, "token_type": "bearer"}
 
 
-@router.get("/me", response_model=UserRead)
+@router.get("/me", response_model=UserPublic)
 async def read_me(current_user: User = Depends(get_current_user)):
-    return UserRead(
+    return UserPublic(
         id=current_user.id,
         email=current_user.email,
         full_name=current_user.full_name,
         role=current_user.role,
+        first_name=current_user.first_name,
+        last_name=current_user.last_name,
     )
 
 
@@ -42,10 +44,20 @@ async def read_my_groups(current_user: User = Depends(get_current_user)):
 
 
 # Example teacher-only endpoint
-@router.get("/admin/users", response_model=List[UserRead])
+@router.get("/admin/users", response_model=List[UserPublic])
 async def list_users_teacher_only(_: User = Depends(require_teacher), db: Session = Depends(get_db)):
     users = db.query(User).order_by(User.id.asc()).all()
-    return [UserRead(id=u.id, email=u.email, full_name=u.full_name, role=u.role) for u in users]
+    return [
+        UserPublic(
+            id=u.id,
+            email=u.email,
+            full_name=u.full_name,
+            role=u.role,
+            first_name=u.first_name,
+            last_name=u.last_name,
+        )
+        for u in users
+    ]
 
 
 @router.post("/change-password")

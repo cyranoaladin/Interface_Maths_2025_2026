@@ -1,21 +1,21 @@
-FROM python:3.11-slim
+FROM python:3.11-slim-bookworm
+
+WORKDIR /code
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-WORKDIR /code
-
-# Sys deps if needed by pip
+# Install minimal system deps
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-    curl ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+    ca-certificates && rm -rf /var/lib/apt/lists/*
 
-# Copy backend sources from uploaded folder (build context root contains ./backend)
-COPY backend/requirements.txt ./requirements.txt
+# Install Python deps first (cache-friendly)
+COPY apps/backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY backend/. .
+# Copy backend app
+COPY apps/backend/ ./
 
 EXPOSE 8000
 

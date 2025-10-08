@@ -19,7 +19,7 @@ def _read_title_if_any(abs_path: str) -> str | None:
         start = low.find("<title>")
         end = low.find("</title>")
         if 0 <= start < end:
-            return head[start + 7 : end].strip()
+            return head[start + 7:end].strip()
     except Exception:
         pass
     return None
@@ -64,4 +64,3 @@ def build_tree(root: str, rel_path: str = "") -> DirNode:
             children.append(_node_for_file(root, abs_file))
 
     return DirNode(type="dir", name=name, path=rel_path.replace(os.sep, "/"), children=children)
-

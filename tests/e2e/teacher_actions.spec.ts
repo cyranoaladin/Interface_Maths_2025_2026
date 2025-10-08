@@ -20,11 +20,14 @@ test('teacher can view bilan and reset student password', async ({ page }) => {
   await page.goto('/content/dashboard.html');
   await expect(page.locator('header .site-title')).toHaveText(/Mon espace/);
 
-  // Click first visible group
-  const firstGroup = page.locator('#teacher-groups a').first();
-  await expect(firstGroup).toBeVisible();
-  await firstGroup.click();
+  // Verify 3 groups, then select P-EDS-6
+  const groups = page.locator('#teacher-groups a');
+  await expect(groups).toHaveCount(3, { timeout: 10000 });
+  await page.getByRole('link', { name: /Première EDS Maths — Groupe 6/ }).click();
   await expect(page.locator('#panel-body table')).toBeVisible();
+  // Names should not be N/A
+  const firstRow = page.locator('#panel-body table tbody tr').first();
+  await expect(firstRow.locator('td').nth(0)).not.toContainText('N/A');
 
   // Actions column should exist
   await expect(page.locator('#panel-body thead tr th', { hasText: 'Actions' })).toBeVisible();

@@ -10,7 +10,6 @@ from starlette.responses import FileResponse
 
 from .config import settings
 from .db import Base, engine
-from .users import Group
 import os
 from .models import DirNode
 from .tree import build_tree

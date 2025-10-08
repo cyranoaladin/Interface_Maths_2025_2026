@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..users import User, Group, GroupRead, UserRead
+from ..users import User, Group, GroupRead, UserPublic
 from ..security import require_teacher, get_current_user
 
 
@@ -19,7 +19,7 @@ async def list_groups(_: User = Depends(require_teacher), db: Session = Depends(
     return [GroupRead(id=g.id, code=g.code, name=g.name) for g in groups]
 
 
-@router.get("/{code}/students", response_model=List[UserRead])
+@router.get("/{code}/students", response_model=List[UserPublic])
 async def list_students_in_group(code: str, _: User = Depends(require_teacher), db: Session = Depends(get_db)):
     grp = db.query(Group).filter_by(code=code).one_or_none()
     if not grp:
@@ -27,7 +27,17 @@ async def list_students_in_group(code: str, _: User = Depends(require_teacher), 
     # members relationship is loaded with selectin; ensure order for stable UI
     students = [m for m in grp.members if m.role == "student"]
     students.sort(key=lambda u: (u.full_name or u.email).lower())
-    return [UserRead(id=s.id, email=s.email, full_name=s.full_name, role=s.role) for s in students]
+    return [
+        UserPublic(
+            id=s.id,
+            email=s.email,
+            full_name=s.full_name,
+            role=s.role,
+            first_name=s.first_name,
+            last_name=s.last_name,
+        )
+        for s in students
+    ]
 
 
 @router.get("/my", response_model=List[GroupRead])
@@ -39,7 +49,7 @@ async def my_groups(me: User = Depends(get_current_user), db: Session = Depends(
     return [GroupRead(id=g.id, code=g.code, name=g.name) for g in user.groups]
 
 
-@router.post("/{code}/seed-test", response_model=UserRead)
+@router.post("/{code}/seed-test", response_model=UserPublic)
 async def seed_test_student(code: str, _: User = Depends(require_teacher), db: Session = Depends(get_db)):
     from ..users import create_student
 
@@ -58,12 +68,11 @@ async def seed_test_student(code: str, _: User = Depends(require_teacher), db: S
     # fetch created/updated user
     user = db.query(User).filter_by(email=email).one()
     # Note: password is returned only via outputs file for security; not in API
-    return UserRead(id=user.id, email=user.email, full_name=user.full_name, role=user.role)
-
-    full_name = f"Élève Test {code}"
-    create_student(db, email=email, full_name=full_name, group_codes=[code])
-
-    # fetch created/updated user
-    user = db.query(User).filter_by(email=email).one()
-    # Note: password is returned only via outputs file for security; not in API
-    return UserRead(id=user.id, email=user.email, full_name=user.full_name, role=user.role)
+    return UserPublic(
+        id=user.id,
+        email=user.email,
+        full_name=user.full_name,
+        role=user.role,
+        first_name=user.first_name,
+        last_name=user.last_name,
+    )

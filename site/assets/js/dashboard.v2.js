@@ -42,26 +42,29 @@ async function init() {
     if (groups.length > 0) {
       box.querySelector(`a[data-group-code]`).click();
     }
-  } catch(e) { console.error("Erreur d'initialisation du dashboard:", e); }
+  } catch (e) { console.error("Erreur d'initialisation du dashboard:", e); }
 }
 
 async function showStudentsForGroup(groupCode) {
   const panelBody = document.getElementById('panel-body');
   panelBody.innerHTML = 'Chargement des élèves...';
   const students = await (await fetchWithAuth(`/groups/${groupCode}/students`)).json();
-  const tableHtml = `
-    <table class="table">
-      <thead><tr><th>Nom</th><th>Prénom</th><th>Bilan</th></tr></thead>
-      <tbody>
-        ${students.map(s => `
-          <tr>
-            <td>${s.last_name || 'N/A'}</td>
-            <td>${s.first_name || 'N/A'}</td>
-            <td><a href="#" class="btn-primary" data-email="${s.email}" data-fullname="${s.first_name || ''} ${s.last_name || ''}">Voir bilan</a></td>
-          </tr>`).join('')}
-      </tbody>
-    </table>`;
-  panelBody.innerHTML = tableHtml;
+  const cardsHtml = `
+    <div class="students-grid fade-in">
+      ${students.map(s => {
+    const initials = `${(s.first_name || '').charAt(0)}${(s.last_name || '').charAt(0)}`.toUpperCase() || '∑';
+    const name = `${s.first_name || ''} ${s.last_name || ''}`.trim() || (s.full_name || s.email);
+    return `
+          <div class="student-card">
+            <div style="display:flex;align-items:center;margin-bottom:10px">
+              <div class="student-initials">${initials}</div>
+              <div class="student-name">${name}</div>
+            </div>
+            <a href="#" class="btn-primary" data-email="${s.email}" data-fullname="${name}">Voir bilan</a>
+          </div>`;
+  }).join('')}
+    </div>`;
+  panelBody.innerHTML = cardsHtml;
 
   panelBody.querySelectorAll('a[data-email]').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -83,20 +86,33 @@ async function showBilanForStudent(email, fullName) {
     const studentBilan = bilans.find(b => (b.eleve || '').toLowerCase() === email.toLowerCase() || (b.nom_prenom || '').toLowerCase() === fullName.trim().toLowerCase());
 
     if (studentBilan) {
+      const got = Number(studentBilan.note || studentBilan.note_finale || 0);
+      const total = Number(studentBilan.bareme || 20);
+      const pct = Math.max(0, Math.min(100, Math.round((got / (total || 20)) * 100)));
+      const donut = `
+        <svg class="donut" viewBox="0 0 36 36" aria-label="Score ${pct}%">
+          <path style="fill:none; stroke:#2D3748; stroke-width:3.8" d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          <path style="fill:none; stroke:#4FD1C5; stroke-width:3.8; stroke-linecap:round; stroke-dasharray:${pct}, 100" d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          <text x="18" y="20.35" style="fill:#E2E8F0" font-size="8" text-anchor="middle">${got}/${total}</text>
+        </svg>`;
+      const questionsHtml = (studentBilan.questions || []).map(q => `
+        <details class="question-item ${q.note > 0 ? 'correct' : 'incorrect'}">
+          <summary>${q.question}</summary>
+          <div>Note: ${q.note} / ${q.bareme}</div>
+          <div>${q.remarque || ''}</div>
+        </details>`).join('');
       const bilanHtml = `
-        <div class="bilan-box">
-          <h3>Bilan de ${studentBilan.nom_prenom || studentBilan.eleve}</h3>
-          <p>Score: ${studentBilan.note || studentBilan.note_finale} / ${studentBilan.bareme || 20}</p>
-          <div class="questions-list">
-            ${(studentBilan.questions || []).map(q => `
-              <div class="question-item ${q.note > 0 ? 'correct' : 'incorrect'}">
-                <strong>${q.question}</strong>
-                <p>Note: ${q.note} / ${q.bareme}</p>
-                <p>${q.remarque}</p>
-              </div>`).join('')}
+        <div class="bilan-box fade-in">
+          <div style="display:flex;gap:16px;align-items:center;margin-bottom:12px">
+            ${donut}
+            <div>
+              <h3 style="margin:0">Bilan de ${studentBilan.nom_prenom || studentBilan.eleve}</h3>
+              <div class="muted">Score ${pct}%</div>
+            </div>
           </div>
+          <div class="questions-list">${questionsHtml || '<div>Détail des questions non disponible</div>'}</div>
         </div>
-        <a href="#" id="back-to-students" class="btn-secondary">Retour à la liste</a>`;
+        <a href="#" id="back-to-students" class="btn-secondary" style="margin-top:12px;display:inline-block">Retour à la liste</a>`;
       panelBody.innerHTML = bilanHtml;
       document.getElementById('back-to-students').addEventListener('click', e => {
         e.preventDefault();

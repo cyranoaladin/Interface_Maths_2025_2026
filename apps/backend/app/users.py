@@ -40,6 +40,9 @@ class User(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     full_name: Mapped[str] = mapped_column(String(255))
+    # Champs explicites pour prénom/nom
+    first_name: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    last_name: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
     role: Mapped[str] = mapped_column(String(32), default="student")  # 'student' | 'teacher'
     hashed_password: Mapped[str] = mapped_column(String(255))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
@@ -48,15 +51,30 @@ class User(Base):
     groups: Mapped[List[Group]] = relationship(
         Group, secondary=user_groups, back_populates="members", lazy="selectin"
     )
+# --- Name parsing utility ---
+def split_full_name(full_name: str) -> tuple[str | None, str | None]:
+    name = (full_name or "").strip()
+    if not name:
+        return None, None
+    parts = [p for p in name.split() if p]
+    if len(parts) == 1:
+        # Single token: treat as last_name, unknown first_name
+        return None, parts[0]
+    # First token as first_name, the rest as last_name (supports composed last names)
+    first = parts[0]
+    last = " ".join(parts[1:])
+    return first, last
 
 
 # Pydantic-style response models (dataclasses sufficient for FastAPI response_model)
 @dataclass
-class UserRead:
+class UserPublic:
     id: int
     email: str
-    full_name: str
+    full_name: str | None
     role: str
+    first_name: str | None = None
+    last_name: str | None = None
 
 
 @dataclass
@@ -120,6 +138,17 @@ def _ensure_teacher(db: Session, email: str, full_name: Optional[str] = None) ->
 def ensure_bootstrap() -> None:
     # Create defaults
     Base.metadata.create_all(bind=engine)
+    # Lightweight migration for first_name/last_name on SQLite
+    try:
+        with engine.connect() as conn:
+            conn.exec_driver_sql("ALTER TABLE users ADD COLUMN first_name VARCHAR(128)")
+    except Exception:
+        pass
+    try:
+        with engine.connect() as conn:
+            conn.exec_driver_sql("ALTER TABLE users ADD COLUMN last_name VARCHAR(128)")
+    except Exception:
+        pass
     with Session(bind=engine) as db:
         # Groups
         code_to_group = {}
@@ -160,7 +189,15 @@ def create_student(db: Session, email: str, full_name: str, group_codes: List[st
         db.commit()
         return ""
     password = token_urlsafe(10)
-    user = User(email=email, full_name=full_name, role="student", hashed_password=get_password_hash(password))
+    first, last = split_full_name(full_name)
+    user = User(
+        email=email,
+        full_name=full_name,
+        first_name=first,
+        last_name=last,
+        role="student",
+        hashed_password=get_password_hash(password),
+    )
     db.add(user)
     # Attach groups
     for code in group_codes:

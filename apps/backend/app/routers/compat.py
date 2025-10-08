@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from ..db import get_db
 from ..security import create_access_token, verify_password, get_secret_key
-from ..users import User, UserRead
+from ..users import User, UserPublic
 from jose import jwt
 from ..security import ALGORITHM
 import os
@@ -99,7 +99,7 @@ async def compat_login_dev(request: Request, response: Response, db: Session = D
     return {"access_token": token, "token_type": "bearer"}
 
 
-@router.get("/session", response_model=UserRead)
+@router.get("/session", response_model=UserPublic)
 async def compat_session(request: Request, db: Session = Depends(get_db)):
     """Return current user using Authorization header or auth_token cookie."""
     # Try header first via the standard dependency
@@ -119,7 +119,14 @@ async def compat_session(request: Request, db: Session = Depends(get_db)):
                 # fallback to first teacher
                 user = db.query(User).filter(User.role == "teacher").first()
             if user:
-                return UserRead(id=user.id, email=user.email, full_name=user.full_name, role=user.role)
+                return UserPublic(
+                    id=user.id,
+                    email=user.email,
+                    full_name=user.full_name,
+                    role=user.role,
+                    first_name=user.first_name,
+                    last_name=user.last_name,
+                )
         raise HTTPException(status_code=401, detail="Missing token")
     try:
         payload = jwt.decode(token, get_secret_key(), algorithms=[ALGORITHM])
@@ -129,7 +136,14 @@ async def compat_session(request: Request, db: Session = Depends(get_db)):
     user = db.get(User, user_id)
     if not user or not user.is_active:
         raise HTTPException(status_code=401, detail="Inactive user")
-    return UserRead(id=user.id, email=user.email, full_name=user.full_name, role=user.role)
+    return UserPublic(
+        id=user.id,
+        email=user.email,
+        full_name=user.full_name,
+        role=user.role,
+        first_name=user.first_name,
+        last_name=user.last_name,
+    )
 
 
 @router.post("/logout")

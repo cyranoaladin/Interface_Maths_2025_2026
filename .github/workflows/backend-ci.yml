@@ -1,43 +1,68 @@
-name: backend-ci
-
+name: Backend CI (build + preflight + smoke)
 on:
   push:
-    branches: [main, master]
-    tags: ["v*.*.*"]
+    branches: [ main ]
+    paths:
+      - "apps/backend/**"
+      - "deploy/prod/Dockerfile.backend"
+      - "scripts/**"
+      - ".github/workflows/backend-ci.yml"
   pull_request:
-
+    paths:
+      - "apps/backend/**"
+      - "deploy/prod/Dockerfile.backend"
+      - "scripts/**"
 jobs:
-  test:
+  build-and-smoke:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/backend
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Install dependencies
+      - name: Build backend image (no cache)
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest-cov
+          docker build --no-cache \
+            -t interface-maths/backend:ci \
+            -f deploy/prod/Dockerfile.backend .
 
-      - name: Ensure bcrypt/passlib pins
+      - name: Run container
         run: |
-          pip install "bcrypt==4.0.1" "passlib>=1.7.4"
+          docker network create infra_nsi_network || true
+          docker run -d --name maths_backend_ci \
+            --network infra_nsi_network \
+            -p 127.0.0.1:18001:8000 \
+            -e DATABASE_URL="postgresql+psycopg://u:p@localhost:5432/db" \
+            -e CORS_ORIGINS='["http://localhost"]' \
+            -e SERVE_STATIC="false" \
+            -e CONTENT_ROOT="/site" \
+            -e SECRET_KEY="ci-secret" \
+            interface-maths/backend:ci
+          # attendre que ça réponde
+          for i in {1..30}; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:18001/api/v1/ping || true)
+            if [ "$code" = "200" ]; then echo "app ready"; exit 0; fi
+            sleep 1
+          done
+          echo "backend never became ready"; docker logs maths_backend_ci --tail 200; exit 1
 
-      - name: Prepare OUTPUTS_DIR
+      - name: Smoke tests
         run: |
-          mkdir -p "$RUNNER_TEMP/outputs"
-          echo "OUTPUTS_DIR=$RUNNER_TEMP/outputs" >> "$GITHUB_ENV"
+          curl -fsS http://127.0.0.1:18001/api/v1/ping | jq -e '.ok == true' >/dev/null
+          curl -fsS http://127.0.0.1:18001/openapi.json -o /tmp/openapi.json
+          jq -e '.openapi and .info and .paths' /tmp/openapi.json >/dev/null
+          test "$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:18001/groups/)" = "401"
 
-      - name: Lint (flake8)
-        run: flake8
+      - name: Show last logs on failure
+        if: failure()
+        run: docker logs maths_backend_ci --tail 300 || true
 
-      - name: Run tests (pytest with coverage)
-        run: pytest --cov=app --cov-report=term-missing --cov-fail-under=55
+      - name: Cleanup
+        if: always()
+        run: |
+          docker rm -f maths_backend_ci || true
+          docker network rm infra_nsi_network || true

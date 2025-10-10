@@ -16,7 +16,7 @@ test('student can login via UI and see bilans section', async ({ page, request }
   form.set('password', 'password123');
   const tok = await request.post('http://127.0.0.1:8080/auth/token', {
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: form.toString(),
+    data: form.toString(),
   });
   expect(tok.ok()).toBeTruthy();
   const teacherToken = (await tok.json()).access_token as string;

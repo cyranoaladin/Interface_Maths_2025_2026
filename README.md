@@ -123,6 +123,22 @@ Structure JS/CSS:
 - `site/assets/js/theme-toggle.js` / `neon-toggle.js` — thèmes et effets visuels
 - `site/assets/css/site.css` — design system (tokens, dark/light, composants)
 
+### Routage & workflows (UX)
+
+- Auth côté client: `assets/js/auth.js` gère token (localStorage) + helper `fetchWithAuth()` (ajout Bearer + redirection 401)
+- Élève: `/login.html` → sur succès → `/student.html`
+  - Panneaux: Aperçu, Ressources, Bilans évaluations (lecture JSON), Changer mot de passe
+- Enseignant: `/login.html` → sur succès → `/dashboard.html`
+  - Menu latéral Groupes → clic groupe → liste cartes élèves → Voir bilan (carte détaillée + retour)
+  - Actions enseignants protégées par rôle côté API (403 sinon)
+
+### Charte graphique & composants
+
+- Thème sombre moderne (fonds gris/bleu nuit, cartes gris clair), coins arrondis, ombres subtiles, espaces généreux
+- Typographies: Inter/Poppins (lisibles), tailles réactives
+- Icônes Lucide (via CDN unpkg) pour titres/sections et retours visuels
+- Micro‑interactions: transitions fade‑in/slide‑in sur listes et bilans, donut SVG pour score
+
 ---
 
 ## 5) Données élèves — Import/Export (CSV)

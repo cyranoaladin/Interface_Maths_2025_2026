@@ -96,16 +96,10 @@ async function showBilans() {
 }
 
 async function loadSecondDegreBilans() {
-  // Essaie d'abord le checked, sinon retombe sur le raw
-  const checked = withBase('/EDS_premiere/Second_Degre/bilans_eval1second_degre.checked.json');
-  const raw = withBase('/EDS_premiere/Second_Degre/bilans_eval1second_degre.json');
-  try {
-    const r1 = await fetch(checked);
-    if (r1.ok) return await r1.json();
-  } catch {}
-  const r2 = await fetch(raw);
-  if (!r2.ok) throw new Error('not found');
-  return await r2.json();
+  const url = withBase('/EDS_premiere/Second_Degre/bilans_eval1_second_degre.json');
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('not found');
+  return await r.json();
 }
 
 function setPanel(title, html) {

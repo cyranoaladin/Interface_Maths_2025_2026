@@ -18,8 +18,17 @@ Usage:
   TEACHER_EMAIL=... TEACHER_PASSWORD=... python3 apps/backend/scripts/bootstrap_prod.py
 """
 
-import os
 import sys
+from pathlib import Path
+
+# Ensure repo root on sys.path so that 'apps.backend.app.*' imports work when run from anywhere
+SCRIPT_DIR = Path(__file__).resolve().parent
+# Inner repository root (contains 'apps/')
+REPO_ROOT = SCRIPT_DIR.parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+import os
 from sqlalchemy.orm import Session
 
 from apps.backend.app.db import engine, Base

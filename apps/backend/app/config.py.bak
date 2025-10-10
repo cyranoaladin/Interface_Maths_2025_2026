@@ -1,7 +1,5 @@
-from __future__ import annotations
-from pathlib import Path
-from typing import List
 from pydantic_settings import BaseSettings
+from typing import List
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
@@ -11,10 +9,9 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///apps/backend/data/app.db"
     CORS_ORIGINS: List[str] = []
     SERVE_STATIC: bool = False
-    CONTENT_ROOT: Path = Path("site")
+    CONTENT_ROOT: str = "site"
     STATIC_BASE_URL: str = "/content"
-    OUTPUTS_DIR: Path = Path("apps/backend/outputs")
+    OUTPUTS_DIR: str = "apps/backend/outputs"
     TESTING: bool = False
-    TEACHER_EMAILS: List[str] = ["alaeddine.benrhouma@ert.tn", "teacher.test@example.com"]
 
 settings = Settings()

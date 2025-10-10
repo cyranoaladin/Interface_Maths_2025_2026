@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 export default <Partial<Config>>{
   content: ['site/**/*.{html,js,ts,tsx}'],
@@ -23,4 +23,4 @@ export default <Partial<Config>>{
     }
   },
   plugins: []
-}
+};

@@ -23,4 +23,3 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: |
           pytest apps/backend/ --cov=apps.backend.app --maxfail=1 --disable-warnings -q
-

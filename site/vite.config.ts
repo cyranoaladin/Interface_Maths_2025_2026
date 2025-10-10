@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 
 // ⚠️ Si vous utilisez React/Vue/Svelte, ajoutez le plugin correspondant.
 // Exemple React : import react from '@vitejs/plugin-react'
@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => ({
         // Splitting automatique par route/chunk
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            return 'vendor'
+            return 'vendor';
           }
         },
         // Nommage stable des assets
@@ -48,4 +48,4 @@ export default defineConfig(({ mode }) => ({
   optimizeDeps: {
     entries: ['index.html']
   }
-}))
+}));

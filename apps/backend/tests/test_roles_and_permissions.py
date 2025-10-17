@@ -42,7 +42,9 @@ def seed_minimal(client: TestClient, db: Session):
     grp = db.query(Group).filter_by(code="P-EDS-6").one_or_none()
     if not grp:
         grp = Group(code="P-EDS-6", name="Première EDS Maths — Groupe 6")
-        db.add(grp); db.commit(); db.refresh(grp)
+        db.add(grp)
+        db.commit()
+        db.refresh(grp)
     create_student(db, email="eleve@example.com", full_name="Eleve Test", group_codes=["P-EDS-6"])
 
 

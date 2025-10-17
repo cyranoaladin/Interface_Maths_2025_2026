@@ -6,10 +6,12 @@ from sqlalchemy.orm import Session
 
 from ..db import get_db
 from ..security import create_access_token, verify_password, get_secret_key
+from ..security import get_password_hash
 from ..users import User, UserPublic
 from jose import jwt
 from ..security import ALGORITHM
 import os
+from ..config import settings
 
 
 class LoginBody(BaseModel):
@@ -43,7 +45,14 @@ async def compat_login(request: Request, response: Response, db: Session = Depen
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = create_access_token({"sub": str(user.id), "email": user.email, "role": user.role})
     response.set_cookie(key=COOKIE_NAME, value=token, httponly=True, samesite="lax", max_age=60*60, path="/")
-    return {"access_token": token, "token_type": "bearer"}
+    # Enforce password reset at first login when default student password is used
+    first_login = False
+    try:
+        if password == settings.DEFAULT_STUDENT_PASSWORD and user.role == "student":
+            first_login = True
+    except Exception:
+        pass
+    return {"access_token": token, "token_type": "bearer", "first_login": first_login}
 
 
 @router.post("/login-form")
@@ -63,7 +72,13 @@ async def compat_login_form(request: Request, response: Response, db: Session = 
         max_age=60*60,
         path="/",
     )
-    return {"access_token": token, "token_type": "bearer"}
+    first_login = False
+    try:
+        if password == settings.DEFAULT_STUDENT_PASSWORD and user.role == "student":
+            first_login = True
+    except Exception:
+        pass
+    return {"access_token": token, "token_type": "bearer", "first_login": first_login}
 
 
 @router.get("/login")
@@ -149,4 +164,49 @@ async def compat_session(request: Request, db: Session = Depends(get_db)):
 @router.post("/logout")
 async def compat_logout(response: Response):
     response.delete_cookie(COOKIE_NAME, path="/")
+    return {"ok": True}
+
+
+class ChangePasswordBody(BaseModel):
+    new_password: str
+
+
+def _extract_token_from_request(req: Request) -> str:
+    """Return bearer token from Authorization header or auth_token cookie."""
+    auth = req.headers.get("authorization") or req.headers.get("Authorization") or ""
+    if auth.lower().startswith("bearer "):
+        return auth.split(None, 1)[1]
+    return req.cookies.get(COOKIE_NAME) or ""
+
+
+@router.post("/change-password")
+async def compat_change_password(
+    request: Request,
+    body: ChangePasswordBody,
+    db: Session = Depends(get_db),
+):
+    """
+    Change password using either Authorization: Bearer <token> or auth_token cookie.
+    This endpoint mirrors /auth/change-password but is tolerant to cookie-only auth,
+    which is commonly set during the compat login flow.
+    """
+    new_password = (body.new_password or "").strip()
+    if not new_password or len(new_password) < 8:
+        raise HTTPException(status_code=422, detail="Password too short")
+
+    token = _extract_token_from_request(request)
+    if not token:
+        raise HTTPException(status_code=401, detail="Missing token")
+    try:
+        payload = jwt.decode(token, get_secret_key(), algorithms=[ALGORITHM])
+        user_id = int(payload.get("sub"))
+    except Exception:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    user = db.get(User, user_id)
+    if not user or not user.is_active:
+        raise HTTPException(status_code=401, detail="Inactive user")
+
+    user.hashed_password = get_password_hash(new_password)
+    db.commit()
     return {"ok": True}

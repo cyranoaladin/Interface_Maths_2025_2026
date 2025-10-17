@@ -11,6 +11,38 @@ async function init() {
   currentUser = me;
   if (sub) sub.textContent = `${me.full_name || me.email} — Élève`;
 
+  // Forcer changement de mot de passe à la première connexion (flag posé par auth.js)
+  try {
+    if (localStorage.getItem('first_login') === '1') {
+      localStorage.removeItem('first_login');
+      setPanel('Sécurité', `
+        <p><strong>Veuillez changer votre mot de passe maintenant.</strong></p>
+        <div style="display:flex; gap:8px; align-items:center">
+          <input id="new-pw" class="input" type="password" placeholder="Nouveau mot de passe (8+)" style="max-width:280px" />
+          <button id="do-change" class="btn">Valider</button>
+        </div>
+      `);
+      document.getElementById('do-change')?.addEventListener('click', async () => {
+        const field = document.getElementById('new-pw');
+        const val = field && field.value ? String(field.value) : '';
+        if (val.length < 8) { alert('Mot de passe trop court'); return; }
+        try {
+          const res = await fetchWithAuth('/api/v1/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: val }) });
+          if (!res.ok) throw new Error('Erreur');
+          alert('Mot de passe mis à jour.');
+          setPanel('Aperçu', `
+            <p>Bienvenue dans votre espace. Retrouvez vos <strong>ressources</strong>, vos <strong>bilans</strong> et vos informations personnelles au même endroit.</p>
+            <ul>
+              <li>Consultez les supports de cours et exercices dans l’onglet Ressources</li>
+              <li>Suivez vos évaluations et progressez grâce au bilan personnalisé</li>
+              <li>Vous pouvez changer votre mot de passe à tout moment</li>
+            </ul>
+          `);
+        } catch { alert('Échec de mise à jour.'); }
+      });
+    }
+  } catch {}
+
   // Liens ressources
   document.getElementById('s-resources')?.addEventListener('click', async (e) => {
     e.preventDefault();
@@ -50,7 +82,7 @@ async function init() {
     const pwd = prompt('Nouveau mot de passe (8+ caractères)');
     if (!pwd || pwd.length < 8) { alert('Mot de passe trop court'); return; }
     try {
-      const res = await fetchWithAuth('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: pwd }) });
+      const res = await fetchWithAuth('/api/v1/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: pwd }) });
       if (!res.ok) throw new Error('Erreur');
       alert('Mot de passe mis à jour.');
     } catch { alert('Échec de mise à jour.'); }
@@ -76,20 +108,14 @@ async function showBilans() {
   // Première EDS: charger JSON Second Degré si présent
   try {
     const data = await loadSecondDegreBilans();
-    // Une seule carte pour cette évaluation si le fichier existe
-    const card = `<a class="card-link" href="#" id="eval-second-degre">Évaluation n°1 — Fonctions de second degré et forme canonique</a>`;
-    setPanel('Bilans — Première EDS', `<div class="grid cols-3">${card}</div>`);
-    const link = document.getElementById('eval-second-degre');
-    link?.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      const studentBilan = findStudentBilan(data, currentUser);
-      if (!studentBilan) {
-        setPanel('Bilan', '<p>Aucun bilan correspondant à votre profil.</p>');
-        return;
-      }
-      const html = renderBilan(studentBilan);
-      setPanel('Bilan — Évaluation n°1 sur les fonctions de second degré et forme canonique', html);
-    });
+    // Afficher directement le bilan (évite doublon carte + bilan)
+    const studentBilan = findStudentBilan(data, currentUser);
+    if (!studentBilan) {
+      setPanel('Bilans', '<p>Aucun bilan correspondant à votre profil.</p>');
+      return;
+    }
+    const html = renderBilan(studentBilan);
+    setPanel('Bilan — Évaluation n°1 sur les fonctions de second degré et forme canonique', html);
   } catch {
     setPanel('Bilans', '<p>Aucun bilan disponible pour votre niveau.</p>');
   }

@@ -14,10 +14,16 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-# Now that the path is set, we can import from the app
-# It's important to do this AFTER adjusting the path
-from apps.backend.app.main import app
-from apps.backend.app.db import Base, get_db
+
+def _load_app_components():
+    """Import app modules lazily once the path is configured."""
+    from apps.backend.app.main import app as fastapi_app
+    from apps.backend.app.db import Base as db_base, get_db as db_get_db
+
+    return fastapi_app, db_base, db_get_db
+
+
+app, Base, get_db = _load_app_components()
 
 # Use an in-memory SQLite database for testing
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"

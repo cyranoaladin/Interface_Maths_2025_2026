@@ -13,10 +13,10 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
-from . import config, db, users
+from . import config, db
 
 if TYPE_CHECKING:
-    from .users import User as UserType
+    from .users import User
 
 # Use bcrypt_sha256 to support passwords > 72 bytes safely
 pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
@@ -61,7 +61,7 @@ def create_access_token(data: dict, expires_minutes: Optional[int] = None) -> st
 
 async def get_current_user(
     token: str = Depends(oauth2_scheme), database: Session = Depends(db.get_db)
-) -> users.User:
+) -> "User":
     """
     Decodes the JWT token to get the current user.
     Raises credentials exception if the token is invalid or the user is not found.
@@ -79,13 +79,15 @@ async def get_current_user(
     except JWTError as exc:
         raise credentials_exception from exc
 
-    user = database.get(users.User, int(user_id))
+    from . import users as users_module
+
+    user = database.get(users_module.User, int(user_id))
     if user is None or not user.is_active:
         raise credentials_exception
     return user
 
 
-def require_teacher(user: users.User = Depends(get_current_user)) -> users.User:
+def require_teacher(user: "User" = Depends(get_current_user)) -> "User":
     """
     Dependency that requires the current user to have the 'teacher' role.
     Raises a 403 Forbidden error otherwise.

@@ -9,7 +9,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
 
 from .db import Base, engine
 from .config import settings
-from .security import get_password_hash
 
 
 # Association table user<->group
@@ -36,7 +35,6 @@ class Group(Base):
 
 class User(Base):
     __tablename__ = "users"
-
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     full_name: Mapped[str] = mapped_column(String(255))
@@ -51,8 +49,10 @@ class User(Base):
     groups: Mapped[List[Group]] = relationship(
         Group, secondary=user_groups, back_populates="members", lazy="selectin"
     )
-# --- Name parsing utility ---
+
+
 def split_full_name(full_name: str) -> tuple[str | None, str | None]:
+    """Split a user's full name into first/last components."""
     name = (full_name or "").strip()
     if not name:
         return None, None
@@ -65,8 +65,9 @@ def split_full_name(full_name: str) -> tuple[str | None, str | None]:
     last = " ".join(parts[1:])
     return first, last
 
-
 # Pydantic-style response models (dataclasses sufficient for FastAPI response_model)
+
+
 @dataclass
 class UserPublic:
     id: int
@@ -89,6 +90,13 @@ DEFAULT_GROUPS = [
     ("P-EDS-6", "Première EDS Maths — Groupe 6"),
     ("MX-1", "Maths expertes — Groupe 1"),
 ]
+
+
+def _hash_password(password: str) -> str:
+    """Hash helper that avoids importing security at module import time."""
+    from .security import get_password_hash as hash_password
+
+    return hash_password(password)
 
 
 def _ensure_group(db: Session, code: str, name: str) -> Group:
@@ -114,7 +122,7 @@ def _ensure_teacher(db: Session, email: str, full_name: Optional[str] = None) ->
     from secrets import token_urlsafe
 
     provisional_password = token_urlsafe(12)
-    hashed = get_password_hash(provisional_password)
+    hashed = _hash_password(provisional_password)
     usr = User(email=email, full_name=full_name or email, role="teacher", hashed_password=hashed)
     db.add(usr)
     db.commit()
@@ -188,7 +196,8 @@ def create_student(db: Session, email: str, full_name: str, group_codes: List[st
             existing.full_name = full_name
         db.commit()
         return ""
-    password = token_urlsafe(10)
+    # Use global default if provided to have same provisional password for all
+    password = settings.DEFAULT_STUDENT_PASSWORD or token_urlsafe(10)
     first, last = split_full_name(full_name)
     user = User(
         email=email,
@@ -196,21 +205,8 @@ def create_student(db: Session, email: str, full_name: str, group_codes: List[st
         first_name=first,
         last_name=last,
         role="student",
-        hashed_password=get_password_hash(password),
+        hashed_password=_hash_password(password),
     )
-    db.add(user)
-    # Attach groups
-    for code in group_codes:
-        grp = db.query(Group).filter_by(code=code).one_or_none()
-        if not grp:
-            # create on the fly
-            grp = Group(code=code, name=code)
-            db.add(grp)
-            db.flush()
-        user.groups.append(grp)
-    db.commit()
-    return password
-
     db.add(user)
     # Attach groups
     for code in group_codes:

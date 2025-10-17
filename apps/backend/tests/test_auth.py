@@ -14,8 +14,16 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from apps.backend.app.users import User
-from apps.backend.app.security import get_password_hash
+
+def _load_test_dependencies():
+    """Import test dependencies lazily once the path is configured."""
+    from apps.backend.app.security import get_password_hash as hash_password
+    from apps.backend.app.users import User as user_model
+
+    return user_model, hash_password
+
+
+User, get_password_hash = _load_test_dependencies()
 
 # A test user and password
 TEST_USER_EMAIL = "test@example.com"

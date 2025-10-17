@@ -6,17 +6,17 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..users import User, Group, GroupRead, UserPublic
+from ..users import User, Group, GroupPublic, UserPublic
 from ..security import require_teacher, get_current_user
 
 
 router = APIRouter(prefix="/groups", tags=["groups"])
 
 
-@router.get("/", response_model=List[GroupRead])
+@router.get("/", response_model=List[GroupPublic])
 async def list_groups(_: User = Depends(require_teacher), db: Session = Depends(get_db)):
     groups = db.query(Group).order_by(Group.code.asc()).all()
-    return [GroupRead(id=g.id, code=g.code, name=g.name) for g in groups]
+    return [GroupPublic(id=g.id, code=g.code, name=g.name) for g in groups]
 
 
 @router.get("/{code}/students", response_model=List[UserPublic])
@@ -40,13 +40,13 @@ async def list_students_in_group(code: str, _: User = Depends(require_teacher), 
     ]
 
 
-@router.get("/my", response_model=List[GroupRead])
+@router.get("/my", response_model=List[GroupPublic])
 async def my_groups(me: User = Depends(get_current_user), db: Session = Depends(get_db)):
     # Return groups for current user (student or teacher)
     user = db.get(User, me.id)
     if not user:
         return []
-    return [GroupRead(id=g.id, code=g.code, name=g.name) for g in user.groups]
+    return [GroupPublic(id=g.id, code=g.code, name=g.name) for g in user.groups]
 
 
 @router.post("/{code}/seed-test", response_model=UserPublic)

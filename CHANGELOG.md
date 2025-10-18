@@ -1,3 +1,16 @@
+## [1.15.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.14.8...v1.15.0) (2025-10-18)
+
+
+### Features
+
+* **auth:** add /api/v1/change-password (cookie/Bearer) and update student.js to call it ([47130ad](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/47130add7bcffad1c10705a841b3a5646161b939))
+* student password compatibility flow ([fd454dd](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/fd454ddfff1228c4924796a36c413e78bf71f073))
+
+
+### Bug Fixes
+
+* harden repo root detection ([983f4d2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/983f4d2c20818fe82bb61b90c9ebe3c55f26bef0))
+
 ## [1.14.8](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.14.7...v1.14.8) (2025-10-08)
 
 ## [1.14.7](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.14.6...v1.14.7) (2025-10-08)

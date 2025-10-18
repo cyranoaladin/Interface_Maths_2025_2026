@@ -8,9 +8,42 @@ from pydantic_settings import BaseSettings
 def _inner_repo_root() -> Path:
     # apps/backend/app/config.py → repo inner root at parents[3]
     here = Path(__file__).resolve()
-    default_root = here.parents[3]
     env_root = os.getenv("REPO_ROOT")
-    return Path(env_root).resolve() if env_root else default_root
+    if env_root:
+        return Path(env_root).resolve()
+
+    def candidate_score(parent: Path) -> int:
+        weights = {
+            "package.json": 6,
+            "pyproject.toml": 5,
+            "site": 4,
+            "apps": 3,
+            "deploy": 2,
+            "scripts": 1,
+        }
+        score = 0
+        for name, weight in weights.items():
+            if (parent / name).exists():
+                score += weight
+        return score
+
+    best_parent: Path | None = None
+    best_score = -1
+    for parent in here.parents:
+        score = candidate_score(parent)
+        if score > best_score or (score == best_score and best_parent and len(parent.parts) < len(best_parent.parts)):
+            best_parent = parent
+            best_score = score
+
+    if best_parent and best_score > 0:
+        return best_parent
+
+    # Fall back to the nearest sensible parent (typically the project module root).
+    parents = list(here.parents)
+    if not parents:
+        return here.parent
+    fallback_index = 1 if len(parents) > 1 else 0
+    return parents[fallback_index]
 
 
 INNER_REPO_ROOT = _inner_repo_root()

@@ -7,8 +7,25 @@
   <title>Interface Maths — Lycée PMF</title>
 
   <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
   <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script type="module">
+    import { loadLegacyScripts } from '../../assets/js/legacy-loader.js';
+
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        macros: { N: '\\mathbb{N}', Z: '\\mathbb{Z}', Q: '\\mathbb{Q}', R: '\\mathbb{R}' },
+      },
+      svg: { fontCache: 'global' },
+    };
+
+    loadLegacyScripts([
+      'https://unpkg.com/lucide@latest/dist/umd/lucide.js',
+      'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js',
+    ]);
+  </script>
   <style>
     :root {
       --bg: #0b1020;
@@ -288,10 +305,7 @@
       }
     }
   </style>
-  <script>
-    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}" } }, svg: { fontCache: 'global' } };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </head>
 
 <body class="light">
@@ -334,7 +348,7 @@
         </ul>
         <div class="pill">Limites et comparaisons</div>
         <ul>
-          <li>$q^n\to0$ si $|q|<1$ ; $q>1$ ⇒ $q^n\to+\infty$ ; $q\le-1$ ⇒ pas de limite.</li>
+          <li>$q^n\to0$ si $|q|&lt;1$ ; $q>1$ ⇒ $q^n\to+\infty$ ; $q\le-1$ ⇒ pas de limite.</li>
           <li>Gendarmes : $v_n\le u_n\le w_n$ et $v_n,w_n\to\ell$ ⇒ $u_n\to\ell$.</li>
           <li>F.I. : $\infty-\infty$, $0\times\infty$, $0/0$, $\infty/\infty$.</li>
         </ul>
@@ -378,7 +392,7 @@
         <div class="flash" tabindex="0">
           <div class="card3d">
             <div class="side front">$q^n$</div>
-            <div class="side back">$|q|<1\Rightarrow q^n\to0$ ; $q>1\Rightarrow +\infty$</div>
+            <div class="side back">$|q|&lt;1\Rightarrow q^n\to0$ ; $q>1\Rightarrow +\infty$</div>
           </div>
         </div>
         <div class="flash" tabindex="0">
@@ -470,9 +484,9 @@
         </div>
         <div class="card">
           <h3>E6 — Puissances</h3>
-          <p>$\displaystyle \lim_{n\to+\infty} q^n$ pour $|q|<1\;:\;$< /p>
-              <input id="e6" class="input mono" placeholder="ex: 0" oninput="checkText('e6','0')" />
-              <div id="e6r" class="result"></div>
+          <p>$\displaystyle \lim_{n\to+\infty} q^n$ pour $|q|&lt;1\;:\;$</p>
+          <input id="e6" class="input mono" placeholder="ex: 0" oninput="checkText('e6','0')" />
+          <div id="e6r" class="result"></div>
         </div>
         <div class="card">
           <h3>E7 — Linéaire 1er ordre</h3>
@@ -501,7 +515,7 @@
     <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
   </main>
 
-  <script>
+  <script type="module">
     const $ = (q) => document.querySelector(q), $$ = (q) => document.querySelectorAll(q);
     // Thème + outils
     try { const s = localStorage.getItem('theme'); if (s) { document.body.classList.toggle('light', s === 'light'); } else if (window.matchMedia?.('(prefers-color-scheme: light)').matches) { document.body.classList.add('light'); } } catch (e) {}
@@ -604,12 +618,12 @@
     // Mise à jour initiale du score
     updateScore();
   </script>
-  <script>
+  <script type="module">
     if (typeof lucide !== 'undefined') {
       lucide.createIcons();
     }
   </script>
-  <script>
+  <script type="module">
     const btn = document.getElementById('theme-toggle');
     btn?.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';

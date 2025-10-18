@@ -6,7 +6,11 @@ function withBase(path) {
 }
 
 export function saveToken(token) {
-  try { localStorage.setItem('auth_token', token); } catch (_) {}
+  try {
+    localStorage.setItem('auth_token', token);
+    // also mirror in a cookie (short-lived) to survive some private modes
+    document.cookie = `auth_token=${encodeURIComponent(token)}; Path=/; SameSite=Lax; Max-Age=86400`;
+  } catch (_) {}
 }
 
 export function getToken() {
@@ -15,6 +19,7 @@ export function getToken() {
 
 export function clearToken() {
   try { localStorage.removeItem('auth_token'); } catch (_) {}
+  try { document.cookie = 'auth_token=; Max-Age=0; Path=/; SameSite=Lax'; } catch (_) {}
 }
 
 export async function fetchWithAuth(path, options = {}) {
@@ -24,7 +29,7 @@ export async function fetchWithAuth(path, options = {}) {
   // API endpoints should not be content-prefixed
   const isApi = path.startsWith('/api/') || path.startsWith('/auth/') || path.startsWith('/groups') || path.startsWith('/testing');
   const url = isApi ? path : withBase(path);
-  const res = await fetch(url, { ...options, headers });
+  const res = await fetch(url, { ...options, headers, cache: isApi ? 'no-store' : (options.cache || 'default') });
   if (res.status === 401) {
     clearToken();
     if (!location.pathname.endsWith('/login.html')) location.href = withBase('/login.html');
@@ -46,6 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!res.ok) { throw new Error('Échec de connexion'); }
         const data = await res.json();
         saveToken(data.access_token);
+        if (data.first_login) {
+          // force password change page if provided, else redirect to dashboard which will prompt
+          const next = withBase('/dashboard.html');
+          localStorage.setItem('first_login', '1');
+          location.href = next;
+          return;
+        }
         location.href = withBase('/dashboard.html');
       } catch (err) {
         // Fallback DEV: try login/dev when TESTING=1 on server

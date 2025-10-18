@@ -146,8 +146,8 @@ async def compat_session(request: Request, db: Session = Depends(get_db)):
     try:
         payload = jwt.decode(token, get_secret_key(), algorithms=[ALGORITHM])
         user_id = int(payload.get("sub"))
-    except Exception:
-        raise HTTPException(status_code=401, detail="Invalid token")
+    except Exception as exc:
+        raise HTTPException(status_code=401, detail="Invalid token") from exc
     user = db.get(User, user_id)
     if not user or not user.is_active:
         raise HTTPException(status_code=401, detail="Inactive user")
@@ -200,8 +200,8 @@ async def compat_change_password(
     try:
         payload = jwt.decode(token, get_secret_key(), algorithms=[ALGORITHM])
         user_id = int(payload.get("sub"))
-    except Exception:
-        raise HTTPException(status_code=401, detail="Invalid token")
+    except Exception as exc:
+        raise HTTPException(status_code=401, detail="Invalid token") from exc
 
     user = db.get(User, user_id)
     if not user or not user.is_active:

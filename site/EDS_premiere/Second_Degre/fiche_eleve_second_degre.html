@@ -7,8 +7,25 @@
   <title>Interface Maths — Lycée PMF</title>
 
   <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
   <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script type="module">
+    import { loadLegacyScripts } from '../../assets/js/legacy-loader.js';
+
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        macros: { N: '\\mathbb{N}', Z: '\\mathbb{Z}', Q: '\\mathbb{Q}', R: '\\mathbb{R}', pp: '\\mathbb{P}' },
+      },
+      svg: { fontCache: 'global' },
+    };
+
+    loadLegacyScripts([
+      'https://unpkg.com/lucide@latest/dist/umd/lucide.js',
+      'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js',
+    ]);
+  </script>
   <style>
     :root {
       --bg: #0b1020;
@@ -175,10 +192,7 @@
       }
     }
   </style>
-  <script>
-    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}", pp: "\\mathbb{P}" } }, svg: { fontCache: 'global' } };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </head>
 
 <body class="light">
@@ -214,12 +228,12 @@
               <ul>
                 <li>$\Delta>0$: racines $\dfrac{-b\pm\sqrt{\Delta}}{2a}$, factorisation $a(x-x_1)(x-x_2)$.</li>
                 <li>$\Delta=0$: racine double $-\dfrac{b}{2a}$, factorisation $a(x-x_0)^2$.</li>
-                <li>$\Delta<0$: pas de racine réelle; signe de $f$=signe de $a$.</li>
+                <li>$\Delta&lt;0$: pas de racine réelle; signe de $f$=signe de $a$.</li>
               </ul>
             </li>
             <li>Somme/produit (si racines réelles $x_1,x_2$): $S=x_1+x_2=-\dfrac{b}{a}$, $P=x_1x_2=\dfrac{c}{a}$.</li>
             <li>Signe (notation française): $a>0 \Rightarrow f\ge0$ sur $]-\infty;x_1]\cup[x_2;+\infty[$ et $f\le0$ sur
-              $[x_1;x_2]$ (règle inversée si $a<0$).< /li>
+              $[x_1;x_2]$ (règle inversée si $a&lt;0$).</li>
           </ul>
         </div>
       </section>
@@ -231,21 +245,21 @@
           <ol>
             <li>Calculer $\alpha=-\dfrac{b}{2a}$ puis $\beta=f(\alpha)$.</li>
             <li>Écrire $f(x)=a(x-\alpha)^2+\beta$.</li>
-            <li>Interpréter: $S(\alpha,\beta)$ est le sommet; minimum si $a>0$, maximum si $a<0$.< /li>
+            <li>Interpréter: $S(\alpha,\beta)$ est le sommet; minimum si $a>0$, maximum si $a&lt;0$.</li>
           </ol>
         </details>
         <details>
           <summary><strong>Résoudre $ax^2+bx+c=0$</strong></summary>
           <ol>
             <li>Calculer $\Delta=b^2-4ac$.</li>
-            <li>$\Delta<0$: pas de solution réelle. $\Delta=0$: $x=-\dfrac{b}{2a}$. $\Delta>0$:
-                $x_{1,2}=\dfrac{-b\pm\sqrt{\Delta}}{2a}$.</li>
+            <li>$\Delta&lt;0$: pas de solution réelle. $\Delta=0$: $x=-\dfrac{b}{2a}$. $\Delta>0$:
+              $x_{1,2}=\dfrac{-b\pm\sqrt{\Delta}}{2a}$.</li>
           </ol>
         </details>
         <details>
           <summary><strong>Signe de $f$</strong></summary>
           <ol>
-            <li>Si $\Delta<0$: signe de $f$=signe de $a$ sur $\R$.</li>
+            <li>Si $\Delta&lt;0$: signe de $f$=signe de $a$ sur $\R$.</li>
             <li>Si $\Delta\ge0$: placer les racines sur l’axe et appliquer la règle « signe de $a$ à l’extérieur, signe
               contraire entre ».</li>
           </ol>
@@ -333,7 +347,7 @@
     <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
   </div>
 
-  <script>
+  <script type="module">
     const $ = (q) => document.querySelector(q), $$ = (q) => document.querySelectorAll(q);
     function fmt(x) { if (!isFinite(x)) return String(x); const s = Number(x).toFixed(6); return s.replace(/\.0+$/, '').replace(/(\.[0-9]*[1-9])0+$/, '$1'); }
     function intervalsFR(a, b, c) { const D = b * b - 4 * a * c; if (D < 0) { return a > 0 ? "$]-\\infty;+\\infty[$" : "∅"; } if (D === 0) { const x0 = -b / (2 * a); return a > 0 ? `$]-\\infty;${fmt(x0)}]\\cup[${fmt(x0)};+\\infty[$` : `∅`; } const r1 = (-b - Math.sqrt(D)) / (2 * a), r2 = (-b + Math.sqrt(D)) / (2 * a); const [x1, x2] = [Math.min(r1, r2), Math.max(r1, r2)]; return a > 0 ? `$]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$` : `$[${fmt(x1)};${fmt(x2)}]$`; }
@@ -370,12 +384,12 @@
       $('#q4out').innerHTML = `<div class="result ok">Trinôme monique: $x^2-${fmt(S)}x+${fmt(P)}$</div>`; MathJax.typesetPromise?.();
     });
   </script>
-  <script>
+  <script type="module">
     if (typeof lucide !== "undefined") {
       lucide.createIcons();
     }
   </script>
-  <script>
+  <script type="module">
     const btn = document.getElementById('theme-toggle');
     btn?.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';

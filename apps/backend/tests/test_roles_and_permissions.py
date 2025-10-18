@@ -15,7 +15,7 @@ from apps.backend.app.security import create_access_token
 @pytest.fixture(name="test_db_session")
 def test_db_session_fixture():
     engine = create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False})
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)  # pylint: disable=invalid-name
     Base.metadata.create_all(bind=engine)
     db = TestingSessionLocal()
     try:

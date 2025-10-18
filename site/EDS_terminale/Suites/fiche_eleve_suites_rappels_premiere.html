@@ -7,8 +7,33 @@
   <title>Interface Maths — Lycée PMF</title>
 
   <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
   <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script type="module">
+    import { loadLegacyScripts } from '../../assets/js/legacy-loader.js';
+
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        macros: {
+          N: '\\mathbb{N}',
+          Z: '\\mathbb{Z}',
+          Q: '\\mathbb{Q}',
+          R: '\\mathbb{R}',
+          div: '\\mid',
+          ndiv: '\\nmid',
+          pmod: '\\;\\mathrm{mod}\\;',
+        },
+      },
+      svg: { fontCache: 'global' },
+    };
+
+    loadLegacyScripts([
+      'https://unpkg.com/lucide@latest/dist/umd/lucide.js',
+      'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js',
+    ]);
+  </script>
   <style>
     :root {
       --bg: #0b1020;
@@ -298,10 +323,7 @@
       }
     }
   </style>
-  <script>
-    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}", div: "\\mid", ndiv: "\\nmid", pmod: "\\;\\mathrm{mod}\\;" } }, svg: { fontCache: 'global' } };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </head>
 
 <body class="light">
@@ -353,38 +375,38 @@
         <p><strong>Deux modes de définition.</strong> <em>Explicite</em> : $u_n=f(n)$. <em>Récurrente</em> : $u_0$ (ou
           $u_1$) donné et relation $u_{n+1}=g(u_n)$.</p>
         <p><strong>Suite arithmétique.</strong> $u_{n+1}=u_n+r$ (raison $r$). Alors $u_n=u_0+nr$. <em>Somme</em> :
-          $\displaystyle \sum_{k=0}^n u_k=\frac{n+1}{2}(u_0+u_n)$. <em>Variations</em> : $r>0$ croissante, $r<0$
-            décroissante, $r=0$ constante.</p>
-            <p><strong>Suite géométrique.</strong> $u_{n+1}=q\,u_n$ (raison $q$). Alors $u_n=u_0\,q^n$. <em>Somme</em> :
-              si $q\ne1$, $\displaystyle \sum_{k=0}^n u_k=u_0\,\frac{1-q^{n+1}}{1-q}$; sinon $(n+1)u_0$.</p>
-            <div class="result goodbox"><strong>Limites usuelles :</strong> $|q|<1 \Rightarrow q^n\to0$; $q=1$
-                constante; $q=-1$ non convergente; $|q|>1$ divergence en module (alternance si $q<0$). Une arithmétique
-                  $u_0+nr$ diverge si $r\ne0$.</div>
-                  <details>
-                    <summary>Exemples (définitions)</summary>
-                    <div class="step">
-                      <div class="n">1</div>
-                      <div>Explicite : $u_n=(-1)^n$ (on peut calculer $u_9$ immédiatement).</div>
-                    </div>
-                    <div class="step">
-                      <div class="n">2</div>
-                      <div>Récurrente : $w_{n+1}=5w_n+3$ (il faut connaître un terme initial).</div>
-                    </div>
-                  </details>
-                  <details>
-                    <summary>Remarques</summary>
-                    <div class="step">
-                      <div class="n">•</div>
-                      <div>On peut souvent <strong>passer</strong> d’une définition à l’autre selon la question étudiée.
-                      </div>
-                    </div>
-                    <div class="step">
-                      <div class="n">•</div>
-                      <div>La suite peut être notée <strong>$u$</strong>; <strong>$u_n$</strong> désigne le <em>n‑ième
-                          terme</em> de la suite $u$.</div>
-                    </div>
-                  </details>
+          $\displaystyle \sum_{k=0}^n u_k=\frac{n+1}{2}(u_0+u_n)$. <em>Variations</em> : $r>0$ croissante, $r&lt;0$
+          décroissante, $r=0$ constante.</p>
+        <p><strong>Suite géométrique.</strong> $u_{n+1}=q\,u_n$ (raison $q$). Alors $u_n=u_0\,q^n$. <em>Somme</em> :
+          si $q\ne1$, $\displaystyle \sum_{k=0}^n u_k=u_0\,\frac{1-q^{n+1}}{1-q}$; sinon $(n+1)u_0$.</p>
+        <div class="result goodbox"><strong>Limites usuelles :</strong> $|q|&lt;1 \Rightarrow q^n\to0$; $q=1$
+          constante; $q=-1$ non convergente; $|q|>1$ divergence en module (alternance si $q&lt;0$). Une arithmétique
+          $u_0+nr$ diverge si $r\ne0$.</div>
+        <details>
+          <summary>Exemples (définitions)</summary>
+          <div class="step">
+            <div class="n">1</div>
+            <div>Explicite : $u_n=(-1)^n$ (on peut calculer $u_9$ immédiatement).</div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>Récurrente : $w_{n+1}=5w_n+3$ (il faut connaître un terme initial).</div>
+          </div>
+        </details>
+        <details>
+          <summary>Remarques</summary>
+          <div class="step">
+            <div class="n">•</div>
+            <div>On peut souvent <strong>passer</strong> d’une définition à l’autre selon la question étudiée.
             </div>
+          </div>
+          <div class="step">
+            <div class="n">•</div>
+            <div>La suite peut être notée <strong>$u$</strong>; <strong>$u_n$</strong> désigne le <em>n‑ième
+                terme</em> de la suite $u$.</div>
+          </div>
+        </details>
+      </div>
     </section>
 
     <section class="card" id="monotonie">
@@ -397,25 +419,25 @@
         <div class="step">
           <div class="n">Croiss.</div>
           <div>Strictement croissante à partir du rang $p$ si $\forall n\ge p$, $u_{n+1}>u_n$. Strictement décroissante
-            si $u_{n+1}<u_n$.< /div>
+            si $u_{n+1}&lt;u_n$.</div>
+        </div>
+        <div class="step">
+          <div class="n">Large</div>
+          <div>Croissante si $u_{n+1}\ge u_n$; décroissante si $u_{n+1}\le u_n$. Stationnaire/constante à partir d’un
+            rang si $u_{n+1}=u_n$ pour tout $n$ assez grand.</div>
+        </div>
+        <details>
+          <summary>Remarques</summary>
+          <div class="step">
+            <div class="n">(1)</div>
+            <div>Si $u_n=f(n)$ (définition explicite), les variations de $(u_n)$ suivent celles de $f$.</div>
           </div>
           <div class="step">
-            <div class="n">Large</div>
-            <div>Croissante si $u_{n+1}\ge u_n$; décroissante si $u_{n+1}\le u_n$. Stationnaire/constante à partir d’un
-              rang si $u_{n+1}=u_n$ pour tout $n$ assez grand.</div>
+            <div class="n">(2)</div>
+            <div>Si $u_{n+1}=f(u_n)$ (définition récurrente), les variations de $(u_n)$ ne suivent <em>pas
+                forcément</em> celles de $f$.</div>
           </div>
-          <details>
-            <summary>Remarques</summary>
-            <div class="step">
-              <div class="n">(1)</div>
-              <div>Si $u_n=f(n)$ (définition explicite), les variations de $(u_n)$ suivent celles de $f$.</div>
-            </div>
-            <div class="step">
-              <div class="n">(2)</div>
-              <div>Si $u_{n+1}=f(u_n)$ (définition récurrente), les variations de $(u_n)$ ne suivent <em>pas
-                  forcément</em> celles de $f$.</div>
-            </div>
-          </details>
+        </details>
       </details>
 
       <details>
@@ -477,16 +499,16 @@
         </div>
         <div class="step">
           <div class="n">Variations</div>
-          <div>$r>0$ croissante; $r<0$ décroissante.</div>
-          </div>
-          <details>
-            <summary>Exemple</summary>
-            <div class="step">
-              <div class="n">Ex</div>
-              <div>$u_0=2,\ r=3 \Rightarrow u_n=2+3n$; $\sum_{k=0}^{4}u_k=\frac{5}{2}(u_0+u_4)=\frac{5}{2}(2+14)=40$.
-              </div>
+          <div>$r>0$ croissante; $r&lt;0$ décroissante.</div>
+        </div>
+        <details>
+          <summary>Exemple</summary>
+          <div class="step">
+            <div class="n">Ex</div>
+            <div>$u_0=2,\ r=3 \Rightarrow u_n=2+3n$; $\sum_{k=0}^{4}u_k=\frac{5}{2}(u_0+u_4)=\frac{5}{2}(2+14)=40$.
             </div>
-          </details>
+          </div>
+        </details>
       </details>
 
       <details>
@@ -505,7 +527,7 @@
         </div>
         <div class="step">
           <div class="n">Limites</div>
-          <div>$|q|<1$ $\Rightarrow$ $u_n\to0$; $q>1$ $\Rightarrow$ $|u_n|\to+\infty$ (si $u_0\ne0$).</div>
+          <div>$|q|&lt;1$ $\Rightarrow$ $u_n\to0$; $q>1$ $\Rightarrow$ $|u_n|\to+\infty$ (si $u_0\ne0$).</div>
         </div>
         <details>
           <summary>Exemple</summary>
@@ -522,15 +544,16 @@
         <summary><strong>N5</strong> — Comportements limites courants</summary>
         <div class="step">
           <div class="n">Règle</div>
-          <div>$|q|<1 \Rightarrow q^n\to0$; arithmétique $u_0+nr$ diverge si $r\ne0$; $(-1)^n$ n’a pas de limite.</div>
+          <div>$|q|&lt;1 \Rightarrow q^n\to0$; arithmétique $u_0+nr$ diverge si $r\ne0$; $(-1)^n$ n’a pas de limite.
           </div>
-          <details>
-            <summary>Exemple</summary>
-            <div class="step">
-              <div class="n">Ex</div>
-              <div>$u_n=5\cdot(0{,}8)^n \to 0$; $v_n=3-2n\to-\infty$.</div>
-            </div>
-          </details>
+        </div>
+        <details>
+          <summary>Exemple</summary>
+          <div class="step">
+            <div class="n">Ex</div>
+            <div>$u_n=5\cdot(0{,}8)^n \to 0$; $v_n=3-2n\to-\infty$.</div>
+          </div>
+        </details>
       </details>
 
       <details>
@@ -622,15 +645,15 @@
         </div>
         <div class="step">
           <div class="n">2</div>
-          <div>Pour une géométrique $u_0>0$ : $q>1$ ⇒ croissante; $0<q<1$ ⇒ décroissante.</div>
+          <div>Pour une géométrique $u_0>0$ : $q>1$ ⇒ croissante; $0&lt;q&lt;1$ ⇒ décroissante.</div>
+        </div>
+        <details>
+          <summary>Exemple corrigé</summary>
+          <div class="step">
+            <div class="n">Ex</div>
+            <div>$u_n=2+3n$ ↑; $v_n=8\cdot0{,}5^n$ ↓ vers 0.</div>
           </div>
-          <details>
-            <summary>Exemple corrigé</summary>
-            <div class="step">
-              <div class="n">Ex</div>
-              <div>$u_n=2+3n$ ↑; $v_n=8\cdot0{,}5^n$ ↓ vers 0.</div>
-            </div>
-          </details>
+        </details>
       </details>
 
       <details>
@@ -657,19 +680,19 @@
         <summary><strong>E. Limites simples</strong></summary>
         <div class="step">
           <div class="n">1</div>
-          <div>$|q|<1$ ⇒ $q^n\to0$; $q=1$ ⇒ constante; $|q|>1$ ⇒ divergence en module.</div>
+          <div>$|q|&lt;1$ ⇒ $q^n\to0$; $q=1$ ⇒ constante; $|q|>1$ ⇒ divergence en module.</div>
         </div>
         <div class="step">
           <div class="n">2</div>
-          <div>Arithmétique $u_0+nr$ : si $r>0$, $\to +\infty$; si $r<0$, $\to -\infty$.</div>
+          <div>Arithmétique $u_0+nr$ : si $r>0$, $\to +\infty$; si $r&lt;0$, $\to -\infty$.</div>
+        </div>
+        <details>
+          <summary>Exemple corrigé</summary>
+          <div class="step">
+            <div class="n">Ex</div>
+            <div>$x_n=5\cdot(0{,}8)^n\to0$, $y_n=1-0{,}2n\to-\infty$.</div>
           </div>
-          <details>
-            <summary>Exemple corrigé</summary>
-            <div class="step">
-              <div class="n">Ex</div>
-              <div>$x_n=5\cdot(0{,}8)^n\to0$, $y_n=1-0{,}2n\to-\infty$.</div>
-            </div>
-          </details>
+        </details>
       </details>
     </section>
 
@@ -692,7 +715,8 @@
           </li>
           <li>Géo. $u_{n+1}=q\,u_n \iff u_n=u_0\,q^n$; somme si $q\ne1$, $\displaystyle \sum_{k=0}^n
             u_k=u_0\,\frac{1-q^{n+1}}{1-q}$.</li>
-          <li>Limites : $|q|<1 \Rightarrow q^n\to0$; $q=1$ constante; $|q|>1$ divergence; $(-1)^n$ non convergente.</li>
+          <li>Limites : $|q|&lt;1 \Rightarrow q^n\to0$; $q=1$ constante; $|q|>1$ divergence; $(-1)^n$ non convergente.
+          </li>
           <li>Monotonie : $u_{n+1}-u_n\ge0$ ⇒ croissante; si $u_n>0$, $\dfrac{u_{n+1}}{u_n}\ge1$ ⇒ croissante.</li>
         </ul>
       </div>
@@ -746,8 +770,9 @@
       <div class="step">
         <div class="n">6</div>
         <div>Étudier le sens de variation de $v_{n+1}=v_n-2$, $v_0=-1$. <details>
-            <summary>Correction</summary>$v_{n+1}-v_n=-2<0$ ⇒ $(v_n)$ strictement décroissante; de plus
-              $v_n=-1-2n$.</details>
+            <summary>Correction</summary>$v_{n+1}-v_n=-2&lt;0$ ⇒ $(v_n)$ strictement décroissante; de plus
+            $v_n=-1-2n$.
+          </details>
         </div>
       </div>
 
@@ -779,7 +804,7 @@
         </li>
         <li>Appliquer une formule de <strong>somme</strong> avec de <strong>mauvaises bornes</strong> ou le mauvais
           type.</li>
-        <li>Conclure une limite sans vérifier les <strong>conditions</strong> ($|q|<1$, signe de $r$, etc.).</li>
+        <li>Conclure une limite sans vérifier les <strong>conditions</strong> ($|q|&lt;1$, signe de $r$, etc.).</li>
       </ul>
     </section>
 
@@ -789,7 +814,7 @@
         id="toggleAll" aria-pressed="false">🧩 Tout déplier/replier</button></div>
   </div>
 
-  <script>
+  <script type="module">
     const $ = (q) => document.querySelector(q), $$ = (q) => document.querySelectorAll(q);
     $('#retypesetBtn').addEventListener('click', () => MathJax.typesetPromise?.());
     $('#printBtn').addEventListener('click', () => window.print());
@@ -805,12 +830,12 @@
     function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
     function checkText(id, expected) { const el = $('#' + id), out = $('#' + id + 'r'); if (!el) return; let ans = (el.value || '').trim(); let pattern = escRe(expected).replace(/\s\+/g, '\\s*').replace(/×/g, '[×x*]').replace(/\s/g, '\\s*').replace(/>/g, '\\s*>\\s*'); const re = new RegExp('^' + pattern + '$', 'i'); const ok = re.test(ans); const box = document.createElement('span'); box.className = 'result ' + (ok ? 'ok' : 'err'); box.textContent = ok ? '✅ Correct' : '❌ Réponse attendue : ' + expected; if (out) { out.replaceChildren(box); } }
   </script>
-  <script>
+  <script type="module">
     if (typeof lucide !== "undefined") {
       lucide.createIcons();
     }
   </script>
-  <script>
+  <script type="module">
     const btn = document.getElementById('theme-toggle');
     btn?.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';

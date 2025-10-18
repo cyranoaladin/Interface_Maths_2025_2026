@@ -11,8 +11,14 @@
   <link rel="canonical" href="/parents.html" />
 
   <link rel="stylesheet" href="/assets/css/site.css?v=4" />
-  <script src="/assets/js/lucide.min.js" defer></script>
-  <script src="assets/js/icons.js" defer></script>
+  <script type="module">
+    import { loadLegacyScripts } from './assets/js/legacy-loader.js';
+
+    loadLegacyScripts([
+      '/assets/js/lucide.min.js',
+      'assets/js/icons.js',
+    ]);
+  </script>
 </head>
 
 <body>
@@ -85,7 +91,7 @@
       </div>
     </footer>
   </div>
-  <script>
+  <script type="module">
     const btn = document.getElementById('theme-toggle');
     btn?.addEventListener('click', () => {
       const root = document.documentElement;

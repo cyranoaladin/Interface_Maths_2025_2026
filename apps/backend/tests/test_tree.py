@@ -1,11 +1,14 @@
+import sys
 from pathlib import Path
 
-import pytest
+REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-from app.tree import build_tree
+from apps.backend.app.tree import build_tree  # pylint: disable=wrong-import-position
 
 
-def test_build_tree_extracts_html_and_titles(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_build_tree_extracts_html_and_titles(tmp_path: Path):
     # Arrange: create nested dirs and files
     base = tmp_path / "EDS_premiere" / "Calcul_litteral"
     (base / "SubA").mkdir(parents=True)
@@ -51,4 +54,3 @@ def test_non_html_files_are_filtered(tmp_path: Path):
     tree = build_tree(str(tmp_path))
     a = next(c for c in tree.children if getattr(c, "name", None) == "a")
     assert all(getattr(n, "type", None) != "file" or n.name.endswith(".html") for n in a.children)
-

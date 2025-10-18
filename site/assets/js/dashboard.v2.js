@@ -1,5 +1,9 @@
 import { fetchWithAuth } from './auth.js';
 let lastGroup = null;
+// Overrides absences explicites (emails en minuscules)
+const absentOverrides = new Set([
+  'yosr.benhajali-e@ert.tn', // BEN HAJ ALI YOSR
+]);
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
@@ -165,6 +169,24 @@ async function showBilanForStudent(email, fullName) {
 
     let studentBilan = datasets.find(isMatch);
 
+    // Forcer "Absente" pour certaines élèves (override explicite)
+    if (!studentBilan && String(lastGroup || '').startsWith('P-EDS')) {
+      const emailLc = String(email || '').toLowerCase().trim();
+      if (absentOverrides.has(emailLc)) {
+        studentBilan = {
+          nom_prenom: fullName,
+          eleve: email,
+          email: email,
+          note_finale: null,
+          mention: 'Absente',
+          bilan_personnalise: { points_forts: [], axes_amelioration: [], conseils: [], appreciation_finale: '' },
+          recapitulatif_exercices: [],
+          _audit: { barreme_total: 20, notes_total: 0, issues: ['absence'] },
+          _absent: true
+        };
+      }
+    }
+
     // Fallbacks si non trouvé: matching approximatif par similarité de tokens et préfixe d'email
     if (!studentBilan) {
       const emailUser = String(email || '').toLowerCase().trim();
@@ -187,9 +209,9 @@ async function showBilanForStudent(email, fullName) {
         let score = simCount / Math.max(1, parts.length, bTokens.length);
         if (emailUserId && bName.includes(emailUserId)) score += 0.2;
         if (bNoSpace === fNoSpace) score += 0.3;
-        if (total > best.score) best = { rec: b, score: total };
+        if (score > best.score) best = { rec: b, score };
       }
-      if (best.rec && best.score >= 0.5) {
+      if (best.rec && best.score >= 0.3) {
         studentBilan = best.rec;
       }
     }
@@ -200,7 +222,7 @@ async function showBilanForStudent(email, fullName) {
         nom_prenom: fullName,
         eleve: email,
         email: email,
-        note_finale: 0,
+        note_finale: null,
         mention: 'Absente',
         bilan_personnalise: {
           points_forts: [],
@@ -209,7 +231,8 @@ async function showBilanForStudent(email, fullName) {
           appreciation_finale: ''
         },
         recapitulatif_exercices: [],
-        _audit: { barreme_total: 20, notes_total: 0, issues: ['absence'] }
+        _audit: { barreme_total: 20, notes_total: 0, issues: ['absence'] },
+        _absent: true
       };
     }
 
@@ -219,10 +242,11 @@ async function showBilanForStudent(email, fullName) {
         const n = parseFloat(String(v ?? '').replace(',', '.').trim());
         return Number.isFinite(n) ? n : def;
       };
-      const got = toNumber(studentBilan.note_finale ?? studentBilan.note ?? 0, 0);
+      const got = toNumber(studentBilan.note_finale ?? studentBilan.note ?? '', 0);
       const total = toNumber(studentBilan.bareme ?? (studentBilan._audit && studentBilan._audit.barreme_total) ?? 20, 20);
-      const pct = Math.max(0, Math.min(100, Math.round((got / (total || 20)) * 100)));
-      const donut = `
+      const isAbsent = String(studentBilan.mention || '').toLowerCase().includes('absent') || !!studentBilan._absent;
+      const pct = total ? Math.max(0, Math.min(100, Math.round((got / (total || 20)) * 100))) : 0;
+      const donut = isAbsent ? '' : `
         <svg class="donut" viewBox="0 0 36 36" aria-label="Score ${pct}%">
           <path style="fill:none; stroke:#2D3748; stroke-width:3.8" d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
           <path style="fill:none; stroke:#4FD1C5; stroke-width:3.8; stroke-linecap:round; stroke-dasharray:${pct}, 100" d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -254,18 +278,18 @@ async function showBilanForStudent(email, fullName) {
             ${donut}
             <div>
               <h3 style="margin:0">Bilan de ${studentBilan.nom_prenom || studentBilan.eleve}</h3>
-              <div class="muted">Score ${pct}%${mention ? ` • ${mention}` : ''}</div>
+              <div class="muted">${isAbsent ? 'Pas noté' : `Score ${pct}%`}${mention ? ` • ${mention}` : ''}</div>
             </div>
           </div>
           <div class="questions-list">${questionsHtml || '<div>Détail des questions non disponible</div>'}</div>
           <div class="bilan-sections" style="display:grid; gap:12px; margin-top:12px">
-            ${pointsForts.length ? `<div class=\"card\"><h4><svg data-lucide=\"check-circle\" width=\"18\" height=\"18\"></svg> Points forts</h4><ul>${pointsForts.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
-            ${axes.length ? `<div class=\"card\"><h4><svg data-lucide=\"x-circle\" width=\"18\" height=\"18\"></svg> Axes d'amélioration</h4><ul>${axes.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
-            ${conseils.length ? `<div class=\"card\"><h4><svg data-lucide=\"info\" width=\"18\" height=\"18\"></svg> Conseils</h4><ul>${conseils.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
-            ${appreciation ? `<div class=\"card\"><h4><svg data-lucide=\"quote\" width=\"18\" height=\"18\"></svg> Appréciation</h4><p>${appreciation}</p></div>` : ''}
+            ${pointsForts.length ? `<div class="card"><h4><svg data-lucide="check-circle" width="18" height="18"></svg> Points forts</h4><ul>${pointsForts.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
+            ${axes.length ? `<div class="card"><h4><svg data-lucide="x-circle" width="18" height="18"></svg> Axes d'amélioration</h4><ul>${axes.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
+            ${conseils.length ? `<div class="card"><h4><svg data-lucide="info" width="18" height="18"></svg> Conseils</h4><ul>${conseils.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
+            ${appreciation ? `<div class="card"><h4><svg data-lucide="quote" width="18" height="18"></svg> Appréciation</h4><p>${appreciation}</p></div>` : ''}
           </div>
         </div>
-        <a href=\"#\" id=\"back-to-students\" class=\"btn-secondary\" style=\"margin-top:12px;display:inline-block\">Retour à la liste</a>`;
+        <a href="#" id="back-to-students" class="btn-secondary" style="margin-top:12px;display:inline-block">Retour à la liste</a>`;
       panelBody.innerHTML = bilanHtml;
       try { window.lucide && window.lucide.createIcons && window.lucide.createIcons(); } catch (_) {}
       const back1 = panelBody.querySelector('#back-to-students');

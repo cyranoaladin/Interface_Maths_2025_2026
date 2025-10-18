@@ -7,8 +7,33 @@
   <title>Fiche mémo & méthodologie — Arithmétique (Maths expertes)</title>
 
   <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
   <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script type="module">
+    import { loadLegacyScripts } from '../../../assets/js/legacy-loader.js';
+
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        macros: {
+          N: '\\mathbb{N}',
+          Z: '\\mathbb{Z}',
+          Q: '\\mathbb{Q}',
+          R: '\\mathbb{R}',
+          div: '\\mid',
+          ndiv: '\\nmid',
+          pmod: '\\;\\mathrm{mod}\\;',
+        },
+      },
+      svg: { fontCache: 'global' },
+    };
+
+    loadLegacyScripts([
+      'https://unpkg.com/lucide@latest/dist/umd/lucide.js',
+      'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js',
+    ]);
+  </script>
   <style>
     :root {
       --bg: #0b1020;
@@ -298,10 +323,7 @@
       }
     }
   </style>
-  <script>
-    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}", div: "\\mid", ndiv: "\\nmid", pmod: "\\;\\mathrm{mod}\\;" } }, svg: { fontCache: 'global' } };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </head>
 
 <body class="light">
@@ -356,12 +378,12 @@
         <p><strong>Divisibilité.</strong> Pour $a,b\in\Z$ ($b\ne0$), $b\mid a \iff \exists k\in\Z,\ a=bk$. Ensembles :
           $a\Z=\{ak:k\in\Z\}$ ; $D(n)$ : diviseurs de $n$.</p>
         <p><strong>Division euclidienne.</strong> $\forall a\in\Z,\ \forall b\in\N^*$, $\exists!\,(q,r)\in\Z^2$ :
-          $a=bq+r$ avec $0\le r<b$.< /p>
-            <p><strong>Lemme des restes.</strong> $\forall b\ge2$, tout entier est $bq,\,bq+1,\dots,\,bq+(b-1)$.</p>
-            <p><strong>Congruences.</strong> $a\equiv b\pmod{n} \iff n\mid(a-b)$ ; opérations compatibles : $+$,
-              $\times$, puissances.</p>
-            <div class="result goodbox"><strong>À retenir :</strong> Euclide (pgcd) + congruences = outils pour prouver,
-              factoriser, et résoudre $ax\equiv b\pmod{n}$.</div>
+          $a=bq+r$ avec $0\le r&lt;b$.</p>
+        <p><strong>Lemme des restes.</strong> $\forall b\ge2$, tout entier est $bq,\,bq+1,\dots,\,bq+(b-1)$.</p>
+        <p><strong>Congruences.</strong> $a\equiv b\pmod{n} \iff n\mid(a-b)$ ; opérations compatibles : $+$,
+          $\times$, puissances.</p>
+        <div class="result goodbox"><strong>À retenir :</strong> Euclide (pgcd) + congruences = outils pour prouver,
+          factoriser, et résoudre $ax\equiv b\pmod{n}$.</div>
       </div>
     </section>
 
@@ -510,20 +532,20 @@
         <summary><strong>B. Effectuer une division euclidienne</strong> ($a=bq+r$)</summary>
         <div class="step">
           <div class="n">1</div>
-          <div>Calculer $q=\lfloor a/b\rfloor$, puis $r=a-bq $ en imposant $0 \le r< b$.</div>
+          <div>Calculer $q=\lfloor a/b\rfloor$, puis $r=a-bq $ en imposant $0 \le r&lt; b$.</div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>Pour le <strong>pgcd</strong>, appliquer <strong>Euclide</strong> : réitérer $x=yq+r$ jusqu’à $r=0$.
           </div>
+        </div>
+        <details>
+          <summary>Exemple corrigé</summary>
           <div class="step">
-            <div class="n">2</div>
-            <div>Pour le <strong>pgcd</strong>, appliquer <strong>Euclide</strong> : réitérer $x=yq+r$ jusqu’à $r=0$.
-            </div>
+            <div class="n">Ex</div>
+            <div>$114=8\cdot14+2$, $8=2\cdot4+0$ ⇒ $\operatorname{pgcd}(114,8)=2$.</div>
           </div>
-          <details>
-            <summary>Exemple corrigé</summary>
-            <div class="step">
-              <div class="n">Ex</div>
-              <div>$114=8\cdot14+2$, $8=2\cdot4+0$ ⇒ $\operatorname{pgcd}(114,8)=2$.</div>
-            </div>
-          </details>
+        </details>
       </details>
 
       <details>
@@ -557,7 +579,7 @@
         <ul>
           <li>J’ai écrit la <b>définition</b> ou le <b>théorème</b> utilisé.</li>
           <li>Chaque égalité est justifiée (P1→P7, Euclide, lemme des restes).</li>
-          <li>Les <b>conditions</b> sont vérifiées (par ex. $0\le r< b$ ; $g\mid b$).</li>
+          <li>Les <b>conditions</b> sont vérifiées (par ex. $0\le r&lt; b$ ; $g\mid b$).</li>
           <li>Le <strong>vocabulaire</strong> est précis : « $\pmod{n}$ », « reste », « quotient »…</li>
           <li>Je relis les <b>signes</b> (attention aux $-$ et aux simplifications interdites).</li>
         </ul>
@@ -607,7 +629,7 @@
       <ul>
         <li>Écrire $a\equiv b\pmod{n}$ sans vérifier que <strong>$n\mid(a-b)$</strong>.</li>
         <li>« Simplifier » une congruence par un facteur <b>non inversible</b> modulo $n$.</li>
-        <li>Oublier la contrainte <b>$0\le r< b$</b> dans une division euclidienne.</li>
+        <li>Oublier la contrainte <b>$0\le r&lt; b$</b> dans une division euclidienne.</li>
         <li>Confondre <b>divise</b> et <b>est multiple de</b>.</li>
       </ul>
     </section>
@@ -618,7 +640,7 @@
         id="toggleAll" aria-pressed="false">🧩 Tout déplier/replier</button></div>
   </div>
 
-  <script>
+  <script type="module">
     const $ = (q) => document.querySelector(q), $$ = (q) => document.querySelectorAll(q);
     $('#retypesetBtn').addEventListener('click', () => MathJax.typesetPromise?.());
     $('#printBtn').addEventListener('click', () => window.print());
@@ -638,7 +660,7 @@
       lucide.createIcons();
     }
   </script>
-  <script>
+  <script type="module">
     const btn = document.getElementById('theme-toggle');
     btn?.addEventListener('click', () => {
       const isDark = document.documentElement.getAttribute('data-theme') !== 'light';

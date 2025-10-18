@@ -2,6 +2,7 @@
 <html lang="fr">
 
 <head>
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nettoyage SW & caches — Interface Maths</title>
@@ -30,13 +31,14 @@
       border-radius: 6px
     }
   </style>
-  <script>
+  <script data-vite-ignore>
     async function cleanup() {
       const log = (m, cls = '') => {
         const p = document.createElement('p'); p.textContent = m; if (cls) p.className = cls; document.getElementById('out').appendChild(p);
       };
       try {
         log('Nettoyage en cours…');
+        try { if (navigator.serviceWorker && navigator.serviceWorker.controller) { navigator.serviceWorker.controller.postMessage({ type: 'SKIP_WAITING' }); } } catch {}
         if ('serviceWorker' in navigator) {
           const regs = await navigator.serviceWorker.getRegistrations();
           await Promise.all(regs.map(r => r.unregister()));
@@ -60,11 +62,23 @@
             log(`IndexedDB: ${((dbs || []).length)} base(s) supprimée(s)`, 'ok');
           }
         } catch { log('IndexedDB: échec ou non supporté', 'warn'); }
-        log('Terminé. Rechargez la page principale.', 'ok');
+        log('Terminé. Recharge de la page…', 'ok');
+        try {
+          const params = new URLSearchParams(location.search);
+          if (params.get('redirect') === '1' || params.get('auto') === '1') {
+            setTimeout(() => { location.href = '/index.html?n=' + Date.now(); }, 400);
+          }
+        } catch {}
       } catch (e) { console.error(e); log('Erreur: ' + e.message, 'err'); }
     }
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('run').addEventListener('click', cleanup);
+      try {
+        const params = new URLSearchParams(location.search);
+        if (params.get('auto') === '1') {
+          cleanup();
+        }
+      } catch {}
     });
   </script>
 </head>
@@ -81,4 +95,3 @@
 </body>
 
 </html>
-

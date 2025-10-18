@@ -7,8 +7,25 @@
   <title>Second degré — Cours complet (EDS Première)</title>
 
   <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
   <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script type="module">
+    import { loadLegacyScripts } from '../../assets/js/legacy-loader.js';
+
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        macros: { N: '\\mathbb{N}', Z: '\\mathbb{Z}', Q: '\\mathbb{Q}', R: '\\mathbb{R}', pp: '\\mathbb{P}' },
+      },
+      svg: { fontCache: 'global' },
+    };
+
+    loadLegacyScripts([
+      'https://unpkg.com/lucide@latest/dist/umd/lucide.js',
+      'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js',
+    ]);
+  </script>
   <style>
     :root {
       --bg: #0b1020;
@@ -295,10 +312,7 @@
       }
     }
   </style>
-  <script>
-    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}", pp: "\\mathbb{P}" } }, svg: { fontCache: 'global' } };
-  </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </head>
 
 <body class="light">
@@ -394,351 +408,353 @@
             $c$. Le <em>sommet</em> de la parabole est le point d’extremum $S(\alpha,f(\alpha))$.</div>
         </div>
         <div class="result goodbox">Si $a>0$, la parabole est tournée vers le haut (convexe) et possède un minimum. Si
-          $a<0$, tournée vers le bas (concave), maximum.</div>
-        </div>
+          $a&lt;0$, tournée vers le bas (concave), maximum.</div>
+      </div>
 
-        <div class="card section" id="canonique">
-          <h2>2. Forme canonique et sommet</h2>
-          <p><strong>Théorème.</strong> Pour $f(x)=ax^2+bx+c$ avec $a\ne0$, on peut écrire $f(x)=a(x-\alpha)^2+\beta$ où
-            $\alpha=-\dfrac{b}{2a}$ et $\beta=f(\alpha)=c-\dfrac{b^2}{4a}$.</p>
-          <details open>
-            <summary><strong>Démonstration (complétion du carré)</strong></summary>
-            <div class="step">
-              <div class="n">1</div>
-              <div>
-                $ax^2+bx+c=a\left[x^2+\dfrac{b}{a}x\right]+c=a\left[(x+\tfrac{b}{2a})^2-\tfrac{b^2}{4a^2}\right]+c=a(x-\alpha)^2+\beta$.
-              </div>
-            </div>
-          </details>
+      <div class="card section" id="canonique">
+        <h2>2. Forme canonique et sommet</h2>
+        <p><strong>Théorème.</strong> Pour $f(x)=ax^2+bx+c$ avec $a\ne0$, on peut écrire $f(x)=a(x-\alpha)^2+\beta$ où
+          $\alpha=-\dfrac{b}{2a}$ et $\beta=f(\alpha)=c-\dfrac{b^2}{4a}$.</p>
+        <details open>
+          <summary><strong>Démonstration (complétion du carré)</strong></summary>
           <div class="step">
-            <div class="n">Sommet</div>
-            <div>Le sommet est $S(\alpha,\beta)$ avec $\alpha=-\dfrac{b}{2a}$, $\beta=f(\alpha)$. C’est le minimum si
-              $a>0$ et le maximum si $a<0$.< /div>
+            <div class="n">1</div>
+            <div>
+              $ax^2+bx+c=a\left[x^2+\dfrac{b}{a}x\right]+c=a\left[(x+\tfrac{b}{2a})^2-\tfrac{b^2}{4a^2}\right]+c=a(x-\alpha)^2+\beta$.
             </div>
-            <details>
-              <summary><strong>Exemple</strong></summary>
-              <div class="step">
-                <div class="n">Ex</div>
-                <div>Écrire sous forme canonique $f(x)=2x^2-4x+5$. Ici $a=2$, $b=-4$, $c=5$, donc
-                  $\alpha=-\dfrac{-4}{2\cdot2}=1$ et $\beta= f(1)=2-4+5=3$. Ainsi $f(x)=2(x-1)^2+3$.</div>
-              </div>
-            </details>
           </div>
+        </details>
+        <div class="step">
+          <div class="n">Sommet</div>
+          <div>Le sommet est $S(\alpha,\beta)$ avec $\alpha=-\dfrac{b}{2a}$, $\beta=f(\alpha)$. C’est le minimum si
+            $a>0$ et le maximum si $a&lt;0$.</div>
+        </div>
+        <details>
+          <summary><strong>Exemple</strong></summary>
+          <div class="step">
+            <div class="n">Ex</div>
+            <div>Écrire sous forme canonique $f(x)=2x^2-4x+5$. Ici $a=2$, $b=-4$, $c=5$, donc
+              $\alpha=-\dfrac{-4}{2\cdot2}=1$ et $\beta= f(1)=2-4+5=3$. Ainsi $f(x)=2(x-1)^2+3$.</div>
+          </div>
+        </details>
+      </div>
 
-          <div class="card section" id="racines">
-            <h2>3. Racines, discriminant, factorisation</h2>
-            <p>On note $\Delta=b^2-4ac$ le <em>discriminant</em> de $ax^2+bx+c$.</p>
-            <ul>
-              <li>$\Delta>0$: deux racines réelles $x_{1,2}=\dfrac{-b\pm\sqrt{\Delta}}{2a}$ et $f(x)=a(x-x_1)(x-x_2)$.
-              </li>
-              <li>$\Delta=0$: une racine double $x_0=-\dfrac{b}{2a}$ et $f(x)=a(x-x_0)^2$.</li>
-              <li>$\Delta<0$: aucune racine réelle; le signe de $f$ est celui de $a$.</li>
+      <div class="card section" id="racines">
+        <h2>3. Racines, discriminant, factorisation</h2>
+        <p>On note $\Delta=b^2-4ac$ le <em>discriminant</em> de $ax^2+bx+c$.</p>
+        <ul>
+          <li>$\Delta>0$: deux racines réelles $x_{1,2}=\dfrac{-b\pm\sqrt{\Delta}}{2a}$ et $f(x)=a(x-x_1)(x-x_2)$.
+          </li>
+          <li>$\Delta=0$: une racine double $x_0=-\dfrac{b}{2a}$ et $f(x)=a(x-x_0)^2$.</li>
+          <li>$\Delta&lt;0$: aucune racine réelle; le signe de $f$ est celui de $a$.</li>
+        </ul>
+        <details>
+          <summary><strong>Exemples guidés</strong></summary>
+          <div class="step">
+            <div class="n">1</div>
+            <div>Résoudre $x^2-5x+6=0$. $\Delta=25-24=1$ donc $x=\dfrac{5\pm1}{2}\in\{2,3\}$; $f(x)=(x-2)(x-3)$.
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <div>Résoudre $4x^2+4x+1=0$. $\Delta=16-16=0$ donc $x_0=-\dfrac{4}{8}=-\tfrac12$;
+              $f(x)=4(x+\tfrac12)^2$.</div>
+          </div>
+        </details>
+      </div>
+
+      <div class="card section" id="signe">
+        <h2>4. Signe du trinôme</h2>
+        <p>Le <em>tableau de signes</em> se déduit des racines et du coefficient $a$.</p>
+        <div class="step">
+          <div class="n">Méthode</div>
+          <div>
+            <ul class="mb-0">
+              <li>Si $\Delta>0$: le signe de $f$ change à $x_1$ et $x_2$, et coïncide avec le signe de $a$ hors de
+                l’intervalle $[x_1,x_2]$.</li>
+              <li>Si $\Delta=0$: $f\ge0$ si $a>0$ (et $\le0$ si $a&lt;0$) avec annulation en $x_0$.</li>
+              <li>Si $\Delta&lt;0$: $\operatorname{sign}(f)=\operatorname{sign}(a)$ sur $\R$.</li>
             </ul>
-            <details>
-              <summary><strong>Exemples guidés</strong></summary>
-              <div class="step">
-                <div class="n">1</div>
-                <div>Résoudre $x^2-5x+6=0$. $\Delta=25-24=1$ donc $x=\dfrac{5\pm1}{2}\in\{2,3\}$; $f(x)=(x-2)(x-3)$.
-                </div>
-              </div>
-              <div class="step">
-                <div class="n">2</div>
-                <div>Résoudre $4x^2+4x+1=0$. $\Delta=16-16=0$ donc $x_0=-\dfrac{4}{8}=-\tfrac12$;
-                  $f(x)=4(x+\tfrac12)^2$.</div>
-              </div>
-            </details>
           </div>
-
-          <div class="card section" id="signe">
-            <h2>4. Signe du trinôme</h2>
-            <p>Le <em>tableau de signes</em> se déduit des racines et du coefficient $a$.</p>
-            <div class="step">
-              <div class="n">Méthode</div>
-              <div>
-                <ul class="mb-0">
-                  <li>Si $\Delta>0$: le signe de $f$ change à $x_1$ et $x_2$, et coïncide avec le signe de $a$ hors de
-                    l’intervalle $[x_1,x_2]$.</li>
-                  <li>Si $\Delta=0$: $f\ge0$ si $a>0$ (et $\le0$ si $a<0$) avec annulation en $x_0$.</li>
-                  <li>Si $\Delta<0$: $\operatorname{sign}(f)=\operatorname{sign}(a)$ sur $\R$.</li>
-                </ul>
-              </div>
-            </div>
-            <details>
-              <summary><strong>Application rapide</strong></summary>
-              <div class="step">
-                <div class="n">Ex</div>
-                <div>Pour $f(x)=x^2-5x+6$, $a>0$, racines 2 et 3. Alors $f\ge 0$ sur $]-\infty;2]\cup[3;+\infty[$ et
-                  $f\le 0$ sur $[2;3]$.</div>
-              </div>
-            </details>
+        </div>
+        <details>
+          <summary><strong>Application rapide</strong></summary>
+          <div class="step">
+            <div class="n">Ex</div>
+            <div>Pour $f(x)=x^2-5x+6$, $a>0$, racines 2 et 3. Alors $f\ge 0$ sur $]-\infty;2]\cup[3;+\infty[$ et
+              $f\le 0$ sur $[2;3]$.</div>
           </div>
+        </details>
+      </div>
 
-          <div class="card section" id="variations">
-            <h2>5. Variations</h2>
-            <p>Pour $f(x)=a(x-\alpha)^2+\beta$ avec $a\ne0$:
-            <ul>
-              <li>si $a>0$, $f$ décroît sur $]-\infty;\alpha]$ puis croît sur $[\alpha;+\infty[$ (minimum $\beta$ au
-                point $\alpha$) ;
-              <li>si $a<0$, $f$ croît puis décroît (maximum $\beta$ au point $\alpha$).</li>
-            </ul>
-            </p>
+      <div class="card section" id="variations">
+        <h2>5. Variations</h2>
+        <p>Pour $f(x)=a(x-\alpha)^2+\beta$ avec $a\ne0$:
+        <ul>
+          <li>si $a>0$, $f$ décroît sur $]-\infty;\alpha]$ puis croît sur $[\alpha;+\infty[$ (minimum $\beta$ au
+            point $\alpha$) ;
+          <li>si $a&lt;0$, $f$ croît puis décroît (maximum $\beta$ au point $\alpha$).</li>
+        </ul>
+        </p>
+      </div>
+
+      <div class="card section" id="eqineq">
+        <h2>6. Équations et inéquations</h2>
+        <div class="step">
+          <div class="n">Éq.</div>
+          <div>Résoudre $ax^2+bx+c=0$ par le discriminant; factoriser si possible puis utiliser le tableau de signes
+            pour $ax^2+bx+c\; \gtrless\; 0$.</div>
+        </div>
+        <details>
+          <summary><strong>Exemples</strong></summary>
+          <div class="step">
+            <div class="n">1</div>
+            <div>Résoudre $x^2-3x-4\le0$. Racines $-1$ et $4$ donc $x\in[-1,4]$.</div>
           </div>
-
-          <div class="card section" id="eqineq">
-            <h2>6. Équations et inéquations</h2>
-            <div class="step">
-              <div class="n">Éq.</div>
-              <div>Résoudre $ax^2+bx+c=0$ par le discriminant; factoriser si possible puis utiliser le tableau de signes
-                pour $ax^2+bx+c\; \gtrless\; 0$.</div>
-            </div>
-            <details>
-              <summary><strong>Exemples</strong></summary>
-              <div class="step">
-                <div class="n">1</div>
-                <div>Résoudre $x^2-3x-4\le0$. Racines $-1$ et $4$ donc $x\in[-1,4]$.</div>
-              </div>
-              <div class="step">
-                <div class="n">2</div>
-                <div>Résoudre $2x^2+2x+3>0$. $\Delta<0$ et $a>0$ donc $\forall x, f(x)>0$.</div>
-              </div>
-            </details>
+          <div class="step">
+            <div class="n">2</div>
+            <div>Résoudre $2x^2+2x+3>0$. $\Delta&lt;0$ et $a>0$ donc $\forall x, f(x)>0$.</div>
           </div>
+        </details>
+      </div>
 
-          <div class="card section" id="sp">
-            <h2>6 bis. Somme et produit des racines</h2>
-            <p><strong>Propriété (admis).</strong> Si $f(x)=ax^2+bx+c$ ($a\ne0$) admet les deux racines réelles
-              $x_1,x_2$, alors: $S=x_1+x_2= -\dfrac{b}{a}$ et $P=x_1x_2=\dfrac{c}{a}$.</p>
-            <details open>
-              <summary><strong>Mini‑quiz</strong></summary>
-              <div class="step">
-                <div class="n">Q1</div>
-                <div>
-                  Pour $f(x)=2x^2-3x+1$, compléter $S=$ <input id="spS1" class="input" style="width:120px"
-                    placeholder="?"> et $P=$ <input id="spP1" class="input" style="width:120px" placeholder="?">.
-                  <button class="btn" id="btnSP1">Vérifier</button> <span id="spR1"></span>
-                </div>
-              </div>
-              <div class="step">
-                <div class="n">Q2</div>
-                <div>
-                  Pour $f(x)=-3x^2+4x-7$, compléter $S=$ <input id="spS2" class="input" style="width:120px"
-                    placeholder="?"> et $P=$ <input id="spP2" class="input" style="width:120px" placeholder="?">.
-                  <button class="btn" id="btnSP2">Vérifier</button> <span id="spR2"></span>
-                </div>
-              </div>
-            </details>
-          </div>
-
-          <div class="card section" id="relpos">
-            <h2>6 ter. Position relative parabole / droite</h2>
-            <p class="muted">Comparer $y_f=ax^2+bx+c$ et $y_g=mx+p$ via le signe de $h(x)=f(x)-g(x)=ax^2+(b-m)x+(c-p)$.
-            </p>
-            <div class=\"grid\" style=\"grid-template-columns:1fr; gap:14px\">
-              <div class="card" style="margin:0">
-                <label class="mono">a <input id="pa" class="input" type="number" step="any" value="1"
-                    style="width:120px"></label>
-                <label class="mono">b <input id="pb" class="input" type="number" step="any" value="0"
-                    style="width:120px"></label>
-                <label class="mono">c <input id="pc" class="input" type="number" step="any" value="0"
-                    style="width:120px"></label>
-                <hr class="hr" />
-                <label class="mono">m <input id="pm" class="input" type="number" step="any" value="1"
-                    style="width:120px"></label>
-                <label class="mono">p <input id="pp" class="input" type="number" step="any" value="-1"
-                    style="width:120px"></label>
-                <button class="btn mt-8" id="btnRel">Analyser</button>
-              </div>
-              <div class="card" id="relOut" style="margin:0">
-                <div class="result">Entrer $(a,b,c,m,p)$ puis « Analyser ».</div>
-              </div>
+      <div class="card section" id="sp">
+        <h2>6 bis. Somme et produit des racines</h2>
+        <p><strong>Propriété (admis).</strong> Si $f(x)=ax^2+bx+c$ ($a\ne0$) admet les deux racines réelles
+          $x_1,x_2$, alors: $S=x_1+x_2= -\dfrac{b}{a}$ et $P=x_1x_2=\dfrac{c}{a}$.</p>
+        <details open>
+          <summary><strong>Mini‑quiz</strong></summary>
+          <div class="step">
+            <div class="n">Q1</div>
+            <div>
+              Pour $f(x)=2x^2-3x+1$, compléter $S=$ <input id="spS1" class="input" style="width:120px" placeholder="?">
+              et $P=$ <input id="spP1" class="input" style="width:120px" placeholder="?">.
+              <button class="btn" id="btnSP1">Vérifier</button> <span id="spR1"></span>
             </div>
           </div>
-
-          <div class="card section" id="optgeo">
-            <h2>6 quater. Optimisation géométrique — Aire maximale</h2>
-            <p class="muted">Objectif: déterminer les dimensions <strong>x</strong> (longueur) et <strong>y</strong>
-              (largeur) d’une aire de jeu <em>rectangulaire</em> adossée à un bâtiment (le long d’un côté), pour
-              <strong>maximiser l’aire</strong> <code>A = x × y</code> (m²),
-              en tenant compte d’une <strong>allée de largeur t</strong> sur trois côtés (avant et les deux côtés) et
-              d’une <strong>longueur totale de clôture L</strong> disponible.</p>
-            <div class="grid" style="grid-template-columns:1fr; gap:14px">
-              <div class="card" style="margin:0">
-                <label class="mono">Clôture disponible L <input id="Lclo" class="input" type="number" step="any"
-                    value="100" style="width:140px"> m</label>
-                <label class="mono">Largeur allée t <input id="Tall" class="input" type="number" step="any" value="3"
-                    style="width:140px"> m</label>
-                <button class="btn mt-8" id="btnOpt">Optimiser</button>
-              </div>
-              <div class="card" id="optOut" style="margin:0">
-                <div class="result">Modèle: clôture sur AB, BC, CD avec allée de largeur t. On impose $x\ge10$, $y\ge10$
-                  (dimensions de l’aire).</div>
-              </div>
+          <div class="step">
+            <div class="n">Q2</div>
+            <div>
+              Pour $f(x)=-3x^2+4x-7$, compléter $S=$ <input id="spS2" class="input" style="width:120px" placeholder="?">
+              et $P=$ <input id="spP2" class="input" style="width:120px" placeholder="?">.
+              <button class="btn" id="btnSP2">Vérifier</button> <span id="spR2"></span>
             </div>
           </div>
+        </details>
+      </div>
 
-          <div class="card section" id="extras">
-            <h2>6 quinquies. Exercices interactifs supplémentaires</h2>
+      <div class="card section" id="relpos">
+        <h2>6 ter. Position relative parabole / droite</h2>
+        <p class="muted">Comparer $y_f=ax^2+bx+c$ et $y_g=mx+p$ via le signe de $h(x)=f(x)-g(x)=ax^2+(b-m)x+(c-p)$.
+        </p>
+        <div class="grid" style="grid-template-columns:1fr; gap:14px">
+          <div class="card" style="margin:0">
+            <label class="mono">a <input id="pa" class="input" type="number" step="any" value="1"
+                style="width:120px"></label>
+            <label class="mono">b <input id="pb" class="input" type="number" step="any" value="0"
+                style="width:120px"></label>
+            <label class="mono">c <input id="pc" class="input" type="number" step="any" value="0"
+                style="width:120px"></label>
+            <hr class="hr" />
+            <label class="mono">m <input id="pm" class="input" type="number" step="any" value="1"
+                style="width:120px"></label>
+            <label class="mono">p <input id="pp" class="input" type="number" step="any" value="-1"
+                style="width:120px"></label>
+            <button class="btn mt-8" id="btnRel">Analyser</button>
+          </div>
+          <div class="card" id="relOut" style="margin:0">
+            <div class="result">Entrer $(a,b,c,m,p)$ puis « Analyser ».</div>
+          </div>
+        </div>
+      </div>
 
-            <details open>
-              <summary><strong>Inégalités du 2e degré</strong></summary>
-              <div class="step">
-                <div class="n">I1</div>
+      <div class="card section" id="optgeo">
+        <h2>6 quater. Optimisation géométrique — Aire maximale</h2>
+        <p class="muted">Objectif: déterminer les dimensions <strong>x</strong> (longueur) et <strong>y</strong>
+          (largeur) d’une aire de jeu <em>rectangulaire</em> adossée à un bâtiment (le long d’un côté), pour
+          <strong>maximiser l’aire</strong> <code>A = x × y</code> (m²),
+          en tenant compte d’une <strong>allée de largeur t</strong> sur trois côtés (avant et les deux côtés) et
+          d’une <strong>longueur totale de clôture L</strong> disponible.
+        </p>
+        <div class="grid" style="grid-template-columns:1fr; gap:14px">
+          <div class="card" style="margin:0">
+            <label class="mono">Clôture disponible L <input id="Lclo" class="input" type="number" step="any" value="100"
+                style="width:140px"> m</label>
+            <label class="mono">Largeur allée t <input id="Tall" class="input" type="number" step="any" value="3"
+                style="width:140px"> m</label>
+            <button class="btn mt-8" id="btnOpt">Optimiser</button>
+          </div>
+          <div class="card" id="optOut" style="margin:0">
+            <div class="result">Modèle: clôture sur AB, BC, CD avec allée de largeur t. On impose $x\ge10$, $y\ge10$
+              (dimensions de l’aire).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section" id="extras">
+        <h2>6 quinquies. Exercices interactifs supplémentaires</h2>
+
+        <details open>
+          <summary><strong>Inégalités du 2e degré</strong></summary>
+          <div class="step">
+            <div class="n">I1</div>
+            <div>
+              Résoudre $f(x)=ax^2+bx+c\; \gtrless\; 0$ (notation française des intervalles).
+              <div class="grid" style="grid-template-columns:1fr; gap:12px">
                 <div>
-                  Résoudre $f(x)=ax^2+bx+c\; \gtrless\; 0$ (notation française des intervalles).
-                  <div class=\"grid\" style=\"grid-template-columns:1fr; gap:12px\">
-                    <div>
-                      <label class="mono">a <input id="ia" class="input" type="number" step="any" value="1"
-                          style="width:120px"></label>
-                      <label class="mono">b <input id="ib" class="input" type="number" step="any" value="-2"
-                          style="width:120px"></label>
-                      <label class="mono">c <input id="ic" class="input" type="number" step="any" value="-3"
-                          style="width:120px"></label>
-                      <label class="mono">Signe recherché
-                        <select id="isgn" class="input" style="width:160px">
-                          <option value=">=0">f(x) ≥ 0</option>
-                          <option value="<=0">f(x) ≤ 0</option>
-                        </select>
-                      </label>
-                      <button class="btn mt-8" id="btnIneq">Résoudre</button>
-                    </div>
-                    <div id="ineqOut" class="card">
-                      <div class="result">Choisir a,b,c et le signe puis « Résoudre ».</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </details>
-
-            <details class="mt-8">
-              <summary><strong>Équations bicarrées</strong></summary>
-              <div class="step">
-                <div class="n">B1</div>
-                <div>
-                  Résoudre $x^4+px^2+q=0$ via $X=x^2$.
-                  <label class="mono">p <input id="bp" class="input" type="number" step="any" value="-9"
+                  <label class="mono">a <input id="ia" class="input" type="number" step="any" value="1"
                       style="width:120px"></label>
-                  <label class="mono">q <input id="bq" class="input" type="number" step="any" value="14"
+                  <label class="mono">b <input id="ib" class="input" type="number" step="any" value="-2"
                       style="width:120px"></label>
-                  <button class="btn mt-8" id="btnBic">Résoudre</button>
-                  <div id="bicOut" class="result mt-6">Suggéré: $x^4-9x^2+14=0$.</div>
+                  <label class="mono">c <input id="ic" class="input" type="number" step="any" value="-3"
+                      style="width:120px"></label>
+                  <label class="mono">Signe recherché
+                    <select id="isgn" class="input" style="width:160px">
+                      <option value=">=0">f(x) ≥ 0</option>
+                      <option value="<=0">f(x) ≤ 0</option>
+                    </select>
+                  </label>
+                  <button class="btn mt-8" id="btnIneq">Résoudre</button>
                 </div>
-              </div>
-            </details>
-
-            <details class="mt-8">
-              <summary><strong>Reconstruire le trinôme à partir de S et P</strong></summary>
-              <div class="step">
-                <div class="n">SP</div>
-                <div>
-                  Étant donnés $S=x_1+x_2$ et $P=x_1x_2$, le trinôme monique est $x^2-Sx+P$.
-                  <label class="mono">S <input id="rs" class="input" type="number" step="any" value="5"
-                      style="width:120px"></label>
-                  <label class="mono">P <input id="rp" class="input" type="number" step="any" value="6"
-                      style="width:120px"></label>
-                  <button class="btn mt-8" id="btnRec">Construire</button>
-                  <div id="recOut" class="result mt-6">Ex.: $S=5, P=6 \Rightarrow x^2-5x+6$.</div>
+                <div id="ineqOut" class="card">
+                  <div class="result">Choisir a,b,c et le signe puis « Résoudre ».</div>
                 </div>
-              </div>
-            </details>
-          </div>
-
-          <div class="card section" id="generator">
-            <h2>6 sexies. Générateur d’exercices (aléatoire) — avec correction</h2>
-            <p class="muted">Génère des énoncés variés: forme canonique, discriminant/racines, signe/intervalle,
-              inéquations. Les valeurs sont choisies pour avoir des calculs propres.</p>
-            <div class="grid" style="grid-template-columns:1fr; gap:14px">
-              <div class="card" style="margin:0">
-                <label class="mono">Type
-                  <select id="gtype" class="input" style="width:220px">
-                    <option value="canonique">Écrire sous forme canonique</option>
-                    <option value="racines">Trouver Δ et les racines</option>
-                    <option value="signe">Tableau de signe</option>
-                    <option value="ineq">Résoudre l’inéquation f(x) ≥ 0</option>
-                  </select>
-                </label>
-                <button class="btn mt-8" id="btnGen">Générer</button>
-                <button class="btn mt-8" id="btnCorr">Afficher la correction</button>
-              </div>
-              <div class="card" id="genOut" style="margin:0">
-                <div id="genStmt" class="result">Cliquez « Générer » pour obtenir un énoncé.</div>
-                <div id="genCorr" class="result mt-6" style="display:none"></div>
               </div>
             </div>
           </div>
+        </details>
 
-          <div class="card section" id="entrainements">
-            <h2>7. Entraînements</h2>
-
-            <details open>
-              <summary><strong>Mini‑exercices</strong></summary>
-              <ul>
-                <li>Mettre sous forme canonique: $3x^2-12x+5$.</li>
-                <li>Donner le signe de $g(x)=-x^2+2x+8$.</li>
-                <li>Résoudre: $x^2-6x+8\ge0$.</li>
-              </ul>
-            </details>
-
-            <details class="mt-8">
-              <summary><strong>Canonique — entraînement guidé</strong></summary>
-              <div class="step">
-                <div class="n">Q1</div>
-                <div>
-                  Pour $f(x)=2x^2-20x+10$, écrire $f$ sous la forme $a(x-\alpha)^2+\beta$.
-                  <div class="mono mt-6">
-                    Réponse attendue: <code>2(x-5)^2-40</code>
-                  </div>
-                  <label class="mono mt-6">Votre proposition: <input id="q1" class="input" style="width:360px"
-                      placeholder="2(x-5)^2-40"></label>
-                  <button class="btn" onclick="checkText('q1','2(x-5)^2-40')">Vérifier</button>
-                  <span id="q1r" class="mono"></span>
-                </div>
-              </div>
-            </details>
-
-            <details class="mt-8">
-              <summary><strong>Variations — TD rapides</strong></summary>
-              <div class="step">
-                <div class="n">H</div>
-                <div>
-                  $h(x)=4x^2+2x+1$. Sommet ? variations ? $h$ s'annule-t-elle ?
-                  <details class="mt-4">
-                    <summary>Correction</summary>
-                    $a=4>0$, $\alpha=-\tfrac{b}{2a}=-\tfrac{2}{8}=-\tfrac14$,
-                    $\beta=h(\alpha)=4(\tfrac{1}{16})+2(-\tfrac14)+1=\tfrac14-\tfrac12+1=\tfrac34$.
-                    Donc minimum $\tfrac34$ en $\alpha=-\tfrac14$; décroît puis croît; $\Delta=2^2-4\cdot4\cdot1=-12<0$
-                      donc aucune racine. </details>
-                </div>
-              </div>
-              <div class="step">
-                <div class="n">G</div>
-                <div>
-                  $g(x)=-4x^2+4x-1$. $a<0$ donc croît puis décroît. $\Delta=16-16=0$, racine double $x=\tfrac12$. </div>
-                </div>
-            </details>
-
-            <details class="mt-8">
-              <summary><strong>Applications — bénéfice (modélisation)</strong></summary>
-              <div class="step">
-                <div class="n">Eco</div>
-                <div>
-                  $f(x)=-2x^2+5x-2$ sur $[0,3]$ (x en centaines). Forme canonique
-                  $f(x)=-2(x-\tfrac{5}{4})^2+\tfrac{9}{8}$. Bénéfice max $\tfrac{9}{8}$ pour $x=\tfrac{5}{4}$ (125
-                  objets). $f>0$ quand $x\in(\tfrac{5-\sqrt{1}}{4},\tfrac{5+\sqrt{1}}{4})=(1,\tfrac{3}{2})$.
-                </div>
-              </div>
-            </details>
-
-            <details class="mt-8">
-              <summary><strong>Équations / Inéquations (sélection)</strong></summary>
-              <ul>
-                <li>Résoudre $-2x^2+x-1=0$; $\Delta=1-(-8)=9$, $x\in\{1,\tfrac12\}$ après division par $-2$ et calcul
-                  classique.</li>
-                <li>Résoudre $x(8-x)+1=0 \iff -x^2+8x+1=0$.</li>
-                <li>Inéquation $x^2-0{,}4x+0{,}04\le0$: racine double $x=0{,}2$, donc $\le0$ uniquement en $x=0{,}2$.
-                </li>
-              </ul>
-            </details>
+        <details class="mt-8">
+          <summary><strong>Équations bicarrées</strong></summary>
+          <div class="step">
+            <div class="n">B1</div>
+            <div>
+              Résoudre $x^4+px^2+q=0$ via $X=x^2$.
+              <label class="mono">p <input id="bp" class="input" type="number" step="any" value="-9"
+                  style="width:120px"></label>
+              <label class="mono">q <input id="bq" class="input" type="number" step="any" value="14"
+                  style="width:120px"></label>
+              <button class="btn mt-8" id="btnBic">Résoudre</button>
+              <div id="bicOut" class="result mt-6">Suggéré: $x^4-9x^2+14=0$.</div>
+            </div>
           </div>
+        </details>
+
+        <details class="mt-8">
+          <summary><strong>Reconstruire le trinôme à partir de S et P</strong></summary>
+          <div class="step">
+            <div class="n">SP</div>
+            <div>
+              Étant donnés $S=x_1+x_2$ et $P=x_1x_2$, le trinôme monique est $x^2-Sx+P$.
+              <label class="mono">S <input id="rs" class="input" type="number" step="any" value="5"
+                  style="width:120px"></label>
+              <label class="mono">P <input id="rp" class="input" type="number" step="any" value="6"
+                  style="width:120px"></label>
+              <button class="btn mt-8" id="btnRec">Construire</button>
+              <div id="recOut" class="result mt-6">Ex.: $S=5, P=6 \Rightarrow x^2-5x+6$.</div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="card section" id="generator">
+        <h2>6 sexies. Générateur d’exercices (aléatoire) — avec correction</h2>
+        <p class="muted">Génère des énoncés variés: forme canonique, discriminant/racines, signe/intervalle,
+          inéquations. Les valeurs sont choisies pour avoir des calculs propres.</p>
+        <div class="grid" style="grid-template-columns:1fr; gap:14px">
+          <div class="card" style="margin:0">
+            <label class="mono">Type
+              <select id="gtype" class="input" style="width:220px">
+                <option value="canonique">Écrire sous forme canonique</option>
+                <option value="racines">Trouver Δ et les racines</option>
+                <option value="signe">Tableau de signe</option>
+                <option value="ineq">Résoudre l’inéquation f(x) ≥ 0</option>
+              </select>
+            </label>
+            <button class="btn mt-8" id="btnGen">Générer</button>
+            <button class="btn mt-8" id="btnCorr">Afficher la correction</button>
+          </div>
+          <div class="card" id="genOut" style="margin:0">
+            <div id="genStmt" class="result">Cliquez « Générer » pour obtenir un énoncé.</div>
+            <div id="genCorr" class="result mt-6" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card section" id="entrainements">
+        <h2>7. Entraînements</h2>
+
+        <details open>
+          <summary><strong>Mini‑exercices</strong></summary>
+          <ul>
+            <li>Mettre sous forme canonique: $3x^2-12x+5$.</li>
+            <li>Donner le signe de $g(x)=-x^2+2x+8$.</li>
+            <li>Résoudre: $x^2-6x+8\ge0$.</li>
+          </ul>
+        </details>
+
+        <details class="mt-8">
+          <summary><strong>Canonique — entraînement guidé</strong></summary>
+          <div class="step">
+            <div class="n">Q1</div>
+            <div>
+              Pour $f(x)=2x^2-20x+10$, écrire $f$ sous la forme $a(x-\alpha)^2+\beta$.
+              <div class="mono mt-6">
+                Réponse attendue: <code>2(x-5)^2-40</code>
+              </div>
+              <label class="mono mt-6">Votre proposition: <input id="q1" class="input" style="width:360px"
+                  placeholder="2(x-5)^2-40"></label>
+              <button class="btn" onclick="checkText('q1','2(x-5)^2-40')">Vérifier</button>
+              <span id="q1r" class="mono"></span>
+            </div>
+          </div>
+        </details>
+
+        <details class="mt-8">
+          <summary><strong>Variations — TD rapides</strong></summary>
+          <div class="step">
+            <div class="n">H</div>
+            <div>
+              $h(x)=4x^2+2x+1$. Sommet ? variations ? $h$ s'annule-t-elle ?
+              <details class="mt-4">
+                <summary>Correction</summary>
+                $a=4>0$, $\alpha=-\tfrac{b}{2a}=-\tfrac{2}{8}=-\tfrac14$,
+                $\beta=h(\alpha)=4(\tfrac{1}{16})+2(-\tfrac14)+1=\tfrac14-\tfrac12+1=\tfrac34$.
+                Donc minimum $\tfrac34$ en $\alpha=-\tfrac14$; décroît puis croît; $\Delta=2^2-4\cdot4\cdot1=-12&lt;0$
+                donc aucune racine.
+              </details>
+            </div>
+          </div>
+          <div class="step">
+            <div class="n">G</div>
+            <div>
+              $g(x)=-4x^2+4x-1$. $a&lt;0$ donc croît puis décroît. $\Delta=16-16=0$, racine double $x=\tfrac12$. </div>
+          </div>
+        </details>
+
+        <details class="mt-8">
+          <summary><strong>Applications — bénéfice (modélisation)</strong></summary>
+          <div class="step">
+            <div class="n">Eco</div>
+            <div>
+              $f(x)=-2x^2+5x-2$ sur $[0,3]$ (x en centaines). Forme canonique
+              $f(x)=-2(x-\tfrac{5}{4})^2+\tfrac{9}{8}$. Bénéfice max $\tfrac{9}{8}$ pour $x=\tfrac{5}{4}$ (125
+              objets). $f>0$ quand $x\in(\tfrac{5-\sqrt{1}}{4},\tfrac{5+\sqrt{1}}{4})=(1,\tfrac{3}{2})$.
+            </div>
+          </div>
+        </details>
+
+        <details class="mt-8">
+          <summary><strong>Équations / Inéquations (sélection)</strong></summary>
+          <ul>
+            <li>Résoudre $-2x^2+x-1=0$; $\Delta=1-(-8)=9$, $x\in\{1,\tfrac12\}$ après division par $-2$ et calcul
+              classique.</li>
+            <li>Résoudre $x(8-x)+1=0 \iff -x^2+8x+1=0$.</li>
+            <li>Inéquation $x^2-0{,}4x+0{,}04\le0$: racine double $x=0{,}2$, donc $\le0$ uniquement en $x=0{,}2$.
+            </li>
+          </ul>
+        </details>
+      </div>
     </section>
 
     <footer class="muted">© 2025 — Cours rédigé par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.
@@ -746,7 +762,7 @@
     <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
   </div>
 
-  <script>
+  <script type="module">
     const $ = (q) => document.querySelector(q), $$ = (q) => document.querySelectorAll(q);
     // Thème
     try { const savedTheme = localStorage.getItem('theme'); if (savedTheme) { if (savedTheme === 'light') { document.body.classList.add('light'); } else { document.body.classList.remove('light'); } } else if (window.matchMedia?.('(prefers-color-scheme: light)').matches) { document.body.classList.add('light'); } } catch (e) {}

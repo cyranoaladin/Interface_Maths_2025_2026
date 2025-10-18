@@ -8,6 +8,8 @@ from datetime import datetime, timezone
 from sqlalchemy import Table, Column, Integer, String, Boolean, DateTime, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
 
+from pathlib import Path
+
 from .db import Base, engine
 from .config import settings
 
@@ -138,6 +140,10 @@ def _ensure_teacher(db: Session, email: str, full_name: Optional[str] = None) ->
 
 
 def ensure_bootstrap() -> None:
+    # SQLite safety: make sure the target directory exists even if engine was
+    # created before the repo tree was fully prepared on CI.
+    if engine.url.drivername.startswith("sqlite") and engine.url.database:
+        Path(engine.url.database).parent.mkdir(parents=True, exist_ok=True)
     # Create defaults
     Base.metadata.create_all(bind=engine)
     # Lightweight migration for first_name/last_name on SQLite

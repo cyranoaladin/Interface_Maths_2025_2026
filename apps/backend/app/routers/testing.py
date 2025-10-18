@@ -1,13 +1,16 @@
 from __future__ import annotations
 
+# pylint: disable=duplicate-code
+
 import os
-from fastapi import APIRouter, Request, HTTPException, Depends
+import re
+
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
 from ..db import SessionLocal, get_db
-from ..users import _ensure_teacher, Group, create_student, User
-import re
 from ..security import get_password_hash
+from ..users import Group, User, _ensure_teacher, create_student
 
 
 router = APIRouter(prefix="/testing", tags=["testing"])
@@ -36,7 +39,7 @@ async def ensure_teacher(request: Request):
         password = (form.get("password") or password).strip()
     if not email:
         raise HTTPException(status_code=422, detail="email required")
-    with SessionLocal() as db:  # type: Session
+    with SessionLocal() as db:
         teacher = _ensure_teacher(db, email=email, full_name=email)
         teacher.hashed_password = get_password_hash(password)
         db.commit()

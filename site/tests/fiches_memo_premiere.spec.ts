@@ -4,5 +4,6 @@ test('Fiche mémo Première (Second Degré cours) charge et affiche un titre', a
   const url = '/EDS_premiere/Second_Degre/cours_second_degre.html';
   const res = await page.goto(url);
   expect(res?.ok()).toBeTruthy();
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  const heading = page.getByRole('heading', { level: 1, name: /Cours complet/i });
+  await expect(heading).toBeVisible();
 });

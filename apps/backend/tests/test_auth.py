@@ -23,17 +23,21 @@ def _load_test_dependencies():
     return user_model, hash_password
 
 
-User, get_password_hash = _load_test_dependencies()
+user_model_cls, get_password_hash = _load_test_dependencies()
 
 # A test user and password
 TEST_USER_EMAIL = "test@example.com"
 TEST_USER_PASSWORD = "a_very_secure_password"
 
 
-def create_test_user(db_session: Session, role: str = "student", email: str = TEST_USER_EMAIL) -> User:
+def create_test_user(
+    db_session: Session,
+    role: str = "student",
+    email: str = TEST_USER_EMAIL,
+):
     """Helper function to create a user in the test database."""
     hashed_password = get_password_hash(TEST_USER_PASSWORD)
-    user = User(
+    user = user_model_cls(
         email=email,
         hashed_password=hashed_password,
         full_name=f"Test {role.capitalize()}",

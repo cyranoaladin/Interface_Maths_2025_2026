@@ -6,10 +6,10 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.main import app
-from app.db import Base, get_db
-from app.users import User, Group
-from app.security import get_password_hash
+from apps.backend.app.db import Base, get_db
+from apps.backend.app.main import app
+from apps.backend.app.security import get_password_hash
+from apps.backend.app.users import Group, User
 
 
 def make_test_app(tmp_path: Path) -> TestClient:

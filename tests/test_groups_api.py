@@ -1,28 +1,41 @@
 from __future__ import annotations
 
-from fastapi.testclient import TestClient
-from apps.backend.app.main import app
-from apps.backend.app.users import ensure_bootstrap, _ensure_teacher
-from apps.backend.app.db import SessionLocal
+import sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from apps.backend.app.security import get_password_hash
+from apps.backend.app.users import Group, User
 
 
-def create_teacher_and_get_token(client: TestClient, email: str) -> str:
-    # Create teacher with provisional password written to outputs (not read here). We set known password by updating hash.
-    ensure_bootstrap()
-    with SessionLocal() as db:
-        teacher = _ensure_teacher(db, email=email, full_name=email)
-        # Reset to known password 'secret'
-        from apps.backend.app.security import get_password_hash
-        teacher.hashed_password = get_password_hash('secret')
-        db.commit()
+def create_teacher_and_get_token(client, session, email: str) -> str:
+    teacher = session.query(User).filter_by(email=email).one_or_none()
+    if not teacher:
+        teacher = User(
+            email=email,
+            full_name="Teacher One",
+            role="teacher",
+            hashed_password=get_password_hash("secret"),
+        )
+        session.add(teacher)
+    group = session.query(Group).filter_by(code="T-EDS-3").one_or_none()
+    if not group:
+        group = Group(code="T-EDS-3", name="Terminale EDS Maths — Groupe 3")
+        session.add(group)
+    if group not in teacher.groups:
+        teacher.groups.append(group)
+    session.commit()
+
     resp = client.post("/auth/token", data={"username": email, "password": "secret"})
     assert resp.status_code == 200, resp.text
     return resp.json()["access_token"]
 
 
-def test_groups_list_and_students_seed_authorized():
-    client = TestClient(app)
-    token = create_teacher_and_get_token(client, email="teacher.test@example.com")
+def test_groups_list_and_students_seed_authorized(client, session):
+    token = create_teacher_and_get_token(client, session, email="teacher.test@example.com")
 
     # Authorized list groups
     r = client.get("/groups/", headers={"Authorization": f"Bearer {token}"})

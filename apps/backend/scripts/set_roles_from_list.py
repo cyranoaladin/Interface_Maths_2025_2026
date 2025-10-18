@@ -14,8 +14,8 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 # Local app imports
-from apps.backend.app.db import SessionLocal
-from apps.backend.app.users import User
+from apps.backend.app.db import SessionLocal  # noqa: E402
+from apps.backend.app.users import User  # noqa: E402
 
 
 LINE_RE = re.compile(r"^\s*([^\s]+)\s+([^\s]+)\s*$")

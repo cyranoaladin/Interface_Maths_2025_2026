@@ -20,6 +20,8 @@ Usage:
 
 import sys
 from pathlib import Path
+import os
+from sqlalchemy.orm import Session
 
 # Ensure repo root on sys.path so that 'apps.backend.app.*' imports work when run from anywhere
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -28,12 +30,9 @@ REPO_ROOT = SCRIPT_DIR.parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-import os
-from sqlalchemy.orm import Session
-
-from apps.backend.app.db import engine, Base
-from apps.backend.app.users import Group, User
-from apps.backend.app.security import get_password_hash
+from apps.backend.app.db import engine, Base  # noqa: E402
+from apps.backend.app.users import Group, User  # noqa: E402
+from apps.backend.app.security import get_password_hash  # noqa: E402
 
 
 def ensure_groups(db: Session) -> None:

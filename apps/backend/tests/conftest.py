@@ -18,12 +18,12 @@ if str(REPO_ROOT) not in sys.path:
 def _load_app_components():
     """Import app modules lazily once the path is configured."""
     from apps.backend.app.main import app as fastapi_app
-    from apps.backend.app.db import Base as db_base, get_db as db_get_db
+    from apps.backend.app.db import Base as base_model, get_db as db_get_db
 
-    return fastapi_app, db_base, db_get_db
+    return fastapi_app, base_model, db_get_db
 
 
-app, Base, get_db = _load_app_components()
+app, db_base, get_db = _load_app_components()
 
 # Use an in-memory SQLite database for testing
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
@@ -33,13 +33,13 @@ engine = create_engine(
     connect_args={"check_same_thread": False},
     poolclass=StaticPool,
 )
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+testing_session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 # Fixture to override the get_db dependency and use the test database
 def override_get_db():
     """Overrides the database dependency to use a test database session."""
-    database = TestingSessionLocal()
+    database = testing_session_local()
     try:
         yield database
     finally:
@@ -56,14 +56,14 @@ def db_session():
     Pytest fixture to create and tear down the test database for each test function.
     """
     # Create all tables
-    Base.metadata.create_all(bind=engine)
-    session = TestingSessionLocal()
+    db_base.metadata.create_all(bind=engine)
+    session = testing_session_local()
     try:
         yield session
     finally:
         session.close()
         # Drop all tables
-        Base.metadata.drop_all(bind=engine)
+        db_base.metadata.drop_all(bind=engine)
 
 
 @pytest.fixture(scope="module")

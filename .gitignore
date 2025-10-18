@@ -12,6 +12,7 @@ ui/coverage/
 apps/backend/.venv/
 apps/backend/outputs/
 apps/backend/data/*.db
+apps/backend/apps/
 .pytest_cache/
 .coverage
 

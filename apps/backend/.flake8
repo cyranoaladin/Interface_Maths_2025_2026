@@ -1,10 +1,5 @@
 [flake8]
 max-line-length = 120
-exclude = .venv,venv,outputs,data,__pycache__
-per-file-ignores =
-    app/__init__.py: W391
-[flake8]
-max-line-length = 120
 extend-ignore = E203,E302,E303,E402,E501,F401,F811,W391
 exclude =
     .git,
@@ -15,3 +10,5 @@ exclude =
     data,
     scripts,
     app/routers/testing.py
+per-file-ignores =
+    app/__init__.py: W391

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from sqlalchemy import create_engine
+from pathlib import Path
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 from .config import settings
@@ -13,10 +14,18 @@ class Base(DeclarativeBase):
 # Create SQLAlchemy engine
 DATABASE_URL = settings.DATABASE_URL
 connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+if DATABASE_URL.startswith("sqlite"):
+    # Ensure parent directory exists for SQLite path like sqlite:////abs/path/to/file.db
+    # Extract filesystem path after the last 'sqlite://'
+    raw = DATABASE_URL.split("sqlite:///")[-1]
+    db_path = Path("/" + raw.lstrip("/"))
+    db_dir = db_path.parent
+    db_dir.mkdir(parents=True, exist_ok=True)
+
 engine = create_engine(DATABASE_URL, echo=False, connect_args=connect_args)
 
 # Session factory
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)  # pylint: disable=invalid-name
 
 
 # Dependency

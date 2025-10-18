@@ -52,7 +52,7 @@ html[data-theme="energie"]:root {
 html[data-theme="pure"]:root {
   --bg: #212121;
   --card: #2a2a2a;
-  --text: #FFFFFF;
+  --text: #FFF;
   --muted: #E0E0E0;
   --link: #174D8C;
   --border: #2f2f2f;
@@ -1300,7 +1300,7 @@ html[data-theme="light"] {
 
   /* Fond clair, texte sombre, masquage des éléments interactifs */
   body {
-    background: #ffffff !important;
+    background: #fff !important;
     color: #111827 !important;
   }
 
@@ -1340,7 +1340,7 @@ html[data-theme="light"] {
   .timeline-card {
     box-shadow: none;
     border: 1px solid #e5e7eb;
-    background: #ffffff;
+    background: #fff;
   }
 }
 

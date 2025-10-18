@@ -12,10 +12,10 @@ REPO_ROOT = SCRIPT_DIR.parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from sqlalchemy.orm import Session
-from apps.backend.app.db import engine
-from apps.backend.app.users import create_student
-from apps.backend.app.config import settings
+from sqlalchemy.orm import Session  # noqa: E402
+from apps.backend.app.db import engine  # noqa: E402
+from apps.backend.app.users import create_student  # noqa: E402
+from apps.backend.app.config import settings  # noqa: E402
 
 """
 Import students from a CSV and generate provisional passwords.

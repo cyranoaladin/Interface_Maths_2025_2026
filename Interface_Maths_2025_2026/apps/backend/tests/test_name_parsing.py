@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from app.users import split_full_name
+from apps.backend.app.users import split_full_name
 
 
 def test_split_simple_name():

@@ -1,7 +1,9 @@
 :root {
   /* Fond sombre premium */
-  --bg: #0e1220;          /* bleu-gris profond */
-  --bg-2: #12182a;        /* panneau */
+  --bg: #0e1220;
+  /* bleu-gris profond */
+  --bg-2: #12182a;
+  /* panneau */
   --panel: #12182a;
   --panel-2: #161d33;
 
@@ -10,24 +12,27 @@
   --text-muted: #c7d0de;
 
   /* Accents (désaturés, non criards) */
-  --accent: #8aa3ff;      /* bleu doux */
-  --accent-2: #b495ff;    /* violet doux */
-  --accent-3: #74d0e0;    /* cyan doux */
+  --accent: #8aa3ff;
+  /* bleu doux */
+  --accent-2: #b495ff;
+  /* violet doux */
+  --accent-3: #74d0e0;
+  /* cyan doux */
 
   /* États */
   --ok: #46c28d;
   --warn: #f5a524;
-  --danger: #ee6666;
+  --danger: #e66;
 
   /* Traits & ombres */
   --border: #223054;
-  --shadow-lg: 0 20px 60px rgba(0,0,0,.35);
-  --shadow-md: 0 12px 30px rgba(0,0,0,.25);
-  --shadow-sm: 0 8px 18px rgba(0,0,0,.18);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, .35);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, .25);
+  --shadow-sm: 0 8px 18px rgba(0, 0, 0, .18);
 
   /* Typographies */
-  --ff-title: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
-  --ff-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ff-title: "Poppins", system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
+  --ff-body: "Inter", system-ui, -apple-system, "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
 
   /* Échelle typographique & mesures (AA) */
   --fs-h1: clamp(2.6rem, 4.2vw, 3.2rem);
@@ -45,9 +50,9 @@
 
   /* Verre dépoli */
   --glass-bg: rgba(20, 27, 46, .6);
-  --glass-brd: rgba(255,255,255,.08);
+  --glass-brd: rgba(255, 255, 255, .08);
 
   /* Dégradés subtils pour hero/cartes */
-  --grad-hero: radial-gradient(1200px 650px at 80% -10%, rgba(116,208,224,.18) 0%, rgba(180,149,255,.12) 35%, rgba(138,163,255,.10) 60%, transparent 100%),
-               radial-gradient(900px 480px at 10% 110%, rgba(138,163,255,.18) 0%, rgba(116,208,224,.12) 40%, transparent 75%);
+  --grad-hero: radial-gradient(1200px 650px at 80% -10%, rgba(116, 208, 224, .18) 0%, rgba(180, 149, 255, .12) 35%, rgba(138, 163, 255, .10) 60%, transparent 100%),
+    radial-gradient(900px 480px at 10% 110%, rgba(138, 163, 255, .18) 0%, rgba(116, 208, 224, .12) 40%, transparent 75%);
 }

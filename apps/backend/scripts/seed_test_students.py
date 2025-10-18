@@ -3,8 +3,8 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session
 
-from app.db import engine
-from app.users import create_student
+from apps.backend.app.db import engine
+from apps.backend.app.users import create_student
 
 
 def main():
@@ -23,4 +23,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -7,8 +7,9 @@
   <title>Interface Maths — Lycée PMF</title>
 
   <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
   <link rel="stylesheet" href="/assets/css/main.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script data-vite-ignore src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     :root {
       --bg: #0b1020;
@@ -288,7 +289,7 @@
   <script>
     window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}", div: "\\mid", ndiv: "\\nmid", pmod: "\\;\\mathrm{mod}\\;" } }, svg: { fontCache: 'global' } };
   </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script data-vite-ignore defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 
 <body class="light">
@@ -474,7 +475,7 @@
     <section id="de" class="section card">
       <h2>2. Division euclidienne — Théorème & P5 (Lemme des restes)</h2>
       <p><strong>Théorème.</strong> Pour $a\in\Z$, $b\in\N^*$, il existe un unique $(q,r)\in\Z^2$ tel que $a=bq+r$ avec
-        $0\le r<b$. $q$ est le <em>quotient</em> et $r$ le <em>reste</em>.</p>
+        $0\le r&lt;b$. $q$ est le <em>quotient</em> et $r$ le <em>reste</em>.</p>
       <details open>
         <summary>Exemple guidé (114 ÷ 8)</summary>
         <div class="control-row"><label class="muted" for="dea">$a$</label><input id="dea" class="input" type="number"
@@ -820,7 +821,7 @@ print("PGCD:", g)
     <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
   </div>
 
-  <script>
+  <script data-vite-ignore>
     // ===== util =====
     const $ = (q) => document.querySelector(q), $$ = (q) => document.querySelectorAll(q);
     let log = []; try { const persisted = localStorage.getItem('mathsexp_log'); if (persisted) { log = JSON.parse(persisted); } } catch (e) {}
@@ -971,7 +972,7 @@ print("PGCD:", g)
       out.textContent = lines.join('\n');
     }
   </script>
-  <script>
+  <script data-vite-ignore>
     if (typeof lucide !== "undefined") {
       lucide.createIcons();
     }

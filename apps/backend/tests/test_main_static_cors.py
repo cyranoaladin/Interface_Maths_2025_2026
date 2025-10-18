@@ -2,6 +2,12 @@ from __future__ import annotations
 
 import importlib
 import os
+import sys
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 
 def test_static_mount_and_cors_reload():
@@ -11,9 +17,9 @@ def test_static_mount_and_cors_reload():
     os.environ["CORS_ORIGINS"] = "[\"http://example.com\"]"
     # Late import with reload to apply settings
     # Reload config then main to apply new env
-    import app.config as config_module
+    import apps.backend.app.config as config_module
     importlib.reload(config_module)
-    from app import main as main_module
+    from apps.backend.app import main as main_module
     importlib.reload(main_module)
     app = main_module.app
     # Confirm application has routes (static mount implied by presence of /content)

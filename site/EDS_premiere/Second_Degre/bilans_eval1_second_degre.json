@@ -53,7 +53,7 @@
     },
     {
         "nom_prenom": "Zaineb Chraïti",
-        "note_finale": 9.5,
+        "note_finale": 9.0,
         "mention": "Fragile",
         "bilan_personnalise": {
             "points_forts": [
@@ -75,19 +75,19 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 2.5,
+                "note": 1.0,
                 "commentaire": "Difficultés sur les identités remarquables et la factorisation, mais résolution correcte de x²-7=0."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 4.5,
+                "note": 4.0,
                 "commentaire": "Excellente maîtrise de la forme canonique et de l'étude de fonction, seule la résolution finale est imprécise."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 2.5,
+                "note": 4.0,
                 "commentaire": "Les idées sont là, mais des erreurs de logique (inversion concave/convexe) et de calcul pénalisent le résultat."
             },
             {
@@ -99,14 +99,14 @@
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 9.5,
+            "notes_total": 9.0,
             "issues": []
         }
     },
     {
         "nom_prenom": "Yassine Kechrid",
-        "note_finale": 13.0,
-        "mention": "Assez Bien",
+        "note_finale": 11.5,
+        "mention": "Acceptable",
         "bilan_personnalise": {
             "points_forts": [
                 "Excellente maîtrise des équations du second degré (Exercice 1 parfait).",
@@ -127,8 +127,8 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 6.0,
-                "commentaire": "Parfaitement maîtrisé, toutes les équations sont résolues avec rigueur."
+                "note": 5.0,
+                "commentaire": "Assez bien maîtrisé, mais attention aux équations de type x^2=a."
             },
             {
                 "exercice": "Ex. 2",
@@ -145,19 +145,19 @@
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 1.5,
+                "note": 1.0,
                 "commentaire": "La mise en équation est juste, mais l'étude de la fonction d'aire est confuse et inachevée."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 13.0,
+            "notes_total": 11.5,
             "issues": []
         }
     },
     {
         "nom_prenom": "Maya Naouali",
-        "note_finale": 3.5,
+        "note_finale": 5.5,
         "mention": "Très Insuffisant",
         "bilan_personnalise": {
             "points_forts": [
@@ -166,7 +166,7 @@
                 "Bonne volonté visible : les étapes sont tentées, même si les calculs sont faux."
             ],
             "axes_amelioration": [
-                "Le respect des consignes : tu as utilisé des formules interdites (α, β avec discriminant). Il faut absolument maîtriser la méthode \"compléter le carré\" à la main.",
+                "Le respect des consignes : tu as utilisé des formules interdites (α, β), mais tu n'as pas été pénalisée. Il faut absolument maîtriser la méthode \"compléter le carré\" à la main.",
                 "Les bases du calcul algébrique : les manipulations d'équations, les signes, et les identités remarquables sont très fragiles.",
                 "Le vocabulaire et la logique : tu inverses \"concave\" et \"convexe\" et la logique du maximum/minimum selon le signe de a."
             ],
@@ -179,38 +179,38 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 0.5,
+                "note": 0.0,
                 "commentaire": "Les bases de la résolution d'équations (identités remarquables, factorisation) ne sont pas maîtrisées."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 0.5,
-                "commentaire": "Utilisation de formules interdites (discriminant) et erreurs de signe sur les coordonnées du sommet."
+                "note": 3.0,
+                "commentaire": "Des erreurs de signe sur les coordonnées du sommet."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 1.5,
+                "note": 2.5,
                 "commentaire": "Travail très maladroit avec inversion des termes \"concave/convexe\", mais quelques éléments sont compris."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 1.0,
-                "commentaire": "L'expression de l'aire est recopiée correctement, mais le raisonnement pour trouver le maximum est absent."
+                "note": 0.0,
+                "commentaire": "L'expression de l'aire est recopiée correctement dans la deuxième question, mais le raisonnement pour trouver le maximum est absent."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 3.5,
+            "notes_total": 5.5,
             "issues": []
         }
     },
     {
         "nom_prenom": "Mohamed-Khalil Ben Rabia",
-        "note_finale": 10.0,
-        "mention": "Passable ️",
+        "note_finale": 7.5,
+        "mention": "Insuffisant",
         "bilan_personnalise": {
             "points_forts": [
                 "Bonne compréhension de la méthode de la forme canonique (très bien réussie dans l'exercice 2).",
@@ -218,7 +218,7 @@
                 "Quelques bonnes intuitions algébriques."
             ],
             "axes_amelioration": [
-                "Le respect des consignes : l'usage du discriminant était interdit. Il faut s'en tenir aux méthodes demandées.",
+                "Laa résolution .",
                 "La rigueur des calculs : des erreurs de signe et de développement (Ex. 3) et de racines (Ex. 1) pénalisent lourdement la note.",
                 "La finalisation des exercices : les résolutions sont souvent interrompues avant la conclusion. Il faut aller au bout du raisonnement."
             ],
@@ -231,37 +231,37 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 2.5,
+                "note": 2.0,
                 "commentaire": "La résolution d'équations simples est peu maîtrisée, avec des erreurs sur les racines et des questions omises."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 4.5,
-                "commentaire": "Très bonne mise en forme canonique et étude de la fonction, mais la résolution de f(x)=0 est confuse."
+                "note": 3.25,
+                "commentaire": "Très bonne mise en forme canonique, mais le tableau de variation n'a pas été justifié et en contradiction avec le résultat du sommet. La résolution de f(x)=0 est confuse."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 2.0,
+                "note": 2.25,
                 "commentaire": "La forme canonique de g(x) est juste, mais celle de h(x) est fausse et la résolution de l'intersection est inachevée."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 1.0,
+                "note": 0.0,
                 "commentaire": "Des tentatives sont visibles mais la confusion règne, notamment sur la relation entre x et y."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 10.0,
+            "notes_total": 7.5,
             "issues": []
         }
     },
     {
         "nom_prenom": "Lina Mnif",
-        "note_finale": 17.75,
+        "note_finale": 15.0,
         "mention": "Très Bien",
         "bilan_personnalise": {
             "points_forts": [
@@ -283,41 +283,41 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 6.0,
-                "commentaire": "Parfait, rigoureux et clair. Toutes les méthodes de résolution sont maîtrisées."
+                "note": 5.0,
+                "commentaire": "Les méthodes de résolution ne sont pas parfaitement maîtrisées."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 5.0,
-                "commentaire": "Excellente maîtrise de la forme canonique et de l'étude de fonction."
+                "note": 4.0,
+                "commentaire": "Excellente maîtrise de la forme canonique et de l'étude de fonction. Attention à ne pas confondre f(x)=0 et le calcul de f(0)"
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 4.0,
+                "note": 2.75,
                 "commentaire": "Très bonne compréhension des concepts, mais la résolution de l'intersection est inachevée."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 2.75,
+                "note": 3.25,
                 "commentaire": "La méthode est bonne, mais de légères erreurs de calcul et d'unité pénalisent le résultat final."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 17.75,
+            "notes_total": 15.0,
             "issues": []
         }
     },
     {
         "nom_prenom": "Ela GAFSI",
-        "note_finale": 14.5,
-        "mention": "Bien, rigoureux et prometteur.",
+        "note_finale": 12.5,
+        "mention": "Assez bien, rigoureux et prometteur.",
         "bilan_personnalise": {
             "points_forts": [
-                "Excellente maîtrise de la mise sous forme canonique et de l'étude de fonction (Exercice 2 parfait).",
+                "Excellente maîtrise de la mise sous forme canonique et de l'étude de fonction.",
                 "Méthode claire, bonne présentation, maîtrise du raisonnement logique.",
                 "Bonne capacité à modéliser un problème (début de l'exercice 4)."
             ],
@@ -335,38 +335,38 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 3.25,
+                "note": 4.0,
                 "commentaire": "Bonne logique de résolution, mais une équation est restée inachevée, ce qui coûte des points."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 5.0,
+                "note": 4.5,
                 "commentaire": "Excellent raisonnement, la forme canonique et l'étude de fonction sont parfaitement maîtrisées."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 3.5,
+                "note": 3.0,
                 "commentaire": "La démarche est claire et les formes canoniques sont justes, mais la résolution de l'intersection est incomplète."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 2.75,
-                "commentaire": "Bonne méthode pour l'optimisation, mais une erreur de lecture finale sur la valeur de x et l'aire non conclue."
+                "note": 1.0,
+                "commentaire": "Des difficultés dans la recherche de la forme caanonique. Une erreur de lecture finale sur la valeur de x et l'aire non conclue."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 14.5,
+            "notes_total": 12.5,
             "issues": []
         }
     },
     {
         "nom_prenom": "Leyna MAGHREBI",
         "note_finale": 4.0,
-        "mention": "Très Insuffisant ⚠️",
+        "mention": "Très Insuffisant",
         "bilan_personnalise": {
             "points_forts": [
                 "Présentation soignée et structurée, ce qui est un excellent point de départ.",
@@ -387,26 +387,26 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 0.5,
+                "note": 0.0,
                 "commentaire": "Le raisonnement est très confus, les manipulations algébriques de base ne sont pas acquises."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 1.0,
+                "note": 2.0,
                 "commentaire": "La méthode pour compléter le carré est mal appliquée, entraînant une cascade d'erreurs."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 1.5,
+                "note": 2.0,
                 "commentaire": "Quelques idées sont présentes, mais les erreurs de calcul et de signe sont nombreuses."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 1.0,
-                "commentaire": "L'expression de l'aire est correcte, mais aucun raisonnement n'est mené pour trouver le maximum."
+                "note": 0.0,
+                "commentaire": "L'expression de l'aire est incorrecte, et aucun raisonnement n'est mené pour trouver le maximum."
             }
         ],
         "_audit": {
@@ -417,7 +417,7 @@
     },
     {
         "nom_prenom": "Malek LABIDI",
-        "note_finale": 19.5,
+        "note_finale": 19.0,
         "mention": "Excellent",
         "bilan_personnalise": {
             "points_forts": [
@@ -445,7 +445,7 @@
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 4.5,
+                "note": 4.0,
                 "commentaire": "Très bonne méthode et étude complète, mais une confusion mineure sur le signe lors de la résolution de f(x)=0."
             },
             {
@@ -463,14 +463,14 @@
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 19.5,
+            "notes_total": 19.0,
             "issues": []
         }
     },
     {
         "nom_prenom": "Meriem HARROUCHI",
-        "note_finale": 12.0,
-        "mention": "Assez Bien",
+        "note_finale": 10.75,
+        "mention": "Moyen",
         "bilan_personnalise": {
             "points_forts": [
                 "Très bonne compréhension de la méthode de la forme canonique.",
@@ -491,37 +491,37 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 4.0,
+                "note": 3.0,
                 "commentaire": "Les bases sont globalement bonnes, mais des erreurs de méthode et l'oubli d'une solution pénalisent la note."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 4.0,
+                "note": 4.5,
                 "commentaire": "Bonne maîtrise de la forme canonique, mais des erreurs de signe sur les coordonnées du sommet."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 2.5,
+                "note": 2.25,
                 "commentaire": "Les raisonnements sont justes au départ, mais les résultats finaux sont incohérents à cause d'erreurs de calcul."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 1.5,
+                "note": 1.0,
                 "commentaire": "L'exercice est commencé correctement mais n'est pas terminé, l'étude de la fonction d'aire est absente."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 12.0,
+            "notes_total": 10.75,
             "issues": []
         }
     },
     {
         "nom_prenom": "Sami SIALA",
-        "note_finale": 12.5,
+        "note_finale": 12.0,
         "mention": "Assez Bien",
         "bilan_personnalise": {
             "points_forts": [
@@ -561,20 +561,20 @@
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 1.5,
+                "note": 1.0,
                 "commentaire": "L'exercice est bien commencé (mise en équation), mais n'est pas terminé (pas d'étude de fonction)."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 12.5,
+            "notes_total": 12.0,
             "issues": []
         }
     },
     {
         "nom_prenom": "Ahmed Taha Labidi",
-        "note_finale": 13.5,
-        "mention": "Bien",
+        "note_finale": 10.5,
+        "mention": "Moyen",
         "bilan_personnalise": {
             "points_forts": [
                 "Bonne compréhension générale du second degré et des transformations.",
@@ -595,7 +595,7 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 5.0,
+                "note": 4.0,
                 "commentaire": "Bonne maîtrise globale des équations, malgré une confusion sur la résolution d'une identité remarquable."
             },
             {
@@ -607,25 +607,25 @@
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 2.5,
+                "note": 2.0,
                 "commentaire": "La démarche est partielle mais cohérente, avec une erreur sur la forme canonique de h(x)."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 1.5,
-                "commentaire": "La méthode est comprise (expression de l'aire), mais la relation initiale est fausse et l'étude inachevée."
+                "note": 0.0,
+                "commentaire": "La relation initiale est fausse et l'étude inachevée."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 13.5,
+            "notes_total": 10.5,
             "issues": []
         }
     },
     {
         "nom_prenom": "EL ASMI Nermine Farah",
-        "note_finale": 18.5,
+        "note_finale": 18.0,
         "mention": "Excellent travail",
         "bilan_personnalise": {
             "points_forts": [
@@ -635,7 +635,7 @@
             ],
             "axes_amelioration": [
                 "La gestion des cas limites : une petite confusion de signe dans f(x)=0 et une erreur de lecture de la valeur de x dans l'Ex. 4 sont les seules failles. Cela montre que même quand on maîtrise, l'inattention reste un risque.",
-                "L'interprétation finale : dans l'Ex. 4, ne pas confondre la valeur de x qui donne le maximum et le maximum lui-même."
+                "L'interprétation finale : dans l'Ex. 4, ne pas confondre la valeur de x qui donne le maximum et le maximum lui-même.Il faut aussi savoir traduire la recherche de maximum d'une fonction de second degré pour répondre à un problème concret."
             ],
             "conseils": [
                 "Excellent travail ! Pour atteindre la perfection, la différence se joue sur des détails. Entraîne-toi à faire une \"relecture du résultat\" : la valeur trouvée est-elle bien celle qui est demandée par la question ? Le signe est-il cohérent avec le raisonnement ? Tu as un excellent niveau, ces derniers ajustements te permettront de sécuriser le 20/20."
@@ -664,19 +664,19 @@
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 3.0,
-                "commentaire": "La méthode est claire, mais une erreur sur la valeur de x pour le maximum pénalise la note finale."
+                "note": 2.5,
+                "commentaire": "Pour trouver l'aire maximaale il faut trouver le maximum de la fonction A(x)'"
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 18.5,
+            "notes_total": 18.0,
             "issues": []
         }
     },
     {
         "nom_prenom": "Nour DRISS",
-        "note_finale": 13.5,
+        "note_finale": 15.0,
         "mention": "Bien",
         "bilan_personnalise": {
             "points_forts": [
@@ -698,19 +698,19 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 5.5,
+                "note": 6.0,
                 "commentaire": "Bonne maîtrise des équations, mais une rédaction parfois lourde et des étapes inutiles."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 2.5,
+                "note": 3.0,
                 "commentaire": "Une confusion de signe et de coefficient dans la forme canonique a faussé toute l'étude de la fonction."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 1.5,
+                "note": 2.0,
                 "commentaire": "La méthode est comprise au départ, mais le développement est confus et la résolution n'est pas aboutie."
             },
             {
@@ -722,7 +722,7 @@
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 13.5,
+            "notes_total": 15.0,
             "issues": []
         }
     },
@@ -780,7 +780,7 @@
     },
     {
         "nom_prenom": "RAJHI Sofia",
-        "note_finale": 6.5,
+        "note_finale": 4.25,
         "mention": "Insuffisant",
         "bilan_personnalise": {
             "points_forts": [
@@ -802,31 +802,31 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 0.5,
+                "note": 0.0,
                 "commentaire": "Les méthodes de résolution de base (identités remarquables, factorisation) ne sont pas acquises."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 1.5,
+                "note": 2.5,
                 "commentaire": "La méthode pour compléter le carré est mal appliquée, avec des erreurs de signe et de division."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 3.0,
+                "note": 1.75,
                 "commentaire": "La forme canonique de g(x) est juste, mais celle de h(x) est fausse. Le raisonnement reste structuré."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 1.5,
-                "commentaire": "L'expression de l'aire est correcte, mais aucune justification ni recherche de maximum n'est fournie."
+                "note": 0.0,
+                "commentaire": "L'expression de l'aire est incorrecte. Aucune justification ni recherche de maximum n'est fournie."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 6.5,
+            "notes_total": 4.25,
             "issues": []
         }
     },
@@ -884,8 +884,8 @@
     },
     {
         "nom_prenom": "Youssef Djait",
-        "note_finale": 12.5,
-        "mention": "Assez Bien",
+        "note_finale": 15.0,
+        "mention": "Bien",
         "bilan_personnalise": {
             "points_forts": [
                 "Bonne maîtrise de la résolution des équations du second degré simples (Ex. 1).",
@@ -906,31 +906,31 @@
             {
                 "exercice": "Ex. 1",
                 "bareme": 6.0,
-                "note": 5.5,
+                "note": 6.0,
                 "commentaire": "Bonne maîtrise des équations, malgré une rédaction parfois confuse."
             },
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 3.0,
-                "commentaire": "La méthode est comprise, mais une erreur de signe sur la constante de la forme canonique fausse l'étude."
+                "note": 4.5,
+                "commentaire": "La méthode est comprise, mais attention aux coordonnées du sommet d'une parabole."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 2.0,
+                "note": 3.0,
                 "commentaire": "Graves confusions dans les signes des formes canoniques, mais la démarche de résolution est amorcée."
             },
             {
                 "exercice": "Ex. 4",
                 "bareme": 4.0,
-                "note": 2.0,
+                "note": 1.5,
                 "commentaire": "La mise en équation est juste, mais l'étude de la fonction d'aire est très confuse et inachevée."
             }
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 12.5,
+            "notes_total": 15.0,
             "issues": []
         }
     },
@@ -987,7 +987,7 @@
     },
     {
         "nom_prenom": "Sarra Hamida",
-        "note_finale": 14.0,
+        "note_finale": 15.0,
         "mention": "Bien",
         "bilan_personnalise": {
             "points_forts": [
@@ -1015,7 +1015,7 @@
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 2.5,
+                "note": 3.5,
                 "commentaire": "La méthode est là, mais une erreur de constante dans la forme canonique fausse l'étude."
             },
             {
@@ -1033,7 +1033,7 @@
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 14.0,
+            "notes_total": 15.0,
             "issues": []
         }
     },
@@ -1091,7 +1091,7 @@
     },
     {
         "nom_prenom": "Khadija Siala",
-        "note_finale": 14.0,
+        "note_finale": 15.0,
         "mention": "Bien",
         "bilan_personnalise": {
             "points_forts": [
@@ -1119,7 +1119,7 @@
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 4.5,
+                "note": 4.0,
                 "commentaire": "Très bonne maîtrise de la forme canonique, seule une erreur de signe dans la résolution finale est à noter."
             },
             {
@@ -1137,7 +1137,7 @@
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 14.0,
+            "notes_total": 15.0,
             "issues": []
         }
     },
@@ -1245,7 +1245,7 @@
     },
     {
         "nom_prenom": "Yanis Naouali",
-        "note_finale": 2.0,
+        "note_finale": 3.5,
         "mention": "Très Insuffisant",
         "bilan_personnalise": {
             "points_forts": [
@@ -1273,13 +1273,13 @@
             {
                 "exercice": "Ex. 2",
                 "bareme": 5.0,
-                "note": 1.0,
+                "note": 1.5,
                 "commentaire": "La structure de la forme canonique est comprise, mais les calculs de constantes et de signes sont faux."
             },
             {
                 "exercice": "Ex. 3",
                 "bareme": 5.0,
-                "note": 1.0,
+                "note": 2.0,
                 "commentaire": "La démarche est très confuse, avec des erreurs de développement et de signe."
             },
             {
@@ -1291,7 +1291,7 @@
         ],
         "_audit": {
             "barreme_total": 20.0,
-            "notes_total": 2.0,
+            "notes_total": 3.5,
             "issues": []
         }
     },

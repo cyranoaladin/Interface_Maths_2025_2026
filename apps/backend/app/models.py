@@ -22,4 +22,3 @@ class DirNode(BaseModel):
 
 # Rebuild model to resolve forward refs (Pydantic v2)
 DirNode.model_rebuild()
-

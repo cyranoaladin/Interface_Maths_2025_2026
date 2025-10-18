@@ -12,6 +12,7 @@ ui/coverage/
 apps/backend/.venv/
 apps/backend/outputs/
 apps/backend/data/*.db
+apps/backend/apps/
 .pytest_cache/
 .coverage
 
@@ -29,6 +30,17 @@ deploy/**/.env*
 
 # Site backups / temporaires
 site/**/*.bak*
-site/**/*~ 
+site/**/*~
 site/**/*.merge
 site/**/*.tmp
+node_modules
+.venv/
+*/.venv/
+node_modules/
+*/node_modules/
+site/dist/
+site/dist/assets/
+test-results/
+site/test-results/
+*.pyc
+__pycache__/

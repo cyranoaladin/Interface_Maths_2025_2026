@@ -1,0 +1,35 @@
+[MASTER]
+init-hook=import sys; from pathlib import Path; root = Path.cwd(); backend_path = root / 'apps' / 'backend'; site_paths = [root / 'lib' / 'python3.12' / 'site-packages', root / 'lib64' / 'python3.12' / 'site-packages']; sys.path.insert(0, str(root)); sys.path.insert(0, str(backend_path)); [sys.path.append(str(candidate)) for candidate in site_paths if candidate.exists()]
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    import-outside-toplevel,
+    line-too-long,
+    wrong-import-order,
+    broad-exception-caught,
+    too-few-public-methods,
+    import-error,
+    duplicate-code
+
+[TYPECHECK]
+ignored-modules=
+    fastapi,
+    fastapi.middleware.cors,
+    fastapi.security,
+    starlette.responses,
+    starlette.staticfiles,
+    fastapi.testclient,
+    app,
+    app.config,
+    app.main,
+    app.db,
+    app.users,
+    app.tree,
+    apps.backend.app,
+    apps.backend.app.config
+
+[FORMAT]
+max-line-length=120

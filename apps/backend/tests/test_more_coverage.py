@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+# pylint: disable=duplicate-code
+
 from fastapi.testclient import TestClient
 
-from app.main import app
-from app.db import get_db, SessionLocal
-from app.users import ensure_bootstrap, User, Group, create_student
+from apps.backend.app.db import SessionLocal, get_db
+from apps.backend.app.main import app
+from apps.backend.app.users import Group, User, create_student, ensure_bootstrap
 
 
 def test_root_and_tree_endpoints_work():

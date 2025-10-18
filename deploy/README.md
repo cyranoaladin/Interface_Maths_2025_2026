@@ -1,3 +1,20 @@
+Deployment quick guide
+
+1) Audit the VPS
+
+```bash
+ssh root@maths.labomaths.tn 'bash -s' < deploy/prod/vps_inspect.sh
+```
+
+2) Zero‑downtime deploy to maths.labomaths.tn
+
+```bash
+TEACHER_EMAIL=teacher@example.com TEACHER_PASSWORD=changeit \
+bash deploy/prod/deploy_mathslab.sh
+```
+
+Nginx should point its root to /var/www/maths_portal/current/site and proxy /api to the FastAPI systemd service. Previous release is kept in /var/www/maths_portal/releases for rollback.
+
 # Déploiement VPS — maths.labomaths.tn
 
 Ce dépôt peut être déployé tel quel en site statique. Depuis la réorganisation, le webroot est `site/`.
@@ -34,6 +51,7 @@ Pour un déploiement HTTPS + HSTS, se référer au guide ci-dessous.
 
 4. HTTPS (Let's Encrypt):
    sudo certbot --nginx -d maths.labomaths.tn
+
    # renouvellement auto: déjà géré par certbot.timer
 
 ### HTTPS + HSTS (production)
@@ -60,7 +78,7 @@ add_header X-Content-Type-Options "nosniff" always;
 add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 add_header X-Frame-Options "DENY" always;
 add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
-add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests" always;
+add_header Content-Security-Policy "default-src 'self'; script-src 'self' <https://cdn.jsdelivr.net> 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests" always;
 }
 
 server {

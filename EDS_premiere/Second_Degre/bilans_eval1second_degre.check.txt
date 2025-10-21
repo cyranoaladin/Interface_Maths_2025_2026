@@ -1,0 +1,8 @@
+JSON bilans: 26
+Élèves (CSV): 27
+Emails ajoutés au JSON: 23
+Élèves sans correspondance JSON: 4
+- NO_MATCH | BEN HAJ ALI YOSR | yosr.benhajali-e@ert.tn
+- NO_MATCH | CHRAITI ZEINEB | zeineb.chriti-e@ert.tn
+- NO_MATCH | JEDDI RAYAN | rayan.jeddi-e@ert.tn
+- NO_MATCH | SOUABNI BEYA | beya.souabni-e@ert.tn

@@ -1,0 +1,176 @@
+\documentclass[12pt, a4paper]{ article; }
+
+% --- PRÉAMBULE-- -;
+\usepackage[utf8]{ inputenc; }
+\usepackage[T1]{ fontenc; }
+\usepackage[french]{ babel; }
+\usepackage{ amsmath, amssymb; }
+\usepackage{ fancyhdr; }
+\usepackage{ geometry; }
+\usepackage{ tcolorbox; } % Pour des boîtes plus jolies
+
+  % --- CONFIGURATIONS-- -;
+\geometry{ margin = 2cm; }
+
+% Configuration de l'en-tête et du pied de page;
+\pagestyle{ fancy; }
+\fancyhf{} % Efface les champs par défaut;
+\lhead{ Mathématiques – Évaluation fonctions du second degré; }
+\rhead{Rayen JEDDI, 1°9; }
+\cfoot{ \thepage; }
+
+% --- DÉBUT DU DOCUMENT-- -;
+\begin{ document; }
+
+\begin{ center; }
+\Large\textbf{Copie modèle corrigée – Rayen JEDDI(1°9); }
+\end{ center; }
+
+\vspace{ 0.5cm; }
+
+\section * { Exercice 1(6 points); };
+
+\subsection * { 1) Résolution de $x^ 2 - 6x + 9 = 0$}
+On reconnaît l'identité remarquable $(a-b)^2 = a^2 - 2ab + b^2$:;
+\[
+  x ^ 2 - 6x + 9 = (x - 3) ^ 2.
+  \]
+L'équation devient $(x - 3)^2 = 0$, ce qui implique $x - 3 = 0$.;
+\[
+  \mathcal{ S } = \{ 3\ }.
+  \];
+
+\subsection * { 2) Résolution de $2x^ 2 + 5x = 0$}
+On factorise par $x$:
+\[
+  x(2x + 5) = 0.
+  \]
+Un produit de facteurs est nul si et seulement si l'un des facteurs est nul :;
+\[
+  x = 0 \quad \text{ ou } \quad 2x + 5 = 0 \implies x = -\dfrac{ 5}{ 2}.
+  \];
+\[
+  \mathcal{ S } = \left\{ 0; -\dfrac{ 5}{ 2}\right\}.
+  \];
+
+\subsection * { 3) Résolution de $x^ 2 - 7 = 0$}
+On isole $x ^ 2$:
+\[
+  x ^ 2 = 7 \implies x = \sqrt{ 7} \quad \text{ ou } \quad x = -\sqrt{ 7}.
+  \];
+\[
+  \mathcal{ S } = \{-\sqrt{ 7}; \sqrt{ 7}\}.
+  \];
+
+\newpage;
+\section * { Exercice 2(5 points); }
+On considère la fonction $f$ définie par $f(x) = -2x ^ 2 + 12x - 10$.;
+
+\subsection * { 1) Mise sous forme canonique }
+On factorise par le coefficient dominant $a = -2$:
+\[
+  f(x) = -2(x ^ 2 - 6x) - 10.
+  \]
+On complète le carré pour $x ^ 2 - 6x = (x - 3) ^ 2 - 9$:
+\[
+  f(x) = -2\left[(x - 3) ^ 2 - 9\right] - 10.;
+\]
+On distribue et on simplifie:
+\[
+  f(x) = -2(x - 3) ^ 2 + 18 - 10 = -2(x - 3) ^ 2 + 8.
+  \];
+
+\subsection * { 2) Coordonnées du sommet }
+La forme canonique $a(x -\alpha) ^ 2 +\beta$ donne le sommet $S(\alpha; \beta) $.
+  Ici, le sommet est $S(3; 8) $.;
+
+\subsection * { 3) Tableau de variation }
+Comme $a = -2 < 0$, la parabole est orientée vers le bas.Elle admet un maximum en $x = 3$, qui vaut $f(3) = 8$.;
+\begin{ center; }
+\begin{ tabular; } {| c | ccccc |}
+\hline;
+$x$ & $ -\infty$ & & $3$ & & $ +\infty$ \\
+\hline
+  &           &   & $8$ &   &           \\
+$f(x)$ &           & \Large$\nearrow$ &   & \Large$\searrow$ &           \\
+      & $ -\infty$ &   &   &   & $ -\infty$ \\
+\hline;
+\end{ tabular; }
+\end{ center; }
+
+\subsection * { 4) Résolution de $f(x) = 0$ }
+On utilise la forme canonique:
+\[
+  -2(x - 3) ^ 2 + 8 = 0 \iff 2(x - 3) ^ 2 = 8 \iff(x - 3) ^ 2 = 4.
+  \]
+On a donc deux solutions:
+\[
+  x - 3 = 2 \quad \text{ ou } \quad x - 3 = -2.
+  \];
+\[
+  \mathcal{ S } = \{ 1; 5\ }.
+  \];
+
+\newpage;
+\section * { Exercice 3(5 points); }
+On considère $g(x) = x ^ 2 - 4x + 5$ et $h(x) = -x ^ 2 + 6x - 7$.;
+
+\subsection * { 1) Formes canoniques et sommets }
+Pour $g(x)$: $g(x) = (x ^ 2 - 4x + 4) + 1 = (x - 2) ^ 2 + 1$.Le sommet est $S_g(2; 1) $.;
+\vspace{ 0.2cm; }
+
+Pour $h(x)$: $h(x) = -(x ^ 2 - 6x) - 7 = -((x - 3) ^ 2 - 9) - 7 = -(x - 3) ^ 2 + 2$.Le sommet est $S_h(3; 2) $.;
+
+\subsection * {
+  2) Points d'intersection}
+On résout $g(x) = h(x)$:
+  \[
+    x ^ 2 - 4x + 5 = - x ^ 2 + 6x - 7 \iff 2x ^ 2 - 10x + 12 = 0 \iff x ^ 2 - 5x + 6 = 0.;
+\]
+On factorise(produit 6, somme 5) : $(x - 2)(x - 3) = 0$.Les abscisses des points d'intersection sont $x=2$ et $x=3$.;
+\vspace{ 0.2cm; }
+
+On calcule les ordonnées:
+\begin{ itemize; }
+\item Pour $x = 2$, $y = g(2) = (2 - 2) ^ 2 + 1 = 1$.Point $A(2; 1) $.;
+\item Pour $x = 3$, $y = g(3) = (3 - 2) ^ 2 + 1 = 2$.Point $B(3; 2) $.;
+\end{ itemize; }
+
+\newpage;
+\section * { Exercice 4(4 points); }
+On dispose de 100 m de clôture pour un enclos rectangulaire \textbf{adossé à un mur; }.
+
+\subsection * {
+  1) Expression de l'aire}
+Le mur remplace un côté.La longueur de la clôture est donc $P = 2x + y = 100$.
+On en déduit la longueur du côté parallèle au mur: $y = 100 - 2x$.
+  L'aire de l'enclos est:
+\[
+  A(x) = x \cdot y = x(100 - 2x) = -2x ^ 2 + 100x.
+  \];
+
+\subsection * {
+  2) Recherche de l'aire maximale}
+On met l'expression de l'aire sous forme canonique:
+  \[
+    A(x) = -2(x ^ 2 - 50x) = -2\left[(x - 25) ^ 2 - 25 ^ 2\right] = - 2\left[(x - 25) ^ 2 - 625\right].
+\]
+\[
+  A(x) = -2(x - 25) ^ 2 + 1250.
+  \];
+
+\subsection * { 3) Conclusion }
+La fonction $A(x)$ est une parabole orientée vers le bas($a = -2 < 0$).Elle admet donc un maximum.
+Ce maximum est atteint pour $x = 25$ m et sa valeur est $A(25) = 1250$ m².
+
+\vspace{ 1cm; }
+\begin{ tcolorbox; } [colback = green!5!white, colframe = green!60!black, title =\textbf{ Note finale et appréciation }];
+\begin{ center; }
+\Huge\textbf{ 20 / 20; }
+\end{ center; }
+\vspace{ 0.3cm; }
+    Excellent travail Rayen! Copie claire, sans erreurs et parfaitement rédigée.
+    Continue sur cette voie, tu as atteint le niveau d’une \textbf{copie modèle; }.
+\end{ tcolorbox; }
+
+\end{ document; }

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Second degré — Cours complet (EDS Première)</title>
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #11162a;
+      --card: #151b34;
+      --text: #eef2ff;
+      --muted: #a2b0d6;
+      --primary: #6aa6ff;
+      --accent: #22d3ee;
+      --good: #0b3d23;
+      --bad: #65121f;
+      --border: #28314f;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .25)
+    }
+
+    .light {
+      --bg: #f6f7fb;
+      --bg2: #eef0f8;
+      --card: #fff;
+      --text: #0f172a;
+      --muted: #4b5563;
+      --primary: #3b82f6;
+      --accent: #06b6d4;
+      --good: #059669;
+      --bad: #b91c1c;
+      --border: #e5e7eb;
+      --shadow: 0 10px 30px rgba(2, 6, 23, .06)
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 26px 18px 90px
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, var(--bg) 80%, #0000);
+      backdrop-filter: saturate(1.2);
+      z-index: 20;
+      padding-bottom: 8px
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .btn:hover {
+      filter: brightness(1.05)
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .8rem;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), #7dd3fc);
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-left: 6px
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 2.2vw + .8rem, 2.4rem);
+      margin: 8px 0
+    }
+
+    h2 {
+      font-size: 1.45rem;
+      margin: .2rem 0 .6rem
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin: .2rem 0
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px
+    }
+
+    .cols-2 {
+      grid-template-columns: 1.05fr .95fr
+    }
+
+    @media (max-width:980px) {
+      .cols-2 {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .pill {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: var(--bg2);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border)
+    }
+
+    .section {
+      scroll-margin-top: 90px
+    }
+
+    details {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin: .6rem 0
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600
+    }
+
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-left: 3px solid #30406e;
+      padding: 10px 12px;
+      margin: 10px 0;
+      background: linear-gradient(90deg, #0000, rgba(99, 102, 241, .08))
+    }
+
+    .step .n {
+      flex: 0 0 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #334155;
+      color: #fff;
+      font-weight: 700
+    }
+
+    .result {
+      background: var(--bg2);
+      border: 1px dashed #3b4a77;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin-top: 8px
+    }
+
+    .ok {
+      background: var(--good);
+      border-color: #0f5132;
+      color: #fff
+    }
+
+    .err {
+      background: var(--bad);
+      border-color: #842029;
+      color: #fff
+    }
+
+    .input {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 10px;
+      color: var(--text)
+    }
+
+    .input:focus {
+      outline: 2px solid var(--primary)
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace
+    }
+
+    .hr {
+      height: 1px;
+      background: linear-gradient(90deg, #0000, #39508f, #0000);
+      margin: 12px 0
+    }
+
+    nav.card ol {
+      margin: 0 0 8px 18px
+    }
+
+    .sticky-footer {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .goodbox {
+      background: rgba(16, 185, 129, .12);
+      border: 1px solid rgba(16, 185, 129, .35)
+    }
+
+    .badbox {
+      background: rgba(239, 68, 68, .12);
+      border: 1px solid rgba(239, 68, 68, .35)
+    }
+
+    .print-only {
+      display: none
+    }
+
+    @media print {
+
+      .buttons,
+      .sticky-footer,
+      nav.card {
+        display: none !important
+      }
+
+      .grid.cols-2 {
+        grid-template-columns: 1fr !important
+      }
+
+      .print-only {
+        display: block
+      }
+
+      details {
+        display: block
+      }
+
+      details>summary {
+        display: none
+      }
+
+      details>* {
+        display: block
+      }
+    }
+  </style>
+  <script>
+    window.MathJax = { tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]], macros: { N: "\\mathbb{N}", Z: "\\mathbb{Z}", Q: "\\mathbb{Q}", R: "\\mathbb{R}", pp: "\\mathbb{P}" } }, svg: { fontCache: 'global' } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body class="light">
+  <div class="container">
+    <header>
+      <div class="toolbar">
+        <div>
+          <h1>Second degré — Cours complet <span class="badge">EDS Première</span></h1>
+          <small class="muted">Auteur : <strong>Alaeddine Ben Rhouma</strong> — Lycée Pierre Mendès France, Tunis • ©
+            2025</small>
+          <p class="pill">Polynômes du 2e degré, forme canonique, signes, variations, racines — conforme au programme de
+            Première (EDS)</p>
+        </div>
+        <div class="buttons">
+          <button class="btn" id="theme-toggle" type="button" aria-pressed="false"><i data-lucide="moon"></i>
+            Thème</button>
+          <button class="btn" onclick="MathJax.typesetPromise()">Repaint</button>
+          <button class="btn" id="revealBtn" aria-pressed="false"><i data-lucide="eye"
+              style="width:16px;height:16px;margin-right:4px;"></i>Révélations</button>
+          <button class="btn" id="printBtn"><i data-lucide="printer"
+              style="width:16px;height:16px;margin-right:4px;"></i>Imprimer</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="card" id="outils">
+      <h2>Outils interactifs</h2>
+      <p class="muted">Calculs immédiats (forme canonique, sommet, discriminant, racines, factorisation, signe). Entrez
+        a, b, c pour le trinôme f(x)=ax^2+bx+c.</p>
+      <div class="grid" style="grid-template-columns:1fr; gap:14px">
+        <div class="card" style="margin:0">
+          <label class="mono">a <input id="a1" class="input" type="number" step="any" value="1"
+              style="width:120px"></label><br />
+          <label class="mono">b <input id="b1" class="input" type="number" step="any" value="-2"
+              style="width:120px"></label><br />
+          <label class="mono">c <input id="c1" class="input" type="number" step="any" value="-3"
+              style="width:120px"></label><br />
+          <button class="btn mt-8" id="btnCalc">Calculer</button>
+        </div>
+        <div class="card" id="toolOut" style="margin:0">
+          <div class="result">Saisissez des coefficients puis cliquez « Calculer ».</div>
+        </div>
+      </div>
+      <details class="mt-8">
+        <summary><strong>Astuces</strong></summary>
+        <ul>
+          <li>Sommet: $\alpha=-\dfrac{b}{2a}$, $\beta=f(\alpha)=c-\dfrac{b^2}{4a}$.</li>
+          <li>Discriminant: $\Delta=b^2-4ac$; racines $\dfrac{-b\pm\sqrt{\Delta}}{2a}$ si $\Delta>0$.</li>
+          <li>Règle de signe: signe de $a$ « à l'extérieur des racines », signe contraire « entre les racines ».</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="print-only card">
+      <h2>Sommaire (impression)</h2>
+      <ol>
+        <li>Définition et vocabulaire</li>
+        <li>Forme canonique et sommet</li>
+        <li>Racines, discriminant et factorisation</li>
+        <li>Signe du trinôme et tableau de signes</li>
+        <li>Variations de la fonction quadratique</li>
+        <li>Équations et inéquations du 2e degré</li>
+        <li>Entraînements</li>
+      </ol>
+    </section>
+
+    <section class="grid" style="grid-template-columns:1fr; gap:18px">
+      <button class="btn" id="togglePlanBtn" aria-expanded="true" style="align-self:flex-start">📚 Afficher/masquer le
+        plan</button>
+      <nav class="card" id="planCard">
+        <h2>Plan</h2>
+        <div class="hr"></div>
+        <ol>
+          <li><a href="#def">1. Définition et vocabulaire</a></li>
+          <li><a href="#canonique">2. Forme canonique et sommet</a></li>
+          <li><a href="#racines">3. Racines, discriminant, factorisation</a></li>
+          <li><a href="#signe">4. Signe du trinôme</a></li>
+          <li><a href="#variations">5. Variations</a></li>
+          <li><a href="#eqineq">6. Équations et inéquations</a></li>
+          <li><a href="#entrainements">7. Entraînements</a></li>
+        </ol>
+        <p class="muted">Les preuves et corrections détaillées sont repliées — dépliez au besoin.</p>
+      </nav>
+
+      <div class="card section" id="def">
+        <h2>1. Définition et vocabulaire</h2>
+        <p><strong>Définition.</strong> Un <em>polynôme du second degré</em> est une fonction $f: \R\to\R$ de la forme
+          $f(x)=ax^2+bx+c$ avec $a\ne0$. On l’appelle <em>trinôme</em> lorsque l’on insiste sur l’expression
+          $ax^2+bx+c$.</p>
+        <div class="step">
+          <div class="n">Vocab</div>
+          <div>On appelle <em>coefficient directeur</em> $a$ (quadratique), coefficient linéaire $b$, terme constant
+            $c$. Le <em>sommet</em> de la parabole est le point d’extremum $S(\alpha,f(\alpha))$.</div>
+        </div>
+        <div class="result goodbox">Si $a>0$, la parabole est tournée vers le haut (convexe) et possède un minimum. Si
+          $a<0$, tournée vers le bas (concave), maximum.</div>
+        </div>
+
+        <div class="card section" id="canonique">
+          <h2>2. Forme canonique et sommet</h2>
+          <p><strong>Théorème.</strong> Pour $f(x)=ax^2+bx+c$ avec $a\ne0$, on peut écrire $f(x)=a(x-\alpha)^2+\beta$ où
+            $\alpha=-\dfrac{b}{2a}$ et $\beta=f(\alpha)=c-\dfrac{b^2}{4a}$.</p>
+          <details open>
+            <summary><strong>Démonstration (complétion du carré)</strong></summary>
+            <div class="step">
+              <div class="n">1</div>
+              <div>
+                $ax^2+bx+c=a\left[x^2+\dfrac{b}{a}x\right]+c=a\left[(x+\tfrac{b}{2a})^2-\tfrac{b^2}{4a^2}\right]+c=a(x-\alpha)^2+\beta$.
+              </div>
+            </div>
+          </details>
+          <div class="step">
+            <div class="n">Sommet</div>
+            <div>Le sommet est $S(\alpha,\beta)$ avec $\alpha=-\dfrac{b}{2a}$, $\beta=f(\alpha)$. C’est le minimum si
+              $a>0$ et le maximum si $a<0$.< /div>
+            </div>
+            <details>
+              <summary><strong>Exemple</strong></summary>
+              <div class="step">
+                <div class="n">Ex</div>
+                <div>Écrire sous forme canonique $f(x)=2x^2-4x+5$. Ici $a=2$, $b=-4$, $c=5$, donc
+                  $\alpha=-\dfrac{-4}{2\cdot2}=1$ et $\beta= f(1)=2-4+5=3$. Ainsi $f(x)=2(x-1)^2+3$.</div>
+              </div>
+            </details>
+          </div>
+
+          <div class="card section" id="racines">
+            <h2>3. Racines, discriminant, factorisation</h2>
+            <p>On note $\Delta=b^2-4ac$ le <em>discriminant</em> de $ax^2+bx+c$.</p>
+            <ul>
+              <li>$\Delta>0$: deux racines réelles $x_{1,2}=\dfrac{-b\pm\sqrt{\Delta}}{2a}$ et $f(x)=a(x-x_1)(x-x_2)$.
+              </li>
+              <li>$\Delta=0$: une racine double $x_0=-\dfrac{b}{2a}$ et $f(x)=a(x-x_0)^2$.</li>
+              <li>$\Delta<0$: aucune racine réelle; le signe de $f$ est celui de $a$.</li>
+            </ul>
+            <details>
+              <summary><strong>Exemples guidés</strong></summary>
+              <div class="step">
+                <div class="n">1</div>
+                <div>Résoudre $x^2-5x+6=0$. $\Delta=25-24=1$ donc $x=\dfrac{5\pm1}{2}\in\{2,3\}$; $f(x)=(x-2)(x-3)$.
+                </div>
+              </div>
+              <div class="step">
+                <div class="n">2</div>
+                <div>Résoudre $4x^2+4x+1=0$. $\Delta=16-16=0$ donc $x_0=-\dfrac{4}{8}=-\tfrac12$;
+                  $f(x)=4(x+\tfrac12)^2$.</div>
+              </div>
+            </details>
+          </div>
+
+          <div class="card section" id="signe">
+            <h2>4. Signe du trinôme</h2>
+            <p>Le <em>tableau de signes</em> se déduit des racines et du coefficient $a$.</p>
+            <div class="step">
+              <div class="n">Méthode</div>
+              <div>
+                <ul class="mb-0">
+                  <li>Si $\Delta>0$: le signe de $f$ change à $x_1$ et $x_2$, et coïncide avec le signe de $a$ hors de
+                    l’intervalle $[x_1,x_2]$.</li>
+                  <li>Si $\Delta=0$: $f\ge0$ si $a>0$ (et $\le0$ si $a<0$) avec annulation en $x_0$.</li>
+                  <li>Si $\Delta<0$: $\operatorname{sign}(f)=\operatorname{sign}(a)$ sur $\R$.</li>
+                </ul>
+              </div>
+            </div>
+            <details>
+              <summary><strong>Application rapide</strong></summary>
+              <div class="step">
+                <div class="n">Ex</div>
+                <div>Pour $f(x)=x^2-5x+6$, $a>0$, racines 2 et 3. Alors $f\ge 0$ sur $]-\infty;2]\cup[3;+\infty[$ et
+                  $f\le 0$ sur $[2;3]$.</div>
+              </div>
+            </details>
+          </div>
+
+          <div class="card section" id="variations">
+            <h2>5. Variations</h2>
+            <p>Pour $f(x)=a(x-\alpha)^2+\beta$ avec $a\ne0$:
+            <ul>
+              <li>si $a>0$, $f$ décroît sur $]-\infty;\alpha]$ puis croît sur $[\alpha;+\infty[$ (minimum $\beta$ au
+                point $\alpha$) ;
+              <li>si $a<0$, $f$ croît puis décroît (maximum $\beta$ au point $\alpha$).</li>
+            </ul>
+            </p>
+          </div>
+
+          <div class="card section" id="eqineq">
+            <h2>6. Équations et inéquations</h2>
+            <div class="step">
+              <div class="n">Éq.</div>
+              <div>Résoudre $ax^2+bx+c=0$ par le discriminant; factoriser si possible puis utiliser le tableau de signes
+                pour $ax^2+bx+c\; \gtrless\; 0$.</div>
+            </div>
+            <details>
+              <summary><strong>Exemples</strong></summary>
+              <div class="step">
+                <div class="n">1</div>
+                <div>Résoudre $x^2-3x-4\le0$. Racines $-1$ et $4$ donc $x\in[-1,4]$.</div>
+              </div>
+              <div class="step">
+                <div class="n">2</div>
+                <div>Résoudre $2x^2+2x+3>0$. $\Delta<0$ et $a>0$ donc $\forall x, f(x)>0$.</div>
+              </div>
+            </details>
+          </div>
+
+          <div class="card section" id="sp">
+            <h2>6 bis. Somme et produit des racines</h2>
+            <p><strong>Propriété (admis).</strong> Si $f(x)=ax^2+bx+c$ ($a\ne0$) admet les deux racines réelles
+              $x_1,x_2$, alors: $S=x_1+x_2= -\dfrac{b}{a}$ et $P=x_1x_2=\dfrac{c}{a}$.</p>
+            <details open>
+              <summary><strong>Mini‑quiz</strong></summary>
+              <div class="step">
+                <div class="n">Q1</div>
+                <div>
+                  Pour $f(x)=2x^2-3x+1$, compléter $S=$ <input id="spS1" class="input" style="width:120px"
+                    placeholder="?"> et $P=$ <input id="spP1" class="input" style="width:120px" placeholder="?">.
+                  <button class="btn" id="btnSP1">Vérifier</button> <span id="spR1"></span>
+                </div>
+              </div>
+              <div class="step">
+                <div class="n">Q2</div>
+                <div>
+                  Pour $f(x)=-3x^2+4x-7$, compléter $S=$ <input id="spS2" class="input" style="width:120px"
+                    placeholder="?"> et $P=$ <input id="spP2" class="input" style="width:120px" placeholder="?">.
+                  <button class="btn" id="btnSP2">Vérifier</button> <span id="spR2"></span>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div class="card section" id="relpos">
+            <h2>6 ter. Position relative parabole / droite</h2>
+            <p class="muted">Comparer $y_f=ax^2+bx+c$ et $y_g=mx+p$ via le signe de $h(x)=f(x)-g(x)=ax^2+(b-m)x+(c-p)$.
+            </p>
+            <div class=\"grid\" style=\"grid-template-columns:1fr; gap:14px\">
+              <div class="card" style="margin:0">
+                <label class="mono">a <input id="pa" class="input" type="number" step="any" value="1"
+                    style="width:120px"></label>
+                <label class="mono">b <input id="pb" class="input" type="number" step="any" value="0"
+                    style="width:120px"></label>
+                <label class="mono">c <input id="pc" class="input" type="number" step="any" value="0"
+                    style="width:120px"></label>
+                <hr class="hr" />
+                <label class="mono">m <input id="pm" class="input" type="number" step="any" value="1"
+                    style="width:120px"></label>
+                <label class="mono">p <input id="pp" class="input" type="number" step="any" value="-1"
+                    style="width:120px"></label>
+                <button class="btn mt-8" id="btnRel">Analyser</button>
+              </div>
+              <div class="card" id="relOut" style="margin:0">
+                <div class="result">Entrer $(a,b,c,m,p)$ puis « Analyser ».</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card section" id="optgeo">
+            <h2>6 quater. Optimisation géométrique — Aire maximale</h2>
+            <p class="muted">Objectif: déterminer les dimensions <strong>x</strong> (longueur) et <strong>y</strong>
+              (largeur) d’une aire de jeu <em>rectangulaire</em> adossée à un bâtiment (le long d’un côté), pour
+              <strong>maximiser l’aire</strong> <code>A = x × y</code> (m²),
+              en tenant compte d’une <strong>allée de largeur t</strong> sur trois côtés (avant et les deux côtés) et
+              d’une <strong>longueur totale de clôture L</strong> disponible.</p>
+            <div class="grid" style="grid-template-columns:1fr; gap:14px">
+              <div class="card" style="margin:0">
+                <label class="mono">Clôture disponible L <input id="Lclo" class="input" type="number" step="any"
+                    value="100" style="width:140px"> m</label>
+                <label class="mono">Largeur allée t <input id="Tall" class="input" type="number" step="any" value="3"
+                    style="width:140px"> m</label>
+                <button class="btn mt-8" id="btnOpt">Optimiser</button>
+              </div>
+              <div class="card" id="optOut" style="margin:0">
+                <div class="result">Modèle: clôture sur AB, BC, CD avec allée de largeur t. On impose $x\ge10$, $y\ge10$
+                  (dimensions de l’aire).</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card section" id="extras">
+            <h2>6 quinquies. Exercices interactifs supplémentaires</h2>
+
+            <details open>
+              <summary><strong>Inégalités du 2e degré</strong></summary>
+              <div class="step">
+                <div class="n">I1</div>
+                <div>
+                  Résoudre $f(x)=ax^2+bx+c\; \gtrless\; 0$ (notation française des intervalles).
+                  <div class=\"grid\" style=\"grid-template-columns:1fr; gap:12px\">
+                    <div>
+                      <label class="mono">a <input id="ia" class="input" type="number" step="any" value="1"
+                          style="width:120px"></label>
+                      <label class="mono">b <input id="ib" class="input" type="number" step="any" value="-2"
+                          style="width:120px"></label>
+                      <label class="mono">c <input id="ic" class="input" type="number" step="any" value="-3"
+                          style="width:120px"></label>
+                      <label class="mono">Signe recherché
+                        <select id="isgn" class="input" style="width:160px">
+                          <option value=">=0">f(x) ≥ 0</option>
+                          <option value="<=0">f(x) ≤ 0</option>
+                        </select>
+                      </label>
+                      <button class="btn mt-8" id="btnIneq">Résoudre</button>
+                    </div>
+                    <div id="ineqOut" class="card">
+                      <div class="result">Choisir a,b,c et le signe puis « Résoudre ».</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <details class="mt-8">
+              <summary><strong>Équations bicarrées</strong></summary>
+              <div class="step">
+                <div class="n">B1</div>
+                <div>
+                  Résoudre $x^4+px^2+q=0$ via $X=x^2$.
+                  <label class="mono">p <input id="bp" class="input" type="number" step="any" value="-9"
+                      style="width:120px"></label>
+                  <label class="mono">q <input id="bq" class="input" type="number" step="any" value="14"
+                      style="width:120px"></label>
+                  <button class="btn mt-8" id="btnBic">Résoudre</button>
+                  <div id="bicOut" class="result mt-6">Suggéré: $x^4-9x^2+14=0$.</div>
+                </div>
+              </div>
+            </details>
+
+            <details class="mt-8">
+              <summary><strong>Reconstruire le trinôme à partir de S et P</strong></summary>
+              <div class="step">
+                <div class="n">SP</div>
+                <div>
+                  Étant donnés $S=x_1+x_2$ et $P=x_1x_2$, le trinôme monique est $x^2-Sx+P$.
+                  <label class="mono">S <input id="rs" class="input" type="number" step="any" value="5"
+                      style="width:120px"></label>
+                  <label class="mono">P <input id="rp" class="input" type="number" step="any" value="6"
+                      style="width:120px"></label>
+                  <button class="btn mt-8" id="btnRec">Construire</button>
+                  <div id="recOut" class="result mt-6">Ex.: $S=5, P=6 \Rightarrow x^2-5x+6$.</div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div class="card section" id="generator">
+            <h2>6 sexies. Générateur d’exercices (aléatoire) — avec correction</h2>
+            <p class="muted">Génère des énoncés variés: forme canonique, discriminant/racines, signe/intervalle,
+              inéquations. Les valeurs sont choisies pour avoir des calculs propres.</p>
+            <div class="grid" style="grid-template-columns:1fr; gap:14px">
+              <div class="card" style="margin:0">
+                <label class="mono">Type
+                  <select id="gtype" class="input" style="width:220px">
+                    <option value="canonique">Écrire sous forme canonique</option>
+                    <option value="racines">Trouver Δ et les racines</option>
+                    <option value="signe">Tableau de signe</option>
+                    <option value="ineq">Résoudre l’inéquation f(x) ≥ 0</option>
+                  </select>
+                </label>
+                <button class="btn mt-8" id="btnGen">Générer</button>
+                <button class="btn mt-8" id="btnCorr">Afficher la correction</button>
+              </div>
+              <div class="card" id="genOut" style="margin:0">
+                <div id="genStmt" class="result">Cliquez « Générer » pour obtenir un énoncé.</div>
+                <div id="genCorr" class="result mt-6" style="display:none"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card section" id="entrainements">
+            <h2>7. Entraînements</h2>
+
+            <details open>
+              <summary><strong>Mini‑exercices</strong></summary>
+              <ul>
+                <li>Mettre sous forme canonique: $3x^2-12x+5$.</li>
+                <li>Donner le signe de $g(x)=-x^2+2x+8$.</li>
+                <li>Résoudre: $x^2-6x+8\ge0$.</li>
+              </ul>
+            </details>
+
+            <details class="mt-8">
+              <summary><strong>Canonique — entraînement guidé</strong></summary>
+              <div class="step">
+                <div class="n">Q1</div>
+                <div>
+                  Pour $f(x)=2x^2-20x+10$, écrire $f$ sous la forme $a(x-\alpha)^2+\beta$.
+                  <div class="mono mt-6">
+                    Réponse attendue: <code>2(x-5)^2-40</code>
+                  </div>
+                  <label class="mono mt-6">Votre proposition: <input id="q1" class="input" style="width:360px"
+                      placeholder="2(x-5)^2-40"></label>
+                  <button class="btn" onclick="checkText('q1','2(x-5)^2-40')">Vérifier</button>
+                  <span id="q1r" class="mono"></span>
+                </div>
+              </div>
+            </details>
+
+            <details class="mt-8">
+              <summary><strong>Variations — TD rapides</strong></summary>
+              <div class="step">
+                <div class="n">H</div>
+                <div>
+                  $h(x)=4x^2+2x+1$. Sommet ? variations ? $h$ s'annule-t-elle ?
+                  <details class="mt-4">
+                    <summary>Correction</summary>
+                    $a=4>0$, $\alpha=-\tfrac{b}{2a}=-\tfrac{2}{8}=-\tfrac14$,
+                    $\beta=h(\alpha)=4(\tfrac{1}{16})+2(-\tfrac14)+1=\tfrac14-\tfrac12+1=\tfrac34$.
+                    Donc minimum $\tfrac34$ en $\alpha=-\tfrac14$; décroît puis croît; $\Delta=2^2-4\cdot4\cdot1=-12<0$
+                      donc aucune racine. </details>
+                </div>
+              </div>
+              <div class="step">
+                <div class="n">G</div>
+                <div>
+                  $g(x)=-4x^2+4x-1$. $a<0$ donc croît puis décroît. $\Delta=16-16=0$, racine double $x=\tfrac12$. </div>
+                </div>
+            </details>
+
+            <details class="mt-8">
+              <summary><strong>Applications — bénéfice (modélisation)</strong></summary>
+              <div class="step">
+                <div class="n">Eco</div>
+                <div>
+                  $f(x)=-2x^2+5x-2$ sur $[0,3]$ (x en centaines). Forme canonique
+                  $f(x)=-2(x-\tfrac{5}{4})^2+\tfrac{9}{8}$. Bénéfice max $\tfrac{9}{8}$ pour $x=\tfrac{5}{4}$ (125
+                  objets). $f>0$ quand $x\in(\tfrac{5-\sqrt{1}}{4},\tfrac{5+\sqrt{1}}{4})=(1,\tfrac{3}{2})$.
+                </div>
+              </div>
+            </details>
+
+            <details class="mt-8">
+              <summary><strong>Équations / Inéquations (sélection)</strong></summary>
+              <ul>
+                <li>Résoudre $-2x^2+x-1=0$; $\Delta=1-(-8)=9$, $x\in\{1,\tfrac12\}$ après division par $-2$ et calcul
+                  classique.</li>
+                <li>Résoudre $x(8-x)+1=0 \iff -x^2+8x+1=0$.</li>
+                <li>Inéquation $x^2-0{,}4x+0{,}04\le0$: racine double $x=0{,}2$, donc $\le0$ uniquement en $x=0{,}2$.
+                </li>
+              </ul>
+            </details>
+          </div>
+    </section>
+
+    <footer class="muted">© 2025 — Cours rédigé par <strong>Alaeddine Ben Rhouma</strong>. Tous droits réservés.
+    </footer>
+    <div class="sticky-footer"><button class="btn" onclick="scrollTo(0,0)">⬆️ Haut</button></div>
+  </div>
+
+  <script>
+    const $ = (q) => document.querySelector(q), $$ = (q) => document.querySelectorAll(q);
+    // Thème
+    try { const savedTheme = localStorage.getItem('theme'); if (savedTheme) { if (savedTheme === 'light') { document.body.classList.add('light'); } else { document.body.classList.remove('light'); } } else if (window.matchMedia?.('(prefers-color-scheme: light)').matches) { document.body.classList.add('light'); } } catch (e) {}
+    $('#theme-toggle')?.addEventListener('click', () => { document.body.classList.toggle('light'); try { localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark'); } catch (e) {} MathJax.typesetPromise?.(); });
+    // Outils
+    $('#retypesetBtn')?.addEventListener('click', () => MathJax.typesetPromise?.());
+    $('#printBtn')?.addEventListener('click', () => window.print());
+    let revealed = false; try { revealed = localStorage.getItem('revealed_second_degre') === '1'; } catch (e) {} if (revealed) { $$('details').forEach(d => d.open = true); } $('#revealBtn')?.setAttribute('aria-pressed', revealed);
+    $('#revealBtn')?.addEventListener('click', () => { revealed = !revealed; $$('details').forEach(d => d.open = revealed); $('#revealBtn')?.setAttribute('aria-pressed', revealed); try { localStorage.setItem('revealed_second_degre', revealed ? '1' : '0'); } catch (e) {} });
+
+    // --- Afficher/masquer le plan
+    const planBtn = document.getElementById('togglePlanBtn');
+    const planCard = document.getElementById('planCard');
+    planBtn?.addEventListener('click', () => {
+      const visible = planCard?.style.display !== 'none';
+      if (planCard) planCard.style.display = visible ? 'none' : '';
+      planBtn?.setAttribute('aria-expanded', (!visible).toString());
+    });
+    // Replier par défaut sur petits écrans
+    if (window.matchMedia && window.matchMedia('(max-width: 900px)').matches) { if (planCard) { planCard.style.display = 'none'; planBtn?.setAttribute('aria-expanded', 'false'); } }
+
+    // ----- Outil interactif f(x)=ax^2+bx+c
+    function fmt(x) { if (!isFinite(x)) return String(x); const s = Number(x).toFixed(6); return s.replace(/\.0+$/, '').replace(/(\.[0-9]*[1-9])0+$/, '$1'); }
+    function sign(x) { return x > 0 ? '+' : x < 0 ? '-' : '±'; }
+    function latexFactor(a, b, c) {
+      const d = b * b - 4 * a * c; if (d < 0) return 'Non factorisable sur $\\mathbb{R}$';
+      if (d === 0) { const x0 = (-b) / (2 * a); return `$${fmt(a)}(x-${fmt(x0)})^2$`; }
+      const r1 = (-b - Math.sqrt(d)) / (2 * a); const r2 = (-b + Math.sqrt(d)) / (2 * a);
+      return `$${fmt(a)}(x-${fmt(r1)})(x-${fmt(r2)})$`;
+    }
+    function canonical(a, b, c) { const alpha = -b / (2 * a); const beta = c - (b * b) / (4 * a); return { alpha, beta }; }
+    function describeSign(a, b, c) {
+      const d = b * b - 4 * a * c; if (d < 0) { return `Signe: même signe que a (${sign(a)}) sur $\\mathbb{R}$.`; }
+      if (d === 0) { const x0 = (-b) / (2 * a); return `Signe: ${a > 0 ? '>=0' : '<=0'} avec annulation double en $x=${fmt(x0)}$.`; }
+      const r1 = (-b - Math.sqrt(d)) / (2 * a); const r2 = (-b + Math.sqrt(d)) / (2 * a);
+      const [x1, x2] = [Math.min(r1, r2), Math.max(r1, r2)];
+      return `Signe: ${a > 0 ? '>=0' : '<=0'} sur $]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$ et ${a > 0 ? '<=0' : '>=0'} sur $[${fmt(x1)};${fmt(x2)}]$.`;
+    }
+    function toolCalc() {
+      const a = parseFloat($('#a1').value), b = parseFloat($('#b1').value), c = parseFloat($('#c1').value);
+      if (!isFinite(a) || a === 0) { $('#toolOut').innerHTML = '<div class="result badbox">Veuillez entrer un a non nul.</div>'; return; }
+      const d = b * b - 4 * a * c; const { alpha, beta } = canonical(a, b, c);
+      const factor = latexFactor(a, b, c);
+      const varTxt = a > 0 ? `Décroît sur $]-\\infty;${fmt(alpha)}]$ puis croît sur $[${fmt(alpha)};+\\infty[$ (minimum $${fmt(beta)}$).` : `Croît sur $]-\\infty;${fmt(alpha)}]$ puis décroît sur $[${fmt(alpha)};+\\infty[$ (maximum $${fmt(beta)}$).`;
+      const html = `<div class="result"><ul>
+          <li>Forme canonique: $${fmt(a)}(x-${fmt(alpha)})^2+${fmt(beta)}$ ; sommet $S(${fmt(alpha)},${fmt(beta)})$</li>
+          <li>Discriminant: $\\Delta=${fmt(d)}$</li>
+          <li>Factorisation: ${factor}</li>
+          <li>${describeSign(a, b, c)}</li>
+          <li>Variations: ${varTxt}</li>
+        </ul></div>`;
+      $('#toolOut').innerHTML = html; MathJax.typesetPromise?.();
+    }
+    $('#btnCalc')?.addEventListener('click', toolCalc);
+
+    // ----- Somme / Produit quiz
+    function setText(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
+    function approxEq(a, b) { return Math.abs(a - b) < 1e-9; }
+    function checkSP(idS, idP, S, P, out) {
+      const s = parseFloat(document.getElementById(idS).value);
+      const p = parseFloat(document.getElementById(idP).value);
+      if (!isFinite(s) || !isFinite(p)) { setText(out, '<span class="result badbox">Entrez deux nombres.</span>'); return; }
+      const ok = approxEq(s, S) && approxEq(p, P);
+      setText(out, ok ? '<span class="result ok">✅ Correct</span>' : `<span class="result badbox">❌ Attendu: S=${fmt(S)}, P=${fmt(P)}</span>`);
+    }
+    document.getElementById('btnSP1')?.addEventListener('click', () => checkSP('spS1', 'spP1', (-(-3)) / 2, (1) / 2, 'spR1'));
+    document.getElementById('btnSP2')?.addEventListener('click', () => checkSP('spS2', 'spP2', (-(4)) / (-3), ((-7)) / (-3), 'spR2'));
+
+    // ----- Position relative parabole/droite
+    function relAnalyse() {
+      const a = parseFloat($('#pa').value), b = parseFloat($('#pb').value), c = parseFloat($('#pc').value);
+      const m = parseFloat($('#pm').value), p = parseFloat($('#pp').value);
+      if (!isFinite(a) || a === 0 || !isFinite(b) || !isFinite(c) || !isFinite(m) || !isFinite(p)) {
+        $('#relOut').innerHTML = '<div class="result badbox">Vérifiez les coefficients (a non nul).</div>'; return;
+      }
+      const A = a, B = b - m, C = c - p; const D = B * B - 4 * A * C; let txt = `$h(x)=${fmt(A)}x^2+${fmt(B)}x+${fmt(C)}$ — $\\Delta=${fmt(D)}$`;
+      if (D < 0) { txt += ` → $h(x)$ garde le signe de ${A > 0 ? 'a>0' : 'a<0'}: parabole ${A > 0 ? 'au‑dessus' : 'au‑dessous'} de la droite pour tout $x$.`; }
+      else if (D === 0) { const x0 = (-B) / (2 * A); txt += ` → tangence en $x=${fmt(x0)}$; ${A > 0 ? 'parabole au‑dessus ailleurs' : 'parabole au‑dessous ailleurs'}.`; }
+      else {
+        const r1 = (-B - Math.sqrt(D)) / (2 * A), r2 = (-B + Math.sqrt(D)) / (2 * A); const [x1, x2] = [Math.min(r1, r2), Math.max(r1, r2)];
+        txt += ` → intersections en $x=${fmt(x1)}$ et $x=${fmt(x2)}$; $h$ a le signe de a sur $]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$ et le signe contraire sur $[${fmt(x1)};${fmt(x2)}]$.`;
+      }
+      $('#relOut').innerHTML = `<div class="result">${txt}</div>`; MathJax.typesetPromise?.();
+    }
+    document.getElementById('btnRel')?.addEventListener('click', relAnalyse);
+
+    // ----- Optimisation aire avec clôture et allée
+    function opt() {
+      const L = parseFloat($('#Lclo').value), t = parseFloat($('#Tall').value);
+      if (!(L > 0 && t >= 0)) { $('#optOut').innerHTML = '<div class="result badbox">Veuillez entrer des valeurs valides: L>0 et t≥0.</div>'; return; }
+      // Modèle (explication):
+      // La clôture entoure l’aire + l’allée sur 3 côtés: longueurs clôturées = (y+2t) + (x+t) + (y+2t) = 2y + x + 5t = L
+      // Aire utile: A = x·y
+      // On en déduit: y = (L - x - 5t)/2, et donc A(x) = x * (L - x - 5t)/2 = -1/2 x^2 + (L-5t)/2 x (parabole concave)
+      const yFrom = (x) => (L - x - 5 * t) / 2; // y>=0 requis
+      const A = (x) => 0.5 * (L - 5 * t) * x - 0.5 * x * x;
+      const alpha = (L - 5 * t) / 2; // abscisse du sommet de la parabole A(x)
+      // Contraintes dimensionnelles minimales (exercice): x≥10 et y≥10
+      let xmin = 10;
+      let xmax = L - 5 * t - 20; // y≥10 ⇒ (L - x - 5t)/2 ≥ 10 ⇒ x ≤ L - 5t - 20
+      xmax = Math.max(xmin, xmax);
+      if (!(xmax >= xmin)) {
+        $('#optOut').innerHTML = '<div class="result badbox">Avec ces paramètres, les contraintes x≥10 et y≥10 sont incompatibles. Augmentez L ou réduisez t.</div>';
+        return;
+      }
+      // Solution optimale avec contraintes: on « pince » le sommet dans [xmin; xmax]
+      const xOpt = Math.min(Math.max(alpha, xmin), xmax);
+      const yOpt = yFrom(xOpt);
+      const area = A(xOpt);
+      const html = `
+          <div class="result">
+            <h3>Énoncé (clairement)</h3>
+            <ul>
+              <li>Aire rectangulaire adossée au bâtiment: dimensions <strong>x</strong> (longueur) et <strong>y</strong> (largeur).</li>
+              <li>Allée de largeur <strong>t</strong> sur trois côtés (avant et les deux côtés).</li>
+              <li>Clôture totale disponible: <strong>L</strong> mètres (entoure l’aire + allée).</li>
+              <li>Contraintes: <strong>x ≥ 10</strong> m et <strong>y ≥ 10</strong> m.</li>
+            </ul>
+            <h3>Modélisation pas à pas</h3>
+            <ol>
+              <li>Clôture: $(y+2t) + (x+t) + (y+2t) = 2y + x + 5t = L$.</li>
+              <li>Donc $y = \\dfrac{L - x - 5t}{2}$.</li>
+              <li>Aire: $A(x) = x\\cdot y = -\\tfrac12 x^2 + \\tfrac{L-5t}{2}x$ (parabole <em>concave</em>).</li>
+              <li>Domaine: $x \\in [${fmt(xmin)}; ${fmt(xmax)}]$ (car $y \\ge 10$ impose $x \\le L-5t-20$).</li>
+              <li>Sommet (sans contrainte): $x_s = \\dfrac{L-5t}{2}$; avec contrainte: $x_\\text{opt} = \\min(\\max(x_s, ${fmt(xmin)}), ${fmt(xmax)})$.</li>
+            </ol>
+            <h3>Résultat</h3>
+            <ul>
+              <li>$x_\\text{opt} = ${fmt(xOpt)}$ m, $y_\\text{opt} = ${fmt(yOpt)}$ m</li>
+              <li>Aire maximale $A_\\text{max} = ${fmt(area)}$ m²</li>
+            </ul>
+            <small class="muted">Conseil: faites varier L et t ci‑dessus puis cliquez « Optimiser » pour observer l’impact sur $x_\\text{opt}$ et $y_\\text{opt}$.</small>
+          </div>`;
+      $('#optOut').innerHTML = html; MathJax.typesetPromise?.();
+    }
+    document.getElementById('btnOpt')?.addEventListener('click', opt);
+
+    // ----- Inégalités
+    function ineq() {
+      const a = parseFloat($('#ia').value), b = parseFloat($('#ib').value), c = parseFloat($('#ic').value);
+      const want = $('#isgn').value;
+      if (!(isFinite(a) && a !== 0 && isFinite(b) && isFinite(c))) { $('#ineqOut').innerHTML = '<div class="result badbox">a non nul, b et c valides.</div>'; return; }
+      const D = b * b - 4 * a * c; let txt = `$\\Delta=${fmt(D)}$`;
+      const ge = want === '>=0';
+      if (D < 0) {
+        if (ge) txt += ` ⇒ solution: ${a > 0 ? '$]-\\infty;+\\infty[$' : '∅'}`; else txt += ` ⇒ solution: ${a < 0 ? '$]-\\infty;+\\infty[$' : '∅'}`;
+      } else if (D === 0) {
+        const x0 = (-b) / (2 * a);
+        if (ge) txt += ` ⇒ solution: ${a > 0 ? `$]-\\infty;${fmt(x0)}]\\cup[${fmt(x0)};+\\infty[$` : '∅'}`;
+        else txt += ` ⇒ solution: ${a < 0 ? `$]-\\infty;${fmt(x0)}]\\cup[${fmt(x0)};+\\infty[$` : '∅'}`;
+      } else {
+        const r1 = (-b - Math.sqrt(D)) / (2 * a), r2 = (-b + Math.sqrt(D)) / (2 * a); const [x1, x2] = [Math.min(r1, r2), Math.max(r1, r2)];
+        if (ge) txt += ` ⇒ solution: ${a > 0 ? `$]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$` : `$[${fmt(x1)};${fmt(x2)}]$`}`;
+        else txt += ` ⇒ solution: ${a > 0 ? `$[${fmt(x1)};${fmt(x2)}]$` : `$]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$`}`;
+      }
+      $('#ineqOut').innerHTML = `<div class="result">${txt}</div>`; MathJax.typesetPromise?.();
+    }
+    document.getElementById('btnIneq')?.addEventListener('click', ineq);
+
+    // ----- Bicarrée
+    function bic() {
+      const p = parseFloat($('#bp').value), q = parseFloat($('#bq').value);
+      if (!isFinite(p) || !isFinite(q)) { $('#bicOut').innerHTML = '<div class="result badbox">Entrez p et q.</div>'; return; }
+      const A = 1, B = p, C = q; const D = B * B - 4 * A * C; let txt = `Équation en $X$: $X^2+${fmt(p)}X+${fmt(q)}=0$ avec $\\Delta=${fmt(D)}$.`;
+      if (D < 0) { txt += ' Pas de solution réelle en $X$ → pas de solution réelle en $x$.'; }
+      else {
+        const X1 = (-B - Math.sqrt(D)) / (2 * A), X2 = (-B + Math.sqrt(D)) / (2 * A);
+        const roots = []; if (X1 >= 0) { const s = Math.sqrt(X1); roots.push(`$x=\\pm ${fmt(s)}$`); } if (X2 >= 0) { const s = Math.sqrt(X2); roots.push(`$x=\\pm ${fmt(s)}$`); } if (roots.length === 0) txt += ` $X_1=${fmt(X1)}, X_2=${fmt(X2)}<0$ ⇒ pas de solution réelle.`; else txt += ` Solutions: ${roots.join(', ')}.`;
+      }
+      $('#bicOut').innerHTML = `<div class="result">${txt}</div>`; MathJax.typesetPromise?.();
+    }
+    document.getElementById('btnBic')?.addEventListener('click', bic);
+
+    // ----- Reconstruction depuis S et P
+    function rec() { const S = parseFloat($('#rs').value), P = parseFloat($('#rp').value); if (!isFinite(S) || !isFinite(P)) { $('#recOut').innerHTML = '<div class="result badbox">Entrez S et P.</div>'; return; } const poly = `$x^2-${fmt(S)}x+${fmt(P)}$`; $('#recOut').innerHTML = `<div class="result">Trinôme monique: ${poly}. ${isFinite(S) && isFinite(P) ? '' : ''}</div>`; MathJax.typesetPromise?.(); }
+    document.getElementById('btnRec')?.addEventListener('click', rec);
+
+    // ----- Générateur d’exercices
+    function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+    function pickCoeffs() {
+      // Génère a∈{1,2,3}, b,c petits, parfois facteurs entiers
+      const a = [1, 2, 3][randInt(0, 2)];
+      const b = randInt(-6, 6);
+      const c = randInt(-9, 9);
+      if (a === 0) return pickCoeffs();
+      return { a, b, c };
+    }
+    function statementCanonique({ a, b, c }) {
+      const s = `Écrire sous forme canonique: $f(x)=${polyLatex(a, b, c)}$`;
+      const { alpha, beta } = canonical(a, b, c);
+      const corr = `$f(x)=${fmt(a)}(x-${fmt(alpha)})^2+${fmt(beta)}$ ; $S(${fmt(alpha)},${fmt(beta)})$.`;
+      return { s, corr };
+    }
+    function statementRacines({ a, b, c }) {
+      const d = b * b - 4 * a * c; let corr = `$\\Delta=${fmt(d)}$`;
+      if (d < 0) corr += ` → pas de racine réelle.`;
+      else if (d === 0) { const x0 = (-b) / (2 * a); corr += ` → racine double $x=${fmt(x0)}$.`; }
+      else { const r1 = (-b - Math.sqrt(d)) / (2 * a), r2 = (-b + Math.sqrt(d)) / (2 * a); corr += ` → racines $x=${fmt(r1)}, ${fmt(r2)}$.`; }
+      return { s: `Calculer $\\Delta$ et les racines de $f(x)=${polyLatex(a, b, c)}$.`, corr };
+    }
+    function statementSigne({ a, b, c }) {
+      const d = b * b - 4 * a * c; let corr = '';
+      if (d < 0) { corr = `Même signe que a: ${a > 0 ? ">=0" : "<=0"} sur $]-\\infty;+\\infty[$.`; }
+      else if (d === 0) { const x0 = (-b) / (2 * a); corr = `${a > 0 ? ">=0" : "<=0"} avec annulation double en $x=${fmt(x0)}$.`; }
+      else {
+        const r1 = (-b - Math.sqrt(d)) / (2 * a), r2 = (-b + Math.sqrt(d)) / (2 * a); const [x1, x2] = [Math.min(r1, r2), Math.max(r1, r2)];
+        corr = `${a > 0 ? ">=0" : "<=0"} sur $]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$ et ${a > 0 ? '<=0' : '>=0'} sur $[${fmt(x1)};${fmt(x2)}]$.`;
+      }
+      return { s: `Dresser le signe de $f(x)=${polyLatex(a, b, c)}$.`, corr };
+    }
+    function statementIneq({ a, b, c }) {
+      const d = b * b - 4 * a * c; let corr = '';
+      if (d < 0) { corr = a > 0 ? `Solution: $]-\\infty;+\\infty[$` : `Aucune solution.`; }
+      else if (d === 0) { const x0 = (-b) / (2 * a); corr = a > 0 ? `$]-\\infty;${fmt(x0)}]\\cup[${fmt(x0)};+\\infty[$` : `∅`; }
+      else {
+        const r1 = (-b - Math.sqrt(d)) / (2 * a), r2 = (-b + Math.sqrt(d)) / (2 * a); const [x1, x2] = [Math.min(r1, r2), Math.max(r1, r2)];
+        corr = a > 0 ? `$]-\\infty;${fmt(x1)}]\\cup[${fmt(x2)};+\\infty[$` : `$[${fmt(x1)};${fmt(x2)}]$`;
+      }
+      return { s: `Résoudre $${polyLatex(a, b, c)} \\ge 0$.`, corr };
+    }
+    // Mise en forme LaTeX propre du trinôme ax^2+bx+c
+    function polyLatex(a, b, c) {
+      function leadTerm(a) {
+        const v = Math.abs(a); if (a === 1) return 'x^2'; if (a === -1) return '-x^2'; return (a < 0 ? '-' : '') + fmt(v) + 'x^2';
+      }
+      function midTerm(coeff, varSym) { if (coeff === 0) return ''; const s = coeff < 0 ? ' - ' : ' + '; const v = Math.abs(coeff); const coefStr = (v === 1 ? '' : fmt(v)); return s + coefStr + varSym; }
+      function constTerm(coeff) { if (coeff === 0) return ''; const s = coeff < 0 ? ' - ' : ' + '; return s + fmt(Math.abs(coeff)); }
+      return leadTerm(a) + midTerm(b, 'x') + constTerm(c);
+    }
+    function generate() {
+      const t = $('#gtype').value; const coefs = pickCoeffs(); let st;
+      if (t === 'canonique') st = statementCanonique(coefs);
+      else if (t === 'racines') st = statementRacines(coefs);
+      else if (t === 'signe') st = statementSigne(coefs);
+      else st = statementIneq(coefs);
+      const stmt = document.getElementById('genStmt'); const corr = document.getElementById('genCorr');
+      if (stmt) stmt.innerHTML = st.s; if (corr) { corr.style.display = 'none'; corr.innerHTML = `<div class=\"result goodbox\">${st.corr}</div>`; }
+      MathJax.typesetPromise?.();
+    }
+    function showCorr() { const el = document.getElementById('genCorr'); if (!el) return; el.style.display = 'block'; MathJax.typesetPromise?.(); el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+    document.getElementById('btnGen')?.addEventListener('click', generate);
+    document.getElementById('btnCorr')?.addEventListener('click', showCorr);
+
+    // Initialiser les icônes Lucide
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+
+</html>

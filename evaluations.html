@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Interface Maths — Lycée PMF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+  <!-- Bandeau héros minimal avec titre centré, seul -->
+  <header class="site-hero">
+    <div class="container">
+      <div class="branding">
+        <div class="badge">PMF</div>
+        <h1 class="site-title">Interface&nbsp;Maths</h1>
+        <p class="site-subtitle">Lycée Pierre Mendès France — Tunis</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Barre de navigation séparée, en dessous du titre -->
+  <div class="nav-wrapper">
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a class="nav-item" href="/index.html">Accueil</a>
+      <a class="nav-item" href="/ressources.html">Ressources</a>
+      <a class="nav-item" href="/progression.html">Mon parcours</a>
+      <a class="nav-item" href="/favoris.html">Mes favoris <span class="badge-dot" data-fav-badge></span></a>
+      <a class="nav-item" href="/evaluations.html">Évaluations</a>
+      <a class="nav-item" href="/programme-epreuves.html">Programme &amp; Épreuves</a>
+      <a class="nav-item" href="/parents.html">Parents</a>
+      <a class="nav-item" href="/apropos.html">À propos</a>
+      <button class="nav-cta" id="theme-toggle" type="button" aria-pressed="false">Thème</button>
+    </nav>
+  </div>
+  <main id="main">
+    <section class="card">
+      <h2>Première — EDS</h2>
+      <ul>
+        <li>DS n°1 — Second degré — 1 h — Barème — <a href="#">Fiche méthode</a></li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Terminale — EDS</h2>
+      <ul>
+        <li>DS n°1 — Suites — 1 h 30 — Barème — <a href="#">Conseils</a></li>
+      </ul>
+    </section>
+    <section class="card">
+      <h2>Terminale — Maths expertes</h2>
+      <ul>
+        <li>DS n°1 — Arithmétique — 1 h — Barème — <a href="#">Fiche méthode</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="block footer-block">
+    <div class="footer-row"><small>© 2025 — Alaeddine Ben Rhouma</small></div>
+  </footer>
+  </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const light = root.getAttribute('data-theme') === 'light';
+      root.setAttribute('data-theme', light ? 'dark' : 'light');
+      btn.setAttribute('aria-pressed', String(!light));
+    });
+  </script>
+</body>
+
+</html>

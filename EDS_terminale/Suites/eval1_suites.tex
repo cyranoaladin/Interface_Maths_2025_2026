@@ -1,0 +1,94 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{multicol}
+
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Lycée Pierre Mendès France -- Tunis}\\[0.2cm]
+\large Terminale EDS Mathématiques -- Groupe 3 \\[0.2cm]
+\large \textbf{Évaluation : Suites et récurrence}\\[0.2cm]
+Mardi 23 septembre 2025 -- Durée : 1 heure
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent\textbf{Consignes :}
+\begin{itemize}
+    \item La rédaction doit être \textbf{claire, complète et rigoureuse}. Chaque résultat doit être justifié.
+    \item Écrire de manière lisible et aérée.
+    \item Utiliser de préférence un \textbf{stylo noir}, ou à défaut un \textbf{stylo bleu}.
+    \item Toute tentative de brouillon illisible ou de rédaction bâclée sera pénalisée.
+\end{itemize}
+
+\vspace{0.5cm}
+
+\hrule
+\vspace{0.5cm}
+
+\section*{Exercice 1 (5 points) -- Monotonie par récurrence}
+On considère la suite $(u_n)$ définie par :
+\[
+u_0 = 1, \quad u_{n+1} = \tfrac{u_n}{2} + 3 \quad \text{pour tout } n \in \mathbb{N}.
+\]
+
+\begin{enumerate}
+    \item Calculer $u_1$ et $u_2$.
+    \item Démontrer par récurrence que $u_{n+1} \geq u_n$ pour tout $n \in \mathbb{N}$.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Exercice 2 (5 points)}
+On considère la suite $(v_n)$ définie par :
+\[
+v_0 = 0, \quad v_{n+1} = v_n + \tfrac{1}{2^n} \quad \text{pour tout } n \in \mathbb{N}.
+\]
+
+\begin{enumerate}
+    \item Calculer $v_1, v_2, v_3$.
+    \item Démontrer par récurrence que, pour tout $n \in \mathbb{N}$, on a $v_n =2-\dfrac{1}{2^{n-1}}$.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Exercice 3 (5 points) -- Expression explicite par récurrence}
+On considère la suite $(w_n)$ définie par :
+\[
+w_0 = 2, \quad w_{n+1} = 3w_n - 2 \quad \text{pour tout } n \in \mathbb{N}.
+\]
+
+\begin{enumerate}
+    \item Calculer $w_1$ et $w_2$.
+    \item Démontrer par récurrence que, pour tout $n$, $w_n = 1+ 3^n$.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Exercice 4 (5 points) -- Propriété numérique}
+On définit la suite $(p_n)$ par :
+\[
+p_0 = 1, \quad p_{n+1} = p_n + 2n + 1.
+\]
+
+\begin{enumerate}
+    \item Calculer $p_1, p_2, p_3$.
+    \item Démontrer par récurrence que, pour tout $n \in \mathbb{N}$, $p_n = n^2+1$.
+\end{enumerate}
+
+\vspace{0.8cm}
+\hrule
+\vspace{0.3cm}
+
+\noindent\textbf{Barème indicatif :}\\
+Ex.1 : 5 pts \quad Ex.2 : 5 pts \quad Ex.3 : 5 pts \quad Ex.4 : 5 pts \\
+\textbf{Total : 20 points}
+
+\end{document}
+q

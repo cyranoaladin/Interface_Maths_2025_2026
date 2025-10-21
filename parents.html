@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Parents — Interface Maths</title>
+  <meta name="description"
+    content="Espace Parents : rôle du site, conseils de suivi, calendrier des évaluations, FAQ." />
+  <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="/parents.html" />
+
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
+  <script src="/assets/js/lucide.min.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <div class="wrap">
+    <header class="header-sticky" data-crumbs="Accueil,/index.html|Parents,/parents.html">
+      <div class="title-block">
+        <img loading="lazy" class="logo" src="assets/img/icon.svg" alt="Logo Interface Maths" />
+        <div class="title-text">
+          <h1>Parents</h1>
+          <small class="subtitle">Conseils de suivi et informations utiles</small>
+        </div>
+      </div>
+      <nav aria-label="Navigation principale" class="site-nav">
+        <a class="nav-link" href="index.html">Accueil</a>
+        <a class="nav-link" href="#conseils">Conseils</a>
+        <a class="nav-link" href="#calendrier">Calendrier d’évaluations</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="card" id="role">
+        <h2>Rôle du site</h2>
+        <p class="small">Aider votre enfant à travailler efficacement : cours clairs, fiches de révision, exercices,
+          progression annuelle.</p>
+      </section>
+
+      <section class="card" id="conseils">
+        <h2>Conseils de suivi</h2>
+        <ul>
+          <li>Encourager un travail régulier (15–20 minutes par jour).</li>
+          <li>Suivre la progression et cocher les jalons atteints.</li>
+          <li>Alterner automatismes courts (QCM) et exercices de raisonnement.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="calendrier">
+        <h2>Calendrier d’évaluations (indicatif)</h2>
+        <ul>
+          <li>Première : contrôles continus, bilans trimestriels; épreuve anticipée de maths en fin d’année.</li>
+          <li>Terminale & Maths expertes : DS par chapitre, évaluations de synthèse avant bac.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="faq">
+        <h2>FAQ</h2>
+        <details>
+          <summary>Calculatrice autorisée ?</summary>
+          <p>Non lors de l’épreuve anticipée; oui selon consignes en classe/devoirs.</p>
+        </details>
+        <details>
+          <summary>Durée d’un devoir surveillé ?</summary>
+          <p>Généralement 1 h à 2 h selon le niveau et le chapitre.</p>
+        </details>
+        <details>
+          <summary>Comment utiliser le site ?</summary>
+          <p>Consulter le sommaire, filtrer par thème/type, ajouter en favoris, suivre la progression.</p>
+        </details>
+      </section>
+    </main>
+
+    <footer class="block footer-block">
+      <div class="footer-row">
+        <div class="footer-links">
+          <a href="mentions.html">Mentions légales</a>
+          <a href="credits.html">Crédits</a>
+        </div>
+        <small>© 2025 — Interface Maths</small>
+      </div>
+    </footer>
+  </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const light = root.getAttribute('data-theme') === 'light';
+      root.setAttribute('data-theme', light ? 'dark' : 'light');
+      btn.setAttribute('aria-pressed', String(!light));
+    });
+  </script>
+</body>
+
+</html>

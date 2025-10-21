@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interface Maths — Lycée PMF</title>
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css?v=4" />
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '\\[', right: '\\]', display: true}, {left: '$', right: '$', display: false}, {left: '\\(', right: '\\)', display: false} ] });"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Chosen Palette: Warm Neutrals -->
+  <!-- Application Structure Plan: The application maintains its narrative structure, guiding the user through the history of continuity. The main navigation is a sticky horizontal timeline. This version enhances the historical context by embedding richer biographical information and portraits of key mathematicians directly within their respective sections. The "Epsilon-Delta Game" and visualizations of "monster" functions remain key interactive elements, now serving as anchors within the enriched historical timeline. The user flow is still guided vertically, encouraging a linear progression, but with more engaging, visually-supported content. -->
+  <!-- Visualization & Content Choices:
+        - Report Info: Cauchy's limit definition. -> Goal: Compare continuous vs. discontinuous functions. -> Viz Method: Two side-by-side Chart.js line charts. -> Interaction: Static comparison. -> Justification: Chart.js is perfect for illustrating the difference with a clear visual contrast.
+        - Report Info: Weierstrass's ε-δ definition. -> Goal: Explain the rigorous definition interactively. -> Viz Method: Custom HTML Canvas "game". -> Interaction: User adjusts a 'δ' slider to satisfy a given 'ε' challenge. -> Justification: This gamified approach makes a complex concept accessible and memorable.
+        - Report Info: Dirichlet function. -> Goal: Visualize a function that cannot be drawn. -> Viz Method: Custom HTML Canvas. -> Interaction: On hover, the canvas dynamically plots a dense cloud of points. -> Justification: Provides an intuitive feel for a non-intuitive concept.
+        - Report Info: Weierstrass function. -> Goal: Show a curve that is continuous but nowhere differentiable. -> Viz Method: Custom HTML Canvas. -> Interaction: A static, pre-rendered plot. -> Justification: The visual complexity itself is the key takeaway, demonstrating a counter-intuitive mathematical object.
+        - Report Info: Mathematicians (Descartes, Newton, Leibniz, Cauchy, Weierstrass, etc.). -> Goal: Enrich historical narrative with visual and biographical context. -> Viz Method: Images and text blocks. -> Interaction: None, serves a contextual purpose. -> Justification: Humanizes the story and provides a stronger sense of place and time.
+        - Library/Method: Chart.js and custom Canvas API for interactivity. Images for historical context. Confirmed NO SVG/Mermaid. -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+
+<body class="light">
+
+  <header class="text-center py-12 px-4 bg-white shadow-md">
+    <h1 class="text-4xl md:text-5xl font-bold text-sky-800 mb-2">Le Voyage de la Continuité</h1>
+    <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto">De l'intuition du "crayon" au formalisme mathématique
+      moderne.</p>
+  </header>
+
+  <nav id="timeline-nav" class="sticky top-0 z-10 bg-white/80 backdrop-blur-md shadow-sm py-4 overflow-x-auto">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between space-x-2 md:space-x-4">
+      <button data-target="introduction"
+        class="nav-item active flex-shrink-0 text-sm md:text-base py-2 px-3 rounded-full bg-stone-200 text-stone-700 font-semibold">Introduction</button>
+      <button data-target="doutes"
+        class="nav-item flex-shrink-0 text-sm md:text-base py-2 px-3 rounded-full bg-stone-200 text-stone-700 font-semibold">Premiers
+        Doutes</button>
+      <button data-target="rigueur"
+        class="nav-item flex-shrink-0 text-sm md:text-base py-2 px-3 rounded-full bg-stone-200 text-stone-700 font-semibold">Révolution
+        de la Rigueur</button>
+      <button data-target="monstres"
+        class="nav-item flex-shrink-0 text-sm md:text-base py-2 px-3 rounded-full bg-stone-200 text-stone-700 font-semibold">Monstres
+        Mathématiques</button>
+      <button data-target="conclusion"
+        class="nav-item flex-shrink-0 text-sm md:text-base py-2 px-3 rounded-full bg-stone-200 text-stone-700 font-semibold">Conclusion</button>
+    </div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto p-4 md:p-8 space-y-16">
+
+    <section id="introduction">
+      <h2 class="text-3xl font-bold text-sky-800 mb-4">Le Problème du "Crayon"</h2>
+      <div class="bg-white p-6 rounded-lg shadow-lg text-stone-700 space-y-4">
+        <p>Imaginez que vous deviez définir une fonction "continue". Votre première idée serait probablement : "c'est
+          une courbe que je peux tracer sans jamais lever mon crayon". Cette image simple et intuitive a guidé les
+          mathématiciens pendant des siècles. Elle fonctionne parfaitement pour les courbes lisses que nous rencontrons
+          tous les jours. Mais que se passe-t-il lorsque les mathématiques nous présentent des objets si étranges qu'ils
+          brisent cette intuition ?</p>
+        <p>Cette page retrace ce voyage fascinant, des premières idées vagues aux définitions précises et puissantes
+          d'aujourd'hui. Vous découvrirez comment la nécessité de résoudre des paradoxes a forcé les mathématiciens à
+          abandonner leur crayon pour forger des outils bien plus rigoureux, capables de décrire un univers de fonctions
+          bien plus riche et étrange que ce qu'ils avaient imaginé.</p>
+      </div>
+    </section>
+
+    <section id="doutes">
+      <h2 class="text-3xl font-bold text-sky-800 mb-4">Le Choc du XIXe Siècle : L'Intuition s'Effondre</h2>
+      <div class="bg-white p-6 rounded-lg shadow-lg text-stone-700 space-y-4">
+        <p>Au XIXe siècle, les mathématiciens ont réalisé que l'image du crayon n'était pas suffisante. Des fonctions
+          étranges, issues de séries infinies, ne se comportaient pas comme prévu. Il fallait une définition plus
+          solide. C'est Augustin-Louis Cauchy qui a posé la première pierre en utilisant la notion de limite.</p>
+        <div class="biography flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 mt-6">
+          <img loading="lazy" src="images/cauchy.jpg" alt="Portrait d'Augustin-Louis Cauchy"
+            class="w-32 h-32 md:w-40 md:h-40 object-cover">
+          <div>
+            <h3 class="font-bold text-xl text-sky-700">Augustin-Louis Cauchy</h3>
+            <p class="text-sm text-stone-500">1789 - 1857</p>
+            <p class="mt-2 text-stone-700">Mathématicien français, pionnier de l'analyse et de la théorie des groupes.
+              Il a formalisé le calcul infinitésimal en se basant sur la notion de limite.</p>
+          </div>
+        </div>
+        <p class="mt-4">Pour Cauchy, une fonction f est continue en un point 'a' si la valeur de f(x) se rapproche de
+          f(a) lorsque x se rapproche de a. Cela élimine les "sauts" brusques dans une courbe. Observez la différence
+          ci-dessous. À gauche, pour la fonction continue, lorsque x s'approche de 2, f(x) s'approche de 4. À droite, la
+          fonction "saute" à x=2. La limite en s'approchant par la gauche n'est pas la même que la valeur au point, la
+          fonction n'est donc pas continue.</p>
+        <div class="grid md:grid-cols-2 gap-8 mt-6">
+          <div>
+            <h3 class="text-center font-semibold text-lg mb-2">Exemple Continu: \(f(x) = x^2\)</h3>
+            <div class="chart-container">
+              <canvas id="continuousChart"></canvas>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-center font-semibold text-lg mb-2">Exemple Discontinu</h3>
+            <div class="chart-container">
+              <canvas id="discontinuousChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rigueur">
+      <h2 class="text-3xl font-bold text-sky-800 mb-4">La Révolution de la Rigueur : Le Jeu des ε et δ</h2>
+      <div class="bg-white p-6 rounded-lg shadow-lg text-stone-700 space-y-4">
+        <p>
+          La définition de Cauchy était une grande avancée, mais c'est Karl Weierstrass qui a apporté
+          la rigueur absolue avec sa fameuse définition en <em>epsilon-delta</em>.
+          Il a transformé le concept de « se rapprocher » en un jeu précis.
+        </p>
+
+        <div class="biography flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 mt-6">
+          <img loading="lazy" src="images/weierstrass.jpg" alt="Portrait de Karl Weierstrass"
+            class="w-32 h-32 md:w-40 md:h-40 object-cover aspect-square">
+          <div>
+            <h3 class="font-bold text-xl text-sky-700">Karl Weierstrass</h3>
+            <p class="text-sm text-stone-500">1815 - 1897</p>
+            <p class="mt-2 text-stone-700">
+              Mathématicien allemand, surnommé le « père de l'analyse moderne ».
+              Ses travaux ont donné des fondations rigoureuses au calcul.
+            </p>
+          </div>
+        </div>
+
+        <div class="bg-stone-50 p-4 rounded-lg shadow-inner mt-4">
+          <p>
+            Imaginez un défi : un ami vous donne une marge d'erreur verticale
+            \( \epsilon \) autour de la valeur \( f(a) \) et vous met au défi de rester à l'intérieur.
+            Votre réponse est de trouver une marge de manœuvre horizontale \( \delta \) autour de \( a \).
+          </p>
+          <p>
+            Si pour n'importe quel défi \( \epsilon > 0 \) (aussi petit soit-il),
+            vous pouvez toujours trouver un \( \delta > 0 \) qui garantit que la courbe reste
+            dans la marge verticale, alors la fonction est continue.
+          </p>
+        </div>
+
+        <p class="text-center font-mono text-lg p-3 bg-stone-100 rounded-md mt-4">
+          \[
+          f \text{ est continue en } a \iff
+          \forall \epsilon > 0, \, \exists \delta > 0 : |x-a| < \delta \implies |f(x)-f(a)| < \epsilon \] </p>
+
+            <p class="mt-4">Jouez au jeu ci-dessous ! La fonction est \(f(x) = x/2 + 1\), au point \(a = 2\). Un
+              \(\epsilon\) vous est
+              donné. <strong>Utilisez le curseur pour trouver un \(\delta\)</strong> assez petit pour que la ligne bleue
+              (votre intervalle) reste entièrement dans la zone verte (le défi).</p>
+
+            <div class="bg-stone-50 p-4 rounded-lg mt-6">
+              <div class="chart-container h-80 max-h-[50vh]">
+                <canvas id="epsilonDeltaCanvas"></canvas>
+              </div>
+              <div class="mt-4 max-w-xl mx-auto">
+                <div class="flex items-center justify-between space-x-4 mb-2">
+                  <label for="epsilonValue" class="font-medium">Défi \(\epsilon\):</label>
+                  <span id="epsilonDisplay" class="font-mono p-2 bg-red-100 rounded">0.50</span>
+                  <button id="newEpsilonBtn"
+                    class="px-3 py-1 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition">Nouveau Défi</button>
+                </div>
+                <div class="flex items-center space-x-4">
+                  <label for="deltaSlider" class="font-medium">Votre \(\delta\):</label>
+                  <input id="deltaSlider" type="range" min="0.01" max="2" value="1.5" step="0.01" class="w-full">
+                  <span id="deltaDisplay" class="font-mono p-2 bg-blue-100 rounded w-16 text-center">1.50</span>
+                </div>
+                <div id="gameResult" class="text-center font-bold text-xl mt-4 p-2 rounded-md" aria-live="polite"></div>
+              </div>
+            </div>
+      </div>
+    </section>
+
+
+    <section id="monstres">
+      <h2 class="text-3xl font-bold text-sky-800 mb-4">Les Monstres Mathématiques</h2>
+      <div class="bg-white p-6 rounded-lg shadow-lg text-stone-700 space-y-4">
+        <p>Une fois la définition rigoureuse établie, les mathématiciens ont pu construire des fonctions qui défiaient
+          complètement l'intuition du "crayon". Ces fonctions "pathologiques" ou "monstres" ont montré les limites de
+          notre imagination visuelle et la puissance de l'analyse formelle. Elles ne sont pas des curiosités, mais des
+          exemples extrêmes qui testent la solidité de nos définitions.</p>
+        <div class="grid md:grid-cols-2 gap-8 mt-6">
+          <div class="border border-stone-200 p-4 rounded-lg">
+            <h3 class="text-center font-semibold text-lg mb-2">La Fonction de Dirichlet</h3>
+            <p class="text-sm mb-2">Cette fonction vaut 1 si x est rationnel (ex: 1/2) et 0 si x est irrationnel (ex:
+              \(\pi\)). Il est impossible de la tracer. Entre deux nombres rationnels, il y a une infinité
+              d'irrationnels,
+              et vice-versa. C'est un "nuage de points" qui n'est continu nulle part. Survolez le graphe pour avoir une
+              idée de sa structure.</p>
+            <div class="chart-container h-64">
+              <canvas id="dirichletCanvas" class="bg-stone-50 rounded"></canvas>
+            </div>
+          </div>
+          <div class="border border-stone-200 p-4 rounded-lg">
+            <h3 class="text-center font-semibold text-lg mb-2">La Fonction de Weierstrass</h3>
+            <p class="text-sm mb-2">C'est l'exemple le plus célèbre : une fonction qui est <strong>continue partout,
+                mais dérivable nulle part</strong>. On peut la tracer sans lever le crayon, mais elle est si "froissée"
+              et "pointue" à chaque niveau de zoom qu'il est impossible de définir une tangente en un quelconque de ses
+              points. L'intuition qui lie continuité et "lissité" est ici brisée.</p>
+            <div class="chart-container h-64">
+              <canvas id="weierstrassCanvas" class="bg-stone-50 rounded"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="conclusion">
+      <h2 class="text-3xl font-bold text-sky-800 mb-4">Au-delà du Crayon : Une Idée Universelle</h2>
+      <div class="bg-white p-6 rounded-lg shadow-lg text-stone-700 space-y-4">
+        <p>L'histoire de la continuité est une leçon sur la nature même des mathématiques. Elle nous montre comment un
+          concept simple et intuitif doit être rigoureusement défini pour devenir un outil puissant et fiable. Ce voyage
+          a obligé les mathématiciens à :</p>
+        <ul class="list-disc list-inside space-y-2 pl-4">
+          <li><strong class="font-semibold text-sky-700">Questionner</strong> leurs intuitions les plus fondamentales.
+          </li>
+          <li><strong class="font-semibold text-sky-700">Affronter</strong> des paradoxes qui semblaient impossibles.
+          </li>
+          <li><strong class="font-semibold text-sky-700">Construire</strong> un langage formel pour éliminer toute
+            ambiguïté.</li>
+          <li><strong class="font-semibold text-sky-700">Généraliser</strong> leurs découvertes pour les appliquer à de
+            nouveaux domaines, comme la topologie où la continuité n'est plus une question de distance mais de
+            structure.</li>
+        </ul>
+        <p>Lorsque vous étudiez la continuité, souvenez-vous de cette aventure. Derrière les définitions formelles se
+          cachent des siècles de débats, de doutes et de découvertes géniales. Apprendre les mathématiques, c'est
+          refaire ce chemin : partir d'une intuition, la tester, la critiquer et la reconstruire sur des bases solides.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center py-6 bg-stone-200 mt-16">
+    <p class="text-stone-600">Une exploration interactive du concept de continuité.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      const createContinuousChart = () => {
+        const ctx = document.getElementById('continuousChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: Array.from({ length: 11 }, (_, i) => (1.5 + i * 0.1).toFixed(1)),
+            datasets: [{
+              label: 'f(x) = x²',
+              data: Array.from({ length: 11 }, (_, i) => Math.pow(1.5 + i * 0.1, 2)),
+              borderColor: '#0ea5e9',
+              tension: 0.1,
+              fill: false,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              title: { display: true, text: 'lim (x->2) x² = 4' }
+            },
+            scales: {
+              x: { title: { display: true, text: 'x' } },
+              y: { title: { display: true, text: 'f(x)' } }
+            },
+            elements: {
+              point: {
+                radius: (context) => context.dataIndex === 5 ? 6 : 3,
+                backgroundColor: (context) => context.dataIndex === 5 ? '#be123c' : '#0ea5e9',
+              }
+            }
+          }
+        });
+      };
+
+      const createDiscontinuousChart = () => {
+        const ctx = document.getElementById('discontinuousChart').getContext('2d');
+        const data1 = Array.from({ length: 6 }, (_, i) => (1.5 + i * 0.1));
+        const data2 = Array.from({ length: 5 }, (_, i) => (2.0 + i * 0.1));
+
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            datasets: [{
+              label: 'f(x) pour x < 2',
+              data: data1.map(x => ({ x: x, y: x + 1 })),
+              borderColor: '#0ea5e9',
+              tension: 0.1,
+              fill: false,
+              borderDash: [5, 5]
+            }, {
+              label: 'f(x) pour x >= 2',
+              data: data2.map(x => ({ x: x, y: x + 2 })),
+              borderColor: '#0ea5e9',
+              tension: 0.1,
+              fill: false,
+            }, {
+              label: 'Point f(2)',
+              data: [{ x: 2, y: 4 }],
+              pointBackgroundColor: '#be123c',
+              pointRadius: 6,
+              type: 'scatter'
+            }, {
+              label: 'Limite à gauche',
+              data: [{ x: 2, y: 3 }],
+              pointBackgroundColor: 'white',
+              pointBorderColor: '#0ea5e9',
+              pointRadius: 5,
+              pointStyle: 'circle',
+              type: 'scatter'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, title: { display: true, text: 'Fonction avec un saut en x=2' } },
+            scales: {
+              x: { type: 'linear', position: 'bottom', min: 1.5, max: 2.5, title: { display: true, text: 'x' } },
+              y: { title: { display: true, text: 'f(x)' } }
+            }
+          }
+        });
+      };
+
+      const setupEpsilonDeltaGame = () => {
+        const canvas = document.getElementById('epsilonDeltaCanvas');
+        if (!canvas) return; // Sécurité si l'élément n'existe pas
+        const ctx = canvas.getContext('2d');
+        const deltaSlider = document.getElementById('deltaSlider');
+        const deltaDisplay = document.getElementById('deltaDisplay');
+        const epsilonDisplay = document.getElementById('epsilonDisplay');
+        const newEpsilonBtn = document.getElementById('newEpsilonBtn');
+        const gameResult = document.getElementById('gameResult');
+
+        let epsilon = 0.5;
+        const a = 2;
+        const func = x => x / 2 + 1;
+        const fa = func(a);
+
+        function draw() {
+          const delta = parseFloat(deltaSlider.value);
+          deltaDisplay.textContent = delta.toFixed(2);
+
+          const dpr = window.devicePixelRatio || 1;
+          const rect = canvas.getBoundingClientRect();
+          canvas.width = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+          ctx.scale(dpr, dpr);
+
+          const width = canvas.width / dpr;
+          const height = canvas.height / dpr;
+
+          const xMin = -1, xMax = 5;
+          const yMin = 0, yMax = 4;
+          const scaleX = width / (xMax - xMin);
+          const scaleY = height / (yMax - yMin);
+          const originX = -xMin * scaleX;
+          const originY = yMax * scaleY;
+
+          ctx.clearRect(0, 0, width, height);
+
+          const toCanvasX = x => originX + x * scaleX;
+          const toCanvasY = y => originY - y * scaleY;
+
+          ctx.fillStyle = '#f0fdf4';
+          ctx.fillRect(0, toCanvasY(fa + epsilon), width, 2 * epsilon * scaleY);
+
+          ctx.strokeStyle = '#86efac';
+          ctx.setLineDash([5, 5]);
+          ctx.beginPath();
+          ctx.moveTo(0, toCanvasY(fa + epsilon));
+          ctx.lineTo(width, toCanvasY(fa + epsilon));
+          ctx.moveTo(0, toCanvasY(fa - epsilon));
+          ctx.lineTo(width, toCanvasY(fa - epsilon));
+          ctx.stroke();
+
+          ctx.fillStyle = 'rgba(191, 219, 254, 0.5)';
+          ctx.fillRect(toCanvasX(a - delta), 0, 2 * delta * scaleX, height);
+
+          ctx.strokeStyle = '#93c5fd';
+          ctx.beginPath();
+          ctx.moveTo(toCanvasX(a - delta), 0);
+          ctx.lineTo(toCanvasX(a - delta), height);
+          ctx.moveTo(toCanvasX(a + delta), 0);
+          ctx.lineTo(toCanvasX(a + delta), height);
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          ctx.strokeStyle = '#6b7280';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(0, originY);
+          ctx.lineTo(width, originY);
+          ctx.moveTo(originX, 0);
+          ctx.lineTo(originX, height);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(toCanvasX(xMin), toCanvasY(func(xMin)));
+          for (let x = xMin; x <= xMax; x += 0.1) {
+            ctx.lineTo(toCanvasX(x), toCanvasY(func(x)));
+          }
+          ctx.strokeStyle = '#4b5563';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          const y_minus_delta = func(a - delta);
+          const y_plus_delta = func(a + delta);
+          const isSuccess = (y_minus_delta > fa - epsilon) && (y_plus_delta < fa + epsilon);
+
+          ctx.beginPath();
+          ctx.moveTo(toCanvasX(a - delta), toCanvasY(y_minus_delta));
+          ctx.lineTo(toCanvasX(a + delta), toCanvasY(y_plus_delta));
+          ctx.strokeStyle = isSuccess ? '#16a34a' : '#dc2626';
+          ctx.lineWidth = 4;
+          ctx.stroke();
+
+          ctx.fillStyle = '#be123c';
+          ctx.beginPath();
+          ctx.arc(toCanvasX(a), toCanvasY(fa), 5, 0, 2 * Math.PI);
+          ctx.fill();
+
+          if (isSuccess) {
+            gameResult.textContent = "Défi Réussi !";
+            gameResult.className = "text-center font-bold text-xl mt-4 p-2 rounded-md bg-green-200 text-green-800";
+          } else {
+            gameResult.textContent = "Essayez un δ plus petit...";
+            gameResult.className = "text-center font-bold text-xl mt-4 p-2 rounded-md bg-red-200 text-red-800";
+          }
+        }
+
+        function startNewChallenge() {
+          epsilon = Math.random() * 0.45 + 0.05;
+          epsilonDisplay.textContent = epsilon.toFixed(2);
+          draw();
+        }
+
+        deltaSlider.addEventListener('input', draw);
+        newEpsilonBtn.addEventListener('click', startNewChallenge);
+
+        const resizeObserver = new ResizeObserver(() => draw());
+        resizeObserver.observe(canvas.parentElement);
+
+        startNewChallenge();
+      };
+
+      const drawDirichlet = () => {
+        const canvas = document.getElementById('dirichletCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let animationFrameId;
+
+        function drawFrame(mouseX) {
+          const dpr = window.devicePixelRatio || 1;
+          const rect = canvas.getBoundingClientRect();
+          canvas.width = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+          ctx.scale(dpr, dpr);
+          const width = canvas.width / dpr;
+          const height = canvas.height / dpr;
+
+          ctx.clearRect(0, 0, width, height);
+
+          const yRational = height * 0.25;
+          const yIrrational = height * 0.75;
+
+          ctx.fillStyle = '#0ea5e9';
+          for (let i = 0; i < 200; i++) {
+            const x = Math.random() * width;
+            ctx.fillRect(x, yRational, 2, 2);
+          }
+
+          ctx.fillStyle = '#f97316';
+          for (let i = 0; i < 200; i++) {
+            const x = Math.random() * width;
+            ctx.fillRect(x, yIrrational, 2, 2);
+          }
+
+          if (mouseX !== null) {
+            ctx.fillStyle = 'rgba(0,0,0,0.1)';
+            ctx.fillRect(mouseX - 10, 0, 20, height);
+          }
+
+          ctx.font = '14px Inter';
+          ctx.fillStyle = '#0ea5e9';
+          ctx.fillText('1 (Rationnels)', 10, yRational - 10);
+          ctx.fillStyle = '#f97316';
+          ctx.fillText('0 (Irrationnels)', 10, yIrrational + 20);
+        }
+
+        canvas.addEventListener('mousemove', e => {
+          const rect = canvas.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          if (animationFrameId) cancelAnimationFrame(animationFrameId);
+          animationFrameId = requestAnimationFrame(() => drawFrame(mouseX));
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+          if (animationFrameId) cancelAnimationFrame(animationFrameId);
+          animationFrameId = requestAnimationFrame(() => drawFrame(null));
+        });
+
+        const resizeObserver = new ResizeObserver(() => drawFrame(null));
+        resizeObserver.observe(canvas.parentElement);
+        drawFrame(null);
+      };
+
+      const drawWeierstrass = () => {
+        const canvas = document.getElementById('weierstrassCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        function weierstrassFunc(x, iterations) {
+          let sum = 0;
+          const a = 0.5;
+          const b = 13;
+          for (let n = 0; n < iterations; n++) {
+            sum += Math.pow(a, n) * Math.cos(Math.pow(b, n) * Math.PI * x);
+          }
+          return sum;
+        }
+
+        function draw() {
+          const dpr = window.devicePixelRatio || 1;
+          const rect = canvas.getBoundingClientRect();
+          canvas.width = rect.width * dpr;
+          canvas.height = rect.height * dpr;
+          ctx.scale(dpr, dpr);
+          const width = canvas.width / dpr;
+          const height = canvas.height / dpr;
+
+          ctx.clearRect(0, 0, width, height);
+
+          ctx.beginPath();
+          ctx.strokeStyle = '#4f46e5';
+          ctx.lineWidth = 1.5;
+
+          const scaleX = width / 2;
+          const scaleY = height / 4;
+
+          for (let i = 0; i < width; i++) {
+            const x = (i / width) * 2 - 1;
+            const y = weierstrassFunc(x, 100);
+            const canvasX = i;
+            const canvasY = height / 2 - y * scaleY;
+            if (i === 0) {
+              ctx.moveTo(canvasX, canvasY);
+            } else {
+              ctx.lineTo(canvasX, canvasY);
+            }
+          }
+          ctx.stroke();
+        }
+        const resizeObserver = new ResizeObserver(draw);
+        resizeObserver.observe(canvas.parentElement);
+        draw();
+      };
+
+      const setupNavigation = () => {
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              navItems.forEach(item => {
+                if (item.getAttribute('data-target') === entry.target.id) {
+                  item.classList.add('active');
+                } else {
+                  item.classList.remove('active');
+                }
+              });
+            }
+          });
+        }, { rootMargin: '-100px 0px -50% 0px', threshold: 0.1 });
+
+        sections.forEach(section => observer.observe(section));
+
+        navItems.forEach(item => {
+          item.addEventListener('click', () => {
+            const targetId = item.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+      };
+
+      createContinuousChart();
+      createDiscontinuousChart();
+      setupEpsilonDeltaGame();
+      drawDirichlet();
+      drawWeierstrass();
+      setupNavigation();
+    });
+  </script>
+  <script>
+    const $ = (q) => document.querySelector(q);
+    $('#printBtn').addEventListener('click', () => window.print());
+  </script>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      if (isDark) {
+        document.documentElement.setAttribute('data-theme', 'light');
+        btn.setAttribute('aria-pressed', 'false');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        btn.setAttribute('aria-pressed', 'true');
+      }
+    });
+  </script>
+</body>
+
+</html>

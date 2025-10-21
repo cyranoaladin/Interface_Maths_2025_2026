@@ -1,0 +1,1350 @@
+[
+    {
+        "nom_prenom": "Amine El Faleh",
+        "note_finale": 13.0,
+        "mention": "Assez Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Bonne compréhension du second degré et du passage à la forme canonique.",
+                "Démarche claire, présentation organisée.",
+                "Bon raisonnement logique dans les équations et factorisations."
+            ],
+            "axes_amelioration": [
+                "La rigueur dans les calculs finaux : une erreur de signe sur la forme canonique de f(x) et une erreur sur la différence de carrés montrent un manque de relecture.",
+                "La complétude des réponses : les exercices 3 et 4 sont bien commencés mais la résolution s'arrête avant la conclusion, ce qui coûte des points précieux.",
+                "La précision du vocabulaire : ne pas confondre une expression (ex: -2x²) avec une valeur numérique maximale."
+            ],
+            "conseils": [
+                "Amine, tu montres une excellente compréhension du fond, mais ton travail manque de finition. Tu réussis très bien les démarches algébriques, mais tu sembles t’essouffler sur les derniers calculs ou interprétations. Prends l'habitude de te poser la question : \"Ai-je bien répondu à tout ce qui était demandé ?\". Un simple temps de relecture te permettrait de gagner facilement plusieurs points."
+            ],
+            "appreciation_finale": "Travail sérieux, propre et globalement bien mené. Les bases sont solides et la logique est là, mais quelques erreurs de signe et d’inattention coûtent cher. Continue à t’entraîner à vérifier tes résultats et à conclure clairement : ton potentiel est excellent."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 5.0,
+                "commentaire": "Bonne maîtrise des identités remarquables et de la factorisation, mais une erreur sur la différence de carrés."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 3.5,
+                "commentaire": "La méthode de la forme canonique est comprise, mais une erreur de signe finale impacte le résultat."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 3.0,
+                "commentaire": "Bonne compréhension des formes canoniques, mais la résolution de l'intersection est inachevée."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 1.5,
+                "commentaire": "La mise en équation de l'aire est correcte, mais l'étude de la fonction pour trouver le maximum n'est pas menée."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 13.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Zaineb Chraïti",
+        "note_finale": 9.0,
+        "mention": "Fragile",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Excellente compréhension du principe de la forme canonique (exercice 2 parfaitement réussi).",
+                "Présentation claire, écriture lisible et logique de raisonnement perceptible.",
+                "Esprit méthodique (sait où elle veut aller, même si le chemin est parfois erroné)."
+            ],
+            "axes_amelioration": [
+                "Le vocabulaire mathématique : confusion systématique entre \"concave\" et \"convexe\". C'est un point de cours à revoir impérativement.",
+                "La maîtrise des bases de la résolution : les identités remarquables et la factorisation par produit nul ne sont pas acquises (Ex. 1).",
+                "La finalisation des calculs : la résolution de f(x)=0 est abandonnée trop tôt, tout comme l'intersection g(x)=h(x)."
+            ],
+            "conseils": [
+                "Zaineb, ton travail est paradoxal : tu excelles sur une méthode complexe comme la forme canonique, mais tu trébuches sur des bases comme les identités remarquables. Concentre-toi sur la consolidation de ces fondamentaux. Pour la confusion concave/convexe, utilise un moyen mnémotechnique : \"conveXe\" a un 'x' comme dans \"maXimum\" quand a<0 (la parabole est tournée vers le bas)."
+            ],
+            "appreciation_finale": "Ensemble correct mais très irrégulier. De très bonnes intuitions et une méthode parfois solide sont pénalisées par des lacunes sur les bases et des imprécisions qui coûtent cher. En solidifiant les acquis du collège et en étant plus rigoureuse, tu peux facilement gagner 4 à 5 points."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 1.0,
+                "commentaire": "Difficultés sur les identités remarquables et la factorisation, mais résolution correcte de x²-7=0."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.0,
+                "commentaire": "Excellente maîtrise de la forme canonique et de l'étude de fonction, seule la résolution finale est imprécise."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 4.0,
+                "commentaire": "Les idées sont là, mais des erreurs de logique (inversion concave/convexe) et de calcul pénalisent le résultat."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.0,
+                "commentaire": "Exercice non traité ou raisonnement inexploitable."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 9.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Yassine Kechrid",
+        "note_finale": 11.5,
+        "mention": "Acceptable",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Excellente maîtrise des équations du second degré (Exercice 1 parfait).",
+                "Maîtrise de la méthode de la forme canonique dans les cas simples.",
+                "Présentation claire, rigueur visible dans les raisonnements."
+            ],
+            "axes_amelioration": [
+                "La cohérence entre calcul et conclusion : dans l'exercice 2, tu trouves les bonnes solutions mais conclus qu'il n'y en a pas. C'est une erreur de relecture.",
+                "L'attention aux signes : une seule erreur de signe sur h(x) a rendu tout l'exercice 3 faux. Cela montre l'importance de vérifier chaque étape.",
+                "La logique des propriétés : ne pas écrire \"a > 0 donc maximum\". C'est l'inverse. Cette règle doit être sue parfaitement."
+            ],
+            "conseils": [
+                "Yassine, tu possèdes des bases très solides et une démarche logique. Tes erreurs ne sont pas des erreurs de compréhension, mais des fautes d'inattention ou de précipitation. Prends le temps de te relire en te demandant : \"Mon résultat est-il logique ? Ma conclusion correspond-elle à mes calculs ?\". Tu peux aisément viser l'excellence."
+            ],
+            "appreciation_finale": "Copie sérieuse et prometteuse. Bon niveau général, mais un manque de rigueur dans les applications et la relecture empêche d'atteindre une meilleure note. Continue à t’entraîner sur la cohérence signe/variation, et veille à conclure chaque question proprement."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 5.0,
+                "commentaire": "Assez bien maîtrisé, mais attention aux équations de type x^2=a."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.0,
+                "commentaire": "Très bonne méthode pour la forme canonique, mais la conclusion de f(x)=0 est incohérente avec les calculs."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 1.5,
+                "commentaire": "Une erreur de signe sur la forme canonique de h(x) entraîne une confusion sur toute la suite de l'exercice."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 1.0,
+                "commentaire": "La mise en équation est juste, mais l'étude de la fonction d'aire est confuse et inachevée."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 11.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Maya Naouali",
+        "note_finale": 5.5,
+        "mention": "Très Insuffisant",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Tu connais globalement la structure des formules et cherches à les appliquer.",
+                "Tu as compris que la forme canonique est un outil utile pour étudier les fonctions.",
+                "Bonne volonté visible : les étapes sont tentées, même si les calculs sont faux."
+            ],
+            "axes_amelioration": [
+                "Le respect des consignes : tu as utilisé des formules interdites (α, β), mais tu n'as pas été pénalisée. Il faut absolument maîtriser la méthode \"compléter le carré\" à la main.",
+                "Les bases du calcul algébrique : les manipulations d'équations, les signes, et les identités remarquables sont très fragiles.",
+                "Le vocabulaire et la logique : tu inverses \"concave\" et \"convexe\" et la logique du maximum/minimum selon le signe de a."
+            ],
+            "conseils": [
+                "Maya, ton envie de bien faire est visible, mais les fondations sont trop fragiles. Il est crucial de reprendre les bases. Entraîne-toi sur des exercices simples : 1) développer et factoriser des expressions. 2) Mettre sous forme canonique SANS formule, en suivant la méthode pas à pas. 3) Apprendre par cœur : \"a>0, parabole 'sourit' 🙂, admet un minimum\" et \"a<0, parabole 'triste' ☹️, admet un maximum\"."
+            ],
+            "appreciation_finale": "Copie incomplète et confuse, mais qui montre des efforts. La méthode n'est pas maîtrisée et les bases du calcul sont à revoir en priorité. En te concentrant sur la méthode de la forme canonique et la signification des signes, tu pourras progresser significativement."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 0.0,
+                "commentaire": "Les bases de la résolution d'équations (identités remarquables, factorisation) ne sont pas maîtrisées."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 3.0,
+                "commentaire": "Des erreurs de signe sur les coordonnées du sommet."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.5,
+                "commentaire": "Travail très maladroit avec inversion des termes \"concave/convexe\", mais quelques éléments sont compris."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.0,
+                "commentaire": "L'expression de l'aire est recopiée correctement dans la deuxième question, mais le raisonnement pour trouver le maximum est absent."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 5.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Mohamed-Khalil Ben Rabia",
+        "note_finale": 7.5,
+        "mention": "Insuffisant",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Bonne compréhension de la méthode de la forme canonique (très bien réussie dans l'exercice 2).",
+                "Bonne volonté et plusieurs démarches amorcées, montrant une tentative de raisonnement.",
+                "Quelques bonnes intuitions algébriques."
+            ],
+            "axes_amelioration": [
+                "Laa résolution .",
+                "La rigueur des calculs : des erreurs de signe et de développement (Ex. 3) et de racines (Ex. 1) pénalisent lourdement la note.",
+                "La finalisation des exercices : les résolutions sont souvent interrompues avant la conclusion. Il faut aller au bout du raisonnement."
+            ],
+            "conseils": [
+                "Mohamed-Khalil, ton travail est contrasté. Tu montres que tu peux maîtriser une méthode complexe (Ex. 2), mais tu manques de rigueur sur des points plus simples. Tu t’engages souvent dans la bonne voie mais t’arrêtes trop tôt. Impose-toi de finir chaque question et de vérifier tes signes. Revois la méthode de résolution des équations de base (produit nul, identités remarquables)."
+            ],
+            "appreciation_finale": "Travail irrégulier mais encourageant. Des idées justes apparaissent, mais il faut solidifier les bases et les calculs. Tu peux facilement gagner plusieurs points avec une meilleure organisation et une plus grande attention aux consignes et aux détails."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 2.0,
+                "commentaire": "La résolution d'équations simples est peu maîtrisée, avec des erreurs sur les racines et des questions omises."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 3.25,
+                "commentaire": "Très bonne mise en forme canonique, mais le tableau de variation n'a pas été justifié et en contradiction avec le résultat du sommet. La résolution de f(x)=0 est confuse."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.25,
+                "commentaire": "La forme canonique de g(x) est juste, mais celle de h(x) est fausse et la résolution de l'intersection est inachevée."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.0,
+                "commentaire": "Des tentatives sont visibles mais la confusion règne, notamment sur la relation entre x et y."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 7.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Lina Mnif",
+        "note_finale": 15.0,
+        "mention": "Très Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Excellent raisonnement global : toutes les formes canoniques sont justes.",
+                "Présentation claire, structurée et méthodique.",
+                "Très bonne compréhension du sens de variation et de la géométrie des paraboles."
+            ],
+            "axes_amelioration": [
+                "La finalisation des problèmes : la résolution de l'intersection dans l'exercice 3 est bien engagée mais non terminée. C'est dommage de perdre des points si près du but.",
+                "La précision des détails : une petite erreur d'inattention (m^2 au lieu de x dans Ex. 4) et une imprécision sur l'unité finale montrent que la relecture peut encore être améliorée.",
+                "L'optimisation des méthodes : la résolution de l'équation produit de l'Ex. 1 est juste mais inutilement complexe. Penser à la méthode la plus directe (factorisation simple)."
+            ],
+            "conseils": [
+                "Lina, ton travail est très solide et montre une compréhension approfondie du cours. Pour passer de \"Très Bien\" à \"Excellent\", concentre-toi sur la \"finition\" : aller systématiquement au bout de chaque question et effectuer une relecture ciblée sur les unités, les variables et les signes. Tu as toutes les cartes en main pour exceller."
+            ],
+            "appreciation_finale": "Copie claire, propre et très bien raisonnée. Tu maîtrises les méthodes et tu sais les expliquer. Un travail de grande qualité, qui frôle la maîtrise complète. Continue ainsi !"
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 5.0,
+                "commentaire": "Les méthodes de résolution ne sont pas parfaitement maîtrisées."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.0,
+                "commentaire": "Excellente maîtrise de la forme canonique et de l'étude de fonction. Attention à ne pas confondre f(x)=0 et le calcul de f(0)"
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.75,
+                "commentaire": "Très bonne compréhension des concepts, mais la résolution de l'intersection est inachevée."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 3.25,
+                "commentaire": "La méthode est bonne, mais de légères erreurs de calcul et d'unité pénalisent le résultat final."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 15.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Ela GAFSI",
+        "note_finale": 12.5,
+        "mention": "Assez bien, rigoureux et prometteur.",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Excellente maîtrise de la mise sous forme canonique et de l'étude de fonction.",
+                "Méthode claire, bonne présentation, maîtrise du raisonnement logique.",
+                "Bonne capacité à modéliser un problème (début de l'exercice 4)."
+            ],
+            "axes_amelioration": [
+                "La complétude des réponses : plusieurs exercices (1, 3 et 4) sont bien démarrés mais non terminés. Il est crucial d'aller jusqu'à la solution numérique finale.",
+                "La lecture attentive de la question : dans l'exercice 4, tu donnes la valeur de x qui maximise l'aire, mais pas l'aire maximale elle-même.",
+                "La gestion de l'attention : l'équation oubliée dans l'exercice 1 semble être un oubli plutôt qu'une incapacité."
+            ],
+            "conseils": [
+                "Ela, ton devoir est très bon et montre que tu maîtrises les concepts difficiles. Ton principal axe de progression est la \"gestion de la fin d'exercice\". Avant de passer à la suite, prends 10 secondes pour relire la question et vérifier que tu as bien fourni la réponse attendue (une valeur ? des coordonnées ? une aire ?). Tu as le potentiel pour gagner 3 à 4 points très facilement."
+            ],
+            "appreciation_finale": "Félicitations pour cette copie sérieuse et bien structurée ! Les méthodes sont comprises et appliquées avec rigueur. Un effort sur la finalisation des réponses te permettra d'atteindre l'excellence. Continue ainsi."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 4.0,
+                "commentaire": "Bonne logique de résolution, mais une équation est restée inachevée, ce qui coûte des points."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.5,
+                "commentaire": "Excellent raisonnement, la forme canonique et l'étude de fonction sont parfaitement maîtrisées."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 3.0,
+                "commentaire": "La démarche est claire et les formes canoniques sont justes, mais la résolution de l'intersection est incomplète."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 1.0,
+                "commentaire": "Des difficultés dans la recherche de la forme caanonique. Une erreur de lecture finale sur la valeur de x et l'aire non conclue."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 12.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Leyna MAGHREBI",
+        "note_finale": 4.0,
+        "mention": "Très Insuffisant",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Présentation soignée et structurée, ce qui est un excellent point de départ.",
+                "Tentative de suivre les démarches du cours, montrant une volonté de bien faire.",
+                "Bonne volonté perceptible, travail appliqué."
+            ],
+            "axes_amelioration": [
+                "Les manipulations algébriques fondamentales : passage d’un membre à l’autre, règle du produit nul, calcul avec les racines carrées. Ces bases du collège sont à revoir en priorité.",
+                "La méthode de la forme canonique : la technique pour \"compléter le carré\" n'est pas maîtrisée, entraînant des erreurs de signe et de coefficients.",
+                "La cohérence du raisonnement : il faut apprendre à vérifier qu'un résultat est possible (ex: un carré ne peut pas être égal à un nombre négatif)."
+            ],
+            "conseils": [
+                "Leyna, ton travail est soigné mais les méthodes mathématiques sont très fragiles. Il faut absolument reprendre les bases. Je te conseille de t'entraîner sur des exercices très ciblés : 1) Résoudre des équations simples avec (ax+b)(cx+d)=0. 2) Apprendre et appliquer les 3 identités remarquables. 3) Refaire pas à pas la méthode pour mettre sous forme canonique, en vérifiant chaque ligne."
+            ],
+            "appreciation_finale": "Copie propre mais très confuse sur le plan mathématique. Les idées sont présentes mais les méthodes mal appliquées. Un retour sur les fondements de l’algèbre est indispensable avant de pouvoir progresser sur ce chapitre. Courage, les efforts peuvent vite payer si le travail de remédiation est fait sérieusement."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 0.0,
+                "commentaire": "Le raisonnement est très confus, les manipulations algébriques de base ne sont pas acquises."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 2.0,
+                "commentaire": "La méthode pour compléter le carré est mal appliquée, entraînant une cascade d'erreurs."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.0,
+                "commentaire": "Quelques idées sont présentes, mais les erreurs de calcul et de signe sont nombreuses."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.0,
+                "commentaire": "L'expression de l'aire est incorrecte, et aucun raisonnement n'est mené pour trouver le maximum."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 4.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Malek LABIDI",
+        "note_finale": 19.0,
+        "mention": "Excellent",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Maîtrise complète des équations et des formes canoniques.",
+                "Raisonnement clair, structuré et d'une grande rigueur.",
+                "Excellent usage du langage mathématique et des symboles.",
+                "Problème d’optimisation mené parfaitement de bout en bout."
+            ],
+            "axes_amelioration": [
+                "La gestion des cas \"impossibles\" : la seule petite erreur vient d'une confusion sur (x-3)² = 4, interprété à tort comme un carré égal à un négatif. C'est un point de vigilance pour ne jamais perdre de points.",
+                "La justification des simplifications : dans l'exercice 3, la simplification de 2x² - 10x + 12 = 0 pourrait être plus explicitement justifiée (division par 2) pour une rigueur absolue."
+            ],
+            "conseils": [
+                "Malek, tu fais preuve d’une très solide maîtrise du chapitre. Tes raisonnements sont précis et bien expliqués. Pour viser la perfection (le 20/20), instaure une routine de relecture finale \"anti-étourderie\" : vérifier les signes dans les équations et s'assurer que chaque simplification est évidente ou justifiée. Tu as toutes les compétences pour atteindre ce niveau."
+            ],
+            "appreciation_finale": "Excellent travail, à la fois rigoureux et complet. Tu comprends parfaitement la logique des fonctions du second degré et tu es en avance sur les attendus du niveau. Poursuis dans cette voie !"
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 6.0,
+                "commentaire": "Parfaitement maîtrisé. Toutes les équations sont résolues avec rigueur et clarté."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.0,
+                "commentaire": "Très bonne méthode et étude complète, mais une confusion mineure sur le signe lors de la résolution de f(x)=0."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 5.0,
+                "commentaire": "Excellent raisonnement, les formes canoniques et les points d'intersection sont justes."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 4.0,
+                "commentaire": "Problème d’optimisation impeccable, de la mise en équation à la conclusion."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 19.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Meriem HARROUCHI",
+        "note_finale": 10.75,
+        "mention": "Moyen",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Très bonne compréhension de la méthode de la forme canonique.",
+                "Présentation claire et ordonnée, qui facilite la lecture.",
+                "Bon raisonnement logique dans la résolution d'équations."
+            ],
+            "axes_amelioration": [
+                "La précision des signes : les coordonnées du sommet (α) sont souvent inversées. C'est une erreur fréquente mais qui doit être corrigée.",
+                "La complétude des résolutions : tu oublies une solution dans l'Ex. 1, et tu ne termines pas les Ex. 3 et 4. Il faut prendre l'habitude d'aller jusqu'au résultat final.",
+                "La cohérence des calculs : dans l'Ex. 3, la démarche est bonne mais les calculs qui suivent sont incohérents."
+            ],
+            "conseils": [
+                "Meriem, tu as bien compris le cours, mais ton travail reste inégal à cause d'un manque de rigueur et de finalisation. Pour progresser, impose-toi une relecture systématique des signes (surtout pour le sommet S(α, β) où α = -b/2a). De plus, avant de rendre ta copie, vérifie que chaque question a une réponse numérique finale. Tu pourrais rapidement atteindre 16-17/20."
+            ],
+            "appreciation_finale": "Travail appliqué et cohérent dans l’ensemble. Bonne maîtrise des concepts essentiels du second degré. Il te faut simplement plus d’attention sur les signes et la conclusion des exercices pour que ton travail soit pleinement valorisé."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 3.0,
+                "commentaire": "Les bases sont globalement bonnes, mais des erreurs de méthode et l'oubli d'une solution pénalisent la note."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.5,
+                "commentaire": "Bonne maîtrise de la forme canonique, mais des erreurs de signe sur les coordonnées du sommet."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.25,
+                "commentaire": "Les raisonnements sont justes au départ, mais les résultats finaux sont incohérents à cause d'erreurs de calcul."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 1.0,
+                "commentaire": "L'exercice est commencé correctement mais n'est pas terminé, l'étude de la fonction d'aire est absente."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 10.75,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Sami SIALA",
+        "note_finale": 12.0,
+        "mention": "Assez Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Très bonne compréhension du second degré et de la géométrie des paraboles.",
+                "Démarches claires, propres et logiques.",
+                "Excellente maîtrise de la mise sous forme canonique."
+            ],
+            "axes_amelioration": [
+                "La complétude : c'est le point noir de cette copie. Quasiment chaque exercice est bien commencé mais n'est pas terminé. Une équation est même entièrement omise.",
+                "La finalisation : il faut systématiquement conclure avec les solutions numériques demandées (f(x)=0, points d'intersection, aire maximale...).",
+                "La gestion du temps ou de l'effort : le travail semble s'arrêter par manque de temps ou de persévérance."
+            ],
+            "conseils": [
+                "Sami, ton travail est propre, réfléchi et tu maîtrises les méthodes. C'est frustrant car tu perds énormément de points non pas par incompréhension, mais parce que tu ne finis pas. Il faut absolument que tu t'entraînes à aller jusqu'au bout. Ose conclure, même si tu n'es pas sûr. La différence entre ta note et un 17/20 ne tient qu'à cela."
+            ],
+            "appreciation_finale": "Travail très sérieux, clair et bien structuré. La compréhension est là, mais le manque de complétude est trop pénalisant. Continue avec la même rigueur, mais force-toi à finir chaque question. C'est un excellent potentiel qui ne demande qu'à être pleinement exploité."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 4.0,
+                "commentaire": "Bon début avec deux équations sur trois réussies, mais une est complètement omise."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.0,
+                "commentaire": "Très bon raisonnement sur la forme canonique et l'étude, mais la résolution de f(x)=0 est absente."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 3.0,
+                "commentaire": "Les bases (formes canoniques) sont solides, mais l'exercice est inachevé (pas de résolution d'intersection)."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 1.0,
+                "commentaire": "L'exercice est bien commencé (mise en équation), mais n'est pas terminé (pas d'étude de fonction)."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 12.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Ahmed Taha Labidi",
+        "note_finale": 10.5,
+        "mention": "Moyen",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Bonne compréhension générale du second degré et des transformations.",
+                "Méthode claire, raisonnement logique et structuré.",
+                "Bonne maîtrise de la méthode de la forme canonique."
+            ],
+            "axes_amelioration": [
+                "La vigilance sur les signes : une erreur de signe sur le sommet dans l'Ex. 2 et sur la forme canonique dans l'Ex. 3. C'est un point de concentration crucial.",
+                "La lecture de l'énoncé : la confusion sur la contrainte de l'Ex. 4 (y=2x au lieu de 2x+y=100) fausse tout le problème.",
+                "La finalisation des questions : comme beaucoup, tu t'arrêtes avant la conclusion numérique dans les problèmes."
+            ],
+            "conseils": [
+                "Ahmed, ton travail montre une bonne compréhension et une réelle rigueur. Tes erreurs sont principalement des fautes d'inattention (signes, lecture d'énoncé). Pour progresser, instaure une double vérification : 1) Relis l'énoncé après avoir écrit ta première ligne de calcul. 2) Relis tes signes avant de passer à la question suivante. Tu peux viser 17/20 sans difficulté."
+            ],
+            "appreciation_finale": "Bon travail d’ensemble, clair et réfléchi. Les méthodes sont maîtrisées, mais il reste à soigner la précision et la lecture pour éviter les erreurs qui coûtent cher. Continue dans cette dynamique, tu es sur la bonne voie !"
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 4.0,
+                "commentaire": "Bonne maîtrise globale des équations, malgré une confusion sur la résolution d'une identité remarquable."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.5,
+                "commentaire": "Très bon travail sur la forme canonique, mais une erreur de signe sur la coordonnée du sommet."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.0,
+                "commentaire": "La démarche est partielle mais cohérente, avec une erreur sur la forme canonique de h(x)."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.0,
+                "commentaire": "La relation initiale est fausse et l'étude inachevée."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 10.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "EL ASMI Nermine Farah",
+        "note_finale": 18.0,
+        "mention": "Excellent travail",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Méthodologie claire, logique impeccable et rédaction mathématique de niveau avancé.",
+                "Maîtrise quasi-parfaite des notions de forme canonique et sens de variation.",
+                "Présentation très soignée et parfaitement structurée."
+            ],
+            "axes_amelioration": [
+                "La gestion des cas limites : une petite confusion de signe dans f(x)=0 et une erreur de lecture de la valeur de x dans l'Ex. 4 sont les seules failles. Cela montre que même quand on maîtrise, l'inattention reste un risque.",
+                "L'interprétation finale : dans l'Ex. 4, ne pas confondre la valeur de x qui donne le maximum et le maximum lui-même.Il faut aussi savoir traduire la recherche de maximum d'une fonction de second degré pour répondre à un problème concret."
+            ],
+            "conseils": [
+                "Excellent travail ! Pour atteindre la perfection, la différence se joue sur des détails. Entraîne-toi à faire une \"relecture du résultat\" : la valeur trouvée est-elle bien celle qui est demandée par la question ? Le signe est-il cohérent avec le raisonnement ? Tu as un excellent niveau, ces derniers ajustements te permettront de sécuriser le 20/20."
+            ],
+            "appreciation_finale": "Travail très propre et complet, parfaitement argumenté. Les idées sont justes, la démarche rigoureuse, la rédaction exemplaire. Encore un petit effort sur la précision numérique finale et ce sera parfait."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 6.0,
+                "commentaire": "Parfait. Toutes les équations sont résolues avec une méthode claire et rigoureuse."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.5,
+                "commentaire": "Très solide, l'étude est complète mais une petite erreur de signe s'est glissée dans la résolution de f(x)=0."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 5.0,
+                "commentaire": "Excellent. L'étude comparée est complète, précise et parfaitement menée."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 2.5,
+                "commentaire": "Pour trouver l'aire maximaale il faut trouver le maximum de la fonction A(x)'"
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 18.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Nour DRISS",
+        "note_finale": 15.0,
+        "mention": "Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Excellente compréhension conceptuelle (concavité, signes, logique graphique).",
+                "Parfaite maîtrise du problème d’optimisation (Ex. 4), ce qui est un point très positif.",
+                "Présentation sérieuse, méthode de raisonnement visible."
+            ],
+            "axes_amelioration": [
+                "La rigueur dans la complétion du carré : des erreurs récurrentes de signe et de coefficient (Ex. 2 et 3) faussent complètement les résultats. C'est le point principal à corriger.",
+                "L'efficacité des calculs : la rédaction est parfois alourdie par des étapes superflues. Il faut viser la méthode la plus directe.",
+                "La finalisation des développements : l'exercice 3 est abandonné en cours de route."
+            ],
+            "conseils": [
+                "Nour, tu as une très bonne vision d'ensemble, mais tu perds beaucoup de points sur la mécanique des calculs. L'erreur sur la forme canonique est un problème récurrent qui doit être traité en priorité. Refais 5 à 10 exercices de mise en forme canonique en vérifiant chaque étape. Le fait que tu aies parfaitement réussi l'exercice le plus difficile (Ex. 4) montre que tu as le potentiel pour la mention Très Bien."
+            ],
+            "appreciation_finale": "Travail sérieux et réfléchi. Tu maîtrises les idées essentielles, mais il faut mieux canaliser ton raisonnement et fiabiliser tes calculs de base. Bravo pour l’optimisation parfaitement réussie, c’est un excellent signe de compréhension."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 6.0,
+                "commentaire": "Bonne maîtrise des équations, mais une rédaction parfois lourde et des étapes inutiles."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 3.0,
+                "commentaire": "Une confusion de signe et de coefficient dans la forme canonique a faussé toute l'étude de la fonction."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.0,
+                "commentaire": "La méthode est comprise au départ, mais le développement est confus et la résolution n'est pas aboutie."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 4.0,
+                "commentaire": "Parfaitement réussi. Le problème d'optimisation est très bien maîtrisé."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 15.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Mzali FARES",
+        "note_finale": 16.5,
+        "mention": "Très Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Excellente maîtrise des techniques de factorisation et de complétion du carré (Ex. 1 et 2).",
+                "Bonne présentation et logique d’enchaînement des idées.",
+                "Raisonnement solide et structuré sur la majorité de la copie."
+            ],
+            "axes_amelioration": [
+                "La précision du vocabulaire : attention à la confusion entre \"concave\" et \"convexe\". C'est une erreur qui peut coûter cher.",
+                "La rigueur dans les problèmes : des erreurs de coefficients dans l'Ex. 4 et une résolution fausse dans l'Ex. 3 montrent un relâchement de l'attention sur les questions complexes.",
+                "L'efficacité de la rédaction : comme pour d'autres, chercher la méthode la plus simple et directe permet de gagner du temps et de limiter les risques d'erreur."
+            ],
+            "conseils": [
+                "Fares, ton travail est très bon et tu comprends parfaitement le chapitre. Pour passer au niveau supérieur, la clé est la rigueur constante, du début à la fin. Ne te laisse pas déconcentrer sur les problèmes longs. Mémorise bien la différence concave/convexe et vérifie toujours tes coefficients avant de calculer une forme canonique."
+            ],
+            "appreciation_finale": "Excellent travail, bien structuré et argumenté. Les quelques imprécisions ne masquent pas une très bonne compréhension du second degré. Continue sur cette lancée !"
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 5.5,
+                "commentaire": "Très bon niveau, rédaction claire mais une méthode inutilement longue sur une équation."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 5.0,
+                "commentaire": "Parfait. L'étude de la fonction est complète et rigoureuse."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 3.5,
+                "commentaire": "Bonne base et formes canoniques justes, mais erreur d'interprétation (concave/convexe) et résolution fausse."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 2.5,
+                "commentaire": "La méthode est juste au départ, mais des fautes sur les coefficients faussent la forme canonique et le résultat."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 16.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "RAJHI Sofia",
+        "note_finale": 4.25,
+        "mention": "Insuffisant",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Une bonne présentation générale et des tentatives de raisonnement structuré.",
+                "Certaines connaissances sont perceptibles (forme canonique de g(x) réussie, expression de l'aire correcte).",
+                "Tu tentes de justifier tes étapes, ce qui montre une démarche réflexive à encourager."
+            ],
+            "axes_amelioration": [
+                "Les fondamentaux de l'algèbre : les identités remarquables et la complétion du carré sont mal maîtrisées. C'est la priorité absolue.",
+                "La manipulation des signes et des coefficients : de nombreuses erreurs viennent de là.",
+                "La confusion entre les méthodes : il ne faut pas mélanger les techniques de résolution. Chaque type d'équation a sa méthode privilégiée."
+            ],
+            "conseils": [
+                "Sofia, ton travail montre que tu as des idées mais que les outils te manquent. Il faut absolument reprendre les bases. Je te conseille de refaire les fiches de méthode pour : 1) Mettre sous forme canonique pas à pas. 2) Reconnaître et utiliser les identités remarquables. 3) Résoudre une équation-produit. Avec de la rigueur et une révision sérieuse, des progrès rapides sont possibles."
+            ],
+            "appreciation_finale": "La copie manque de structure logique et beaucoup de résultats sont faux par confusion de méthode. L’effort est visible mais les bases sont trop fragiles. Un travail de remédiation sur les fondamentaux du calcul algébrique est indispensable."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 0.0,
+                "commentaire": "Les méthodes de résolution de base (identités remarquables, factorisation) ne sont pas acquises."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 2.5,
+                "commentaire": "La méthode pour compléter le carré est mal appliquée, avec des erreurs de signe et de division."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 1.75,
+                "commentaire": "La forme canonique de g(x) est juste, mais celle de h(x) est fausse. Le raisonnement reste structuré."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.0,
+                "commentaire": "L'expression de l'aire est incorrecte. Aucune justification ni recherche de maximum n'est fournie."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 4.25,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "JEDDI Rayen",
+        "note_finale": 19.5,
+        "mention": "Excellent",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Démarche claire, rigoureuse et ordonnée sur l'ensemble de la copie.",
+                "Aucune erreur conceptuelle, maîtrise remarquable du chapitre.",
+                "Rédaction fluide, présentation soignée, logique parfaitement maîtrisée.",
+                "Compréhension fine du rôle du coefficient a et des intersections."
+            ],
+            "axes_amelioration": [
+                "La justification des calculs intermédiaires : pour atteindre une perfection formelle, pense à mieux détailler certaines étapes de développement algébrique (par exemple, la simplification de l'équation dans g(x)=h(x)).",
+                "L'optimisation de la présentation : bien que déjà très bonne, la mise en page des tableaux ou l'alignement des équations peut toujours être peaufinée pour une lisibilité absolue."
+            ],
+            "conseils": [
+                "Rayen, ta copie est exemplaire. Les \"points à retravailler\" sont des détails pour te pousser vers une rigueur mathématique de niveau supérieur. Continue à t'exercer sur des problèmes de modélisation complexes pour entretenir et approfondir cette excellente maîtrise. Pense à la rédaction comme un moyen de convaincre un lecteur exigeant de chaque étape de ton raisonnement."
+            ],
+            "appreciation_finale": "Copie exemplaire, rigoureuse et fluide. Tu montres une maîtrise remarquable du second degré sans recours au discriminant. Félicitations pour cette prestation quasi parfaite !"
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 6.0,
+                "commentaire": "Parfait, aucune erreur. Démarche claire et notation propre."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 5.0,
+                "commentaire": "Maîtrise parfaite de la méthode et présentation claire."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 4.5,
+                "commentaire": "Excellent raisonnement, juste une justification un peu légère sur le développement de g(x)=h(x)."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 4.0,
+                "commentaire": "Parfait. Le problème est modélisé et résolu avec une grande rigueur."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 19.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Youssef Djait",
+        "note_finale": 15.0,
+        "mention": "Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Bonne maîtrise de la résolution des équations du second degré simples (Ex. 1).",
+                "La structure des raisonnements est globalement comprise (forme canonique, étude de fonction).",
+                "Élève appliqué qui tente de répondre à toutes les questions."
+            ],
+            "axes_amelioration": [
+                "La rigueur sur les signes : c'est le problème majeur de la copie. De graves confusions sur les signes dans les formes canoniques faussent la plupart des exercices.",
+                "La clarté de la rédaction : la présentation est parfois confuse, ce qui peut amener à des erreurs de calcul.",
+                "La finalisation des problèmes : l'exercice 4 est bien démarré mais non conclu."
+            ],
+            "conseils": [
+                "Youssef, tu as une base correcte mais tu perds trop de points sur des détails de signes. Adopte une routine de vérification systématique : après chaque forme canonique, vérifie le signe de α et β. Entraîne-toi spécifiquement à compléter le carré en étant très attentif aux coefficients et aux signes. Une meilleure organisation sur ton brouillon pourrait aussi t'aider à éviter les erreurs."
+            ],
+            "appreciation_finale": "Élève appliqué mais encore fragile dans la manipulation des formes canoniques à cause d'un manque de rigueur sur les signes. Des progrès sont attendus sur la relecture systématique et la clarté de la présentation."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 6.0,
+                "commentaire": "Bonne maîtrise des équations, malgré une rédaction parfois confuse."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.5,
+                "commentaire": "La méthode est comprise, mais attention aux coordonnées du sommet d'une parabole."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 3.0,
+                "commentaire": "Graves confusions dans les signes des formes canoniques, mais la démarche de résolution est amorcée."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 1.5,
+                "commentaire": "La mise en équation est juste, mais l'étude de la fonction d'aire est très confuse et inachevée."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 15.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Emna Elloumi",
+        "note_finale": 17.0,
+        "mention": "Très Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Travail d’excellente qualité sur les trois premiers exercices : rigueur, clarté et parfaite compréhension du second degré.",
+                "Maîtrise totale des méthodes de résolution et d'étude de fonction.",
+                "Présentation impeccable."
+            ],
+            "axes_amelioration": [
+                "La gestion du temps et la complétude : l'exercice 4, un problème d'application, est resté inachevé. C'est ce qui te sépare du 20/20.",
+                "L'endurance sur les problèmes longs : il est possible que la fatigue ou un manque de temps ait conduit à l'abandon de la dernière question."
+            ],
+            "conseils": [
+                "Emna, ton niveau est excellent. Le seul conseil que je puisse te donner est de travailler ta stratégie en évaluation. Peut-être commencer par survoler tous les exercices pour évaluer leur difficulté, ou t'entraîner à résoudre des problèmes complets en temps limité. Ne laisse pas un exercice inachevé te priver d'une note qui reflète ton vrai niveau."
+            ],
+            "appreciation_finale": "Élève très sérieuse, appliquée et compétente. Le travail sur les exercices techniques est parfait. Il faut maintenant s'assurer de traiter toutes les questions, y compris les problèmes, pour viser l’excellence absolue."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 6.0,
+                "commentaire": "Parfait. Rigueur, clarté et parfaite compréhension."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 5.0,
+                "commentaire": "Excellent. L'étude de la fonction est menée sans aucune erreur."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 5.0,
+                "commentaire": "Excellent. L'étude comparée est complète et parfaitement juste."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 1.0,
+                "commentaire": "L'exercice est resté inachevé, seule une tentative de forme canonique est visible."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 17.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Sarra Hamida",
+        "note_finale": 15.0,
+        "mention": "Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Excellente maîtrise des équations du second degré (Exercice 1 parfait).",
+                "La logique et la méthode pour aborder les problèmes sont bien comprises.",
+                "Capacité à mener un raisonnement jusqu'à sa conclusion (Ex. 4)."
+            ],
+            "axes_amelioration": [
+                "La précision dans les calculs : des erreurs de constante (Ex. 2), de signe (Ex. 3) et de facteur (Ex. 4) montrent un manque de vigilance.",
+                "La cohérence interne : dans l'Ex. 2, le sommet indiqué est incohérent avec la forme canonique calculée. Il faut toujours vérifier que les résultats découlent logiquement les uns des autres.",
+                "La simplification des méthodes : la résolution de l'Ex. 3 est inutilement compliquée."
+            ],
+            "conseils": [
+                "Sarra, tes idées sont bonnes et tu sais où aller, mais tu te perds dans les détails des calculs. Je te propose un protocole de relecture : après chaque calcul de forme canonique, prends 15 secondes pour vérifier les signes et les constantes. Assure-toi que ton raisonnement reste simple et direct. Tu as un bon niveau, la rigueur te fera passer un cap."
+            ],
+            "appreciation_finale": "Élève appliquée et méthodique. Les bases sont solides, mais des progrès sont attendus sur la rigueur algébrique pour éviter les erreurs de calcul qui pénalisent une bonne compréhension d'ensemble."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 6.0,
+                "commentaire": "Parfait. Bonne maîtrise des différentes techniques de résolution."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 3.5,
+                "commentaire": "La méthode est là, mais une erreur de constante dans la forme canonique fausse l'étude."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.5,
+                "commentaire": "Des erreurs de signe et de calcul perturbent la résolution, bien que la démarche soit comprise."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 3.0,
+                "commentaire": "Bonne démarche globale, mais une erreur de facteur dans la forme canonique est à noter."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 15.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Malek Guerfali",
+        "note_finale": 11.25,
+        "mention": "Assez Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Bonne compréhension des équations et de la mise sous forme canonique (Ex. 1 et 3).",
+                "Capacité à démarrer correctement la plupart des exercices.",
+                "Présentation claire."
+            ],
+            "axes_amelioration": [
+                "La complétude du travail : c'est le défaut majeur. Tous les exercices sont inachevés. Il est impératif de finir les questions.",
+                "La rigueur des calculs : une erreur de constante dans l'Ex. 2 fausse l'étude.",
+                "La persévérance : les exercices semblent abandonnés dès qu'une difficulté apparaît."
+            ],
+            "conseils": [
+                "Malek, tu as les connaissances pour avoir une bien meilleure note. Ton principal ennemi est le \"non-fini\". Force-toi à aller jusqu'au bout de chaque question, même si tu doutes. Un résultat partiel est toujours mieux qu'une absence de réponse. Entraîne-toi à gérer ton temps pour pouvoir traiter et finir chaque exercice."
+            ],
+            "appreciation_finale": "Niveau correct mais le travail est trop inégal et incomplet pour être valorisé pleinement. Les progrès viendront en apprenant à finaliser les calculs et à ne pas abandonner un exercice en cours de route."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 5.0,
+                "commentaire": "Bonne maîtrise des équations, mais une résolution est restée inachevée."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 2.0,
+                "commentaire": "La méthode est bonne, mais une erreur sur la constante de la forme canonique et l'oubli de f(x)=0 pénalisent la note."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 3.5,
+                "commentaire": "Très bonne reconnaissance des formes canoniques, mais la résolution de l'intersection est inachevée."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.75,
+                "commentaire": "La mise en équation est juste, mais l'exercice est abandonné ensuite."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 11.25,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Khadija Siala",
+        "note_finale": 15.0,
+        "mention": "Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Très bonne maîtrise de la méthode de la forme canonique et de l'étude des variations.",
+                "Capacité à structurer un raisonnement complexe (Ex. 2 et 3).",
+                "Travail soigné et réfléchi."
+            ],
+            "axes_amelioration": [
+                "L'exhaustivité : une équation non traitée et une solution oubliée dans l'Ex. 1 coûtent la moitié des points de l'exercice.",
+                "La précision numérique : plusieurs erreurs d'étourderie sur les signes et les calculs finaux (Ex. 2, 3, 4) pénalisent un travail de bonne qualité.",
+                "La finalisation des résolutions : la fin de l'Ex. 3 est mal menée."
+            ],
+            "conseils": [
+                "Khadija, tu maîtrises très bien les méthodes. Tes erreurs sont principalement des fautes d'inattention. Mets en place une routine de double vérification : 1) Ai-je traité toutes les questions ? 2) Mes signes et mes valeurs numériques finales sont-ils corrects ? En étant plus vigilante sur ces détails, tu peux facilement gagner les points qui te manquent pour la mention Très Bien."
+            ],
+            "appreciation_finale": "Travail soigné et réfléchi, d'un bon niveau général. La compréhension est là, mais la note est impactée par des erreurs d'étourderie et des oublis. Une plus grande vigilance sur les calculs finaux est attendue."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 3.0,
+                "commentaire": "Une équation est non traitée et une autre est incomplète, ce qui montre une maîtrise partielle."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 4.0,
+                "commentaire": "Très bonne maîtrise de la forme canonique, seule une erreur de signe dans la résolution finale est à noter."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 4.0,
+                "commentaire": "Les formes canoniques sont justes, mais la résolution de l'intersection est mal terminée."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 2.5,
+                "commentaire": "La démarche est correcte, mais des erreurs algébriques et de calcul faussent le résultat final."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 15.0,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Baya Souabni",
+        "note_finale": 19.5,
+        "mention": "Excellent",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Travail très clair, d'une rigueur et d'une complétude exemplaires.",
+                "Maîtrise parfaite de toutes les méthodes, y compris les plus complexes.",
+                "Démonstrations logiques et présentation très propre."
+            ],
+            "axes_amelioration": [
+                "L'efficacité des méthodes : la seule perte de points vient d'une méthode inutilement longue pour résoudre une équation simple. Savoir choisir l'outil le plus direct est aussi une compétence.",
+                "L'optimisation de la rédaction : bien que très claire, la rédaction pourrait parfois être plus concise pour gagner en efficacité, sans perdre en rigueur."
+            ],
+            "conseils": [
+                "Baya, ton travail est excellent. Pour aller encore plus loin, pose-toi la question de l'élégance et de l'efficacité. Face à un problème, demande-toi : \"Quelle est la voie la plus rapide et la plus directe pour arriver au résultat ?\". C'est un raffinement qui te servira dans tes études supérieures. Continue de cultiver cette rigueur, c'est ta plus grande force."
+            ],
+            "appreciation_finale": "Travail excellent et très soigné. La maîtrise du chapitre est quasi-totale. Félicitations pour cette performance de très haut niveau."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 5.5,
+                "commentaire": "Excellent raisonnement, pénalisé par une méthode inutilement longue sur une équation."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 5.0,
+                "commentaire": "Parfait. L'étude de la fonction est complète et rigoureuse."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 5.0,
+                "commentaire": "Parfait. L'étude comparée est menée avec une grande clarté."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 4.0,
+                "commentaire": "Parfait. Le problème d'optimisation est résolu sans erreur."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 19.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Azmi Ben Maaouia",
+        "note_finale": 6.75,
+        "mention": "Insuffisant",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Bonne maîtrise de la résolution d'équations simples quand la méthode est directe (Ex. 1).",
+                "Bonne intuition de départ sur plusieurs questions."
+            ],
+            "axes_amelioration": [
+                "La méthode de la forme canonique : elle n'est pas maîtrisée. Les erreurs de signe et de constante sont nombreuses. C'est un point de blocage majeur.",
+                "La persévérance : la plupart des exercices sont commencés mais abandonnés. Il faut apprendre à ne pas se décourager.",
+                "La clarté de la rédaction : les raisonnements sont confus et difficiles à suivre."
+            ],
+            "conseils": [
+                "Azmi, tu réussis bien quand la question est simple, mais tu es en difficulté dès que la méthode se complexifie. Il faut absolument te concentrer sur la maîtrise de la forme canonique. Je te propose un plan de remédiation : refais 10 exercices de mise sous forme canonique, puis 10 exercices d'étude de fonction. Ne passe à la suite que lorsque la méthode est sûre. La clé est la pratique ciblée."
+            ],
+            "appreciation_finale": "Copie insuffisante. Les bases de la résolution d'équations sont là, mais la méthode clé du chapitre (forme canonique) n'est pas acquise. Un travail de fond est nécessaire pour combler ces lacunes et apprendre à finaliser les exercices."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 4.5,
+                "commentaire": "Bonne maîtrise des équations simples, mais une résolution est restée inachevée."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 0.5,
+                "commentaire": "La méthode de la forme canonique est mal appliquée, avec des erreurs de signe et de constante."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 1.0,
+                "commentaire": "La démarche est très confuse et les résolutions sont interrompues."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.75,
+                "commentaire": "L'exercice est à peine ébauché et abandonné."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 6.75,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Yanis Naouali",
+        "note_finale": 3.5,
+        "mention": "Très Insuffisant",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Persévérance et volonté de répondre à toutes les questions, même difficiles.",
+                "Présentation globalement lisible ; la mise en page claire est à conserver.",
+                "Quelques démarches sont amorcées (tentative de mise en facteur, repérage d'un sommet), ce qui montre une écoute en classe."
+            ],
+            "axes_amelioration": [
+                "Les bases du calcul algébrique : les identités remarquables, la factorisation, et la résolution d'équations simples ne sont pas maîtrisées. C'est la priorité absolue.",
+                "La méthode de la forme canonique : la structure est vaguement reconnue, mais les calculs sont entièrement faux.",
+                "La logique mathématique : les démarches sont souvent inachevées et les réponses improvisées sans raisonnement."
+            ],
+            "conseils": [
+                "Yanis, il faut reprendre les choses depuis le début. Je te propose un itinéraire : 1) Revoir les 3 identités remarquables. 2) T'entraîner à factoriser des expressions simples. 3) Apprendre la méthode pour compléter le carré pas à pas, avec un exemple sous les yeux. Il faut travailler 20 minutes par jour, mais tous les jours, sur ces points précis. La régularité paiera."
+            ],
+            "appreciation_finale": "Copie très fragile avec une compréhension lacunaire des notions de base. Un travail de fond sur les acquis du collège est indispensable. Le chemin est long mais la progression est possible avec un travail régulier et méthodique."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 0.0,
+                "commentaire": "Les méthodes de base pour résoudre les équations du second degré ne sont pas acquises."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 1.5,
+                "commentaire": "La structure de la forme canonique est comprise, mais les calculs de constantes et de signes sont faux."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.0,
+                "commentaire": "La démarche est très confuse, avec des erreurs de développement et de signe."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 0.0,
+                "commentaire": "L'exercice est entièrement non traité."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 3.5,
+            "issues": []
+        }
+    },
+    {
+        "nom_prenom": "Salma Jatlaoui",
+        "note_finale": 11.0,
+        "mention": "Assez Bien",
+        "bilan_personnalise": {
+            "points_forts": [
+                "Bonne compréhension des concepts de base (résolution d'équations, structure canonique).",
+                "Intuition correcte du sens de variation et de la géométrie des paraboles.",
+                "Capacité à bien démarrer les exercices."
+            ],
+            "axes_amelioration": [
+                "La rigueur des calculs : les calculs sont souvent \"brouillons\" et mènent à des erreurs qui faussent la suite.",
+                "La complétude des réponses : une solution oubliée, des résolutions inachevées... Le travail n'est pas mené à son terme.",
+                "La cohérence : la résolution de f(x)=0 est incohérente avec la forme canonique trouvée juste avant."
+            ],
+            "conseils": [
+                "Salma, tu as une bonne base, mais tu dois absolument gagner en rigueur et apprendre à terminer ce que tu commences. Organise mieux ton brouillon pour clarifier tes calculs. Avant de passer à une autre question, demande-toi : \"Ai-je bien fini la précédente ?\". Entraîne-toi à rédiger des résolutions complètes, du début à la phrase de conclusion."
+            ],
+            "appreciation_finale": "Élève sérieuse mais dont le travail est confus dans les calculs et souvent incomplet. Des progrès sont attendus sur la clarté de la rédaction et la rigueur des étapes de résolution pour que le potentiel visible soit mieux exploité."
+        },
+        "recapitulatif_exercices": [
+            {
+                "exercice": "Ex. 1",
+                "bareme": 6.0,
+                "note": 4.5,
+                "commentaire": "Bonne maîtrise des équations, mais une solution est oubliée et la rédaction est parfois confuse."
+            },
+            {
+                "exercice": "Ex. 2",
+                "bareme": 5.0,
+                "note": 3.5,
+                "commentaire": "La forme canonique est bien trouvée, mais la résolution de f(x)=0 est incohérente."
+            },
+            {
+                "exercice": "Ex. 3",
+                "bareme": 5.0,
+                "note": 2.0,
+                "commentaire": "La démarche est correcte au début, mais des erreurs de calcul et l'oubli de la fin de la résolution pénalisent la note."
+            },
+            {
+                "exercice": "Ex. 4",
+                "bareme": 4.0,
+                "note": 1.0,
+                "commentaire": "La mise en équation est juste, mais l'exercice est abandonné avant l'étude de la fonction."
+            }
+        ],
+        "_audit": {
+            "barreme_total": 20.0,
+            "notes_total": 11.0,
+            "issues": []
+        }
+    }
+]

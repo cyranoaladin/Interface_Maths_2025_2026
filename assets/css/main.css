@@ -1,0 +1,486 @@
+/* Dark mode base theme */
+:root {
+  --bg: #1A202C;
+  --surface: #2D3748;
+  --text: #E2E8F0;
+  --muted: #A0AEC0;
+  --accent: #3182CE;
+  --accent-2: #4FD1C5;
+  --card-radius: 12px;
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+}
+
+.btn,
+.btn-primary,
+.btn-secondary {
+  border-radius: 10px;
+  transition: background-color .2s ease, transform .15s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: #4A5568;
+  color: #fff;
+}
+
+/* Sidebar/headers tweaks */
+.site-hero {
+  background: linear-gradient(135deg, #0F172A, #1A202C);
+}
+
+.site-title,
+.site-subtitle {
+  color: var(--text);
+}
+
+.side-nav a {
+  color: var(--text);
+}
+
+.side-nav a:hover {
+  color: var(--accent-2);
+}
+
+/* Student cards grid */
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.student-card {
+  background: var(--surface);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+
+.student-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.student-initials {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #334155;
+  color: #E2E8F0;
+  font-weight: 700;
+  margin-right: 12px;
+}
+
+.student-name {
+  font-weight: 600;
+}
+
+/* Bilan visuals */
+.bilan-box {
+  background: var(--surface);
+  border-radius: var(--card-radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.donut {
+  width: 120px;
+  height: 120px;
+  display: inline-block;
+}
+
+.questions-list .question-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 0;
+}
+
+.question-item.correct {
+  color: #48BB78;
+}
+
+.question-item.incorrect {
+  color: #F56565;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn .25s ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Base */
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--ff-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+/* Container & page width */
+.container {
+  width: min(1200px, 94vw);
+  margin-inline: auto;
+}
+
+.page {
+  width: min(1200px, 94vw);
+  margin: 40px auto 80px;
+}
+
+/* Titre centré isolé (hero) */
+.site-hero {
+  background: var(--bg);
+  background-image: var(--grad-hero);
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
+}
+
+.branding {
+  text-align: center;
+  padding: 48px 0 28px;
+}
+
+.site-title {
+  font-family: var(--ff-title);
+  font-size: var(--fs-h1);
+  letter-spacing: .2px;
+  text-shadow: 0 8px 28px rgba(0, 0, 0, .45);
+  margin: 6px 0 4px;
+}
+
+.site-subtitle {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Petit badge établissement */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, rgba(138, 163, 255, .18), rgba(138, 163, 255, .10));
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Barre de navigation “verre dépoli” séparée du titre */
+.nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  padding: 10px 0 18px;
+  backdrop-filter: blur(8px);
+}
+
+.site-nav {
+  width: min(980px, 92vw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-brd);
+  border-radius: 999px;
+  padding: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-item {
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--text);
+  border: 1px solid transparent;
+  transition: .15s ease;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, .04);
+  border-color: rgba(255, 255, 255, .08);
+}
+
+.nav-item[aria-current="page"] {
+  background: rgba(138, 163, 255, .16);
+  border-color: rgba(138, 163, 255, .35);
+}
+
+.nav-cta {
+  margin-left: 6px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(255, 255, 255, .03);
+  color: var(--text);
+  cursor: pointer;
+  transition: .15s ease;
+}
+
+.nav-cta:hover {
+  background: rgba(255, 255, 255, .08);
+}
+
+/* Badge de favoris dans le menu */
+.badge-dot {
+  display: inline-block;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #0b1020;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  margin-left: 6px;
+}
+
+/* Sections génériques */
+.section {
+  margin: 42px 0;
+}
+
+.section h2 {
+  font-family: var(--ff-title);
+  font-size: var(--fs-h2);
+  margin: 0 0 10px;
+}
+
+.section p,
+.section li {
+  max-width: var(--max-ch);
+  color: var(--text-muted);
+}
+
+/* Cartes premium */
+.card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(255, 255, 255, .01));
+  border: 1px solid var(--glass-brd);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: 20px;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, .10);
+  background: linear-gradient(180deg, rgba(138, 163, 255, .18), rgba(138, 163, 255, .10));
+  color: var(--text);
+  font-weight: 600;
+  transition: .15s ease;
+}
+
+.btn:hover {
+  filter: brightness(1.05);
+}
+
+/* Focus visible AA */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+/* Layout cartes responsive */
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+/* Course/Fiche inner grids: auto-fit responsive cards instead of 12 thin columns */
+.card>.grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.col-4 {
+  grid-column: span 4;
+}
+
+.col-6 {
+  grid-column: span 6;
+}
+
+.col-12 {
+  grid-column: span 12;
+}
+
+@media (max-width: 1024px) {
+
+  .col-4,
+  .col-6 {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 720px) {
+
+  .col-4,
+  .col-6 {
+    grid-column: span 12;
+  }
+}
+
+/* Thème clair (optionnel) */
+:root[data-theme="light"] {
+  --bg: #f6f8fb;
+  --bg-2: #fff;
+  --panel: #fff;
+  --panel-2: #f4f6fb;
+  --text: #0f1a2c;
+  --text-muted: #415168;
+  --border: #dfe6f4;
+  --glass-bg: rgba(255, 255, 255, .7);
+  --glass-brd: rgba(10, 20, 40, .08);
+}
+
+/* ===== Cours / Fiches — Styles communs ===== */
+/* Grille 2 colonnes (plan à gauche + contenu) */
+.grid.cols-2 {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .grid.cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Barre d’outils (titre + boutons) */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.toolbar .buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Titres dans cartes de contenu */
+.card h2 {
+  margin: 0 0 8px;
+}
+
+/* Étapes: numéro + contenu */
+.step {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 6px 0;
+}
+
+.step .n {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .06);
+  color: var(--text);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Détails: ergonomie */
+details {
+  margin: 6px 0;
+}
+
+details>summary {
+  cursor: pointer;
+}
+
+details>summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Ancrages: éviter masquage par header sticky */
+h2 span[id],
+h3 span[id],
+[id^="ex"] {
+  scroll-margin-top: 90px;
+}
+
+/* Plan à gauche sticky sur grands écrans */
+@media (min-width: 1200px) {
+  .grid.cols-2>nav.card {
+    position: sticky;
+    top: 78px;
+    align-self: start;
+  }
+}

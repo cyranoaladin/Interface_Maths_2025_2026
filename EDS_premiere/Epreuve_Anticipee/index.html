@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Épreuve anticipée — EDS Première</title>
+  <meta name="description"
+    content="Épreuve anticipée de mathématiques en Première: infos clés, déroulé, sujets exemples." />
+  <link rel="icon" href="../../assets/img/icon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="/EDS_premiere/Epreuve_Anticipee/index.html" />
+
+  <link rel="stylesheet" href="../../assets/css/site.css?v=4" />
+  <script src="../../assets/js/lucide.min.js" defer></script>
+  <script src="../../assets/js/icons.js" defer></script>
+  <script src="../../assets/js/neon-toggle.js" defer></script>
+  <script src="../../assets/js/theme-toggle.js" defer></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <div class="wrap">
+    <header class="header-sticky"
+      data-crumbs="Accueil,/index.html|EDS Première,/EDS_premiere/index.html|Épreuve anticipée,/EDS_premiere/Epreuve_Anticipee/index.html">
+      <div class="title-block">
+        <img loading="lazy" class="logo" src="../../assets/img/icon.svg" alt="Logo Interface Maths" />
+        <img loading="lazy" class="logo" src="../../assets/img/logo_pmf.svg" alt="Logo Lycée Pierre Mendès France" />
+        <div class="title-text">
+          <h1>Épreuve anticipée — Première</h1>
+          <small class="subtitle"><span class="i" aria-hidden="true">📝</span> Infos clés et sujets exemples</small>
+        </div>
+      </div>
+      <nav aria-label="Navigation principale">
+        <a class="btn" href="../index.html">Retour EDS Première</a>
+        <a class="btn" href="../../index.html">Accueil</a>
+        <button id="neon-toggle" class="btn" type="button" aria-pressed="false"
+          aria-label="Activer le mode néon">Néon</button>
+        <button id="theme-toggle" class="btn" type="button" aria-pressed="false"
+          aria-label="Basculer le thème">Thème</button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="card">
+        <h2>Épreuve anticipée de maths : le bac en Première</h2>
+        <p class="small">À partir de 2027, tous les élèves de Première passent une épreuve de mathématiques.</p>
+        <div class="grid cols-2 mt-8">
+          <div>
+            <h3>C’est quoi ?</h3>
+            <ul>
+              <li>Épreuve écrite passée en fin de Première, comme le bac de français.</li>
+              <li>Objectif : valider bases, raisonnement et résolution de problèmes.</li>
+            </ul>
+            <h3 class="mt-8">Programme évalué</h3>
+            <ul>
+              <li><strong>Spécialité maths</strong> : programme complet de Première.</li>
+              <li><strong>Sans spécialité</strong> : maths de l’Enseignement scientifique.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Déroulé</h3>
+            <ul>
+              <li>Durée : 2 h, note /20, coefficient 2.</li>
+              <li><strong>Calculatrice interdite</strong>.</li>
+              <li>Partie 1 (6 pts) : automatismes (QCM).</li>
+              <li>Partie 2 (14 pts) : 2–3 exercices de raisonnement.</li>
+            </ul>
+            <h3 class="mt-8">Sujets exemples (Eduscol)</h3>
+            <ul>
+              <li><a href="https://eduscol.education.fr/document/65500/download" target="_blank" rel="noopener">Sujet 0
+                  — Doc 65500</a></li>
+              <li><a href="https://eduscol.education.fr/document/65502/download" target="_blank" rel="noopener">Sujet 0
+                  — Doc 65502</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Se préparer efficacement</h2>
+        <ul>
+          <li>Fiches de révision ciblées (méthodes et pièges courants).</li>
+          <li>Exercices d’entraînement thématiques avec corrections.</li>
+          <li>Quiz d’automatismes (format QCM) en séances courtes.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="block footer-block">
+      <div class="footer-row">
+        <div class="footer-links">
+          <a href="../../mentions.html">Mentions légales</a>
+          <a href="../../credits.html">Crédits</a>
+        </div>
+        <small>© 2025 — Interface Maths</small>
+      </div>
+    </footer>
+  </div>
+  <script>
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const light = root.getAttribute('data-theme') === 'light';
+      root.setAttribute('data-theme', light ? 'dark' : 'light');
+      btn.setAttribute('aria-pressed', String(!light));
+    });
+  </script>
+</body>
+
+</html>

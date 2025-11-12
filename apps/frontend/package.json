@@ -17,10 +17,11 @@
   },
   "devDependencies": {
     "@eslint/js": "8.57.1",
+    "@tailwindcss/postcss": "^4.1.17",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.7.0",
-    "autoprefixer": "^10.4.21",
+    "autoprefixer": "^10.4.22",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.27.0",

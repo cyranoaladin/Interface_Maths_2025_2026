@@ -1,3 +1,5 @@
+## [1.15.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.0...v1.15.1) (2026-02-16)
+
 ## [1.15.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.14.8...v1.15.0) (2025-10-18)
 
 

@@ -66,6 +66,30 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y rsync openssh-client jq
 
+      - name: Validate deploy secrets and key format
+        run: |
+          set -euo pipefail
+          missing=0
+          for v in SSH_PRIVATE_KEY VPS_HOST VPS_USER VPS_PATH; do
+            if [ -z "${!v:-}" ]; then
+              echo "::error::Missing required secret/env: $v"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::Set SSH_PRIVATE_KEY, VPS_HOST, VPS_USER and VPS_PATH in repository secrets."
+            exit 1
+          fi
+
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          if ! ssh-keygen -y -f ~/.ssh/deploy_key >/dev/null 2>&1; then
+            echo "::error::SSH_PRIVATE_KEY is invalid or badly formatted."
+            echo "::error::Paste the full key including BEGIN/END lines."
+            exit 1
+          fi
+
       - name: Start ssh-agent and add key
         if: ${{ env.SSH_PRIVATE_KEY != '' && env.VPS_HOST != '' && env.VPS_USER != '' && env.VPS_PATH != '' }}
         uses: webfactory/ssh-agent@v0.8.0
@@ -77,6 +101,16 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+      - name: Check SSH connectivity to VPS
+        if: ${{ env.VPS_HOST != '' && env.VPS_USER != '' && env.SSH_PRIVATE_KEY != '' }}
+        run: |
+          set -euo pipefail
+          if ! ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=15 "$VPS_USER@$VPS_HOST" 'echo ssh-ok'; then
+            echo "::error::SSH connection failed for $VPS_USER@$VPS_HOST"
+            echo "::error::Verify SSH_PRIVATE_KEY matches ~/.ssh/authorized_keys for VPS_USER and that SSH access is enabled on the server."
+            exit 1
+          fi
 
       - name: Wait for CI workflow success (backend-ci)
         if: ${{ github.event_name == 'push' }}

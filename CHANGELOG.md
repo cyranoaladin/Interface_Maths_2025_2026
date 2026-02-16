@@ -1,3 +1,10 @@
+## [1.15.2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.1...v1.15.2) (2026-02-16)
+
+
+### Bug Fixes
+
+* restore static pages and stabilize local prod-like validation ([d47c29c](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/d47c29cab8a9efcd541997c3b1a7975795c8824a))
+
 ## [1.15.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.0...v1.15.1) (2026-02-16)
 
 ## [1.15.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.14.8...v1.15.0) (2025-10-18)

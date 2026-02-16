@@ -125,6 +125,10 @@ async def on_startup_create_schema_and_bootstrap():
     2. Optionally bootstraps default user groups.
     3. Ensures a favicon exists to avoid 404s.
     """
+    env = (os.getenv("APP_ENV") or config.settings.APP_ENV or "development").lower()
+    if env in {"production", "prod"} and not config.settings.SECRET_KEY:
+        raise RuntimeError("SECRET_KEY is required when APP_ENV=production")
+
     with suppress(Exception):
         db.Base.metadata.create_all(bind=db.engine)
 

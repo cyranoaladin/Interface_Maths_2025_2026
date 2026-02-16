@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from ..db import get_db
@@ -15,8 +15,8 @@ from ..config import settings
 
 
 class LoginBody(BaseModel):
-    email: EmailStr | None = None
-    username: EmailStr | None = None
+    email: str | None = None
+    username: str | None = None
     password: str
 
 
@@ -44,7 +44,15 @@ async def compat_login(request: Request, response: Response, db: Session = Depen
     if not user or not verify_password(password, user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = create_access_token({"sub": str(user.id), "email": user.email, "role": user.role})
-    response.set_cookie(key=COOKIE_NAME, value=token, httponly=True, samesite="lax", max_age=60*60, path="/")
+    response.set_cookie(
+        key=COOKIE_NAME,
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure= not settings.TESTING, # Basic heuristic, or we can add a setting
+        max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        path="/"
+    )
     # Enforce password reset at first login when default student password is used
     first_login = False
     try:
@@ -110,7 +118,15 @@ async def compat_login_dev(request: Request, response: Response, db: Session = D
     if not user:
         raise HTTPException(status_code=404, detail="user not found")
     token = create_access_token({"sub": str(user.id), "email": user.email, "role": user.role})
-    response.set_cookie(key=COOKIE_NAME, value=token, httponly=True, samesite="lax", max_age=60*60, path="/")
+    response.set_cookie(
+        key=COOKIE_NAME,
+        value=token,
+        httponly=True,
+        samesite="lax",
+        secure= not settings.TESTING, # Basic heuristic, or we can add a setting
+        max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        path="/"
+    )
     return {"access_token": token, "token_type": "bearer"}
 
 

@@ -4,6 +4,7 @@ Security-related utilities for authentication, password hashing, and user author
 
 from __future__ import annotations
 
+import secrets
 from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING, Optional
 
@@ -25,6 +26,7 @@ pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 
 ALGORITHM = "HS256"
+_DEV_EPHEMERAL_SECRET: str | None = None
 
 
 def get_secret_key() -> str:
@@ -34,8 +36,11 @@ def get_secret_key() -> str:
     """
     if config.settings.SECRET_KEY:
         return config.settings.SECRET_KEY
-    # Fallback only for local dev — short-lived secret per process
-    return "dev-ephemeral-secret-key-change-me"
+    # Fallback only for local dev/testing — short-lived secret per process.
+    global _DEV_EPHEMERAL_SECRET
+    if _DEV_EPHEMERAL_SECRET is None:
+        _DEV_EPHEMERAL_SECRET = secrets.token_urlsafe(48)
+    return _DEV_EPHEMERAL_SECRET
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:

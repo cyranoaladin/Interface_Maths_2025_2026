@@ -51,7 +51,7 @@ INNER_REPO_ROOT = _inner_repo_root()
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
-    SECRET_KEY: str = "dev-local-secret"
+    SECRET_KEY: str = ""
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     ALGORITHM: str = "HS256"
     # Use absolute SQLite path by default to be independent from CWD (pytest, uvicorn, etc.)
@@ -59,13 +59,14 @@ class Settings(BaseSettings):
     CORS_ORIGINS: List[str] = []
     SERVE_STATIC: bool = False
     # Absolute content root for predictable static mapping in dev/tests
-    CONTENT_ROOT: Path = INNER_REPO_ROOT / "site"
+    CONTENT_ROOT: Path = INNER_REPO_ROOT / "apps/legacy-site"
     STATIC_BASE_URL: str = "/content"
     OUTPUTS_DIR: Path = INNER_REPO_ROOT / "apps/backend/outputs"
     TESTING: bool = False
     TEACHER_EMAILS: List[str] = ["alaeddine.benrhouma@ert.tn", "teacher.test@example.com"]
-    # Mot de passe provisoire par défaut pour tous les élèves (peut être surchargé par env)
-    DEFAULT_STUDENT_PASSWORD: str = "Maths2025!"
+    # Development / test can set this to keep deterministic first-login flows.
+    DEFAULT_STUDENT_PASSWORD: str = ""
+    APP_ENV: str = "development"
 
 
 settings = Settings()

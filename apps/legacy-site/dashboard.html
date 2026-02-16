@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mon espace — Interface Maths</title>
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <style>
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px)
+    }
+
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .side-nav a,
+    .side-nav button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+      color: var(--text);
+      text-decoration: none
+    }
+
+    .side-nav a[aria-current="page"] {
+      border-color: var(--accent)
+    }
+
+    .content {
+      min-height: 60vh
+    }
+
+    @media (max-width:980px) {
+      .layout {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-hero">
+    <div class="container branding">
+      <div class="badge">PMF</div>
+      <h1 class="site-title">Mon espace</h1>
+      <p class="site-subtitle" id="user-subtitle">Chargement…</p>
+    </div>
+  </header>
+
+  <div class="nav-wrapper">
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a class="nav-item" href="/content/index.html">Accueil</a>
+      <a class="nav-item" href="/content/ressources.html">Ressources</a>
+      <button class="nav-cta" id="logout-btn" type="button">Se déconnecter</button>
+    </nav>
+  </div>
+
+  <main class="page container layout">
+    <aside class="sidebar">
+      <nav class="side-nav" aria-label="Menu latéral">
+        <a href="#" id="lnk-overview" aria-current="page">Aperçu</a>
+        <a href="#" id="lnk-reports">Mes Bilans</a>
+        <div id="teacher-groups"></div>
+      </nav>
+    </aside>
+    <section class="content">
+      <div class="card" id="overview-panel">
+        <h2 id="panel-title">Aperçu</h2>
+        <div id="panel-body">Bienvenue sur votre espace personnel.</div>
+      </div>
+      <div class="card" id="reports-panel" style="display:none">
+        <h2>Mes Bilans</h2>
+        <p>Vos bulletins et résultats d'évaluation apparaîtront ici.</p>
+        <div id="reports-list" class="mt-6">
+          <small>Aucun bilan disponible pour le moment.</small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/assets/js/auth.js"></script>
+  <script data-vite-ignore src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="/assets/js/dashboard.js"></script>
+</body>
+
+</html>

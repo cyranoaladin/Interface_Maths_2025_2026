@@ -19,7 +19,7 @@ pip install -U pip
 pip install -r apps/backend/requirements.txt
 ```
 
-3. Construire les assets (si applicable) et publier sous `site/assets/`.
+3. Construire les assets (si applicable) et publier sous `apps/legacy-site/assets/`.
 4. Renseigner `.env.production` (voir README) et lancer bootstrap:
 
 ```bash

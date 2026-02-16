@@ -19,9 +19,9 @@
 
 ## 2) Architecture (monorepo simple)
 
-- `site/` — Site public (HTML/CSS/JS). Sert aussi de racine de contenu pour les pages et ressources.
+- `apps/legacy-site/` — Site public principal (HTML/CSS/JS), servi comme racine de contenu.
 - `apps/backend/` — API FastAPI (Python 3.12), SQLite via SQLAlchemy, JWT, endpoints groupes/utilisateurs, scripts d’import/seed.
-- `apps/frontend/` — Build vite/vue-tsc (expose des assets packagés recopiés vers `site/assets/`).
+- `apps/vue-client/` — Prototype Vue 3 (migration progressive), distinct du site principal.
 - `tests/` — Tests E2E Playwright (et tests unitaires JS/TS si présents).
 - `deploy/` — Script de déploiement unique `deploy_all.sh` + exemples infra.
 
@@ -29,14 +29,14 @@ Schéma:
 
 ```text
 Interface_Maths_2025_2026/
-  site/                       # HTML, CSS, JS (public)
+  apps/legacy-site/           # HTML, CSS, JS (public)
   apps/
     backend/
       app/                    # FastAPI (routers, sécurité, db)
       data/app.db             # SQLite (créée auto)
       outputs/                # Exports CSV et journaux applicatifs
       scripts/                # import/export/seed/bootstrap
-    frontend/                 # build vite (assets → site/assets)
+    vue-client/               # prototype Vue 3
   tests/                      # E2E Playwright
   deploy/deploy_all.sh        # Déploiement VPS one‑shot
 ```
@@ -55,7 +55,7 @@ Endpoints principaux:
 - `POST /auth/token` — login standard OAuth2 (username=email, password)
 - `GET /auth/me` — profil courant
 - `POST /auth/change-password` — changer son mot de passe
-- `POST /auth/reset-student-password` — enseignant → réinitialise un élève sur « password123 »
+- `POST /auth/reset-student-password` — enseignant → génère un mot de passe temporaire aléatoire
 - `GET /groups/` — liste des groupes (enseignant)
 - `GET /groups/{code}/students` — élèves d’un groupe (enseignant)
 - `GET /groups/my` — groupes associés à l’utilisateur courant (élève/enseignant)
@@ -101,27 +101,27 @@ Bootstrap automatique au démarrage:
 
 - Pages publiques: `index.html`, rubriques `EDS_premiere/`, `EDS_terminale/`, `Maths_expertes/`, progression, mentions, etc.
 - Tableaux de bord:
-  - Élève (`site/student.html`, `assets/js/student.js`):
+  - Élève (`apps/legacy-site/student.html`, `assets/js/student.js`):
     - « Ressources » (cartes EDS Première), « Changer mon mot de passe », bilans d’évaluations (lecture JSON et rendu stylé, filtrage par élève)
-  - Enseignant (`site/dashboard.html`, `assets/js/dashboard.js`):
+  - Enseignant (`apps/legacy-site/dashboard.html`, `assets/js/dashboard.js`):
     - Liste des groupes → table des élèves (nom nettoyé, email)
     - Actions: « Voir bilan » (rendu carte détaillée), « Réinitialiser » (mot de passe)
 
 Rendu des bilans (EDS Première, Second Degré):
 
-- Source JSON: `site/EDS_premiere/Second_Degre/bilans_eval1second_degre.json`
+- Source JSON: `apps/legacy-site/EDS_premiere/Second_Degre/bilans_eval1second_degre.json`
 - Filtrage: par email (si présent) ou par nom complet normalisé
 - Mise en page: carte avec titre « Évaluation n°1 — Fonctions de second degré et forme canonique », date, mention, sections Points forts / Axes d’amélioration / Conseils / Appréciation / tableau des exercices.
 
 Structure JS/CSS:
 
-- `site/assets/js/contents.js` — sommaire d’accueil (chargement des contenus, filtres, recherche, favoris)
-- `site/assets/js/levels.js` — listes de niveau (Première/Terminale/Maths expertes)
-- `site/assets/js/progression.js` — timeline + grille à partir des tableaux de progression
-- `site/assets/js/student.js` — tableau de bord élève (bilans, changement mot de passe)
-- `site/assets/js/dashboard.js` — tableau de bord enseignant (groupes, élèves, bilans, reset)
-- `site/assets/js/theme-toggle.js` / `neon-toggle.js` — thèmes et effets visuels
-- `site/assets/css/site.css` — design system (tokens, dark/light, composants)
+- `apps/legacy-site/assets/js/contents.js` — sommaire d’accueil (chargement des contenus, filtres, recherche, favoris)
+- `apps/legacy-site/assets/js/levels.js` — listes de niveau (Première/Terminale/Maths expertes)
+- `apps/legacy-site/assets/js/progression.js` — timeline + grille à partir des tableaux de progression
+- `apps/legacy-site/assets/js/student.js` — tableau de bord élève (bilans, changement mot de passe)
+- `apps/legacy-site/assets/js/dashboard.js` — tableau de bord enseignant (groupes, élèves, bilans, reset)
+- `apps/legacy-site/assets/js/theme-toggle.js` / `neon-toggle.js` — thèmes et effets visuels
+- `apps/legacy-site/assets/css/site.css` — design system (tokens, dark/light, composants)
 
 ### Routage & workflows (UX)
 
@@ -174,9 +174,9 @@ Mapping officiel des groupes:
 Variables importantes:
 
 - `DATABASE_URL` (défaut: SQLite dans `apps/backend/data/app.db`)
-- `CONTENT_ROOT` (défaut: `site/`)
+- `CONTENT_ROOT` (défaut: `apps/legacy-site/`)
 - `STATIC_BASE_URL` (défaut: `/content`)
-- `SERVE_STATIC` (dev: `true` pour servir `site/` via FastAPI; prod: `false`, Nginx sert `site/`)
+- `SERVE_STATIC` (dev: `true` pour servir `apps/legacy-site/` via FastAPI; prod: `false`, Nginx sert le contenu statique)
 - `SECRET_KEY` (JWT, prod: valeur longue et secrète)
 - `AUTO_BOOTSTRAP` (`1` pour créer schéma + groupes au démarrage)
 - `TEACHER_EMAIL`, `TEACHER_PASSWORD` (utilisés par `bootstrap_prod.py`)
@@ -185,7 +185,7 @@ Exemple `.env.production` (VPS):
 
 ```ini
 AUTO_BOOTSTRAP=1
-CONTENT_ROOT=/opt/interface_maths/site
+CONTENT_ROOT=/opt/interface_maths/apps/legacy-site
 STATIC_BASE_URL=/content
 SERVE_STATIC=false
 DATABASE_URL=sqlite:////opt/interface_maths/apps/backend/data/app.db
@@ -196,7 +196,7 @@ TEACHER_PASSWORD=secret
 
 Notes:
 
-- En dev, `SERVE_STATIC=1` fait servir `site/` par FastAPI; en prod, Nginx sert les fichiers et reverse‑proxy l’API.
+- En dev, `SERVE_STATIC=1` fait servir `apps/legacy-site/` par FastAPI; en prod, Nginx sert les fichiers et reverse‑proxy l’API.
 - `OUTPUTS_DIR` par défaut: `apps/backend/outputs/` (exports CSV des imports et bootstrap pour audit).
 
 ---
@@ -215,11 +215,10 @@ pip install -r apps/backend/requirements.txt
 Build frontend et copier assets:
 
 ```bash
-cd apps/frontend && npm ci || npm install && npm run build
-cd ../.. && mkdir -p site/assets && rsync -a apps/frontend/dist/assets/ site/assets/
+cd apps/vue-client && npm ci || npm install && npm run build
 ```
 
-Démarrer l’API en dev (sert aussi `site/`):
+Démarrer l’API en dev (sert aussi `apps/legacy-site/`):
 
 ```bash
 SERVE_STATIC=1 uvicorn apps.backend.app.main:app --host 127.0.0.1 --port 8008
@@ -229,7 +228,7 @@ Jeux d’essai (optionnels): endpoint de test `POST /testing/ensure-teacher` (qu
 
 API d’arborescence `/api/tree`:
 
-- `GET /api/tree` — retourne l’arborescence des `.html` sous `CONTENT_ROOT` (par défaut `site/`).
+- `GET /api/tree` — retourne l’arborescence des `.html` sous `CONTENT_ROOT` (par défaut `apps/legacy-site/`).
 - `GET /api/tree/{subpath}` — sous‑arbre d’un répertoire.
 
 ---
@@ -244,8 +243,12 @@ Commandes:
 ```bash
 npx playwright install chromium
 npm run test:e2e
+npm run test:e2e:local -- tests/e2e/login_flow.spec.ts
 . apps/backend/.venv/bin/activate && pytest -q apps/backend
 ```
+
+Notes:
+- `test:e2e:local` démarre l’API de test localement, attend `GET /api/v1/ping`, lance Playwright avec `PLAYWRIGHT_SKIP_WEB_SERVER=1`, puis stoppe l’API automatiquement.
 
 Qualité & audits:
 
@@ -265,10 +268,10 @@ bash deploy/deploy_all.sh
 Ce script:
 
 - Crée la venv, installe le backend
-- Build le frontend et publie les assets vers `site/assets/`
+- (Optionnel) Build du prototype Vue `apps/vue-client/`
 - Bootstrape la base (schéma + groupes + enseignant réel via `TEACHER_EMAIL`/`TEACHER_PASSWORD`)
 - Crée/active un service systemd `interface-maths` (API sur `127.0.0.1:8000`)
-- Configure Nginx pour servir `site/` en `/content` et reverse‑proxy `/(api|auth|groups|api/v1)` vers l’API
+- Configure Nginx pour servir `apps/legacy-site/` en `/content` et reverse‑proxy `/(api|auth|groups|api/v1)` vers l’API
 
 Accès:
 

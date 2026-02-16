@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { normalize } from '../../site/assets/js/search-utils.js';
+import { normalize } from '../../apps/legacy-site/assets/js/search-utils.js';
 
 describe('normalize', () => {
   it('retire accents et met en minuscule', () => {

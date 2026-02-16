@@ -10,10 +10,11 @@
   "scripts": {
     "test:unit": "vitest run tests/unit",
     "test:e2e": "playwright test",
+    "test:e2e:local": "bash scripts/run_e2e_local.sh",
     "test": "npm run test:unit && npm run test:e2e",
     "release": "semantic-release",
-    "lint": "eslint site/assets/js --ext .js --ignore-pattern **/*.min.js --ignore-pattern site/assets/js/lucide.min.js",
-    "css:build": "postcss site/assets/css/site.css -o site/assets/css/site.min.css"
+    "lint": "eslint apps/legacy-site/assets/js --ext .js --ignore-pattern **/*.min.js --ignore-pattern apps/legacy-site/assets/js/lucide.min.js",
+    "css:build": "postcss apps/legacy-site/assets/css/site.css -o apps/legacy-site/assets/css/site.min.css"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.9.1",

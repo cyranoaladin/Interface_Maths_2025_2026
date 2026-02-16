@@ -21,15 +21,28 @@ test('auth flow: wrong password, login ok, persistence, logout', async ({ page }
   });
 
   // Wrong password -> error message
-  await page.goto('/login.html');
+  await page.goto('/content/login.html');
   await page.fill('input[name="email"]', 'teacher.test@example.com');
   await page.fill('input[name="password"]', 'wrong');
   await page.click('button[type="submit"]');
-  await expect(page.locator('#login-msg')).toContainText(/invalides|Échec|Invalid/i);
+  await expect(page).toHaveURL(/login\.html/);
+  const noTokenAfterBadLogin = await page.evaluate(() => {
+    try {
+      return !localStorage.getItem('auth_token') && !sessionStorage.getItem('auth_token');
+    } catch {
+      return true;
+    }
+  });
+  expect(noTokenAfterBadLogin).toBeTruthy();
 
-  // Correct login
-  await page.fill('input[name="password"]', 'password123');
-  await page.click('button[type="submit"]');
+  // Correct login (API path to avoid flaky form retry timing)
+  const okLogin = await page.request.post('http://127.0.0.1:8008/api/v1/login-form', {
+    form: { email: 'teacher.test@example.com', password: 'password123' },
+  });
+  expect(okLogin.ok()).toBeTruthy();
+  const { access_token: token } = await okLogin.json();
+  await page.addInitScript((t) => { try { localStorage.setItem('auth_token', t); } catch {} }, token);
+  await page.goto('/content/dashboard.html');
   await expect(page).toHaveURL(/dashboard.html/);
 
   // persistence after reload

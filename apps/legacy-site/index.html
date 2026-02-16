@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interface Maths</title>
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="site-hero">
+    <div class="container branding">
+      <div class="badge">PMF</div>
+      <h1 class="site-title">Interface Maths</h1>
+      <p class="site-subtitle">Ressources pédagogiques</p>
+      <span data-fav-badge class="badge" aria-label="Favoris">0</span>
+    </div>
+  </header>
+
+  <div class="nav-wrapper">
+    <nav class="site-nav" aria-label="Navigation principale">
+      <a class="nav-item" href="/content/index.html">Accueil</a>
+      <a class="nav-item" href="/content/ressources.html">Ressources</a>
+      <a id="login-link" class="nav-cta" href="/content/login.html">Se connecter</a>
+    </nav>
+  </div>
+
+  <main class="page container">
+    <section class="card">
+      <label for="search-input">Rechercher une fiche</label>
+      <input id="search-input" type="search" aria-label="Rechercher une fiche" />
+      <p id="results-count" class="small mt-6">0 résultat</p>
+      <div id="auto-index-body" class="mt-6"></div>
+    </section>
+  </main>
+
+  <script type="module" src="/assets/js/index.js"></script>
+</body>
+</html>

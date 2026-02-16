@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion — Interface Maths</title>
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+<body>
+  <header class="site-hero">
+    <div class="container branding">
+      <div class="badge">PMF</div>
+      <h1 class="site-title">Connexion</h1>
+    </div>
+  </header>
+
+  <main class="page container">
+    <section class="card" style="max-width:560px">
+      <form id="login-form">
+        <p>
+          <label for="email">Adresse e-mail</label><br />
+          <input id="email" name="email" type="email" required />
+        </p>
+        <p>
+          <label for="password">Mot de passe</label><br />
+          <input id="password" name="password" type="password" required />
+        </p>
+        <button type="submit">Connexion</button>
+      </form>
+      <output id="login-msg" class="small mt-6" aria-live="polite"></output>
+    </section>
+  </main>
+
+  <script type="module" src="/assets/js/auth.js"></script>
+</body>
+</html>

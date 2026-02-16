@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: maths
+      POSTGRES_PASSWORD: maths
+      POSTGRES_DB: interface_maths
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U maths -d interface_maths"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - pgdata_prod_local:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  backend:
+    build:
+      context: ../../apps/backend
+    environment:
+      APP_ENV: production
+      SECRET_KEY: local-prod-secret-change-me
+      TESTING: "1"
+      SERVE_STATIC: "1"
+      STATIC_BASE_URL: /content
+      CONTENT_ROOT: /site
+      DATABASE_URL: postgresql+psycopg://maths:maths@db:5432/interface_maths
+      TEACHER_EMAILS: '["alaeddine.benrhouma@ert.tn","teacher.test@example.com"]'
+      OUTPUTS_DIR: /outputs
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ../../apps/legacy-site:/site:ro
+      - outputs_prod_local:/outputs
+    ports:
+      - "8008:8000"
+
+  frontend:
+    image: nginx:1.27-alpine
+    depends_on:
+      - backend
+    ports:
+      - "28080:80"
+    volumes:
+      - ./nginx.prod-local.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  pgdata_prod_local:
+  outputs_prod_local:

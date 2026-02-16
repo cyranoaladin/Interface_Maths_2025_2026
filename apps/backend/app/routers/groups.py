@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import secrets
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -61,7 +62,9 @@ async def seed_test_student(code: str, _: User = Depends(require_teacher), db: S
         db.commit()
         db.refresh(grp)
 
-    email = f"eleve.test.{code.lower()}@example.com"
+    # Unique test user per call to avoid cross-test password reset collisions
+    suffix = secrets.token_hex(3)
+    email = f"eleve.test.{code.lower()}.{suffix}@example.com"
     full_name = f"Élève Test {code}"
     create_student(db, email=email, full_name=full_name, group_codes=[code])
 

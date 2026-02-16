@@ -1,0 +1,76 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+}
+
+.container {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+}
+
+.site-hero {
+  background: linear-gradient(135deg, #0f766e, #115e59);
+  color: #fff;
+  padding: 1.25rem 0;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-title {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.site-subtitle {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.nav-wrapper {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-nav {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.75rem 0;
+}
+
+.nav-item,
+.nav-cta {
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 10px;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.page {
+  padding: 1rem 0 1.5rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+}

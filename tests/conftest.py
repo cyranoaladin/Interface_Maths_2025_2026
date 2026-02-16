@@ -7,7 +7,6 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
 # Ensure the project root (containing the "apps" package) is importable when
 # running tests from this directory.
@@ -21,11 +20,11 @@ from apps.backend.app.main import app
 
 @pytest.fixture()
 def test_database(tmp_path):
-    """Provide an isolated in-memory SQLite database for API tests."""
+    """Provide an isolated SQLite file database for API tests."""
+    db_path = tmp_path / "test_api.db"
     engine = create_engine(
-        "sqlite://",
+        f"sqlite:///{db_path.as_posix()}",
         connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
     )
     Base.metadata.create_all(bind=engine)
     session_factory = sessionmaker(autocommit=False, autoflush=False, bind=engine)

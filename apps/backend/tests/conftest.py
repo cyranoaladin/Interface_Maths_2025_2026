@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import sys
+import tempfile
 from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
 # Ensure repo root is on sys.path for 'apps.backend.*' imports
 REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -25,13 +25,14 @@ def _load_app_components():
 
 app, db_base, get_db = _load_app_components()
 
-# Use an in-memory SQLite database for testing
-SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
+# Use a temporary file-based SQLite database for tests.
+# In-memory + StaticPool can deadlock when a fixture-held session and a
+# TestClient request session run concurrently in different threads.
+SQLALCHEMY_DATABASE_URL = f"sqlite:///{(Path(tempfile.gettempdir()) / 'interface_maths_backend_tests.db').as_posix()}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     connect_args={"check_same_thread": False},
-    poolclass=StaticPool,
 )
 testing_session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

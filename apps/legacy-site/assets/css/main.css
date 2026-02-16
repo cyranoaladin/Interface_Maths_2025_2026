@@ -1,0 +1,32 @@
+.table-simple {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-simple th,
+.table-simple td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.table-simple th {
+  background: var(--panel);
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+
+.small {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}

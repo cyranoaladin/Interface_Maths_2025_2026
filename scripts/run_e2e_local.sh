@@ -6,7 +6,7 @@ cd "$ROOT_DIR"
 
 HOST="${HOST:-127.0.0.1}"
 PORT="${PORT:-8008}"
-PYTHON_BIN="${PYTHON_BIN:-$ROOT_DIR/.venv/bin/python3}"
+PYTHON_BIN="${PYTHON_BIN:-$ROOT_DIR/apps/backend/.venv/bin/python3}"
 API_LOG="${API_LOG:-/tmp/interface-maths-e2e-api.log}"
 
 if [[ ! -x "$PYTHON_BIN" ]]; then

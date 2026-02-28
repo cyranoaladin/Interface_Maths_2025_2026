@@ -52,14 +52,14 @@ INNER_REPO_ROOT = _inner_repo_root()
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = ""
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 240
     ALGORITHM: str = "HS256"
     # Use absolute SQLite path by default to be independent from CWD (pytest, uvicorn, etc.)
     DATABASE_URL: str = f"sqlite:////{(INNER_REPO_ROOT / 'apps/backend/data/app.db').as_posix()}"
     CORS_ORIGINS: List[str] = []
     SERVE_STATIC: bool = False
     # Absolute content root for predictable static mapping in dev/tests
-    CONTENT_ROOT: Path = INNER_REPO_ROOT / "apps/legacy-site"
+    CONTENT_ROOT: Path = INNER_REPO_ROOT / "site"
     STATIC_BASE_URL: str = "/content"
     OUTPUTS_DIR: Path = INNER_REPO_ROOT / "apps/backend/outputs"
     TESTING: bool = False

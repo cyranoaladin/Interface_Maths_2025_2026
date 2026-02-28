@@ -8,7 +8,7 @@ from ..db import get_db
 from ..security import create_access_token, verify_password, get_secret_key
 from ..security import get_password_hash
 from ..users import User, UserPublic
-from jose import jwt
+import jwt
 from ..security import ALGORITHM
 import os
 from ..config import settings

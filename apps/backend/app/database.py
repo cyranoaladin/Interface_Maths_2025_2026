@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from pathlib import Path
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
@@ -23,6 +23,14 @@ if DATABASE_URL.startswith("sqlite"):
     db_dir.mkdir(parents=True, exist_ok=True)
 
 engine = create_engine(DATABASE_URL, echo=False, connect_args=connect_args)
+
+if DATABASE_URL.startswith("sqlite"):
+    @event.listens_for(engine, "connect")
+    def set_sqlite_pragma(dbapi_connection, connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA synchronous=NORMAL")
+        cursor.close()
 
 # Session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)  # pylint: disable=invalid-name

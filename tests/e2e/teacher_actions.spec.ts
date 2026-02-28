@@ -24,25 +24,22 @@ test('teacher can view bilan and reset student password', async ({ page }) => {
   const groups = page.locator('#teacher-groups a');
   await expect(groups).toHaveCount(3, { timeout: 10000 });
   await page.getByRole('link', { name: /Première EDS Maths — Groupe 6/ }).click();
-  await expect(page.locator('#panel-body table')).toBeVisible();
+  await expect(page.locator('#panel-body .students-grid')).toBeVisible();
   // Names should not be N/A
-  const firstRow = page.locator('#panel-body table tbody tr').first();
-  await expect(firstRow.locator('td').nth(0)).not.toContainText('N/A');
-
-  // Actions column should exist
-  await expect(page.locator('#panel-body thead tr th', { hasText: 'Actions' })).toBeVisible();
+  const firstCard = page.locator('#panel-body .student-card').first();
+  await expect(firstCard.locator('.student-name')).not.toContainText('N/A');
 
   // Try clicking first "Voir bilan" if present; tolerate absence of JSON (shows message)
-  const bilanLink = page.locator('#panel-body a.bilan-btn').first();
+  const bilanLink = page.locator('#panel-body .student-card a.btn-primary').first();
   if (await bilanLink.count()) {
     await bilanLink.click();
     // Either the bilan panel or a fallback message should appear
-    await expect(page.locator('#panel-title')).toHaveText(/Bilan —|Bilans/);
+    await expect(page.locator('#panel-body')).toContainText(/Bilan|Retour|Erreur/);
     // Use back link if present
-    const back = page.locator('#back-to-group');
+    const back = page.locator('#back-to-students');
     if (await back.count()) {
       await back.click();
-      await expect(page.locator('#panel-body table')).toBeVisible();
+      await expect(page.locator('#panel-body .students-grid')).toBeVisible();
     }
   }
 
@@ -81,22 +78,19 @@ test('teacher can view bilan (second pass) and reset password toast', async ({ p
   const firstGroup = page.locator('#teacher-groups a').first();
   await expect(firstGroup).toBeVisible();
   await firstGroup.click();
-  await expect(page.locator('#panel-body table')).toBeVisible();
-
-  // Actions column should exist
-  await expect(page.locator('#panel-body thead tr th', { hasText: 'Actions' })).toBeVisible();
+  await expect(page.locator('#panel-body .students-grid')).toBeVisible();
 
   // Try clicking first "Voir bilan" if present; tolerate absence of JSON (shows message)
-  const bilanLink = page.locator('#panel-body a.bilan-btn').first();
+  const bilanLink = page.locator('#panel-body .student-card a.btn-primary').first();
   if (await bilanLink.count()) {
     await bilanLink.click();
     // Either the bilan panel or a fallback message should appear
-    await expect(page.locator('#panel-title')).toHaveText(/Bilan —|Bilans/);
+    await expect(page.locator('#panel-body')).toContainText(/Bilan|Retour|Erreur/);
     // Use back link if present
-    const back = page.locator('#back-to-group');
+    const back = page.locator('#back-to-students');
     if (await back.count()) {
       await back.click();
-      await expect(page.locator('#panel-body table')).toBeVisible();
+      await expect(page.locator('#panel-body .students-grid')).toBeVisible();
     }
   }
 

@@ -10,7 +10,8 @@ from typing import TYPE_CHECKING, Optional
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
+import jwt
+from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
@@ -81,7 +82,7 @@ async def get_current_user(
         user_id: Optional[str] = payload.get("sub")
         if user_id is None:
             raise credentials_exception
-    except JWTError as exc:
+    except InvalidTokenError as exc:
         raise credentials_exception from exc
 
     from . import users as users_module

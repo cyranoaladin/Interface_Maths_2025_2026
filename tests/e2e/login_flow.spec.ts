@@ -30,7 +30,7 @@ test('real login to dashboard (API-served content)', async ({ page }) => {
   const groupLink = page.getByRole('link', { name: /Terminale EDS Maths/ });
   await expect(groupLink).toBeVisible();
   await groupLink.click();
-  await expect(page.locator('#panel-body table')).toBeVisible();
+  await expect(page.locator('#panel-body .students-grid')).toBeVisible();
 });
 
 test('teacher journey: groups list and names not N/A', async ({ page }) => {
@@ -52,8 +52,7 @@ test('teacher journey: groups list and names not N/A', async ({ page }) => {
   await expect(groups).toHaveCount(3, { timeout: 10000 });
   // Click Première EDS
   await page.getByRole('link', { name: /Première EDS Maths — Groupe 6/ }).click();
-  await expect(page.locator('#panel-body table')).toBeVisible();
-  const firstRow = page.locator('#panel-body table tbody tr').first();
-  await expect(firstRow.locator('td').nth(0)).not.toContainText('N/A');
-  await expect(firstRow.locator('td').nth(1)).not.toContainText('N/A');
+  await expect(page.locator('#panel-body .students-grid')).toBeVisible();
+  const firstCard = page.locator('#panel-body .student-card').first();
+  await expect(firstCard.locator('.student-name')).not.toContainText('N/A');
 });

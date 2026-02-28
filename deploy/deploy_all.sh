@@ -16,7 +16,7 @@ fi
 
 # Defaults
 : "${DATABASE_URL:=sqlite:///$PROJECT_ROOT/apps/backend/data/app.db}"
-: "${CONTENT_ROOT:=$PROJECT_ROOT/site}"
+: "${CONTENT_ROOT:=$PROJECT_ROOT/site/dist}"
 : "${STATIC_BASE_URL:=/content}"
 : "${SERVE_STATIC:=false}"
 : "${SECRET_KEY:=change-me-long-and-random}"
@@ -33,12 +33,10 @@ pip install -U pip
 pip install -r apps/backend/requirements.txt
 
 echo "[2/7] Frontend build"
-pushd apps/frontend >/dev/null
+pushd site >/dev/null
 npm ci || npm install
 npm run build
 popd >/dev/null
-mkdir -p site/assets
-rsync -a apps/frontend/dist/assets/ site/assets/ || true
 
 echo "[3/7] Database bootstrap"
 export DATABASE_URL CONTENT_ROOT STATIC_BASE_URL SERVE_STATIC SECRET_KEY

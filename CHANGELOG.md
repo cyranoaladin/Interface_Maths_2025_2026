@@ -1,3 +1,10 @@
+## [1.15.7](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.6...v1.15.7) (2026-02-28)
+
+
+### Bug Fixes
+
+* **seo:** improve lighthouse scores by fixing canonical urls and adding meta robots ([95a133a](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/95a133afef34837b0ecb6e2717a001ada46d91c9))
+
 ## [1.15.6](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.5...v1.15.6) (2026-02-16)
 
 ## [1.15.5](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.4...v1.15.5) (2026-02-16)

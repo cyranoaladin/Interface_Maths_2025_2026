@@ -1,3 +1,10 @@
+## [1.16.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.7...v1.16.0) (2026-03-30)
+
+
+### Features
+
+* add 7 showcase features for training presentation ([6d81615](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/6d81615c952b5c024a060d002f44e92aab3536a4))
+
 ## [1.15.7](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.6...v1.15.7) (2026-02-28)
 
 

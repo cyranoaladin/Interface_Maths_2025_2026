@@ -102,7 +102,12 @@ jobs:
         if: ${{ env.VPS_HOST != '' && env.VPS_USER != '' && env.SSH_PRIVATE_KEY != '' }}
         run: |
           set -euo pipefail
-          if ! ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=15 "$VPS_USER@$VPS_HOST" 'echo ssh-ok'; then
+          if ! ssh -i ~/.ssh/deploy_key \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            -o ConnectTimeout=15 \
+            "$VPS_USER@$VPS_HOST" 'echo ssh-ok'; then
             echo "::error::SSH connection failed for $VPS_USER@$VPS_HOST"
             echo "::error::Verify SSH_PRIVATE_KEY matches ~/.ssh/authorized_keys for VPS_USER and that SSH access is enabled on the server."
             exit 1

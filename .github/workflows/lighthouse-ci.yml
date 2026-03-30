@@ -28,7 +28,6 @@ jobs:
 
       - name: Run LHCI (config file)
         env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LHCI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           lhci autorun --config=lighthouserc.json

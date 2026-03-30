@@ -1,46 +1,43 @@
-# Node / Vite
-ui/node_modules/
-ui/dist/
-ui/.vite/
-ui/.cache/
-ui/.turbo/
-ui/coverage/
+# Dependencies
+node_modules/
+.venv/
 
 # Python
-**/__pycache__/
-**/*.pyc
-apps/backend/.venv/
-apps/backend/outputs/
-apps/backend/data/*.db
-apps/backend/apps/
+__pycache__/
+*.pyc
 .pytest_cache/
 .coverage
 
-# Env / secrets
-*.env
+# Build outputs
+site/dist/
+ui/dist/
+
+# Database
+apps/backend/data/*.db
+apps/backend/data/*.db-shm
+apps/backend/data/*.db-wal
+apps/backend/data/*.db-journal
+
+# Secrets & env
 .env*
+*.env
 deploy/**/env*.*
 deploy/**/.env*
 
-# Logs / OS / IDE
-*.log
-.DS_Store
+# Generated outputs
+apps/backend/outputs/
+test-results/
+.lighthouseci/
+
+# Backups & temporaries
+*.bak
+*.bak.*
+*.tmp
+*.merge
+*~
+
+# IDE & OS
 .vscode/
 .idea/
-
-# Site backups / temporaires
-site/**/*.bak*
-site/**/*~
-site/**/*.merge
-site/**/*.tmp
-node_modules
-.venv/
-*/.venv/
-node_modules/
-*/node_modules/
-site/dist/
-site/dist/assets/
-test-results/
-site/test-results/
-*.pyc
-__pycache__/
+.DS_Store
+*.log

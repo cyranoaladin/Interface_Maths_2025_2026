@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.0...v1.16.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* backend improvements, auth duplication, and rate limits (3.1 - 3.10) ([7043329](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/704332942a85265c3e0ac07ff8143462178f9807))
+
 ## [1.16.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.15.7...v1.16.0) (2026-03-30)
 
 

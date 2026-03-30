@@ -1,3 +1,10 @@
+## [1.16.4](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.3...v1.16.4) (2026-03-30)
+
+
+### Bug Fixes
+
+* **api:** add /api/v1/ping health check endpoint ([76d17be](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/76d17be4caac05b1161cfdab1b0252a4e3e20f6a))
+
 ## [1.16.3](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.2...v1.16.3) (2026-03-30)
 
 

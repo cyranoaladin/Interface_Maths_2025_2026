@@ -19,9 +19,17 @@ fi
 : "${CONTENT_ROOT:=$PROJECT_ROOT/site/dist}"
 : "${STATIC_BASE_URL:=/content}"
 : "${SERVE_STATIC:=false}"
-: "${SECRET_KEY:=change-me-long-and-random}"
 : "${TEACHER_EMAIL:=alaeddine.benrhouma@ert.tn}"
-: "${TEACHER_PASSWORD:=secret}"
+
+# Fail-safe: block deployment with insecure defaults
+if [ -z "${SECRET_KEY:-}" ] || [ "${SECRET_KEY:-}" = "change-me-long-and-random" ]; then
+  echo "ERREUR FATALE: SECRET_KEY non défini ou valeur par défaut. Créez .env.production." >&2
+  exit 1
+fi
+if [ -z "${TEACHER_PASSWORD:-}" ]; then
+  echo "ERREUR FATALE: TEACHER_PASSWORD non défini. Créez .env.production." >&2
+  exit 1
+fi
 : "${API_PORT:=8000}"
 : "${API_HOST:=127.0.0.1}"
 : "${DOMAIN:=maths.example.com}"

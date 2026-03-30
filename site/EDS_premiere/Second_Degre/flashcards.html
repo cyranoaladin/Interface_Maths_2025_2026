@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcards - Second Degr&eacute;</title>
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #11162a;
+      --card: #151b34;
+      --text: #eef2ff;
+      --muted: #a2b0d6;
+      --primary: #6aa6ff;
+      --accent: #22d3ee;
+      --border: #28314f;
+      --good: #22c55e;
+      --bad: #ef4444;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header */
+    .fc-header {
+      width: 100%;
+      max-width: 800px;
+      padding: 1.5rem 1rem 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .fc-header a.back-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .fc-header a.back-link:hover { color: var(--accent); }
+
+    .fc-header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+      flex: 1;
+    }
+
+    /* Controls bar */
+    .fc-controls {
+      width: 100%;
+      max-width: 800px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .fc-counter {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--muted);
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s, background 0.2s;
+      outline: none;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible { box-shadow: 0 0 0 3px rgba(106,166,255,0.4); }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #0b1020;
+    }
+    .btn-primary:hover { background: #85b8ff; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-outline.active { border-color: var(--accent); color: var(--accent); }
+
+    .btn-good {
+      background: var(--good);
+      color: #fff;
+    }
+    .btn-good:hover { background: #2ade6a; }
+
+    .btn-bad {
+      background: var(--bad);
+      color: #fff;
+    }
+    .btn-bad:hover { background: #f56565; }
+
+    .btn-nav {
+      background: var(--bg2);
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+      font-size: 1.3rem;
+      padding: 0.5rem 1rem;
+      line-height: 1;
+    }
+    .btn-nav:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+    /* Card area */
+    .fc-stage {
+      width: 100%;
+      max-width: 800px;
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-slide-wrapper {
+      width: 100%;
+      max-width: 600px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-flip {
+      perspective: 1000px;
+      cursor: pointer;
+      width: 100%;
+      height: 360px;
+      position: relative;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .card-flip.slide-left {
+      animation: slideOutLeft 0.28s ease-in forwards;
+    }
+    .card-flip.slide-right {
+      animation: slideOutRight 0.28s ease-in forwards;
+    }
+    .card-flip.slide-in-left {
+      animation: slideInFromRight 0.28s ease-out forwards;
+    }
+    .card-flip.slide-in-right {
+      animation: slideInFromLeft 0.28s ease-out forwards;
+    }
+
+    @keyframes slideOutLeft {
+      to { transform: translateX(-110%); opacity: 0; }
+    }
+    @keyframes slideOutRight {
+      to { transform: translateX(110%); opacity: 0; }
+    }
+    @keyframes slideInFromRight {
+      from { transform: translateX(110%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideInFromLeft {
+      from { transform: translateX(-110%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .card-flip.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      overflow: auto;
+    }
+
+    .card-front {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      border-color: var(--accent);
+    }
+
+    .card-label {
+      position: absolute;
+      top: 1rem;
+      left: 1.2rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    .card-front .card-label { color: var(--primary); }
+    .card-back .card-label { color: var(--accent); }
+
+    .card-content {
+      font-size: 1.35rem;
+      line-height: 1.6;
+    }
+
+    .card-hint {
+      position: absolute;
+      bottom: 1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+
+    /* Navigation row */
+    .fc-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Evaluation buttons */
+    .fc-eval {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .fc-eval.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Progress bar */
+    .fc-progress {
+      width: 100%;
+      max-width: 600px;
+      height: 4px;
+      background: var(--bg2);
+      border-radius: 2px;
+      margin-top: 1.2rem;
+      overflow: hidden;
+    }
+    .fc-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+
+    /* Summary screen */
+    .fc-summary {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      text-align: center;
+      padding: 2rem;
+    }
+    .fc-summary.visible {
+      display: flex;
+    }
+
+    .fc-summary h2 {
+      font-size: 1.6rem;
+      color: var(--text);
+    }
+
+    .fc-summary .stat-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .fc-summary .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .fc-summary .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+    .fc-summary .stat-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .stat-good .stat-value { color: var(--good); }
+    .stat-bad .stat-value { color: var(--bad); }
+
+    .fc-summary .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .card-flip { height: 300px; }
+      .card-content { font-size: 1.1rem; }
+      .card-front, .card-back { padding: 1.5rem 1.2rem; }
+      .fc-header h1 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="fc-header">
+    <a href="cours_second_degre.html" class="back-link">&larr; Retour au cours</a>
+    <h1>Flashcards &mdash; Second Degr&eacute;</h1>
+    <div style="min-width:100px"></div>
+  </header>
+
+  <!-- Controls -->
+  <div class="fc-controls">
+    <span class="fc-counter" id="counter">1 / 15</span>
+    <button class="btn btn-outline" id="btnRandom" title="Mode al&eacute;atoire">&#x1F500; Al&eacute;atoire</button>
+    <button class="btn btn-outline" id="btnReset">Recommencer</button>
+  </div>
+
+  <!-- Stage -->
+  <div class="fc-stage" id="stage">
+    <div class="card-slide-wrapper">
+      <div class="card-flip" id="cardFlip" tabindex="0" role="button" aria-label="Retourner la carte">
+        <div class="card-inner" id="cardInner">
+          <div class="card-front">
+            <span class="card-label">Question</span>
+            <div class="card-content" id="frontContent"></div>
+            <span class="card-hint">Cliquer ou Espace pour retourner</span>
+          </div>
+          <div class="card-back">
+            <span class="card-label">R&eacute;ponse</span>
+            <div class="card-content" id="backContent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="fc-nav">
+      <button class="btn btn-nav" id="btnPrev" aria-label="Carte pr&eacute;c&eacute;dente">&larr;</button>
+      <button class="btn btn-nav" id="btnNext" aria-label="Carte suivante">&rarr;</button>
+    </div>
+
+    <!-- Evaluation -->
+    <div class="fc-eval" id="evalRow">
+      <button class="btn btn-bad" id="btnBad">&#x2716; &Agrave; revoir</button>
+      <button class="btn btn-good" id="btnGood">&#x2714; Je connais</button>
+    </div>
+
+    <!-- Progress -->
+    <div class="fc-progress">
+      <div class="fc-progress-bar" id="progressBar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="fc-summary" id="summary">
+    <h2>R&eacute;sultats</h2>
+    <div class="stat-row">
+      <div class="stat stat-good">
+        <span class="stat-value" id="sumGood">0</span>
+        <span class="stat-label">Ma&icirc;tris&eacute;es</span>
+      </div>
+      <div class="stat stat-bad">
+        <span class="stat-value" id="sumBad">0</span>
+        <span class="stat-label">&Agrave; revoir</span>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-bad" id="btnReviewMissed">Revoir les rat&eacute;es</button>
+      <button class="btn btn-primary" id="btnRestartAll">Tout recommencer</button>
+      <a href="cours_second_degre.html" class="btn btn-outline">Retour au cours</a>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    /* ── Flashcard data ── */
+    const ALL_CARDS = [
+      { front: "Formule du discriminant ?", back: "$$\\Delta = b^2 - 4ac$$" },
+      { front: "Formule des racines quand $\\Delta > 0$ ?", back: "$$x_{1,2} = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}$$" },
+      { front: "Coordonn\u00e9es du sommet ?", back: "$$S\\left(-\\frac{b}{2a}\\,;\\, f\\left(-\\frac{b}{2a}\\right)\\right)$$" },
+      { front: "Forme canonique ?", back: "$$f(x) = a(x - \\alpha)^2 + \\beta$$" },
+      { front: "Signe de $f(x)$ si $\\Delta < 0$ et $a > 0$ ?", back: "$$f(x) > 0 \\text{ pour tout } x \\in \\mathbb{R}$$" },
+      { front: "Axe de sym\u00e9trie ?", back: "$$\\text{Droite } x = -\\frac{b}{2a}$$" },
+      { front: "Somme des racines ?", back: "$$x_1 + x_2 = -\\frac{b}{a}$$" },
+      { front: "Produit des racines ?", back: "$$x_1 \\cdot x_2 = \\frac{c}{a}$$" },
+      { front: "Si $a > 0$, la parabole est ouverte vers\u2026", back: "$$\\text{le haut (forme de U)}$$" },
+      { front: "Si $\\Delta = 0$, combien de racines ?", back: "$$\\text{1 racine double : } x_0 = -\\frac{b}{2a}$$" },
+      { front: "Factorisation quand $\\Delta > 0$ ?", back: "$$f(x) = a(x - x_1)(x - x_2)$$" },
+      { front: "Factorisation quand $\\Delta = 0$ ?", back: "$$f(x) = a(x - x_0)^2$$" },
+      { front: "$f(x) = x^2 - 9$, racines ?", back: "$$x = -3 \\text{ et } x = 3$$" },
+      { front: "Le minimum de $f(x) = 2(x-1)^2 + 3$ ?", back: "$$\\text{Minimum} = 3, \\text{ atteint en } x = 1$$" },
+      { front: "$\\Delta$ de $x^2 + 1 = 0$ ?", back: "$$\\Delta = -4 < 0 \\text{ : pas de racine r\u00e9elle}$$" }
+    ];
+
+    /* ── State ── */
+    let cards = ALL_CARDS.map(function (c, i) { return { id: i, front: c.front, back: c.back }; });
+    let current = 0;
+    let flipped = false;
+    let randomMode = false;
+    let evaluated = {};   // id -> 'good' | 'bad'
+    let answeredCount = 0;
+    let animating = false;
+
+    /* ── DOM refs ── */
+    const cardFlip   = document.getElementById('cardFlip');
+    const frontEl    = document.getElementById('frontContent');
+    const backEl     = document.getElementById('backContent');
+    const counter    = document.getElementById('counter');
+    const evalRow    = document.getElementById('evalRow');
+    const btnPrev    = document.getElementById('btnPrev');
+    const btnNext    = document.getElementById('btnNext');
+    const btnGood    = document.getElementById('btnGood');
+    const btnBad     = document.getElementById('btnBad');
+    const btnRandom  = document.getElementById('btnRandom');
+    const btnReset   = document.getElementById('btnReset');
+    const progressBar = document.getElementById('progressBar');
+    const stage      = document.getElementById('stage');
+    const summary    = document.getElementById('summary');
+    const sumGood    = document.getElementById('sumGood');
+    const sumBad     = document.getElementById('sumBad');
+    const btnReviewMissed = document.getElementById('btnReviewMissed');
+    const btnRestartAll   = document.getElementById('btnRestartAll');
+
+    /* ── KaTeX rendering helper ── */
+    function renderMath(el) {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(el, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    /* ── Display card ── */
+    function showCard() {
+      var c = cards[current];
+      flipped = false;
+      cardFlip.classList.remove('flipped');
+      evalRow.classList.remove('visible');
+
+      frontEl.innerHTML = c.front;
+      backEl.innerHTML  = c.back;
+      renderMath(frontEl);
+      renderMath(backEl);
+
+      counter.textContent = (current + 1) + ' / ' + cards.length;
+      btnPrev.disabled = current === 0;
+      btnNext.disabled = current === cards.length - 1;
+      updateProgress();
+    }
+
+    function updateProgress() {
+      var pct = cards.length > 0 ? (answeredCount / cards.length) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }
+
+    /* ── Flip ── */
+    function flipCard() {
+      if (animating) return;
+      flipped = !flipped;
+      cardFlip.classList.toggle('flipped', flipped);
+      if (flipped) {
+        evalRow.classList.add('visible');
+      } else {
+        evalRow.classList.remove('visible');
+      }
+    }
+
+    /* ── Slide transition ── */
+    function slideTo(direction, newIndex) {
+      if (animating) return;
+      animating = true;
+
+      var outClass = direction === 'next' ? 'slide-left' : 'slide-right';
+      var inClass  = direction === 'next' ? 'slide-in-left' : 'slide-in-right';
+
+      cardFlip.classList.add(outClass);
+
+      setTimeout(function () {
+        cardFlip.classList.remove(outClass);
+        current = newIndex;
+        showCard();
+        cardFlip.classList.add(inClass);
+
+        setTimeout(function () {
+          cardFlip.classList.remove(inClass);
+          animating = false;
+        }, 280);
+      }, 280);
+    }
+
+    /* ── Navigate ── */
+    function goNext() {
+      if (current < cards.length - 1) {
+        slideTo('next', current + 1);
+      }
+    }
+    function goPrev() {
+      if (current > 0) {
+        slideTo('prev', current - 1);
+      }
+    }
+
+    /* ── Evaluate ── */
+    function evaluate(result) {
+      var c = cards[current];
+      if (!(c.id in evaluated)) {
+        answeredCount++;
+      }
+      evaluated[c.id] = result;
+      updateProgress();
+
+      // Auto-advance or show summary
+      if (current < cards.length - 1) {
+        goNext();
+      } else {
+        showSummary();
+      }
+    }
+
+    /* ── Summary ── */
+    function showSummary() {
+      var good = 0, bad = 0;
+      for (var id in evaluated) {
+        if (evaluated[id] === 'good') good++;
+        else bad++;
+      }
+      // Count unanswered as "to review"
+      var unanswered = cards.length - good - bad;
+      bad += unanswered;
+
+      sumGood.textContent = good;
+      sumBad.textContent  = bad;
+
+      stage.style.display   = 'none';
+      summary.classList.add('visible');
+
+      btnReviewMissed.style.display = bad > 0 ? '' : 'none';
+    }
+
+    /* ── Random mode ── */
+    function shuffle(arr) {
+      for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+      }
+      return arr;
+    }
+
+    function toggleRandom() {
+      randomMode = !randomMode;
+      btnRandom.classList.toggle('active', randomMode);
+      if (randomMode) {
+        shuffle(cards);
+      } else {
+        cards.sort(function (a, b) { return a.id - b.id; });
+      }
+      current = 0;
+      showCard();
+    }
+
+    /* ── Reset ── */
+    function resetAll() {
+      cards = ALL_CARDS.map(function (c, i) { return { id: i, front: c.front, back: c.back }; });
+      if (randomMode) shuffle(cards);
+      current = 0;
+      evaluated = {};
+      answeredCount = 0;
+      stage.style.display = '';
+      summary.classList.remove('visible');
+      showCard();
+    }
+
+    function reviewMissed() {
+      var missed = [];
+      cards.forEach(function (c) {
+        if (evaluated[c.id] !== 'good') {
+          missed.push(c);
+        }
+      });
+      if (missed.length === 0) return;
+      cards = missed;
+      if (randomMode) shuffle(cards);
+      current = 0;
+      // Reset evaluated only for missed cards
+      var newEval = {};
+      evaluated = newEval;
+      answeredCount = 0;
+      stage.style.display = '';
+      summary.classList.remove('visible');
+      showCard();
+    }
+
+    /* ── Event listeners ── */
+    cardFlip.addEventListener('click', flipCard);
+
+    btnNext.addEventListener('click', goNext);
+    btnPrev.addEventListener('click', goPrev);
+    btnGood.addEventListener('click', function () { evaluate('good'); });
+    btnBad.addEventListener('click', function ()  { evaluate('bad'); });
+    btnRandom.addEventListener('click', toggleRandom);
+    btnReset.addEventListener('click', resetAll);
+    btnRestartAll.addEventListener('click', resetAll);
+    btnReviewMissed.addEventListener('click', reviewMissed);
+
+    document.addEventListener('keydown', function (e) {
+      if (summary.classList.contains('visible')) return;
+      if (e.key === ' ' || e.code === 'Space') {
+        e.preventDefault();
+        flipCard();
+      } else if (e.key === 'ArrowRight') {
+        if (flipped && !(cards[current].id in evaluated)) {
+          // If flipped but not evaluated, treat right arrow as "good" then next
+        }
+        goNext();
+      } else if (e.key === 'ArrowLeft') {
+        goPrev();
+      }
+    });
+
+    /* ── Init ── */
+    showCard();
+  });
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v20251015-04';
+const CACHE_NAME = 'v20260330-02';
 const ASSETS = [
   '/',
   '/index.html',
@@ -11,17 +11,20 @@ const ASSETS = [
   '/assets/js/neon-toggle.js',
   '/assets/js/levels.js',
   '/assets/js/progression.js',
+  '/assets/js/gamification.js',
+  '/assets/js/accessibility.js',
   '/assets/js/sw-client.js',
   '/assets/js/sw-update.js',
   '/assets/js/auth.js',
   '/assets/js/dashboard.js',
   '/assets/contents.json',
-  '/assets/contents.static.js',
   '/EDS_premiere/index.html',
   '/EDS_terminale/index.html',
   '/Maths_expertes/index.html',
   '/login.html',
   '/dashboard.html',
+  '/analytics.html',
+  '/showcase.html',
   '/mentions.html',
   '/credits.html',
   '/assets/img/icon.svg',
@@ -29,6 +32,9 @@ const ASSETS = [
   '/EDS_premiere/Epreuve_Anticipee/index.html',
   '/EDS_terminale/Progression/index.html',
   '/Maths_expertes/Progression/index.html',
+  '/EDS_premiere/Second_Degre/labo_interactif.html',
+  '/EDS_premiere/Second_Degre/qcm_second_degre.html',
+  '/EDS_premiere/Second_Degre/flashcards.html',
 ];
 self.addEventListener('install', e => {
   // Pre-cache core assets and activate new SW immediately

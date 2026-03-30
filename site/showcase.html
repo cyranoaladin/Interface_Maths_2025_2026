@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vitrine — Le numérique en mathématiques</title>
+  <meta name="description" content="Présentation du portail Interface Maths : outils numériques innovants au service de l'enseignement et des apprentissages en mathématiques." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="icon" href="assets/img/icon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+
+  <style>
+    /* ===== Showcase palette overrides ===== */
+    :root {
+      --sc-bg: #0b1020;
+      --sc-bg2: #11162a;
+      --sc-card: #151b34;
+      --sc-text: #eef2ff;
+      --sc-muted: #a2b0d6;
+      --sc-primary: #6aa6ff;
+      --sc-accent: #22d3ee;
+      --sc-border: #28314f;
+      --sc-good: #22c55e;
+    }
+
+    /* ===== Reset & base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body.showcase {
+      background: var(--sc-bg);
+      color: var(--sc-text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--sc-primary); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--sc-accent); }
+
+    /* ===== Back link ===== */
+    .sc-back {
+      position: fixed;
+      top: 1.2rem;
+      left: 1.5rem;
+      z-index: 100;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem 1.1rem;
+      background: rgba(21, 27, 52, .85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--sc-border);
+      border-radius: 999px;
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--sc-muted);
+      transition: all .25s;
+    }
+    .sc-back:hover {
+      color: var(--sc-accent);
+      border-color: var(--sc-accent);
+      transform: translateX(-3px);
+    }
+    .sc-back svg { width: 16px; height: 16px; }
+
+    /* ===== Section layout ===== */
+    .sc-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+    }
+
+    .sc-section-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: .6rem;
+      background: linear-gradient(135deg, var(--sc-primary), var(--sc-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sc-section-sub {
+      text-align: center;
+      color: var(--sc-muted);
+      font-size: 1.05rem;
+      margin-bottom: 3rem;
+    }
+
+    /* ===== Scroll reveal ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+
+    /* ================================================================
+       HERO
+       ================================================================ */
+    .sc-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      overflow: hidden;
+    }
+
+    /* Animated gradient background */
+    .sc-hero::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 20% 50%, rgba(106,166,255,.12) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 20%, rgba(34,211,238,.1) 0%, transparent 50%),
+                  radial-gradient(ellipse at 50% 80%, rgba(139,92,246,.08) 0%, transparent 50%);
+      animation: hero-drift 20s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes hero-drift {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      33%  { transform: translate(-3%, 2%) rotate(1deg); }
+      66%  { transform: translate(2%, -2%) rotate(-0.5deg); }
+      100% { transform: translate(-1%, 1%) rotate(0.5deg); }
+    }
+
+    /* Grid dots background */
+    .sc-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(106,166,255,.08) 1px, transparent 1px);
+      background-size: 32px 32px;
+      z-index: 0;
+    }
+
+    .sc-hero > * { position: relative; z-index: 1; }
+
+    .sc-hero-tag {
+      display: inline-block;
+      padding: .4rem 1rem;
+      background: rgba(106,166,255,.12);
+      border: 1px solid rgba(106,166,255,.25);
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--sc-primary);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .sc-hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(2.5rem, 5.5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, var(--sc-primary) 50%, var(--sc-accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sc-hero-subtitle {
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      color: var(--sc-muted);
+      max-width: 640px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    .sc-hero-author {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--sc-text);
+      margin-bottom: .3rem;
+    }
+
+    .sc-hero-location {
+      font-size: .9rem;
+      color: var(--sc-muted);
+    }
+
+    /* Floating orbs */
+    .sc-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .sc-orb--1 {
+      width: 400px; height: 400px;
+      background: rgba(106,166,255,.15);
+      top: 10%; left: -5%;
+      animation: orb-float 15s ease-in-out infinite alternate;
+    }
+    .sc-orb--2 {
+      width: 300px; height: 300px;
+      background: rgba(34,211,238,.12);
+      bottom: 5%; right: -5%;
+      animation: orb-float 18s ease-in-out infinite alternate-reverse;
+    }
+    .sc-orb--3 {
+      width: 200px; height: 200px;
+      background: rgba(139,92,246,.1);
+      top: 60%; left: 50%;
+      animation: orb-float 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes orb-float {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(30px, -20px) scale(1.1); }
+      100% { transform: translate(-20px, 15px) scale(.95); }
+    }
+
+    /* ================================================================
+       PILLARS (3-column grid)
+       ================================================================ */
+    .sc-pillars {
+      background: var(--sc-bg2);
+      border-top: 1px solid var(--sc-border);
+      border-bottom: 1px solid var(--sc-border);
+    }
+
+    .sc-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .sc-pillar {
+      position: relative;
+      background: var(--sc-card);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--sc-border);
+      overflow: hidden;
+      transition: transform .3s, border-color .3s;
+    }
+    .sc-pillar:hover {
+      transform: translateY(-4px);
+      border-color: var(--sc-primary);
+    }
+
+    /* Animated gradient border effect */
+    .sc-pillar::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: -1px; right: -1px; bottom: -1px;
+      border-radius: 18px;
+      background: conic-gradient(from var(--angle, 0deg), transparent 60%, var(--sc-primary) 80%, var(--sc-accent) 90%, transparent 100%);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity .4s;
+      animation: border-rotate 6s linear infinite;
+    }
+    .sc-pillar:hover::before { opacity: 1; }
+
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+    @keyframes border-rotate {
+      to { --angle: 360deg; }
+    }
+
+    .sc-pillar-icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      margin-bottom: 1.2rem;
+      font-size: 1.5rem;
+    }
+    .sc-pillar-icon--tools { background: rgba(106,166,255,.15); color: var(--sc-primary); }
+    .sc-pillar-icon--learn { background: rgba(34,211,238,.15); color: var(--sc-accent); }
+    .sc-pillar-icon--teach { background: rgba(34,197,94,.15); color: var(--sc-good); }
+
+    .sc-pillar h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--sc-text);
+    }
+
+    .sc-pillar ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+    }
+
+    .sc-pillar li {
+      position: relative;
+      padding-left: 1.3rem;
+      font-size: .92rem;
+      color: var(--sc-muted);
+      line-height: 1.5;
+    }
+    .sc-pillar li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: .55rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--sc-primary);
+    }
+    .sc-pillar li a {
+      border-bottom: 1px dashed rgba(106,166,255,.3);
+      transition: border-color .2s;
+    }
+    .sc-pillar li a:hover {
+      border-color: var(--sc-accent);
+    }
+
+    /* ================================================================
+       TIMELINES
+       ================================================================ */
+    .sc-timeline-wrapper {
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sc-timeline {
+      display: flex;
+      gap: 0;
+      min-width: max-content;
+      padding: 2rem 0;
+      position: relative;
+    }
+
+    .sc-timeline::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 2rem;
+      right: 2rem;
+      height: 3px;
+      background: linear-gradient(90deg, var(--sc-primary), var(--sc-accent));
+      border-radius: 2px;
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .sc-timeline-step {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 140px;
+      padding: 0 .5rem;
+    }
+
+    .sc-timeline-num {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--sc-card);
+      border: 2px solid var(--sc-primary);
+      border-radius: 50%;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--sc-primary);
+      margin-bottom: .7rem;
+      transition: all .3s;
+    }
+    .sc-timeline-step:hover .sc-timeline-num {
+      background: var(--sc-primary);
+      color: var(--sc-bg);
+      transform: scale(1.15);
+      box-shadow: 0 0 20px rgba(106,166,255,.4);
+    }
+
+    .sc-timeline-label {
+      font-size: .82rem;
+      color: var(--sc-muted);
+      text-align: center;
+      max-width: 120px;
+      line-height: 1.35;
+      transition: color .3s;
+    }
+    .sc-timeline-step:hover .sc-timeline-label {
+      color: var(--sc-text);
+    }
+
+    /* Teacher timeline accent */
+    .sc-timeline--teacher::before {
+      background: linear-gradient(90deg, var(--sc-good), var(--sc-primary));
+    }
+    .sc-timeline--teacher .sc-timeline-num {
+      border-color: var(--sc-good);
+      color: var(--sc-good);
+    }
+    .sc-timeline--teacher .sc-timeline-step:hover .sc-timeline-num {
+      background: var(--sc-good);
+      color: var(--sc-bg);
+      box-shadow: 0 0 20px rgba(34,197,94,.4);
+    }
+
+    /* ================================================================
+       ARCHITECTURE DIAGRAM
+       ================================================================ */
+    .sc-arch {
+      background: var(--sc-bg2);
+      border-top: 1px solid var(--sc-border);
+      border-bottom: 1px solid var(--sc-border);
+    }
+
+    .sc-arch-diagram {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .sc-arch-diagram svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .sc-arch-box {
+      fill: var(--sc-card);
+      stroke: var(--sc-border);
+      stroke-width: 1.5;
+      rx: 12;
+    }
+    .sc-arch-box--highlight {
+      stroke: var(--sc-primary);
+      stroke-width: 2;
+    }
+    .sc-arch-text {
+      fill: var(--sc-text);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+    .sc-arch-text--small {
+      font-size: 11px;
+      fill: var(--sc-muted);
+      font-weight: 400;
+    }
+    .sc-arch-arrow {
+      stroke: var(--sc-primary);
+      stroke-width: 2;
+      fill: none;
+      marker-end: url(#arrowhead);
+    }
+    .sc-arch-label {
+      fill: var(--sc-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      text-anchor: middle;
+      dominant-baseline: central;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    /* ================================================================
+       KEY FIGURES
+       ================================================================ */
+    .sc-figures-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .sc-figure {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--sc-card);
+      border-radius: 16px;
+      border: 1px solid var(--sc-border);
+      transition: transform .3s, border-color .3s;
+    }
+    .sc-figure:hover {
+      transform: translateY(-3px);
+      border-color: var(--sc-accent);
+    }
+
+    .sc-figure-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--sc-primary), var(--sc-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: .4rem;
+    }
+
+    .sc-figure-label {
+      font-size: .9rem;
+      color: var(--sc-muted);
+      line-height: 1.4;
+    }
+
+    /* ================================================================
+       FOOTER / QUOTE
+       ================================================================ */
+    .sc-footer {
+      text-align: center;
+      padding: 5rem 1.5rem 3rem;
+      background: var(--sc-bg2);
+      border-top: 1px solid var(--sc-border);
+    }
+
+    .sc-quote {
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-style: italic;
+      color: var(--sc-muted);
+      line-height: 1.7;
+      position: relative;
+      padding: 0 2rem;
+    }
+    .sc-quote::before {
+      content: '\201C';
+      position: absolute;
+      top: -.5rem;
+      left: 0;
+      font-size: 4rem;
+      font-style: normal;
+      background: linear-gradient(135deg, var(--sc-primary), var(--sc-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .sc-license {
+      font-size: .8rem;
+      color: rgba(162,176,214,.5);
+      margin-top: 1.5rem;
+    }
+
+    .sc-footer-author {
+      font-size: .85rem;
+      color: var(--sc-muted);
+      margin-top: 1rem;
+    }
+
+    /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+    @media (max-width: 900px) {
+      .sc-pillars-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .sc-figures-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sc-section { padding: 3.5rem 1rem; }
+      .sc-figures-grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      .sc-back { top: .8rem; left: .8rem; padding: .45rem .9rem; font-size: .8rem; }
+    }
+  </style>
+</head>
+
+<body class="showcase">
+
+  <!-- Back link -->
+  <a href="/index.html" class="sc-back" aria-label="Retour a l'accueil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    Accueil
+  </a>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="sc-hero" id="hero">
+    <div class="sc-orb sc-orb--1"></div>
+    <div class="sc-orb sc-orb--2"></div>
+    <div class="sc-orb sc-orb--3"></div>
+
+    <span class="sc-hero-tag">Formation - Outils numériques</span>
+    <h1>Le numérique<br>en mathématiques</h1>
+    <p class="sc-hero-subtitle">
+      Des outils innovants au service des apprentissages et de l'enseignement
+    </p>
+    <p class="sc-hero-author">Alaeddine Ben Rhouma — Professeur agrégé de mathématiques</p>
+    <p class="sc-hero-location">Lycée Pierre Mendès France — Tunis</p>
+  </section>
+
+  <!-- ============================================================
+       LES 3 PILIERS
+       ============================================================ -->
+  <section class="sc-pillars">
+    <div class="sc-section">
+      <h2 class="sc-section-title reveal">Les 3 piliers</h2>
+      <p class="sc-section-sub reveal">Un écosystème complet pour les mathématiques</p>
+
+      <div class="sc-pillars-grid">
+        <!-- Pilier 1 -->
+        <article class="sc-pillar reveal reveal-delay-1">
+          <div class="sc-pillar-icon sc-pillar-icon--tools">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3>Outils innovants</h3>
+          <ul>
+            <li><a href="/EDS_premiere/Second_Degre/labo_interactif.html">Labo interactif JSXGraph</a></li>
+            <li>Rendu LaTeX natif (MathJax / KaTeX)</li>
+            <li>Architecture moderne (FastAPI + JS + PWA)</li>
+            <li>Déploiement automatisé (CI/CD GitHub Actions)</li>
+          </ul>
+        </article>
+
+        <!-- Pilier 2 -->
+        <article class="sc-pillar reveal reveal-delay-2">
+          <div class="sc-pillar-icon sc-pillar-icon--learn">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h3>Au service des apprentissages</h3>
+          <ul>
+            <li><a href="/EDS_premiere/Second_Degre/qcm_second_degre.html">QCM interactifs auto-corrigés</a></li>
+            <li>Bilans personnalisés générés par IA (Claude)</li>
+            <li><a href="/EDS_premiere/Second_Degre/flashcards.html">Flashcards de révision</a></li>
+            <li>Progression gamifiée (niveaux + badges)</li>
+            <li>Mode offline (Service Worker)</li>
+          </ul>
+        </article>
+
+        <!-- Pilier 3 -->
+        <article class="sc-pillar reveal reveal-delay-3">
+          <div class="sc-pillar-icon sc-pillar-icon--teach">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Au service de l'enseignement</h3>
+          <ul>
+            <li><a href="/dashboard.html">Dashboard enseignant sécurisé</a></li>
+            <li><a href="/analytics.html">Analytics visuels (Chart.js)</a></li>
+            <li>Import CSV &rarr; base élèves en un script</li>
+            <li>Réinitialisation de mots de passe en un clic</li>
+            <li>Bilans PDF exportables</li>
+            <li>Suivi groupe par groupe</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PARCOURS ELEVE
+       ============================================================ -->
+  <section class="sc-section">
+    <h2 class="sc-section-title reveal">Parcours d'un élève</h2>
+    <p class="sc-section-sub reveal">De la connexion au badge débloqué</p>
+
+    <div class="sc-timeline-wrapper reveal">
+      <div class="sc-timeline">
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">1</span>
+          <span class="sc-timeline-label">Connexion</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">2</span>
+          <span class="sc-timeline-label">Dashboard personnalisé</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">3</span>
+          <span class="sc-timeline-label">Accès aux cours (LaTeX)</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">4</span>
+          <span class="sc-timeline-label">Labo interactif</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">5</span>
+          <span class="sc-timeline-label">QCM auto-évaluation</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">6</span>
+          <span class="sc-timeline-label">Consultation du bilan</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">7</span>
+          <span class="sc-timeline-label">Flashcards de révision</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">8</span>
+          <span class="sc-timeline-label">Badge débloqué</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PARCOURS ENSEIGNANT
+       ============================================================ -->
+  <section class="sc-section" style="padding-top: 0;">
+    <h2 class="sc-section-title reveal">Parcours d'un enseignant</h2>
+    <p class="sc-section-sub reveal">Du tableau de bord à l'export de données</p>
+
+    <div class="sc-timeline-wrapper reveal">
+      <div class="sc-timeline sc-timeline--teacher">
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">1</span>
+          <span class="sc-timeline-label">Connexion</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">2</span>
+          <span class="sc-timeline-label">Vue groupes</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">3</span>
+          <span class="sc-timeline-label">Liste élèves</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">4</span>
+          <span class="sc-timeline-label">Bilans individuels</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">5</span>
+          <span class="sc-timeline-label">Analytics classe</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">6</span>
+          <span class="sc-timeline-label">Réinitialisation MDP</span>
+        </div>
+        <div class="sc-timeline-step">
+          <span class="sc-timeline-num">7</span>
+          <span class="sc-timeline-label">Export données</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ARCHITECTURE TECHNIQUE
+       ============================================================ -->
+  <section class="sc-arch">
+    <div class="sc-section">
+      <h2 class="sc-section-title reveal">Architecture technique</h2>
+      <p class="sc-section-sub reveal">Une stack simple, efficace et auto-hébergeable</p>
+
+      <div class="sc-arch-diagram reveal">
+        <svg viewBox="0 0 860 370" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#6aa6ff"/>
+            </marker>
+            <linearGradient id="grad-primary" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#6aa6ff"/>
+              <stop offset="100%" stop-color="#22d3ee"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Section labels -->
+          <text x="200" y="28" class="sc-arch-label" font-size="12" letter-spacing=".1em">Frontend (Navigateur)</text>
+          <text x="660" y="28" class="sc-arch-label" font-size="12" letter-spacing=".1em">Backend (Serveur)</text>
+
+          <!-- Divider -->
+          <line x1="430" y1="40" x2="430" y2="350" stroke="#28314f" stroke-width="1" stroke-dasharray="6 4"/>
+
+          <!-- Frontend boxes -->
+          <rect x="30" y="55" width="150" height="52" class="sc-arch-box sc-arch-box--highlight" rx="12"/>
+          <text x="105" y="75" class="sc-arch-text">JavaScript</text>
+          <text x="105" y="93" class="sc-arch-text--small">auth.js, dashboard.js, student.js</text>
+
+          <rect x="210" y="55" width="150" height="52" class="sc-arch-box" rx="12"/>
+          <text x="285" y="75" class="sc-arch-text">CSS</text>
+          <text x="285" y="93" class="sc-arch-text--small">tokens, site, main</text>
+
+          <rect x="30" y="135" width="150" height="52" class="sc-arch-box" rx="12"/>
+          <text x="105" y="155" class="sc-arch-text">MathJax</text>
+          <text x="105" y="173" class="sc-arch-text--small">Rendu LaTeX</text>
+
+          <rect x="210" y="135" width="150" height="52" class="sc-arch-box" rx="12"/>
+          <text x="285" y="155" class="sc-arch-text">JSXGraph</text>
+          <text x="285" y="173" class="sc-arch-text--small">Labo interactif</text>
+
+          <rect x="120" y="215" width="150" height="52" class="sc-arch-box" rx="12"/>
+          <text x="195" y="235" class="sc-arch-text">Chart.js</text>
+          <text x="195" y="253" class="sc-arch-text--small">Analytics visuels</text>
+
+          <!-- Navigateur wrapper -->
+          <rect x="15" y="290" width="395" height="55" rx="14" fill="none" stroke="url(#grad-primary)" stroke-width="2" stroke-dasharray="6 3"/>
+          <text x="212" y="322" class="sc-arch-text" font-size="14">Navigateur (PWA + Service Worker)</text>
+
+          <!-- Backend boxes -->
+          <rect x="480" y="55" width="170" height="52" class="sc-arch-box sc-arch-box--highlight" rx="12"/>
+          <text x="565" y="75" class="sc-arch-text">Nginx</text>
+          <text x="565" y="93" class="sc-arch-text--small">Reverse proxy + TLS</text>
+
+          <rect x="480" y="145" width="170" height="52" class="sc-arch-box sc-arch-box--highlight" rx="12"/>
+          <text x="565" y="165" class="sc-arch-text">FastAPI</text>
+          <text x="565" y="183" class="sc-arch-text--small">API REST + Auth JWT</text>
+
+          <rect x="480" y="235" width="170" height="52" class="sc-arch-box" rx="12"/>
+          <text x="565" y="255" class="sc-arch-text">SQLite</text>
+          <text x="565" y="273" class="sc-arch-text--small">Base de données</text>
+
+          <!-- Docker wrapper -->
+          <rect x="695" y="130" width="140" height="170" rx="14" fill="none" stroke="#28314f" stroke-width="1.5"/>
+          <text x="765" y="155" class="sc-arch-label" font-size="11">Docker</text>
+          <rect x="710" y="168" width="110" height="36" class="sc-arch-box" rx="8"/>
+          <text x="765" y="190" class="sc-arch-text--small">CI/CD</text>
+          <rect x="710" y="218" width="110" height="36" class="sc-arch-box" rx="8"/>
+          <text x="765" y="240" class="sc-arch-text--small">GitHub Actions</text>
+          <rect x="710" y="268" width="110" height="20" class="sc-arch-box" rx="6"/>
+          <text x="765" y="282" class="sc-arch-text--small" font-size="9">deploy.sh</text>
+
+          <!-- Arrows -->
+          <!-- Browser -> Nginx -->
+          <line x1="410" y1="317" x2="467" y2="100" class="sc-arch-arrow"/>
+          <!-- Nginx -> FastAPI -->
+          <line x1="565" y1="107" x2="565" y2="145" class="sc-arch-arrow"/>
+          <!-- FastAPI -> SQLite -->
+          <line x1="565" y1="197" x2="565" y2="235" class="sc-arch-arrow"/>
+          <!-- FastAPI -> Docker -->
+          <line x1="650" y1="171" x2="695" y2="195" class="sc-arch-arrow"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CHIFFRES CLES
+       ============================================================ -->
+  <section class="sc-section">
+    <h2 class="sc-section-title reveal">Chiffres clés</h2>
+    <p class="sc-section-sub reveal">L'essentiel en un coup d'oeil</p>
+
+    <div class="sc-figures-grid">
+      <div class="sc-figure reveal reveal-delay-1">
+        <div class="sc-figure-num" data-target="3">0</div>
+        <div class="sc-figure-label">niveaux couverts<br><small style="color:rgba(162,176,214,.5)">(1re, Tle, Maths Expertes)</small></div>
+      </div>
+      <div class="sc-figure reveal reveal-delay-2">
+        <div class="sc-figure-num" data-target="12" data-suffix="+">0</div>
+        <div class="sc-figure-label">chapitres de cours</div>
+      </div>
+      <div class="sc-figure reveal reveal-delay-3">
+        <div class="sc-figure-num" data-target="26">0</div>
+        <div class="sc-figure-label">bilans personnalisés générés</div>
+      </div>
+      <div class="sc-figure reveal reveal-delay-1">
+        <div class="sc-figure-num" data-target="4">0</div>
+        <div class="sc-figure-label">exercices analysés par bilan</div>
+      </div>
+      <div class="sc-figure reveal reveal-delay-2">
+        <div class="sc-figure-num" data-target="100" data-suffix="%">0</div>
+        <div class="sc-figure-label">en français</div>
+      </div>
+      <div class="sc-figure reveal reveal-delay-3">
+        <div class="sc-figure-num" data-target="0" data-prefix="" data-suffix="€" data-fixed="0€">0€</div>
+        <div class="sc-figure-label">de licence</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER / QUOTE
+       ============================================================ -->
+  <footer class="sc-footer">
+    <blockquote class="sc-quote reveal">
+      Ce portail est un cas concret de ce que le numérique peut apporter aux mathématiques :
+      interactivité, personnalisation, données exploitables, et autonomie de l'élève.
+    </blockquote>
+    <p class="sc-footer-author reveal">
+      Alaeddine Ben Rhouma — Interface Maths 2025–2026
+    </p>
+    <p class="sc-license reveal">
+      Licence CC BY-NC-SA 4.0
+    </p>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script>
+    /* ===== Scroll-reveal via IntersectionObserver ===== */
+    (function () {
+      const els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+      els.forEach(function (el) { observer.observe(el); });
+    })();
+
+    /* ===== Count-up animation ===== */
+    (function () {
+      var figures = document.querySelectorAll('.sc-figure-num[data-target]');
+      if (!('IntersectionObserver' in window)) return;
+
+      var countObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          countObserver.unobserve(el);
+
+          var target = parseInt(el.getAttribute('data-target'), 10);
+          var suffix = el.getAttribute('data-suffix') || '';
+          var fixed = el.getAttribute('data-fixed');
+
+          if (fixed) {
+            el.textContent = fixed;
+            return;
+          }
+
+          if (target === 0) {
+            el.textContent = '0' + suffix;
+            return;
+          }
+
+          var duration = 1800;
+          var startTime = null;
+
+          function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            // ease-out cubic
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = Math.round(eased * target);
+            el.textContent = current + suffix;
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            }
+          }
+
+          requestAnimationFrame(step);
+        });
+      }, { threshold: 0.5 });
+
+      figures.forEach(function (el) { countObserver.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>

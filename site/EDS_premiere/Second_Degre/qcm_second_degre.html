@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QCM — Second degré (EDS Première)</title>
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tQ2/19O0Y1Mpa0FLBlMFqBMn4hdt1Y+pg3MON7VO7+oKCi0Yhmw"
+        crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+          integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Ber2MmGfYPHtRR1QLAK10sA7KFOwkOBgXo9t5Os"
+          crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+          integrity="sha384-+VBxd8OVMLIefJQsmUR8OlGnlHXqiMt6MPMF/pYiMDIccihbEjm0GR+jJpRjQlg"
+          crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #11162a;
+      --card: #151b34;
+      --text: #eef2ff;
+      --muted: #a2b0d6;
+      --primary: #6aa6ff;
+      --accent: #22d3ee;
+      --border: #28314f;
+      --good: #22c55e;
+      --bad: #ef4444;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ---- Layout ---- */
+    .qcm-wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: .95rem;
+      margin-bottom: 1.5rem;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg { width: 18px; height: 18px; }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: .25rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: .95rem;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ---- Progress ---- */
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 2rem;
+    }
+    .progress-label {
+      font-size: .85rem;
+      color: var(--muted);
+      white-space: nowrap;
+      min-width: 90px;
+    }
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--bg2);
+      border-radius: 99px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 99px;
+      transition: width .5s cubic-bezier(.4,0,.2,1);
+    }
+    .score-live {
+      font-size: .85rem;
+      color: var(--accent);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* ---- Question Card ---- */
+    .question-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      transform: translateX(40px);
+      animation: slideIn .5s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .question-card.answered { pointer-events: none; }
+
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .q-number {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      margin-bottom: .5rem;
+    }
+    .q-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    /* ---- Choices ---- */
+    .choices { display: flex; flex-direction: column; gap: .65rem; }
+
+    .choice-btn {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      padding: .9rem 1.15rem;
+      background: var(--bg2);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .choice-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .choice-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(106,166,255,.12);
+    }
+    .choice-btn:hover::before { opacity: .06; }
+
+    .choice-btn input[type="radio"] { display: none; }
+
+    .choice-radio {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all .25s;
+      position: relative;
+      z-index: 1;
+    }
+    .choice-radio::after {
+      content: '';
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      transform: scale(0);
+      transition: transform .25s cubic-bezier(.22,1,.36,1);
+    }
+
+    .choice-label {
+      font-size: .98rem;
+      position: relative;
+      z-index: 1;
+      color: var(--text);
+    }
+
+    /* States */
+    .choice-btn.correct {
+      border-color: var(--good);
+      background: rgba(34,197,94,.08);
+    }
+    .choice-btn.correct .choice-radio {
+      border-color: var(--good);
+    }
+    .choice-btn.correct .choice-radio::after {
+      background: var(--good);
+      transform: scale(1);
+    }
+    .choice-btn.wrong {
+      border-color: var(--bad);
+      background: rgba(239,68,68,.08);
+    }
+    .choice-btn.wrong .choice-radio {
+      border-color: var(--bad);
+    }
+    .choice-btn.wrong .choice-radio::after {
+      background: var(--bad);
+      transform: scale(1);
+    }
+    .choice-btn.dimmed {
+      opacity: .4;
+      pointer-events: none;
+    }
+
+    /* Explanation */
+    .explanation {
+      margin-top: 1rem;
+      padding: 1rem 1.15rem;
+      background: rgba(239,68,68,.06);
+      border-left: 3px solid var(--bad);
+      border-radius: 0 10px 10px 0;
+      font-size: .9rem;
+      color: var(--muted);
+      animation: fadeIn .4s ease;
+    }
+    .explanation.good-expl {
+      background: rgba(34,197,94,.06);
+      border-left-color: var(--good);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- Final Score ---- */
+    .final-screen {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      animation: slideIn .6s cubic-bezier(.22,1,.36,1) forwards;
+      opacity: 0;
+    }
+    .final-score {
+      font-size: 4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: .25rem;
+    }
+    .final-mention {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: .75rem;
+      color: var(--accent);
+    }
+    .final-message {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-restart {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .85rem 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-restart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(34,211,238,.25);
+    }
+
+    /* ---- Confetti ---- */
+    .confetti-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      top: -20px;
+      opacity: 0;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall {
+      0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(105vh) rotate(720deg) scale(.6); }
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 600px) {
+      .qcm-wrapper { padding: 1.25rem 1rem 3rem; }
+      h1 { font-size: 1.35rem; }
+      .question-card { padding: 1.5rem 1.15rem; }
+      .final-score { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="qcm-wrapper" id="app">
+  <a class="back-link" href="cours_second_degre.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    Retour au cours
+  </a>
+
+  <h1>QCM — Le second degré</h1>
+  <p class="subtitle">10 questions pour tester vos connaissances. Bonne chance !</p>
+
+  <div class="progress-wrap">
+    <span class="progress-label" id="progressLabel">Question 0/10</span>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="score-live" id="scoreLive">Score : 0/0</span>
+  </div>
+
+  <div id="questionsContainer"></div>
+  <div id="finalScreen" style="display:none"></div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  /* ========== DATA ========== */
+  const QUESTIONS_BANK = [
+    {
+      q: "Quel est le discriminant de \\(f(x) = 2x^2 - 3x + 1\\) ?",
+      choices: ["\\(\\Delta = 1\\)", "\\(\\Delta = -1\\)", "\\(\\Delta = 7\\)", "\\(\\Delta = 17\\)"],
+      correct: 0,
+      explanation: "\\(\\Delta = (-3)^2 - 4 \\times 2 \\times 1 = 9 - 8 = 1\\)"
+    },
+    {
+      q: "Combien de racines réelles a \\(g(x) = x^2 + 4x + 4\\) ?",
+      choices: ["Aucune racine", "1 racine double", "2 racines distinctes", "Impossible à déterminer"],
+      correct: 1,
+      explanation: "\\(\\Delta = 16 - 16 = 0\\), donc racine double \\(x_0 = -2\\)"
+    },
+    {
+      q: "Le sommet de la parabole \\(f(x) = -x^2 + 6x - 5\\) est :",
+      choices: ["\\(S(3\\,;\\,4)\\)", "\\(S(-3\\,;\\,4)\\)", "\\(S(3\\,;\\,-4)\\)", "\\(S(6\\,;\\,-5)\\)"],
+      correct: 0,
+      explanation: "\\(\\alpha = \\frac{-6}{2 \\times (-1)} = 3,\\; \\beta = f(3) = -9 + 18 - 5 = 4\\)"
+    },
+    {
+      q: "La forme canonique de \\(f(x) = x^2 - 4x + 7\\) est :",
+      choices: ["\\((x-2)^2 + 3\\)", "\\((x+2)^2 + 3\\)", "\\((x-4)^2 + 7\\)", "\\((x-2)^2 - 3\\)"],
+      correct: 0,
+      explanation: "\\(\\alpha = 2,\\; \\beta = 4 - 8 + 7 = 3\\)"
+    },
+    {
+      q: "Le trinôme \\(3x^2 - x + 2\\) est toujours :",
+      choices: ["strictement positif", "strictement négatif", "nul", "de signe variable"],
+      correct: 0,
+      explanation: "\\(\\Delta = 1 - 24 = -23 < 0 \\text{ et } a = 3 > 0\\)"
+    },
+    {
+      q: "Les racines de \\(x^2 - 5x + 6 = 0\\) sont :",
+      choices: ["\\(x = 2\\) et \\(x = 3\\)", "\\(x = -2\\) et \\(x = -3\\)", "\\(x = 1\\) et \\(x = 6\\)", "\\(x = -1\\) et \\(x = -6\\)"],
+      correct: 0,
+      explanation: "\\(\\text{Produit} = 6,\\; \\text{somme} = 5 \\Rightarrow x=2 \\text{ et } x=3\\)"
+    },
+    {
+      q: "Si \\(\\Delta < 0\\) et \\(a > 0\\), alors \\(f(x)\\) est :",
+      choices: ["toujours positive", "toujours négative", "tantôt positive, tantôt négative", "nulle"],
+      correct: 0,
+      explanation: "\\(\\text{Pas de racine et parabole ouverte vers le haut}\\)"
+    },
+    {
+      q: "La parabole \\(f(x) = -2x^2 + 1\\) est ouverte vers :",
+      choices: ["le bas", "le haut", "la droite", "la gauche"],
+      correct: 0,
+      explanation: "\\(a = -2 < 0 \\Rightarrow \\text{parabole ouverte vers le bas}\\)"
+    },
+    {
+      q: "L'axe de symétrie de \\(f(x) = x^2 + 6x + 5\\) a pour équation :",
+      choices: ["\\(x = -3\\)", "\\(x = 3\\)", "\\(x = -6\\)", "\\(x = 5\\)"],
+      correct: 0,
+      explanation: "\\(x = \\frac{-b}{2a} = \\frac{-6}{2} = -3\\)"
+    },
+    {
+      q: "Factoriser \\(2x^2 - 8\\) :",
+      choices: ["\\(2(x-2)(x+2)\\)", "\\(2(x-4)(x+4)\\)", "\\((2x-8)\\)", "\\(2(x^2-8)\\)"],
+      correct: 0,
+      explanation: "\\(2(x^2 - 4) = 2(x-2)(x+2)\\)"
+    }
+  ];
+
+  /* ========== STATE ========== */
+  let questions = [];
+  let answered = 0;
+  let score = 0;
+
+  /* ========== SHUFFLE ========== */
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function prepareQuestions() {
+    const shuffledQs = shuffle(QUESTIONS_BANK);
+    return shuffledQs.map(q => {
+      const indices = q.choices.map((_, i) => i);
+      const shuffledIndices = shuffle(indices);
+      return {
+        q: q.q,
+        choices: shuffledIndices.map(i => q.choices[i]),
+        correct: shuffledIndices.indexOf(q.correct),
+        explanation: q.explanation
+      };
+    });
+  }
+
+  /* ========== RENDER ========== */
+  function renderMath(el) {
+    if (typeof renderMathInElement === "function") {
+      renderMathInElement(el, {
+        delimiters: [
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true }
+        ],
+        throwOnError: false
+      });
+    }
+  }
+
+  function updateProgress() {
+    document.getElementById("progressLabel").textContent = "Question " + answered + "/10";
+    document.getElementById("progressFill").style.width = (answered * 10) + "%";
+    document.getElementById("scoreLive").textContent = "Score : " + score + "/" + answered;
+  }
+
+  function buildQuestions() {
+    const container = document.getElementById("questionsContainer");
+    container.innerHTML = "";
+    document.getElementById("finalScreen").style.display = "none";
+    answered = 0;
+    score = 0;
+    questions = prepareQuestions();
+    updateProgress();
+
+    questions.forEach((q, qi) => {
+      const card = document.createElement("div");
+      card.className = "question-card";
+      card.style.animationDelay = (qi * 0.08) + "s";
+      card.dataset.qi = qi;
+
+      let choicesHTML = "";
+      q.choices.forEach((c, ci) => {
+        choicesHTML += '<label class="choice-btn" data-ci="' + ci + '">' +
+          '<input type="radio" name="q' + qi + '" value="' + ci + '">' +
+          '<span class="choice-radio"></span>' +
+          '<span class="choice-label">' + c + '</span>' +
+          '</label>';
+      });
+
+      card.innerHTML =
+        '<div class="q-number">Question ' + (qi + 1) + ' / 10</div>' +
+        '<div class="q-text">' + q.q + '</div>' +
+        '<div class="choices">' + choicesHTML + '</div>';
+
+      container.appendChild(card);
+
+      /* Attach listeners */
+      card.querySelectorAll(".choice-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+          if (card.classList.contains("answered")) return;
+          handleAnswer(card, qi, parseInt(btn.dataset.ci));
+        });
+      });
+    });
+
+    /* Render math after DOM insertion */
+    requestAnimationFrame(() => renderMath(container));
+  }
+
+  function handleAnswer(card, qi, ci) {
+    card.classList.add("answered");
+    answered++;
+    const q = questions[qi];
+    const isCorrect = ci === q.correct;
+
+    if (isCorrect) score++;
+
+    const btns = card.querySelectorAll(".choice-btn");
+    btns.forEach((btn, i) => {
+      if (i === ci) {
+        btn.classList.add(isCorrect ? "correct" : "wrong");
+      } else if (i === q.correct) {
+        btn.classList.add("correct");
+      } else {
+        btn.classList.add("dimmed");
+      }
+    });
+
+    /* Explanation */
+    const explDiv = document.createElement("div");
+    explDiv.className = "explanation" + (isCorrect ? " good-expl" : "");
+    explDiv.innerHTML = isCorrect
+      ? "<strong>Bonne réponse !</strong> " + q.explanation
+      : "<strong>Mauvaise réponse.</strong> " + q.explanation;
+    card.querySelector(".choices").after(explDiv);
+    renderMath(explDiv);
+
+    updateProgress();
+
+    if (answered === 10) {
+      setTimeout(showFinal, 600);
+    }
+  }
+
+  /* ========== FINAL SCREEN ========== */
+  function getMention(s) {
+    if (s === 10) return { mention: "Parfait !", msg: "Score impeccable ! Vous maîtrisez parfaitement le second degré. Bravo !" };
+    if (s >= 8) return { mention: "Excellent", msg: "Très bel effort ! Vous avez une solide compréhension du second degré." };
+    if (s >= 6) return { mention: "Bien", msg: "Bon travail ! Revoyez les points manqués pour progresser encore." };
+    if (s >= 4) return { mention: "Encourageant", msg: "Vous avez les bases, mais quelques notions méritent d'être revues." };
+    return { mention: "À retravailler", msg: "Prenez le temps de relire le cours et refaites le QCM ensuite. Courage !" };
+  }
+
+  function showFinal() {
+    const { mention, msg } = getMention(score);
+    const finalEl = document.getElementById("finalScreen");
+    finalEl.style.display = "";
+    finalEl.innerHTML =
+      '<div class="final-screen">' +
+        '<div class="final-score">' + score + ' / 10</div>' +
+        '<div class="final-mention">' + mention + '</div>' +
+        '<p class="final-message">' + msg + '</p>' +
+        '<button class="btn-restart" id="btnRestart">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>' +
+          'Recommencer' +
+        '</button>' +
+      '</div>';
+
+    document.getElementById("btnRestart").addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(buildQuestions, 300);
+    });
+
+    if (score >= 8) launchConfetti();
+
+    finalEl.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  /* ========== CONFETTI ========== */
+  function launchConfetti() {
+    const container = document.createElement("div");
+    container.className = "confetti-container";
+    document.body.appendChild(container);
+
+    const colors = ["#6aa6ff", "#22d3ee", "#22c55e", "#fbbf24", "#f472b6", "#a78bfa", "#ef4444"];
+    const shapes = ["circle", "rect", "triangle"];
+
+    for (let i = 0; i < 80; i++) {
+      const piece = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      piece.setAttribute("width", "16");
+      piece.setAttribute("height", "16");
+      piece.setAttribute("viewBox", "0 0 16 16");
+      piece.classList.add("confetti-piece");
+
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      let inner;
+      if (shape === "circle") {
+        inner = '<circle cx="8" cy="8" r="6" fill="' + color + '"/>';
+      } else if (shape === "rect") {
+        inner = '<rect x="2" y="2" width="12" height="12" rx="2" fill="' + color + '"/>';
+      } else {
+        inner = '<polygon points="8,1 15,15 1,15" fill="' + color + '"/>';
+      }
+      piece.innerHTML = inner;
+
+      const left = Math.random() * 100;
+      const duration = 2 + Math.random() * 2;
+      const delay = Math.random() * 1.5;
+      const size = 10 + Math.random() * 14;
+
+      piece.style.left = left + "%";
+      piece.style.width = size + "px";
+      piece.style.height = size + "px";
+      piece.style.animationDuration = duration + "s";
+      piece.style.animationDelay = delay + "s";
+
+      container.appendChild(piece);
+    }
+
+    setTimeout(() => container.remove(), 5000);
+  }
+
+  /* ========== INIT ========== */
+  function init() {
+    if (typeof renderMathInElement === "function") {
+      buildQuestions();
+    } else {
+      document.addEventListener("DOMContentLoaded", buildQuestions);
+      /* Fallback: wait for KaTeX auto-render */
+      const checkKatex = setInterval(() => {
+        if (typeof renderMathInElement === "function") {
+          clearInterval(checkKatex);
+          buildQuestions();
+        }
+      }, 100);
+    }
+  }
+
+  init();
+});
+</script>
+
+</body>
+</html>

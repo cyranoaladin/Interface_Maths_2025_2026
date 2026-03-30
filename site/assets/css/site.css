@@ -1345,3 +1345,9 @@ html[data-theme="light"] {
 }
 
 /* Fonts désactivées (évite 404 si WOFF2 non fournis). On s'appuie sur la pile système. */
+
+/* Accessibility overrides */
+@import url('https://fonts.googleapis.com/css2?family=OpenDyslexic&display=swap');
+body.a11y-dyslexia, body.a11y-dyslexia * { font-family: 'OpenDyslexic', sans-serif !important }
+body.a11y-contrast { --text: #ffffff; --bg: #000000; --bg2: #0a0a0a; --card: #1a1a1a; --muted: #cccccc; --border: #555555 }
+body.a11y-large { font-size: 120% }

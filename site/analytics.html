@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Analytics — Évaluation Second Degré</title>
+  <link rel="stylesheet" href="/assets/css/tokens.css" />
+  <link rel="stylesheet" href="/assets/css/site.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #11162a;
+      --card: #151b34;
+      --text: #eef2ff;
+      --muted: #a2b0d6;
+      --primary: #6aa6ff;
+      --accent: #22d3ee;
+      --border: #28314f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 16px 24px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .topbar a:hover { text-decoration: underline; }
+
+    .topbar h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn:hover {
+      border-color: var(--accent);
+      background: var(--bg2);
+    }
+
+    .btn.active {
+      border-color: var(--accent);
+      background: rgba(34, 211, 238, 0.1);
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Summary stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-card .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .stat-card .value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Chart grid */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .chart-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .btn-export {
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      border-radius: 6px;
+    }
+
+    .chart-wrap {
+      position: relative;
+      flex: 1;
+      min-height: 280px;
+    }
+
+    .chart-wrap canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .chart-analysis {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: var(--bg2);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .charts-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 500px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .container { padding: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="topbar">
+    <a href="/dashboard.html">&larr; Retour au tableau de bord</a>
+    <h1>Analytics — Évaluation Second Degré</h1>
+    <div class="topbar-actions">
+      <button class="btn" id="btnAnon" onclick="toggleAnonymous()">Mode anonyme</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Summary stats -->
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <!-- Charts 2x2 -->
+    <div class="charts-grid">
+      <!-- 1. Histogramme -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h2>Histogramme des notes</h2>
+          <button class="btn btn-export" onclick="exportChart('histChart')">Exporter PNG</button>
+        </div>
+        <div class="chart-wrap"><canvas id="histChart"></canvas></div>
+        <div class="chart-analysis" id="histAnalysis"></div>
+      </div>
+
+      <!-- 2. Radar -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h2>Radar des compétences</h2>
+          <button class="btn btn-export" onclick="exportChart('radarChart')">Exporter PNG</button>
+        </div>
+        <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
+        <div class="chart-analysis" id="radarAnalysis"></div>
+      </div>
+
+      <!-- 3. Doughnut -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h2>Répartition des mentions</h2>
+          <button class="btn btn-export" onclick="exportChart('doughnutChart')">Exporter PNG</button>
+        </div>
+        <div class="chart-wrap"><canvas id="doughnutChart"></canvas></div>
+        <div class="chart-analysis" id="doughnutAnalysis"></div>
+      </div>
+
+      <!-- 4. Scatter -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h2>Nuage de points — Notes individuelles</h2>
+          <button class="btn btn-export" onclick="exportChart('scatterChart')">Exporter PNG</button>
+        </div>
+        <div class="chart-wrap"><canvas id="scatterChart"></canvas></div>
+        <div class="chart-analysis" id="scatterAnalysis"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Demo data: 26 students ─────────────────────────────────────────
+    const STUDENTS = [
+      // 3 Excellent (16.5–19.5)
+      { nom_prenom: "MARTIN Léa",       note_finale: 19.5, ex: [6.0, 5.0, 4.5, 4.0] },
+      { nom_prenom: "BERNARD Hugo",     note_finale: 17.5, ex: [5.5, 4.5, 4.5, 3.0] },
+      { nom_prenom: "DUMONT Clara",     note_finale: 16.5, ex: [5.0, 4.5, 4.0, 3.0] },
+      // 3 Très Bien (14–15.5)
+      { nom_prenom: "PETIT Lucas",      note_finale: 15.5, ex: [5.0, 4.0, 3.5, 3.0] },
+      { nom_prenom: "ROBERT Emma",      note_finale: 14.5, ex: [4.5, 4.0, 3.5, 2.5] },
+      { nom_prenom: "MOREAU Nathan",    note_finale: 14.0, ex: [4.5, 3.5, 3.5, 2.5] },
+      // 4 Bien (12–13.5)
+      { nom_prenom: "LEROY Camille",    note_finale: 13.5, ex: [4.5, 3.5, 3.0, 2.5] },
+      { nom_prenom: "SIMON Mathis",     note_finale: 13.0, ex: [4.0, 3.5, 3.0, 2.5] },
+      { nom_prenom: "LAURENT Chloé",    note_finale: 12.5, ex: [4.0, 3.0, 3.0, 2.5] },
+      { nom_prenom: "LEFEBVRE Raphaël", note_finale: 12.0, ex: [4.0, 3.0, 3.0, 2.0] },
+      // 4 Assez Bien (10–11.5)
+      { nom_prenom: "GARCIA Inès",      note_finale: 11.5, ex: [3.5, 3.0, 3.0, 2.0] },
+      { nom_prenom: "FOURNIER Théo",    note_finale: 11.0, ex: [3.5, 3.0, 2.5, 2.0] },
+      { nom_prenom: "DUPONT Manon",     note_finale: 10.5, ex: [3.5, 2.5, 2.5, 2.0] },
+      { nom_prenom: "MOREL Antoine",    note_finale: 10.0, ex: [3.0, 2.5, 2.5, 2.0] },
+      // 4 Moyen (8–9.5)
+      { nom_prenom: "GIRARD Juliette",  note_finale: 9.5,  ex: [3.0, 2.5, 2.0, 2.0] },
+      { nom_prenom: "ANDRE Enzo",       note_finale: 9.0,  ex: [3.0, 2.0, 2.0, 2.0] },
+      { nom_prenom: "MERCIER Lina",     note_finale: 8.5,  ex: [2.5, 2.0, 2.0, 2.0] },
+      { nom_prenom: "BONNET Noé",       note_finale: 8.0,  ex: [2.5, 2.0, 2.0, 1.5] },
+      // 4 Insuffisant (6–7.5)
+      { nom_prenom: "LAMBERT Jade",     note_finale: 7.5,  ex: [2.5, 2.0, 1.5, 1.5] },
+      { nom_prenom: "FONTAINE Louis",   note_finale: 7.0,  ex: [2.0, 2.0, 1.5, 1.5] },
+      { nom_prenom: "ROUSSEAU Zoé",     note_finale: 6.5,  ex: [2.0, 1.5, 1.5, 1.5] },
+      { nom_prenom: "VINCENT Paul",     note_finale: 6.0,  ex: [2.0, 1.5, 1.5, 1.0] },
+      // 4 Très Insuffisant (3.5–5.5)
+      { nom_prenom: "MULLER Sarah",     note_finale: 5.5,  ex: [2.0, 1.5, 1.0, 1.0] },
+      { nom_prenom: "LEFEVRE Axel",     note_finale: 5.0,  ex: [1.5, 1.5, 1.0, 1.0] },
+      { nom_prenom: "FAURE Maëlys",     note_finale: 4.0,  ex: [1.5, 1.0, 1.0, 0.5] },
+      { nom_prenom: "CHEVALIER Rayan",  note_finale: 3.5,  ex: [1.0, 1.0, 1.0, 0.5] },
+    ];
+
+    const BAREMES = [6, 5, 5, 4];
+    const EX_LABELS = ["Ex. 1", "Ex. 2", "Ex. 3", "Ex. 4"];
+
+    // Compute mentions
+    function getMention(note) {
+      if (note >= 16) return "Excellent";
+      if (note >= 14) return "Très Bien";
+      if (note >= 12) return "Bien";
+      if (note >= 10) return "Assez Bien";
+      if (note >= 8)  return "Moyen";
+      if (note >= 6)  return "Insuffisant";
+      return "Très Insuffisant";
+    }
+    STUDENTS.forEach(s => { s.mention = getMention(s.note_finale); });
+
+    const MENTION_ORDER = ["Excellent", "Très Bien", "Bien", "Assez Bien", "Moyen", "Insuffisant", "Très Insuffisant"];
+    const MENTION_COLORS = {
+      "Excellent":         "#22c55e",
+      "Très Bien":         "#4ade80",
+      "Bien":              "#6aa6ff",
+      "Assez Bien":        "#a78bfa",
+      "Moyen":             "#fbbf24",
+      "Insuffisant":       "#f97316",
+      "Très Insuffisant":  "#ef4444",
+    };
+
+    let anonymous = false;
+    let charts = {};
+
+    // ── Stats ──────────────────────────────────────────────────────────
+    function computeStats(data) {
+      const notes = data.map(s => s.note_finale).sort((a, b) => a - b);
+      const n = notes.length;
+      const sum = notes.reduce((a, b) => a + b, 0);
+      const mean = sum / n;
+      const mid = n % 2 === 0 ? (notes[n / 2 - 1] + notes[n / 2]) / 2 : notes[Math.floor(n / 2)];
+      const variance = notes.reduce((acc, v) => acc + (v - mean) ** 2, 0) / n;
+      const std = Math.sqrt(variance);
+      return {
+        moyenne: mean.toFixed(2),
+        mediane: mid.toFixed(2),
+        ecartType: std.toFixed(2),
+        min: notes[0].toFixed(1),
+        max: notes[n - 1].toFixed(1),
+        effectif: n,
+      };
+    }
+
+    function renderStats() {
+      const s = computeStats(STUDENTS);
+      const items = [
+        { label: "Moyenne", value: s.moyenne },
+        { label: "Médiane", value: s.mediane },
+        { label: "Écart-type", value: s.ecartType },
+        { label: "Min", value: s.min },
+        { label: "Max", value: s.max },
+        { label: "Effectif", value: s.effectif },
+      ];
+      document.getElementById("statsGrid").innerHTML = items
+        .map(i => `<div class="stat-card"><div class="label">${i.label}</div><div class="value">${i.value}</div></div>`)
+        .join("");
+    }
+
+    // ── Chart.js dark defaults ─────────────────────────────────────────
+    Chart.defaults.color = "#a2b0d6";
+    Chart.defaults.borderColor = "#28314f";
+    Chart.defaults.plugins.legend.labels.color = "#eef2ff";
+    Chart.defaults.plugins.tooltip.backgroundColor = "#151b34";
+    Chart.defaults.plugins.tooltip.titleColor = "#eef2ff";
+    Chart.defaults.plugins.tooltip.bodyColor = "#a2b0d6";
+    Chart.defaults.plugins.tooltip.borderColor = "#28314f";
+    Chart.defaults.plugins.tooltip.borderWidth = 1;
+
+    // ── 1. Histogram ───────────────────────────────────────────────────
+    function buildHistogram() {
+      const bins = [0, 0, 0, 0, 0]; // [0-4[, [4-8[, [8-12[, [12-16[, [16-20]
+      const labels = ["[0–4[", "[4–8[", "[8–12[", "[12–16[", "[16–20]"];
+      const colors = ["#ef4444", "#f97316", "#fbbf24", "#6aa6ff", "#22c55e"];
+      STUDENTS.forEach(s => {
+        const n = s.note_finale;
+        if (n < 4) bins[0]++;
+        else if (n < 8) bins[1]++;
+        else if (n < 12) bins[2]++;
+        else if (n < 16) bins[3]++;
+        else bins[4]++;
+      });
+
+      const stats = computeStats(STUDENTS);
+      const avg = parseFloat(stats.moyenne);
+
+      const ctx = document.getElementById("histChart").getContext("2d");
+      charts.histChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels,
+          datasets: [{
+            label: "Nombre d'élèves",
+            data: bins,
+            backgroundColor: colors,
+            borderColor: colors.map(c => c),
+            borderWidth: 1,
+            borderRadius: 4,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            annotation: undefined,
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1, precision: 0 },
+              grid: { color: "#28314f" },
+            },
+            x: {
+              grid: { display: false },
+            },
+          },
+        },
+        plugins: [{
+          id: "avgLine",
+          afterDraw(chart) {
+            const { ctx: c, chartArea: { left, right, top, bottom }, scales: { x } } = chart;
+            // Map avg to pixel position on x axis
+            const range = 20;
+            const binWidth = (right - left) / 5;
+            const binIndex = avg < 4 ? 0 : avg < 8 ? 1 : avg < 12 ? 2 : avg < 16 ? 3 : 4;
+            const binStart = avg < 4 ? 0 : avg < 8 ? 4 : avg < 12 ? 8 : avg < 16 ? 12 : 16;
+            const binEnd = binStart + 4;
+            const frac = (avg - binStart) / (binEnd - binStart);
+            const px = left + binIndex * binWidth + frac * binWidth;
+
+            c.save();
+            c.setLineDash([6, 4]);
+            c.strokeStyle = "#22d3ee";
+            c.lineWidth = 2;
+            c.beginPath();
+            c.moveTo(px, top);
+            c.lineTo(px, bottom);
+            c.stroke();
+
+            c.setLineDash([]);
+            c.fillStyle = "#22d3ee";
+            c.font = "bold 11px Inter, sans-serif";
+            c.textAlign = "center";
+            c.fillText(`Moy. ${avg.toFixed(1)}`, px, top - 6);
+            c.restore();
+          },
+        }],
+      });
+
+      // Analysis
+      const maxBinIdx = bins.indexOf(Math.max(...bins));
+      document.getElementById("histAnalysis").textContent =
+        `La tranche ${labels[maxBinIdx]} concentre le plus grand nombre d'élèves (${bins[maxBinIdx]}/${STUDENTS.length}). Moyenne de la classe : ${avg.toFixed(1)}/20.`;
+    }
+
+    // ── 2. Radar ───────────────────────────────────────────────────────
+    function buildRadar() {
+      const avgPct = BAREMES.map((b, i) => {
+        const sum = STUDENTS.reduce((a, s) => a + s.ex[i], 0);
+        return ((sum / STUDENTS.length) / b * 100);
+      });
+
+      const ctx = document.getElementById("radarChart").getContext("2d");
+      charts.radarChart = new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: EX_LABELS.map((l, i) => `${l} (/${BAREMES[i]})`),
+          datasets: [{
+            label: "Taux de réussite moyen (%)",
+            data: avgPct,
+            backgroundColor: "rgba(106, 166, 255, 0.2)",
+            borderColor: "#6aa6ff",
+            pointBackgroundColor: "#6aa6ff",
+            pointBorderColor: "#eef2ff",
+            pointRadius: 5,
+            borderWidth: 2,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                stepSize: 20,
+                backdropColor: "transparent",
+                color: "#a2b0d6",
+              },
+              grid: { color: "#28314f" },
+              angleLines: { color: "#28314f" },
+              pointLabels: { color: "#eef2ff", font: { size: 12 } },
+            },
+          },
+          plugins: {
+            legend: { display: true, position: "bottom" },
+          },
+        },
+      });
+
+      // Analysis — find weakest exercise
+      const minIdx = avgPct.indexOf(Math.min(...avgPct));
+      const maxIdx = avgPct.indexOf(Math.max(...avgPct));
+      document.getElementById("radarAnalysis").textContent =
+        `L'exercice ${minIdx + 1} affiche le taux de réussite le plus faible (${avgPct[minIdx].toFixed(1)}%). Remédiation recommandée. L'exercice ${maxIdx + 1} est le mieux réussi (${avgPct[maxIdx].toFixed(1)}%).`;
+    }
+
+    // ── 3. Doughnut ────────────────────────────────────────────────────
+    function buildDoughnut() {
+      const counts = {};
+      MENTION_ORDER.forEach(m => { counts[m] = 0; });
+      STUDENTS.forEach(s => { counts[s.mention]++; });
+      const data = MENTION_ORDER.map(m => counts[m]);
+      const colors = MENTION_ORDER.map(m => MENTION_COLORS[m]);
+
+      const ctx = document.getElementById("doughnutChart").getContext("2d");
+      charts.doughnutChart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: MENTION_ORDER,
+          datasets: [{
+            data,
+            backgroundColor: colors,
+            borderColor: "#151b34",
+            borderWidth: 3,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "55%",
+          plugins: {
+            legend: {
+              position: "right",
+              labels: { padding: 12, usePointStyle: true, pointStyleWidth: 12 },
+            },
+          },
+        },
+        plugins: [{
+          id: "centerText",
+          afterDraw(chart) {
+            const { ctx: c, chartArea: { left, right, top, bottom } } = chart;
+            const cx = (left + right) / 2;
+            const cy = (top + bottom) / 2;
+            c.save();
+            c.textAlign = "center";
+            c.textBaseline = "middle";
+            c.fillStyle = "#eef2ff";
+            c.font = "bold 28px Inter, sans-serif";
+            c.fillText(STUDENTS.length, cx, cy - 10);
+            c.font = "12px Inter, sans-serif";
+            c.fillStyle = "#a2b0d6";
+            c.fillText("élèves", cx, cy + 14);
+            c.restore();
+          },
+        }],
+      });
+
+      // Analysis
+      const aboveTen = STUDENTS.filter(s => s.note_finale >= 10).length;
+      const pct = ((aboveTen / STUDENTS.length) * 100).toFixed(0);
+      document.getElementById("doughnutAnalysis").textContent =
+        `${aboveTen} élèves sur ${STUDENTS.length} (${pct}%) ont obtenu la moyenne ou plus. ${counts["Très Insuffisant"]} élèves sont en grande difficulté (< 6/20).`;
+    }
+
+    // ── 4. Scatter ─────────────────────────────────────────────────────
+    function buildScatter() {
+      // Group by mention for coloring
+      const datasets = MENTION_ORDER.map(mention => {
+        const pts = STUDENTS
+          .map((s, i) => ({ ...s, idx: i }))
+          .filter(s => s.mention === mention)
+          .map(s => ({
+            x: s.idx + 1,
+            y: s.note_finale,
+            label: anonymous ? `Élève ${s.idx + 1}` : s.nom_prenom,
+          }));
+        return {
+          label: mention,
+          data: pts,
+          backgroundColor: MENTION_COLORS[mention],
+          borderColor: MENTION_COLORS[mention],
+          pointRadius: 6,
+          pointHoverRadius: 9,
+        };
+      }).filter(ds => ds.data.length > 0);
+
+      const ctx = document.getElementById("scatterChart").getContext("2d");
+      charts.scatterChart = new Chart(ctx, {
+        type: "scatter",
+        data: { datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: { display: true, text: "Élève (rang)", color: "#a2b0d6" },
+              grid: { color: "#28314f" },
+              ticks: { stepSize: 1 },
+            },
+            y: {
+              title: { display: true, text: "Note /20", color: "#a2b0d6" },
+              min: 0,
+              max: 20,
+              grid: { color: "#28314f" },
+            },
+          },
+          plugins: {
+            legend: { position: "bottom", labels: { usePointStyle: true, pointStyleWidth: 10 } },
+            tooltip: {
+              callbacks: {
+                label(ctx) {
+                  const pt = ctx.raw;
+                  return `${pt.label} — ${pt.y}/20`;
+                },
+              },
+            },
+          },
+        },
+      });
+
+      // Analysis
+      const stats = computeStats(STUDENTS);
+      const std = parseFloat(stats.ecartType);
+      const dispersion = std > 4.5 ? "très dispersées" : std > 3 ? "assez dispersées" : "relativement groupées";
+      document.getElementById("scatterAnalysis").textContent =
+        `Les notes sont ${dispersion} (écart-type : ${stats.ecartType}). L'écart entre la meilleure et la moins bonne note est de ${(parseFloat(stats.max) - parseFloat(stats.min)).toFixed(1)} points.`;
+    }
+
+    // ── Toggle anonymous ───────────────────────────────────────────────
+    function toggleAnonymous() {
+      anonymous = !anonymous;
+      const btn = document.getElementById("btnAnon");
+      btn.classList.toggle("active", anonymous);
+      btn.textContent = anonymous ? "Mode nominatif" : "Mode anonyme";
+      // Rebuild scatter with updated labels
+      charts.scatterChart.destroy();
+      buildScatter();
+    }
+
+    // ── Export PNG ──────────────────────────────────────────────────────
+    function exportChart(chartId) {
+      const canvas = document.getElementById(chartId);
+      const link = document.createElement("a");
+      link.download = `${chartId}_analytics.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    // ── Init ───────────────────────────────────────────────────────────
+    document.addEventListener("DOMContentLoaded", () => {
+      renderStats();
+      buildHistogram();
+      buildRadar();
+      buildDoughnut();
+      buildScatter();
+    });
+  </script>
+</body>
+
+</html>

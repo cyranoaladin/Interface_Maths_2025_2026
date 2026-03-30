@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Labo Interactif — Second Degré</title>
+  <link rel="stylesheet" href="/assets/css/tokens.css"/>
+  <link rel="stylesheet" href="/assets/css/site.css"/>
+  <link rel="stylesheet" href="/assets/css/main.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <style>
+    :root { --bg:#0b1020; --bg2:#11162a; --card:#151b34; --text:#eef2ff; --muted:#a2b0d6;
+      --primary:#6aa6ff; --accent:#22d3ee; --border:#28314f; --good:#22c55e; --bad:#ef4444; --warning:#f59e0b }
+    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui, sans-serif }
+    .container { max-width:1200px; margin:0 auto; padding:24px 18px }
+    h1 { font-size:1.8rem; margin-bottom:4px }
+    .subtitle { color:var(--muted); margin-bottom:24px }
+    .lab-grid { display:grid; grid-template-columns:1fr 380px; gap:24px; align-items:start }
+    @media(max-width:900px) { .lab-grid { grid-template-columns:1fr } }
+    .board-wrap { background:var(--card); border-radius:16px; padding:16px; border:1px solid var(--border) }
+    #jsxbox { width:100%; aspect-ratio:4/3 }
+    .panel { background:var(--card); border-radius:16px; padding:20px; border:1px solid var(--border) }
+    .panel h2 { font-size:1.1rem; margin:0 0 16px; color:var(--accent) }
+    .slider-row { display:flex; align-items:center; gap:12px; margin-bottom:14px }
+    .slider-row label { min-width:24px; font-weight:700; font-size:1.1rem; color:var(--primary) }
+    .slider-row input[type=range] { flex:1; accent-color:var(--accent) }
+    .slider-row .val { min-width:48px; text-align:right; font-family:monospace; font-size:1rem }
+    .info-card { background:var(--bg2); border-radius:12px; padding:14px 16px; margin-top:12px;
+      border-left:4px solid var(--accent); font-size:.95rem; line-height:1.7 }
+    .info-card .label { color:var(--muted); font-size:.8rem; text-transform:uppercase; letter-spacing:.05em }
+    .info-card .math { font-size:1.05rem; margin:4px 0 }
+    .delta-positive { color:var(--good) }
+    .delta-zero { color:var(--warning) }
+    .delta-negative { color:var(--bad) }
+    .badge-status { display:inline-block; padding:3px 10px; border-radius:20px; font-size:.8rem; font-weight:600 }
+    .badge-status.pos { background:rgba(34,197,94,.15); color:var(--good) }
+    .badge-status.zero { background:rgba(245,158,11,.15); color:var(--warning) }
+    .badge-status.neg { background:rgba(239,68,68,.15); color:var(--bad) }
+    .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--accent);
+      text-decoration:none; margin-bottom:16px; font-size:.9rem }
+    .back-link:hover { text-decoration:underline }
+    .katex { font-size:1.1em !important }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back-link" href="/EDS_premiere/Second_Degre/cours_second_degre.html">&#8592; Retour au cours</a>
+    <h1>Labo Interactif — Fonctions du second degré</h1>
+    <p class="subtitle">Manipule les paramètres a, b, c et observe en temps réel la parabole, le discriminant, les racines et la forme canonique.</p>
+
+    <div class="lab-grid">
+      <div class="board-wrap">
+        <div id="jsxbox"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Paramètres</h2>
+        <div class="slider-row">
+          <label>a</label>
+          <input type="range" id="sl-a" min="-5" max="5" step="0.1" value="1"/>
+          <span class="val" id="v-a">1.0</span>
+        </div>
+        <div class="slider-row">
+          <label>b</label>
+          <input type="range" id="sl-b" min="-10" max="10" step="0.1" value="-2"/>
+          <span class="val" id="v-b">-2.0</span>
+        </div>
+        <div class="slider-row">
+          <label>c</label>
+          <input type="range" id="sl-c" min="-10" max="10" step="0.1" value="-3"/>
+          <span class="val" id="v-c">-3.0</span>
+        </div>
+
+        <div class="info-card" id="info-expression">
+          <div class="label">Expression</div>
+          <div class="math" id="katex-expr"></div>
+        </div>
+        <div class="info-card" id="info-delta">
+          <div class="label">Discriminant</div>
+          <div class="math" id="katex-delta"></div>
+        </div>
+        <div class="info-card" id="info-canonical">
+          <div class="label">Forme canonique</div>
+          <div class="math" id="katex-canonical"></div>
+        </div>
+        <div class="info-card" id="info-roots">
+          <div class="label">Racines</div>
+          <div class="math" id="katex-roots"></div>
+        </div>
+        <div class="info-card" id="info-sommet">
+          <div class="label">Sommet</div>
+          <div class="math" id="katex-sommet"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    const board = JXG.JSXGraph.initBoard('jsxbox', {
+      boundingbox: [-8, 12, 8, -8], axis: true, keepaspectratio: false,
+      showNavigation: false, showCopyright: false,
+      defaultAxes: {
+        x: { ticks: { minorTicks: 0, majorHeight: 8, strokeColor: '#28314f', label: { fontSize: 12, cssStyle:'color:#a2b0d6' } } },
+        y: { ticks: { minorTicks: 0, majorHeight: 8, strokeColor: '#28314f', label: { fontSize: 12, cssStyle:'color:#a2b0d6' } } }
+      },
+      renderer: 'svg'
+    });
+    board.defaultAxes.x.setAttribute({ strokeColor: '#28314f' });
+    board.defaultAxes.y.setAttribute({ strokeColor: '#28314f' });
+
+    let a = 1, b = -2, c = -3;
+    const f = (x) => a * x * x + b * x + c;
+
+    const curve = board.create('functiongraph', [f], {
+      strokeColor: '#6aa6ff', strokeWidth: 3, highlight: false
+    });
+
+    const sommet = board.create('point', [() => -b/(2*a), () => f(-b/(2*a))], {
+      name: 'S', size: 5, fillColor: '#22d3ee', strokeColor: '#22d3ee',
+      fixed: true, label: { fontSize: 14, color: '#22d3ee', offset: [8, 12] }
+    });
+
+    const axeSym = board.create('line', [() => [(-b)/(2*a), 0], () => [(-b)/(2*a), 1]], {
+      strokeColor: '#22d3ee', strokeWidth: 1, dash: 2, straightFirst: true, straightLast: true,
+      fixed: true, highlight: false, point1: { visible: false }, point2: { visible: false }
+    });
+
+    const root1 = board.create('point', [
+      () => { const d = b*b - 4*a*c; return d >= 0 && a !== 0 ? (-b - Math.sqrt(d))/(2*a) : NaN; },
+      () => 0
+    ], { name: 'x\u2081', size: 5, fillColor: '#22c55e', strokeColor: '#22c55e', fixed: true,
+      label: { fontSize: 13, color: '#22c55e', offset: [-10, -18] } });
+
+    const root2 = board.create('point', [
+      () => { const d = b*b - 4*a*c; return d > 0 && a !== 0 ? (-b + Math.sqrt(d))/(2*a) : NaN; },
+      () => 0
+    ], { name: 'x\u2082', size: 5, fillColor: '#22c55e', strokeColor: '#22c55e', fixed: true,
+      label: { fontSize: 13, color: '#22c55e', offset: [8, -18] } });
+
+    const fillPos = board.create('inequality', [curve], {
+      fillColor: 'rgba(106,166,255,0.08)', fillOpacity: 0.6, strokeWidth: 0,
+      inverse: () => a < 0
+    });
+
+    function fmt(v) { return Number.isInteger(v) ? String(v) : v.toFixed(2).replace(/0+$/,'').replace(/\.$/,''); }
+
+    function renderKaTeX(id, tex) {
+      try { katex.render(tex, document.getElementById(id), { displayMode: false, throwOnError: false }); }
+      catch(e) { document.getElementById(id).textContent = tex; }
+    }
+
+    function update() {
+      a = parseFloat(document.getElementById('sl-a').value);
+      b = parseFloat(document.getElementById('sl-b').value);
+      c = parseFloat(document.getElementById('sl-c').value);
+      document.getElementById('v-a').textContent = a.toFixed(1);
+      document.getElementById('v-b').textContent = b.toFixed(1);
+      document.getElementById('v-c').textContent = c.toFixed(1);
+
+      if (a === 0) {
+        renderKaTeX('katex-expr', 'f(x) = ' + fmt(b) + 'x + ' + fmt(c));
+        renderKaTeX('katex-delta', '\\text{a = 0 : pas un trinôme}');
+        renderKaTeX('katex-canonical', '-');
+        renderKaTeX('katex-roots', b !== 0 ? 'x = ' + fmt(-c/b) : '\\text{pas de variable}');
+        renderKaTeX('katex-sommet', '-');
+        board.update();
+        return;
+      }
+
+      const delta = b * b - 4 * a * c;
+      const alpha = -b / (2 * a);
+      const beta = f(alpha);
+
+      const bSign = b >= 0 ? '+' : '';
+      const cSign = c >= 0 ? '+' : '';
+      renderKaTeX('katex-expr', 'f(x) = ' + fmt(a) + 'x^2 ' + bSign + ' ' + fmt(b) + 'x ' + cSign + ' ' + fmt(c));
+
+      const deltaEl = document.getElementById('info-delta');
+      deltaEl.className = 'info-card';
+      let statusClass = '', statusText = '';
+      if (delta > 0) { statusClass = 'pos'; statusText = '2 racines réelles'; }
+      else if (delta === 0) { statusClass = 'zero'; statusText = '1 racine double'; }
+      else { statusClass = 'neg'; statusText = 'Pas de racine réelle'; }
+      document.getElementById('katex-delta').innerHTML = '';
+      renderKaTeX('katex-delta', '\\Delta = ' + fmt(b) + '^2 - 4 \\times ' + fmt(a) + ' \\times ' + fmt(c) + ' = ' + fmt(delta));
+      document.getElementById('katex-delta').innerHTML += ' <span class="badge-status ' + statusClass + '">' + statusText + '</span>';
+
+      const betaSign = beta >= 0 ? '+' : '';
+      renderKaTeX('katex-canonical', 'f(x) = ' + fmt(a) + '\\left(x ' + (alpha >= 0 ? '-' : '+') + ' ' + fmt(Math.abs(alpha)) + '\\right)^2 ' + betaSign + ' ' + fmt(beta));
+
+      if (delta > 0) {
+        const x1 = (-b - Math.sqrt(delta)) / (2 * a);
+        const x2 = (-b + Math.sqrt(delta)) / (2 * a);
+        renderKaTeX('katex-roots', 'x_1 = ' + fmt(x1) + ' \\quad ; \\quad x_2 = ' + fmt(x2));
+      } else if (delta === 0) {
+        renderKaTeX('katex-roots', 'x_0 = ' + fmt(alpha) + ' \\text{ (racine double)}');
+      } else {
+        renderKaTeX('katex-roots', '\\text{Pas de racine réelle} \\; (\\Delta < 0)');
+      }
+
+      renderKaTeX('katex-sommet', 'S\\left(' + fmt(alpha) + ' \\,;\\, ' + fmt(beta) + '\\right) \\quad \\text{— ' + (a > 0 ? 'minimum' : 'maximum') + '}');
+
+      board.update();
+    }
+
+    document.getElementById('sl-a').addEventListener('input', update);
+    document.getElementById('sl-b').addEventListener('input', update);
+    document.getElementById('sl-c').addEventListener('input', update);
+    update();
+  })();
+  </script>
+</body>
+</html>

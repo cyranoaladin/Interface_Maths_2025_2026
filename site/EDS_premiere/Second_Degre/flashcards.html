@@ -604,6 +604,10 @@
       sumGood.textContent = good;
       sumBad.textContent  = bad;
 
+      if (window.mathsGamification) {
+        window.mathsGamification.recordFlashcards(good, cards.length);
+      }
+
       stage.style.display   = 'none';
       summary.classList.add('visible');
 
@@ -694,5 +698,7 @@
     showCard();
   });
   </script>
+  <script src="/assets/js/gamification.js"></script>
+  <script src="/assets/js/accessibility.js"></script>
 </body>
 </html>

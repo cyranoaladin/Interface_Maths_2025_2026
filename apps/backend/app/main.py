@@ -36,9 +36,6 @@ async def lifespan(app: FastAPI):
         raise RuntimeError("SECRET_KEY is required when APP_ENV=production")
     if "*" in config.settings.CORS_ORIGINS and config.settings.CORS_ORIGINS:
         raise RuntimeError("CORS_ORIGINS='*' with credentials is a security risk")
-    if False:
-        raise RuntimeError("SECRET_KEY is required when APP_ENV=production")
-
     with suppress(Exception):
         db.Base.metadata.create_all(bind=db.engine)
 

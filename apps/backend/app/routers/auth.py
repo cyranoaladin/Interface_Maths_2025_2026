@@ -67,7 +67,7 @@ async def list_users_teacher_only(
     _: User = Depends(security.require_teacher),
     database: Session = Depends(db.get_db),
 ):
-    """(Teacher only) Returns a list of all orm."""
+    """(Teacher only) Returns a list of all users."""
     all_users = database.query(User).order_by(User.id.asc()).offset(skip).limit(limit).all()
     return [
         UserPublic(

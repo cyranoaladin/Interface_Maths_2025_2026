@@ -1,6 +1,6 @@
 const API_BASE = "/"; // same origin; backend should be served under same host or proxied
 
-function withBase(path) {
+export function withBase(path) {
   const base = location.pathname.startsWith('/content/') ? '/content' : '';
   return base + path;
 }
@@ -57,22 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         location.href = withBase('/dashboard.html');
       } catch (err) {
-        // Fallback DEV: try login/dev when TESTING=1 on server
-        try {
-          const res2 = await fetch('/api/v1/login/dev', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-          });
-          if (res2.ok) {
-            const data2 = await res2.json();
-            saveToken(data2.access_token || '');
-            location.href = withBase('/dashboard.html');
-            return;
-          }
-        } catch (_) {}
         const out = document.getElementById('login-msg');
-        if (out) out.textContent = 'Identifiants invalides';
+        if (out) out.textContent = err.message || 'Identifiants invalides';
       }
     });
   }

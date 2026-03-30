@@ -563,6 +563,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function showFinal() {
+    if (window.mathsGamification) {
+      window.mathsGamification.recordQCM('second_degre', score, questions.length);
+    }
     const { mention, msg } = getMention(score);
     const finalEl = document.getElementById("finalScreen");
     finalEl.style.display = "";
@@ -652,5 +655,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<script src="/assets/js/gamification.js"></script>
+<script src="/assets/js/accessibility.js"></script>
 </body>
 </html>

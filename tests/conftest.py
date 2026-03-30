@@ -3,6 +3,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import os
+os.environ.setdefault("TESTING", "1")
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine

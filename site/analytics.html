@@ -253,8 +253,8 @@
   </div>
 
   <script>
-    // ── Demo data: 26 students ─────────────────────────────────────────
-    const STUDENTS = [
+    // ── Demo data (fallback): 26 students ──────────────────────────────
+    const DEMO_STUDENTS = [
       // 3 Excellent (16.5–19.5)
       { nom_prenom: "MARTIN Léa",       note_finale: 19.5, ex: [6.0, 5.0, 4.5, 4.0] },
       { nom_prenom: "BERNARD Hugo",     note_finale: 17.5, ex: [5.5, 4.5, 4.5, 3.0] },
@@ -290,8 +290,10 @@
       { nom_prenom: "CHEVALIER Rayan",  note_finale: 3.5,  ex: [1.0, 1.0, 1.0, 0.5] },
     ];
 
-    const BAREMES = [6, 5, 5, 4];
-    const EX_LABELS = ["Ex. 1", "Ex. 2", "Ex. 3", "Ex. 4"];
+    // Will be populated by loadStudents() — either from JSON or demo fallback
+    let STUDENTS = [];
+    let BAREMES = [6, 5, 5, 4];
+    let EX_LABELS = ["Ex. 1", "Ex. 2", "Ex. 3", "Ex. 4"];
 
     // Compute mentions
     function getMention(note) {
@@ -303,7 +305,61 @@
       if (note >= 6)  return "Insuffisant";
       return "Très Insuffisant";
     }
-    STUDENTS.forEach(s => { s.mention = getMention(s.note_finale); });
+
+    /**
+     * Map JSON bilan data to the internal chart format.
+     * JSON format: { nom_prenom, note_finale, mention, recapitulatif_exercices: [{exercice, bareme, note, commentaire}] }
+     * Internal format: { nom_prenom, note_finale, mention, ex: [note1, note2, ...] }
+     */
+    function mapJsonToInternal(jsonData) {
+      // Derive baremes and labels from the first student that has exercises
+      const ref = jsonData.find(s => s.recapitulatif_exercices && s.recapitulatif_exercices.length > 0);
+      if (ref) {
+        BAREMES = ref.recapitulatif_exercices.map(e => e.bareme);
+        EX_LABELS = ref.recapitulatif_exercices.map(e => e.exercice);
+      }
+
+      return jsonData.map(s => ({
+        nom_prenom: s.nom_prenom,
+        note_finale: s.note_finale,
+        mention: s.mention || getMention(s.note_finale),
+        ex: (s.recapitulatif_exercices || []).map(e => e.note),
+      }));
+    }
+
+    /**
+     * Check if fetched data has enough variety to be useful:
+     * more than 3 students AND at least 2 distinct note_finale values.
+     */
+    function isDataViable(data) {
+      if (!Array.isArray(data) || data.length <= 3) return false;
+      const uniqueGrades = new Set(data.map(s => s.note_finale));
+      return uniqueGrades.size >= 2;
+    }
+
+    /**
+     * Try to fetch real bilan JSON; fall back to DEMO_STUDENTS.
+     */
+    async function loadStudents() {
+      try {
+        const resp = await fetch("/EDS_premiere/Second_Degre/bilans_eval1_second_degre.json");
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const json = await resp.json();
+        if (isDataViable(json)) {
+          STUDENTS = mapJsonToInternal(json);
+          console.log(`[analytics] Loaded ${STUDENTS.length} students from JSON`);
+          return;
+        }
+        console.warn("[analytics] JSON data not viable (<=3 students or no grade variety), using demo data");
+      } catch (err) {
+        console.warn("[analytics] Fetch failed, using demo data:", err.message);
+      }
+      // Fallback to demo data
+      STUDENTS = DEMO_STUDENTS.map(s => ({ ...s }));
+      BAREMES = [6, 5, 5, 4];
+      EX_LABELS = ["Ex. 1", "Ex. 2", "Ex. 3", "Ex. 4"];
+      STUDENTS.forEach(s => { s.mention = getMention(s.note_finale); });
+    }
 
     const MENTION_ORDER = ["Excellent", "Très Bien", "Bien", "Assez Bien", "Moyen", "Insuffisant", "Très Insuffisant"];
     const MENTION_COLORS = {
@@ -646,7 +702,8 @@
     }
 
     // ── Init ───────────────────────────────────────────────────────────
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadStudents();
       renderStats();
       buildHistogram();
       buildRadar();
@@ -654,6 +711,7 @@
       buildScatter();
     });
   </script>
+  <script src="/assets/js/accessibility.js"></script>
 </body>
 
 </html>

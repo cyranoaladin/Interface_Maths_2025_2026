@@ -1,6 +1,5 @@
-import { fetchWithAuth } from './auth.js';
+import { fetchWithAuth, withBase } from './auth.js';
 import { findStudentBilan, renderBilan, escapeHtml, canonicalizeName } from './bilans.js';
-function withBase(path) { return (location.pathname.startsWith('/content/') ? '/content' : '') + path; }
 let lastGroup = null;
 
 async function init() {

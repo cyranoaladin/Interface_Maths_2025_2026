@@ -1,7 +1,6 @@
-import { clearToken, fetchWithAuth } from './auth.js';
+import { clearToken, fetchWithAuth, withBase } from './auth.js';
 import { findStudentBilan, renderBilan, escapeHtml, canonicalizeName } from './bilans.js';
 
-function withBase(path) { return (location.pathname.startsWith('/content/') ? '/content' : '') + path; }
 
 let currentUser = null;
 
@@ -78,15 +77,30 @@ async function init() {
     `);
   });
 
-  // Changer mot de passe
-  document.getElementById('change-pw-btn')?.addEventListener('click', async () => {
-    const pwd = prompt('Nouveau mot de passe (8+ caractères)');
-    if (!pwd || pwd.length < 8) { alert('Mot de passe trop court'); return; }
-    try {
-      const res = await fetchWithAuth('/api/v1/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: pwd }) });
-      if (!res.ok) throw new Error('Erreur');
-      alert('Mot de passe mis à jour.');
-    } catch { alert('Échec de mise à jour.'); }
+  // Changer mot de passe (panel in-page, pas de prompt)
+  document.getElementById('change-pw-btn')?.addEventListener('click', () => {
+    setPanel('Changer le mot de passe', `
+      <div style="max-width:400px">
+        <label for="new-pw-1">Nouveau mot de passe (8+ caractères)</label>
+        <input id="new-pw-1" class="input" type="password" placeholder="Nouveau mot de passe" style="width:100%;margin:6px 0" />
+        <label for="new-pw-2">Confirmer le mot de passe</label>
+        <input id="new-pw-2" class="input" type="password" placeholder="Confirmer" style="width:100%;margin:6px 0" />
+        <div id="pw-feedback" style="min-height:24px;margin:6px 0;font-size:.9rem"></div>
+        <button id="do-pw-change" class="btn" style="margin-top:6px">Valider</button>
+      </div>
+    `);
+    document.getElementById('do-pw-change')?.addEventListener('click', async () => {
+      const p1 = document.getElementById('new-pw-1')?.value || '';
+      const p2 = document.getElementById('new-pw-2')?.value || '';
+      const fb = document.getElementById('pw-feedback');
+      if (p1.length < 8) { if (fb) fb.textContent = 'Mot de passe trop court (8 caractères minimum)'; return; }
+      if (p1 !== p2) { if (fb) fb.textContent = 'Les mots de passe ne correspondent pas'; return; }
+      try {
+        const res = await fetchWithAuth('/api/v1/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: p1 }) });
+        if (!res.ok) throw new Error('Erreur');
+        setPanel('Mot de passe', '<p style="color:#22c55e">Mot de passe mis à jour avec succès.</p>');
+      } catch { if (fb) fb.textContent = 'Échec de mise à jour.'; }
+    });
   });
 
   document.getElementById('logout-btn')?.addEventListener('click', () => { clearToken(); location.href = withBase('/index.html'); });

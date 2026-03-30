@@ -13,8 +13,17 @@ from starlette.responses import RedirectResponse
 
 from ..db import get_db
 from ..orm import User, UserPublic
-from ..security import create_access_token, get_password_hash, get_secret_key
+from ..config import settings as app_settings
+from ..security import create_access_token, get_password_hash, get_secret_key, verify_password
 from ..services_auth import authenticate_user
+
+
+def _is_first_login(user) -> bool:
+    """Check if student still has the default password."""
+    default_pw = app_settings.DEFAULT_STUDENT_PASSWORD
+    if not default_pw or user.role != "student":
+        return False
+    return verify_password(default_pw, user.hashed_password)
 
 
 router = APIRouter(tags=["compat"])
@@ -32,6 +41,9 @@ async def compat_login(
     JSON-based login (for programmatic clients or future frontend).
     Sets an auth_token cookie.
     """
+    content_type = request.headers.get("content-type", "")
+    if "application/json" not in content_type:
+        raise HTTPException(status_code=415, detail="Content-Type must be application/json")
     user_req = await request.json()
     if not user_req or "email" not in user_req or "password" not in user_req:
         raise HTTPException(status_code=400, detail="Missing email or password")
@@ -46,12 +58,12 @@ async def compat_login(
     response.set_cookie(
         key="auth_token",
         value=token,
-        httponly=False,  # Needs to be read by JS temporarily
+        httponly=True,
         samesite="lax",
         max_age=3600 * 24
     )
     
-    return {"access_token": token, "first_login": user.first_login if hasattr(user, "first_login") else False}
+    return {"access_token": token, "first_login": _is_first_login(user)}
 
 
 @router.post("/api/v1/login-form")
@@ -82,12 +94,12 @@ async def compat_login_form(
     response.set_cookie(
         key="auth_token",
         value=token,
-        httponly=False,
+        httponly=True,
         samesite="lax",
         max_age=3600 * 24
     )
     
-    return {"access_token": token, "first_login": user.first_login if hasattr(user, "first_login") else False}
+    return {"access_token": token, "first_login": _is_first_login(user)}
 
 
 @router.post("/api/v1/login/dev")
@@ -116,7 +128,7 @@ async def compat_login_dev(
     response.set_cookie(
         key="auth_token",
         value=token,
-        httponly=False,
+        httponly=True,
         samesite="lax",
         max_age=3600 * 24
     )

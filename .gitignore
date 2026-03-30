@@ -28,6 +28,7 @@ deploy/**/.env*
 apps/backend/outputs/
 test-results/
 .lighthouseci/
+lhci-reports/
 
 # Backups & temporaries
 *.bak

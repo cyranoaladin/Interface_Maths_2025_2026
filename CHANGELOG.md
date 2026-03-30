@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.1...v1.16.2) (2026-03-30)
+
+
+### Bug Fixes
+
+* **tests:** use absolute imports in test_exhaustive.py for CI compatibility ([e22ede2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/e22ede217d80bc73d65ae99ce5520cb0c751c086))
+
 ## [1.16.1](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.0...v1.16.1) (2026-03-30)
 
 

@@ -1,3 +1,10 @@
+## [1.16.3](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.2...v1.16.3) (2026-03-30)
+
+
+### Bug Fixes
+
+* **ci:** resolve Playwright port conflict and Lighthouse artifact path ([3aef427](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/3aef4272e8672acae7200de5a5d99489ed39ad5e))
+
 ## [1.16.2](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.1...v1.16.2) (2026-03-30)
 
 

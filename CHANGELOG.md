@@ -1,3 +1,10 @@
+## [1.16.6](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.5...v1.16.6) (2026-03-30)
+
+
+### Bug Fixes
+
+* resolve remaining audit items — C-05, C-09, C-11, M-03, M-06 ([19804a7](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/19804a70545d44bb6df65a208d2b01c115bf9511))
+
 ## [1.16.5](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.4...v1.16.5) (2026-03-30)
 
 

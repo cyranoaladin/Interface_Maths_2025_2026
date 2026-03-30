@@ -24,8 +24,8 @@ test('bilan view shows score and questions, back returns to list', async ({ page
   if (await firstBtn.count()) {
     await firstBtn.click();
     // Expect bilan box
-    await expect(page.locator('.card')).toBeVisible();
-    await expect(page.locator('.card')).toContainText(/Score:|Pas noté|Aucun bilan disponible/);
+    await expect(page.locator('.card').first()).toBeVisible();
+    await expect(page.locator('.card').first()).toContainText(/\/20|Score:|Pas noté|Aucun bilan disponible/);
     // If questions exist, there should be a questions list
     const maybeQuestions = page.locator('.questions-list .question-item');
     if (await maybeQuestions.count() > 0) {

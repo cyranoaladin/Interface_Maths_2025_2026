@@ -1,3 +1,15 @@
+## [1.17.0](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.6...v1.17.0) (2026-03-30)
+
+
+### Features
+
+* improve student routing and add evaluations endpoint (12.1, 12.3) ([9811453](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/98114530625dd2b25b3d9c324a0ccd127140e492))
+
+
+### Bug Fixes
+
+* fix ping endpoint priority and tests ([a2b6239](https://github.com/cyranoaladin/Interface_Maths_2025_2026/commit/a2b623976fca6dbf4f02c8079475140b1574689c))
+
 ## [1.16.6](https://github.com/cyranoaladin/Interface_Maths_2025_2026/compare/v1.16.5...v1.16.6) (2026-03-30)
 
 

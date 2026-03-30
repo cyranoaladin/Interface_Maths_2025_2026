@@ -4,7 +4,7 @@ import os
 from typing import List, Union
 
 from .config import settings
-from .models import DirNode, FileNode
+from .schemas_tree import DirNode, FileNode
 
 
 def _is_hidden(name: str) -> bool:

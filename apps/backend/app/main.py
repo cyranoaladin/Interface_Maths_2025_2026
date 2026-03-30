@@ -17,7 +17,7 @@ from sqlalchemy.orm import Session
 from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
 
-from . import config, db, models, tree, users
+from . import config, db, schemas_tree, tree, orm
 from .routers import auth, compat, groups, testing
 
 app = FastAPI(title="Maths Portal API")
@@ -141,9 +141,9 @@ async def on_startup_create_schema_and_bootstrap():
                 ("MX-1", "Maths expertes — Groupe 1"),
             ]
             for code, name in defaults:
-                g = session.query(users.Group).filter_by(code=code).one_or_none()
+                g = session.query(orm.Group).filter_by(code=code).one_or_none()
                 if not g:
-                    session.add(users.Group(code=code, name=name))
+                    session.add(orm.Group(code=code, name=name))
             session.commit()
 
     # Ensure favicon exists at site root to avoid 404 from StaticFiles mounts
@@ -157,7 +157,7 @@ async def on_startup_create_schema_and_bootstrap():
 
 
 @lru_cache(maxsize=1)
-def get_full_tree_cached() -> models.DirNode:
+def get_full_tree_cached() -> schemas_tree.DirNode:
     """Returns a cached directory tree of the content root."""
     content_root_str = str(config.settings.CONTENT_ROOT)
     if not Path(content_root_str).is_dir():
@@ -185,7 +185,7 @@ def api_version():
     }
 
 
-@app.get("/api/tree", response_model=models.DirNode)
+@app.get("/api/tree", response_model=schemas_tree.DirNode)
 async def api_tree():
     """Returns the full directory tree."""
     try:
@@ -194,7 +194,7 @@ async def api_tree():
         raise HTTPException(status_code=500, detail=str(e)) from e
 
 
-@app.get("/api/tree/{subpath:path}", response_model=models.DirNode)
+@app.get("/api/tree/{subpath:path}", response_model=schemas_tree.DirNode)
 async def api_subtree(subpath: str):
     """Returns a subtree for a given subpath."""
     safe_subpath = Path(subpath).as_posix().lstrip("/")  # normalize

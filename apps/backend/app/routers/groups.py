@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..db import get_db
-from ..users import User, Group, GroupPublic, UserPublic
+from ..orm import User, Group, GroupPublic, UserPublic
 from ..security import require_teacher, get_current_user
 
 
@@ -52,7 +52,7 @@ async def my_groups(me: User = Depends(get_current_user), db: Session = Depends(
 
 @router.post("/{code}/seed-test", response_model=UserPublic)
 async def seed_test_student(code: str, _: User = Depends(require_teacher), db: Session = Depends(get_db)):
-    from ..users import create_student
+    from ..orm import create_student
 
     # ensure group exists
     grp = db.query(Group).filter_by(code=code).one_or_none()

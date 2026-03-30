@@ -18,7 +18,7 @@ from sqlalchemy.orm import Session
 from . import config, db
 
 if TYPE_CHECKING:
-    from .users import User
+    from .orm import User
 
 # Use bcrypt_sha256 to support passwords > 72 bytes safely
 pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
@@ -85,7 +85,7 @@ async def get_current_user(
     except InvalidTokenError as exc:
         raise credentials_exception from exc
 
-    from . import users as users_module
+    from . import orm as users_module
 
     user = database.get(users_module.User, int(user_id))
     if user is None or not user.is_active:

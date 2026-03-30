@@ -12,7 +12,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from .. import db, security
-from ..users import GroupPublic, User, UserPublic
+from ..orm import GroupPublic, User, UserPublic
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -58,7 +58,7 @@ async def list_users_teacher_only(
     _: User = Depends(security.require_teacher),
     database: Session = Depends(db.get_db),
 ):
-    """(Teacher only) Returns a list of all users."""
+    """(Teacher only) Returns a list of all orm."""
     all_users = database.query(User).order_by(User.id.asc()).all()
     return [
         UserPublic(

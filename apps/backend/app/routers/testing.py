@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 from ..db import SessionLocal, get_db
 from ..security import get_password_hash
-from ..users import Group, User, _ensure_teacher, create_student
+from ..orm import Group, User, _ensure_teacher, create_student
 
 
 router = APIRouter(prefix="/testing", tags=["testing"])

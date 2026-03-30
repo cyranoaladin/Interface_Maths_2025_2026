@@ -1,6 +1,6 @@
 import pytest
-from app import security
-from app.orm import User, Group
+from apps.backend.app import security
+from apps.backend.app.orm import User, Group
 
 @pytest.fixture
 def seeded_db(db_session):

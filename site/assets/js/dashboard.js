@@ -60,7 +60,7 @@ async function loadGroup(code, name) {
         `<td>` +
         `<a href="#" class="bilan-btn" data-email="${escapeHtml(email)}" data-name="${escapeHtml(fullName)}">Voir bilan</a>` +
         ` &nbsp; ` +
-        `<button type="button" class="reset-btn" data-email="${escapeHtml(email)}">Réinitialiser</button>` +
+        `<button type="button" class="reset-btn" data-email="${escapeHtml(email)}" aria-label="Réinitialiser le mot de passe de ${escapeHtml(fullName)}">Réinitialiser</button>` +
         `</td>`,
         '</tr>'
       ].join('');

@@ -6,7 +6,7 @@ from __future__ import annotations
 import os
 import shutil
 import time
-from contextlib import suppress
+from contextlib import suppress, asynccontextmanager
 from functools import lru_cache
 from pathlib import Path
 from typing import Callable
@@ -16,11 +16,59 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
 from . import config, db, schemas_tree, tree, orm
 from .routers import auth, compat, groups, testing
 
-app = FastAPI(title="Maths Portal API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    On startup:
+    1. Ensures the database schema is created.
+    2. Optionally bootstraps default user groups.
+    3. Ensures a favicon exists to avoid 404s.
+    """
+    env = (os.getenv("APP_ENV") or config.settings.APP_ENV or "development").lower()
+    if env in {"production", "prod"} and not config.settings.SECRET_KEY:
+        raise RuntimeError("SECRET_KEY is required when APP_ENV=production")
+
+    with suppress(Exception):
+        db.Base.metadata.create_all(bind=db.engine)
+
+    # Optional: auto-bootstrap groups in production when AUTO_BOOTSTRAP=1
+    if os.getenv("AUTO_BOOTSTRAP") == "1":
+        with Session(bind=db.engine) as session:
+            defaults = [
+                ("T-EDS-3", "Terminale EDS Maths — Groupe 3"),
+                ("P-EDS-6", "Première EDS Maths — Groupe 6"),
+                ("MX-1", "Maths expertes — Groupe 1"),
+            ]
+            for code, name in defaults:
+                g = session.query(orm.Group).filter_by(code=code).one_or_none()
+                if not g:
+                    session.add(orm.Group(code=code, name=name))
+            session.commit()
+
+    # Ensure favicon exists at site root to avoid 404 from StaticFiles mounts
+    with suppress(Exception):
+        root_dir = Path(str(config.settings.CONTENT_ROOT))
+        ico = root_dir / "favicon.ico"
+        if not ico.is_file():
+            svg = root_dir / "assets" / "img" / "icon.svg"
+            if svg.is_file():
+                shutil.copyfile(svg, ico)
+    
+    yield
+
+
+app = FastAPI(title="Maths Portal API", lifespan=lifespan)
+limiter = Limiter(key_func=get_remote_address, enabled=os.getenv("TESTING") != "1")
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 # Optional JSON access logs
 JSON_LOGS = os.getenv("JSON_LOGS", "0") == "1"
 if JSON_LOGS:
@@ -115,45 +163,6 @@ if config.settings.SERVE_STATIC:
         if path.is_file():
             return FileResponse(path)
         raise HTTPException(status_code=404, detail="Not found")
-
-
-@app.on_event("startup")
-async def on_startup_create_schema_and_bootstrap():
-    """
-    On startup:
-    1. Ensures the database schema is created.
-    2. Optionally bootstraps default user groups.
-    3. Ensures a favicon exists to avoid 404s.
-    """
-    env = (os.getenv("APP_ENV") or config.settings.APP_ENV or "development").lower()
-    if env in {"production", "prod"} and not config.settings.SECRET_KEY:
-        raise RuntimeError("SECRET_KEY is required when APP_ENV=production")
-
-    with suppress(Exception):
-        db.Base.metadata.create_all(bind=db.engine)
-
-    # Optional: auto-bootstrap groups in production when AUTO_BOOTSTRAP=1
-    if os.getenv("AUTO_BOOTSTRAP") == "1":
-        with Session(bind=db.engine) as session:
-            defaults = [
-                ("T-EDS-3", "Terminale EDS Maths — Groupe 3"),
-                ("P-EDS-6", "Première EDS Maths — Groupe 6"),
-                ("MX-1", "Maths expertes — Groupe 1"),
-            ]
-            for code, name in defaults:
-                g = session.query(orm.Group).filter_by(code=code).one_or_none()
-                if not g:
-                    session.add(orm.Group(code=code, name=name))
-            session.commit()
-
-    # Ensure favicon exists at site root to avoid 404 from StaticFiles mounts
-    with suppress(Exception):
-        root_dir = Path(str(config.settings.CONTENT_ROOT))
-        ico = root_dir / "favicon.ico"
-        if not ico.is_file():
-            svg = root_dir / "assets" / "img" / "icon.svg"
-            if svg.is_file():
-                shutil.copyfile(svg, ico)
 
 
 @lru_cache(maxsize=1)

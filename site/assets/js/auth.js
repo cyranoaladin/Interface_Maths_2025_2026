@@ -8,8 +8,6 @@ function withBase(path) {
 export function saveToken(token) {
   try {
     localStorage.setItem('auth_token', token);
-    // also mirror in a cookie (short-lived) to survive some private modes
-    document.cookie = `auth_token=${encodeURIComponent(token)}; Path=/; SameSite=Lax; Max-Age=86400`;
   } catch (_) {}
 }
 
@@ -19,7 +17,6 @@ export function getToken() {
 
 export function clearToken() {
   try { localStorage.removeItem('auth_token'); } catch (_) {}
-  try { document.cookie = 'auth_token=; Max-Age=0; Path=/; SameSite=Lax'; } catch (_) {}
 }
 
 export async function fetchWithAuth(path, options = {}) {

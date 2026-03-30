@@ -1,153 +1,149 @@
-from __future__ import annotations
+import os
+import jwt
+from ..config import settings
+from ..security import ALGORITHM
 
-from fastapi import APIRouter, Depends, HTTPException, Request, Response
-from pydantic import BaseModel
+from typing import Optional
+
+from fastapi import APIRouter, Depends, Form, HTTPException, Request, Response
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 from sqlalchemy.orm import Session
+from starlette.responses import RedirectResponse
 
 from ..db import get_db
-from ..security import create_access_token, verify_password, get_secret_key
-from ..security import get_password_hash
 from ..orm import User, UserPublic
-import jwt
-from ..security import ALGORITHM
-import os
-from ..config import settings
+from ..security import create_access_token, get_password_hash, get_secret_key
+from ..services_auth import authenticate_user
 
 
-class LoginBody(BaseModel):
-    email: str | None = None
-    username: str | None = None
-    password: str
+router = APIRouter(tags=["compat"])
+limiter = Limiter(key_func=get_remote_address, enabled=os.getenv("TESTING") != "1")
 
 
-router = APIRouter(prefix="/api/v1", tags=["compat"])
-
-
-COOKIE_NAME = "auth_token"
-
-
-@router.post("/login")
-async def compat_login(request: Request, response: Response, db: Session = Depends(get_db)):
-    # Accept both JSON and form
-    content_type = request.headers.get("content-type", "")
-    email = ""
-    password = ""
-    if "application/json" in content_type:
-        data = await request.json()
-        email = (data.get("email") or data.get("username") or "").strip()
-        password = (data.get("password") or "").strip()
-    else:
-        form = await request.form()
-        email = (form.get("email") or form.get("username") or "").strip()
-        password = (form.get("password") or "").strip()
-    user = db.query(User).filter(User.email == email).one_or_none()
-    if not user or not verify_password(password, user.hashed_password):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    token = create_access_token({"sub": str(user.id), "email": user.email, "role": user.role})
-    response.set_cookie(
-        key=COOKIE_NAME,
-        value=token,
-        httponly=True,
-        samesite="lax",
-        secure= not settings.TESTING, # Basic heuristic, or we can add a setting
-        max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
-        path="/"
-    )
-    # Enforce password reset at first login when default student password is used
-    first_login = False
-    try:
-        if password == settings.DEFAULT_STUDENT_PASSWORD and user.role == "student":
-            first_login = True
-    except Exception:
-        pass
-    return {"access_token": token, "token_type": "bearer", "first_login": first_login}
-
-
-@router.post("/login-form")
-async def compat_login_form(request: Request, response: Response, db: Session = Depends(get_db)):
-    form = await request.form()
-    email = (form.get('email') or form.get('username') or '').strip()
-    password = (form.get('password') or '').strip()
-    user = db.query(User).filter(User.email == email).one_or_none()
-    if not user or not verify_password(password, user.hashed_password):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    token = create_access_token({"sub": str(user.id), "email": user.email, "role": user.role})
-    response.set_cookie(
-        key=COOKIE_NAME,
-        value=token,
-        httponly=True,
-        samesite="lax",
-        max_age=60*60,
-        path="/",
-    )
-    first_login = False
-    try:
-        if password == settings.DEFAULT_STUDENT_PASSWORD and user.role == "student":
-            first_login = True
-    except Exception:
-        pass
-    return {"access_token": token, "token_type": "bearer", "first_login": first_login}
-
-
-@router.get("/login")
-async def compat_login_get():
-    # Help text for users navigating directly in the browser
-    return {"message": "POST JSON {email,password} to /api/v1/login, or form to /api/v1/login-form"}
-
-
-@router.get("/ping")
-async def ping():
-    return {"ok": True}
-
-
-@router.post("/login/dev")
-async def compat_login_dev(request: Request, response: Response, db: Session = Depends(get_db)):
-    """DEV ONLY: authenticate without checking password when TESTING=1.
-    Body may contain {email|username}.
+@router.post("/api/v1/login")
+@limiter.limit("10/minute")
+async def compat_login(
+    request: Request,
+    response: Response,
+    db: Session = Depends(get_db)
+):
     """
-    if os.getenv("TESTING") != "1":
-        raise HTTPException(status_code=403, detail="disabled")
-    content_type = request.headers.get("content-type", "")
-    if "application/json" in content_type:
-        data = await request.json()
-        email = (data.get("email") or data.get("username") or "").strip()
-    else:
-        form = await request.form()
-        email = (form.get("email") or form.get("username") or "").strip()
+    JSON-based login (for programmatic clients or future frontend).
+    Sets an auth_token cookie.
+    """
+    user_req = await request.json()
+    if not user_req or "email" not in user_req or "password" not in user_req:
+        raise HTTPException(status_code=400, detail="Missing email or password")
+    
+    user = authenticate_user(db, user_req["email"], user_req["password"])
+    if not user:
+        raise HTTPException(status_code=400, detail="Incorrect email or password")
+
+    token = create_access_token({"sub": str(user.id)})
+    
+    # Also set a cookie for convenience (legacy frontend might still use it)
+    response.set_cookie(
+        key="auth_token",
+        value=token,
+        httponly=False,  # Needs to be read by JS temporarily
+        samesite="lax",
+        max_age=3600 * 24
+    )
+    
+    return {"access_token": token, "first_login": user.first_login if hasattr(user, "first_login") else False}
+
+
+@router.post("/api/v1/login-form")
+@limiter.limit("10/minute")
+async def compat_login_form(
+    request: Request,
+    response: Response,
+    db: Session = Depends(get_db),
+    email: str = Form(None),
+    username: str = Form(None),
+    password: str = Form(...)
+):
+    """
+    Form-based login (legacy).
+    Accepts email or username fields.
+    """
+    actual_email = email or username
+    if not actual_email:
+        raise HTTPException(status_code=400, detail="Missing email")
+        
+    user = authenticate_user(db, actual_email, password)
+    if not user:
+        raise HTTPException(status_code=400, detail="Incorrect email or password")
+
+    token = create_access_token({"sub": str(user.id)})
+    
+    # Also set a cookie for convenience
+    response.set_cookie(
+        key="auth_token",
+        value=token,
+        httponly=False,
+        samesite="lax",
+        max_age=3600 * 24
+    )
+    
+    return {"access_token": token, "first_login": user.first_login if hasattr(user, "first_login") else False}
+
+
+@router.post("/api/v1/login/dev")
+async def compat_login_dev(
+    request: Request,
+    response: Response,
+    db: Session = Depends(get_db)
+):
+    """
+    Dev-only bypass login.
+    """
+    if os.getenv("TESTING") != "1" or os.getenv("APP_ENV", "development") == "production":
+        raise HTTPException(status_code=403, detail="Not available in production")
+        
+    user_req = await request.json()
+    email = user_req.get("email")
+    if not email:
+        raise HTTPException(status_code=400, detail="Missing email")
+        
     user = db.query(User).filter(User.email == email).one_or_none()
     if not user:
-        raise HTTPException(status_code=404, detail="user not found")
-    token = create_access_token({"sub": str(user.id), "email": user.email, "role": user.role})
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    token = create_access_token({"sub": str(user.id)})
+    
     response.set_cookie(
-        key=COOKIE_NAME,
+        key="auth_token",
         value=token,
-        httponly=True,
+        httponly=False,
         samesite="lax",
-        secure= not settings.TESTING, # Basic heuristic, or we can add a setting
-        max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
-        path="/"
+        max_age=3600 * 24
     )
-    return {"access_token": token, "token_type": "bearer"}
+    
+    return {"access_token": token}
 
 
-@router.get("/session", response_model=UserPublic)
+def _extract_token_from_request(req: Request) -> str:
+    auth_header = req.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        return auth_header[7:]
+    return req.cookies.get("auth_token", "")
+
+
+@router.get("/api/v1/session", response_model=UserPublic)
 async def compat_session(request: Request, db: Session = Depends(get_db)):
-    """Return current user using Authorization header or auth_token cookie."""
-    # Try header first via the standard dependency
-    auth = request.headers.get("authorization") or request.headers.get("Authorization")
-    if auth and auth.lower().startswith("bearer "):
-        # Delegate to existing dependency path by constructing a subrequest would be heavy; decode directly
-        token = auth.split(None, 1)[1]
-    else:
-        token = request.cookies.get(COOKIE_NAME) or ""
+    """
+    Session check relying on the auth_token cookie or Authorization header.
+    """
+    token = _extract_token_from_request(request)
+    
     if not token:
-        # DEV fallback: when TESTING=1, allow returning default teacher to unblock frontend without credentials
-        if os.getenv("TESTING") == "1":
-            # Prefer specific teacher email if exists
-            preferred = "alaeddine.benrhouma@ert.tn"
+        # DEV fallback
+        if os.getenv("ALLOW_UNAUTHENTICATED_DEV") == "1" and os.getenv("APP_ENV", "development") != "production":
+            preferred = "teacher.test@example.com"
             user = db.query(User).filter(User.email == preferred).one_or_none()
             if not user:
-                # fallback to first teacher
                 user = db.query(User).filter(User.role == "teacher").first()
             if user:
                 return UserPublic(
@@ -158,71 +154,70 @@ async def compat_session(request: Request, db: Session = Depends(get_db)):
                     first_name=user.first_name,
                     last_name=user.last_name,
                 )
-        raise HTTPException(status_code=401, detail="Missing token")
+        raise HTTPException(status_code=401, detail="No session")
+        
     try:
         payload = jwt.decode(token, get_secret_key(), algorithms=[ALGORITHM])
-        user_id = int(payload.get("sub"))
-    except Exception as exc:
-        raise HTTPException(status_code=401, detail="Invalid token") from exc
-    user = db.get(User, user_id)
-    if not user or not user.is_active:
-        raise HTTPException(status_code=401, detail="Inactive user")
-    return UserPublic(
-        id=user.id,
-        email=user.email,
-        full_name=user.full_name,
-        role=user.role,
-        first_name=user.first_name,
-        last_name=user.last_name,
-    )
+        user_id = payload.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid token payload")
+            
+        user = db.query(User).filter(User.id == int(user_id)).one_or_none()
+        if not user:
+            raise HTTPException(status_code=401, detail="User not found")
+            
+        return UserPublic(
+            id=user.id,
+            email=user.email,
+            full_name=user.full_name,
+            role=user.role,
+            first_name=user.first_name,
+            last_name=user.last_name,
+        )
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 
-@router.post("/logout")
-async def compat_logout(response: Response):
-    response.delete_cookie(COOKIE_NAME, path="/")
-    return {"ok": True}
-
-
-class ChangePasswordBody(BaseModel):
-    new_password: str
-
-
-def _extract_token_from_request(req: Request) -> str:
-    """Return bearer token from Authorization header or auth_token cookie."""
-    auth = req.headers.get("authorization") or req.headers.get("Authorization") or ""
-    if auth.lower().startswith("bearer "):
-        return auth.split(None, 1)[1]
-    return req.cookies.get(COOKIE_NAME) or ""
-
-
-@router.post("/change-password")
+@router.post("/api/v1/change-password")
 async def compat_change_password(
     request: Request,
-    body: ChangePasswordBody,
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_db)
 ):
     """
-    Change password using either Authorization: Bearer <token> or auth_token cookie.
-    This endpoint mirrors /auth/change-password but is tolerant to cookie-only auth,
-    which is commonly set during the compat login flow.
+    Change password based on current session token.
     """
-    new_password = (body.new_password or "").strip()
-    if not new_password or len(new_password) < 8:
-        raise HTTPException(status_code=422, detail="Password too short")
-
     token = _extract_token_from_request(request)
     if not token:
-        raise HTTPException(status_code=401, detail="Missing token")
+        raise HTTPException(status_code=401, detail="No session")
+        
     try:
         payload = jwt.decode(token, get_secret_key(), algorithms=[ALGORITHM])
-        user_id = int(payload.get("sub"))
-    except Exception as exc:
-        raise HTTPException(status_code=401, detail="Invalid token") from exc
+        user_id = payload.get("sub")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid token payload")
+            
+        req_data = await request.json()
+        new_password = req_data.get("new_password")
+        if not new_password or len(new_password) < 8:
+            raise HTTPException(status_code=422, detail="Password too short")
+        if len(new_password) > 128:
+            raise HTTPException(status_code=422, detail="Password too long")
+            
+        user = db.query(User).filter(User.id == int(user_id)).one_or_none()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+            
+        user.hashed_password = get_password_hash(new_password)
+        db.commit()
+        return {"ok": True}
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
-    user = db.get(User, user_id)
-    if not user or not user.is_active:
-        raise HTTPException(status_code=401, detail="Inactive user")
 
-    user.hashed_password = get_password_hash(new_password)
-    db.commit()
+@router.post("/api/v1/logout")
+async def compat_logout(response: Response):
+    """
+    Clears the auth_token cookie.
+    """
+    response.delete_cookie("auth_token", path="/")
     return {"ok": True}

@@ -1,6 +1,6 @@
 import pytest
 from app import security
-from app.users import User, Group
+from app.orm import User, Group
 
 @pytest.fixture
 def seeded_db(db_session):
@@ -80,7 +80,7 @@ def test_compat_login_form(test_client, seeded_db):
     assert "access_token" in response.json()
 
 
-def test_compat_session_missing_token(test_client):
+def test_compat_session_missing_token(test_client, seeded_db):
     test_client.cookies.delete("auth_token", path="/")
     response = test_client.get("/api/v1/session")
     import os

@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker, Session
 
 from apps.backend.app.main import app
 from apps.backend.app.database import Base, get_db
-from apps.backend.app.users import create_student, _ensure_teacher, Group, User
+from apps.backend.app.orm import create_student, _ensure_teacher, Group, User
 from apps.backend.app.security import create_access_token
 
 
@@ -51,7 +51,7 @@ def seed_minimal(client: TestClient, db: Session):
 def test_student_session_and_403_on_teacher_endpoint(client: TestClient, test_db_session: Session):
     seed_minimal(client, test_db_session)
     user = test_db_session.query(User).filter_by(email="eleve@example.com").one()
-    token = create_access_token({"sub": str(user.id), "email": user.email, "role": user.role})
+    token = create_access_token({"sub": str(user.id)})
     headers = {"Authorization": f"Bearer {token}"}
     # session should reflect student
     r = client.get("/api/v1/session", headers=headers)

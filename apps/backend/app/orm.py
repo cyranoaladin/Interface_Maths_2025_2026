@@ -127,7 +127,7 @@ def _ensure_teacher(db: Session, email: str, full_name: Optional[str] = None) ->
     # Write credential to outputs file (never to logs)
     out_dir = settings.OUTPUTS_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
-    ts = datetime.utcnow().strftime("%Y%m%d-%H%M%S")
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
     out_file = out_dir / f"bootstrap_credentials_{ts}.csv"
     try:
         with out_file.open("a", encoding="utf-8") as f:

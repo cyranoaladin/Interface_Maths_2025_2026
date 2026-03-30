@@ -8,7 +8,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from apps.backend.app.security import get_password_hash
-from apps.backend.app.users import Group, User
+from apps.backend.app.orm import Group, User
 
 
 def create_teacher_and_get_token(client, session, email: str) -> str:

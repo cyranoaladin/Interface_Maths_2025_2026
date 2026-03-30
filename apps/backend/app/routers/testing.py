@@ -146,4 +146,3 @@ async def remove_user(request: Request):
         db.commit()
         return {"ok": True, "removed": True}
 
-    return {"ok": True}

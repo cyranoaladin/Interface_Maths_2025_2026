@@ -17,7 +17,7 @@ test('index nav shows login link and dashboard after token', async ({ page }) =>
 test('auth flow: wrong password, login ok, persistence, logout', async ({ page }) => {
   // Ensure teacher
   await page.request.post('http://127.0.0.1:8008/testing/ensure-teacher', {
-    form: { email: 'teacher.test@example.com', password: 'password123' },
+    form: { email: 'teacher.test@example.com', password: 'secret' },
   });
 
   // Wrong password -> error message
@@ -37,7 +37,7 @@ test('auth flow: wrong password, login ok, persistence, logout', async ({ page }
 
   // Correct login (API path to avoid flaky form retry timing)
   const okLogin = await page.request.post('http://127.0.0.1:8008/api/v1/login-form', {
-    form: { email: 'teacher.test@example.com', password: 'password123' },
+    form: { email: 'teacher.test@example.com', password: 'secret' },
   });
   expect(okLogin.ok()).toBeTruthy();
   const { access_token: token } = await okLogin.json();

@@ -79,7 +79,7 @@ async def get_current_user(
     )
     try:
         payload = jwt.decode(token, get_secret_key(), algorithms=[ALGORITHM])
-        user_id: Optional[str] = payload.get("sub")
+        user_id: Optional[str] = str(payload.get("sub")) if payload.get("sub") else None
         if user_id is None:
             raise credentials_exception
     except InvalidTokenError as exc:

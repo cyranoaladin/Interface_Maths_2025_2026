@@ -18,7 +18,7 @@ if str(REPO_ROOT) not in sys.path:
 def _load_test_dependencies():
     """Import test dependencies lazily once the path is configured."""
     from apps.backend.app.security import get_password_hash as hash_password
-    from apps.backend.app.users import User as user_model
+    from apps.backend.app.orm import User as user_model
 
     return user_model, hash_password
 

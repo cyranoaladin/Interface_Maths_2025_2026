@@ -26,21 +26,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node (for frontend build)
-        if: ${{ hashFiles('apps/frontend/package.json') != '' }}
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Build frontend (if present)
-        if: ${{ hashFiles('apps/frontend/package.json') != '' }}
+      - name: Build Frontend (Vite)
         run: |
           set -euo pipefail
-          cd apps/frontend
+          cd site
           npm ci || npm install
           npm run build
-          cd ../..
-          mkdir -p site/assets
-          rsync -a apps/frontend/dist/assets/ site/assets/ || true
+          cd ..
 
       - name: Generate sitemap.xml
         run: |

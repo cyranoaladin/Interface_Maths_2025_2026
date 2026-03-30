@@ -5,10 +5,10 @@ ui/**
 # Ignore tout apps/ puis ré-inclus le frontend
 apps/**
 !apps/
-!apps/frontend/
-!apps/frontend/**
-!apps/frontend/src/**
-apps/frontend/dist/**
+
+**
+src/**
+site/dist/**
 
 **/node_modules/**
 

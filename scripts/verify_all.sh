@@ -4,19 +4,17 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
-echo "==> 1/6 CSS build (legacy site)"
-npm run -s css:build
-
-echo "==> 2/6 Frontend build (Vue)"
+echo "==> 1/5 Frontend build (Vite site)"
 (
-  cd apps/frontend
-  npm run -s build
+  cd site
+  npm install
+  npm run build
 )
 
-echo "==> 3/6 Unit tests (Vitest)"
+echo "==> 2/5 Unit tests (Vitest)"
 npm run -s test:unit
 
-echo "==> 4/6 Backend tests (pytest)"
+echo "==> 3/5 Backend tests (pytest)"
 if command -v docker >/dev/null 2>&1; then
   echo "Using Docker isolated Python environment for backend tests."
   docker run --rm \
@@ -31,10 +29,10 @@ else
     tests/test_auth_routes.py tests/test_config.py tests/test_groups_api.py tests/test_security.py
 fi
 
-echo "==> 5/6 Playwright browser check"
+echo "==> 4/5 Playwright browser check"
 npx playwright install chromium >/dev/null
 
-echo "==> 6/6 E2E tests"
+echo "==> 5/5 E2E tests"
 npm run test:e2e:local -- tests/e2e
 
 echo "All checks passed."

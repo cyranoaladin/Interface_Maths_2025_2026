@@ -40,7 +40,7 @@ def import_students(csv_path: str) -> Path:
 
     out_dir = settings.OUTPUTS_DIR
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_file = out_dir / f"new_students_{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}.csv"
+    out_file = out_dir / f"new_students_{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')}.csv"
 
     created_rows: List[List[str]] = []
 

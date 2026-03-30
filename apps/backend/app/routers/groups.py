@@ -52,6 +52,10 @@ async def my_groups(me: User = Depends(get_current_user), db: Session = Depends(
 
 @router.post("/{code}/seed-test", response_model=UserPublic)
 async def seed_test_student(code: str, _: User = Depends(require_teacher), db: Session = Depends(get_db)):
+    import os
+    if os.getenv("TESTING") != "1":
+        raise HTTPException(status_code=403, detail="disabled")
+
     from ..orm import create_student
 
     # ensure group exists

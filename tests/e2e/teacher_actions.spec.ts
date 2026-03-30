@@ -24,13 +24,13 @@ test('teacher can view bilan and reset student password', async ({ page }) => {
   const groups = page.locator('#teacher-groups a');
   await expect(groups).toHaveCount(3, { timeout: 10000 });
   await page.getByRole('link', { name: /Première EDS Maths — Groupe 6/ }).click();
-  await expect(page.locator('#panel-body .students-grid')).toBeVisible();
+  await expect(page.locator('#panel-body .table-simple')).toBeVisible();
   // Names should not be N/A
-  const firstCard = page.locator('#panel-body .student-card').first();
-  await expect(firstCard.locator('.student-name')).not.toContainText('N/A');
+  const firstCard = page.locator('#panel-body tbody tr').first();
+  await expect(firstCard.locator('td').first()).not.toContainText('N/A');
 
   // Try clicking first "Voir bilan" if present; tolerate absence of JSON (shows message)
-  const bilanLink = page.locator('#panel-body .student-card a.btn-primary').first();
+  const bilanLink = page.locator('#panel-body tbody tr .bilan-btn').first();
   if (await bilanLink.count()) {
     await bilanLink.click();
     // Either the bilan panel or a fallback message should appear
@@ -39,7 +39,7 @@ test('teacher can view bilan and reset student password', async ({ page }) => {
     const back = page.locator('#back-to-students');
     if (await back.count()) {
       await back.click();
-      await expect(page.locator('#panel-body .students-grid')).toBeVisible();
+      await expect(page.locator('#panel-body .table-simple')).toBeVisible();
     }
   }
 
@@ -78,10 +78,10 @@ test('teacher can view bilan (second pass) and reset password toast', async ({ p
   const firstGroup = page.locator('#teacher-groups a').first();
   await expect(firstGroup).toBeVisible();
   await firstGroup.click();
-  await expect(page.locator('#panel-body .students-grid')).toBeVisible();
+  await expect(page.locator('#panel-body .table-simple')).toBeVisible();
 
   // Try clicking first "Voir bilan" if present; tolerate absence of JSON (shows message)
-  const bilanLink = page.locator('#panel-body .student-card a.btn-primary').first();
+  const bilanLink = page.locator('#panel-body tbody tr .bilan-btn').first();
   if (await bilanLink.count()) {
     await bilanLink.click();
     // Either the bilan panel or a fallback message should appear
@@ -90,7 +90,7 @@ test('teacher can view bilan (second pass) and reset password toast', async ({ p
     const back = page.locator('#back-to-students');
     if (await back.count()) {
       await back.click();
-      await expect(page.locator('#panel-body .students-grid')).toBeVisible();
+      await expect(page.locator('#panel-body .table-simple')).toBeVisible();
     }
   }
 

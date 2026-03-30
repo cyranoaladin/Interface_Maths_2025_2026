@@ -32,7 +32,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ../../apps/legacy-site:/site:ro
+      - ../../site/dist:/site:ro
       - outputs_prod_local:/outputs
     ports:
       - "8008:8000"

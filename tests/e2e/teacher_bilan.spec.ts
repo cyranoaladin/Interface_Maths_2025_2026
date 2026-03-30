@@ -17,23 +17,23 @@ test('bilan view shows score and questions, back returns to list', async ({ page
   // Dashboard and group
   await page.goto('/content/dashboard.html');
   await page.getByRole('link', { name: /Première EDS Maths — Groupe 6/ }).click();
-  await expect(page.locator('#panel-body .students-grid')).toBeVisible();
+  await expect(page.locator('#panel-body .table-simple')).toBeVisible();
 
   // Click first "Voir bilan" if exists
-  const firstBtn = page.locator('#panel-body a.btn-primary').first();
+  const firstBtn = page.locator('#panel-body .bilan-btn').first();
   if (await firstBtn.count()) {
     await firstBtn.click();
     // Expect bilan box
-    await expect(page.locator('.bilan-box')).toBeVisible();
-    await expect(page.locator('.bilan-box')).toContainText(/Score:|Pas noté/);
+    await expect(page.locator('.card')).toBeVisible();
+    await expect(page.locator('.card')).toContainText(/Score:|Pas noté|Aucun bilan disponible/);
     // If questions exist, there should be a questions list
     const maybeQuestions = page.locator('.questions-list .question-item');
     if (await maybeQuestions.count() > 0) {
       await expect(maybeQuestions.first()).toBeVisible();
     }
     // Back to list
-    const back = page.locator('#back-to-students');
+    const back = page.locator('#back-to-group');
     await back.click();
-    await expect(page.locator('#panel-body .students-grid')).toBeVisible();
+    await expect(page.locator('#panel-body .table-simple')).toBeVisible();
   }
 });

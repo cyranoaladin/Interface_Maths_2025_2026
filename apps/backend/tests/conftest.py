@@ -5,6 +5,10 @@ import tempfile
 from pathlib import Path
 
 import pytest
+import os
+
+os.environ["TESTING"] = "1"
+os.environ["ALLOW_UNAUTHENTICATED_DEV"] = "1"
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -24,6 +28,8 @@ def _load_app_components():
 
 
 app, db_base, get_db = _load_app_components()
+if hasattr(app.state, "limiter"):
+    app.state.limiter.enabled = False
 
 # Use a temporary file-based SQLite database for tests.
 # In-memory + StaticPool can deadlock when a fixture-held session and a

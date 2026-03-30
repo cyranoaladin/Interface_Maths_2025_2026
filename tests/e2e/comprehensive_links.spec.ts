@@ -65,7 +65,7 @@ test.describe('Navigation and Core Links', () => {
     await expect(logoutBtn).toBeVisible();
 
     // Check specific teacher groups
-    const groups = page.locator('#teacher-groups a.group-item');
+    const groups = page.locator('#teacher-groups a');
     await expect(groups.first()).toBeVisible();
 
     // Ensure we can logout

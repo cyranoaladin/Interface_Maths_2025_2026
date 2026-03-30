@@ -7,28 +7,35 @@ import secrets
 import string
 from typing import List
 
-from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from .. import db, security
 from ..orm import GroupPublic, User, UserPublic
+from ..services_auth import authenticate_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+import os
+limiter = Limiter(key_func=get_remote_address, enabled=os.getenv("TESTING") != "1")
 
 
 @router.post("/token")
+@limiter.limit("10/minute")
 async def login_for_access_token(
-    form_data: OAuth2PasswordRequestForm = Depends(),
+    request: Request,
+    form_data: OAuth2PasswordRequestForm = Depends(OAuth2PasswordRequestForm),
     database: Session = Depends(db.get_db),
 ):
     """Handles user login and returns an access token."""
     # username field contains email in our case
-    user = database.query(User).filter(User.email == form_data.username).one_or_none()
-    if not user or not security.verify_password(form_data.password, user.hashed_password):
+    user = authenticate_user(database, form_data.username, form_data.password)
+    if not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")
     token = security.create_access_token(
-        {"sub": str(user.id), "email": user.email, "role": user.role}
+        {"sub": str(user.id)}
     )
     return {"access_token": token, "token_type": "bearer"}
 
@@ -55,11 +62,13 @@ async def read_my_groups(current_user: User = Depends(security.get_current_user)
 # Example teacher-only endpoint
 @router.get("/admin/users", response_model=List[UserPublic])
 async def list_users_teacher_only(
+    skip: int = 0,
+    limit: int = 100,
     _: User = Depends(security.require_teacher),
     database: Session = Depends(db.get_db),
 ):
     """(Teacher only) Returns a list of all orm."""
-    all_users = database.query(User).order_by(User.id.asc()).all()
+    all_users = database.query(User).order_by(User.id.asc()).offset(skip).limit(limit).all()
     return [
         UserPublic(
             id=u.id,
@@ -82,6 +91,8 @@ async def change_password(
     """Allows an authenticated user to change their password."""
     if not new_password or len(new_password) < 8:
         raise HTTPException(status_code=422, detail="Password too short")
+    if len(new_password) > 128:
+        raise HTTPException(status_code=422, detail="Password too long")
     user = database.get(User, current_user.id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

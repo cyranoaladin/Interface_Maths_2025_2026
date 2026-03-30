@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Configurable vars
-VPS_HOST=${VPS_HOST:-root@46.202.171.14}
+VPS_HOST=${VPS_HOST:-root@88.99.254.59}
 VPS_VHOST_PATH=/etc/nginx/sites-available/maths.labomaths.tn
 VPS_VHOST_LINK=/etc/nginx/sites-enabled/maths.labomaths.tn
 VPS_WEBROOT=/var/www/maths

@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 
 from apps.backend.app.db import SessionLocal, get_db
 from apps.backend.app.main import app
-from apps.backend.app.users import Group, User, create_student, ensure_bootstrap
+from apps.backend.app.orm import Group, User, create_student, ensure_bootstrap
 
 
 def test_root_and_tree_endpoints_work():
@@ -45,11 +45,11 @@ def test_create_student_and_bootstrap_defaults():
     ensure_bootstrap()
     with SessionLocal() as db:
         groups = db.query(Group).all()
-        # Expect at least the 3 defaults from users.DEFAULT_GROUPS
+        # Expect at least the 3 defaults from orm.DEFAULT_GROUPS
         assert len(groups) >= 3
         teachers = db.query(User).filter(User.role == "teacher").all()
         assert len(teachers) >= 1
-        # Create a student and attach groups (covers users.create_student)
+        # Create a student and attach groups (covers orm.create_student)
         codes = [g.code for g in groups[:2]]
         pwd = create_student(
             db,

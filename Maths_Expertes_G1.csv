@@ -1,15 +1,3 @@
-﻿;;Né(e) le;Sexe;Adresse E-mail;Classe;Entrée;Sortie;Tuteur;Cnx Ele.;Cnx Resp.;Option 1;Option 2;Option 3;Autres options;Régime
-"AKROUT MEHDI";"undefined";"29/12/2008";"Masculin";"mehdi.akrout-e@ert.tn";"T.04";01/09/2025;;"";"27/09/2025";"26/09/2025";"Arabe";"Anglais";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
-"ALBOUCHI ADAM";"undefined";"08/04/2008";"Masculin";"adam.albouchi-e@ert.tn";"T.04";01/09/2025;;"";"26/09/2025";"19/09/2025";"Anglais";"Arabe";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
-"BEN RABAA MOHAMED";"undefined";"06/12/2008";"Masculin";"mohamed.benrabaa-e@ert.tn";"T.04";01/09/2025;;"";"26/09/2025";"25/09/2025";"Anglais";"Arabe";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
-"BOUHAHA SOFYA";"undefined";"04/10/2008";"Féminin";"sofya.bouhaha-e@ert.tn";"T.04";01/09/2025;;"";"28/09/2025";"27/09/2025";"Anglais";"Arabe";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
-"BOUJEMAA MOHAMED-AMINE";"undefined";"22/10/2008";"Masculin";"mohamed-amine.boujemaa-e@ert.tn";"T.04";01/09/2025;;"";"27/09/2025";"26/09/2025";"Anglais";"Arabe";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
-"CHAPOUTOT LEIL";"undefined";"19/11/2008";"Masculin";"leil.chapoutot-e@ert.tn";"T.04";01/09/2025;;"";"27/09/2025";"27/09/2025";"Anglais Euro";"Arabe";"";"EDS MATHS, EDS PC, OF1 - Rugby, OF2 - MATHS EXPERTES";"EXTERNE"
-"FENNIRA NADINE";"undefined";"13/11/2008";"Féminin";"nadine.fennira-e@ert.tn";"T.07";01/09/2025;;"";"27/09/2025";"28/09/2025";"Arabe";"ACL Anglais";"";"EDS MATHS, EDS PC, OF1 - Art dramatique";"EXTERNE"
-"HACHICH SELIM";"undefined";"12/06/2008";"Masculin";"selim.hachich-e@ert.tn";"T.01";01/09/2025;;"";"27/09/2025";"";"Anglais Euro";"Espagnol";"";"EDS MATHS, EDS PC, Arabe LVC, OF2 - MATHS EXPERTES";"EXTERNE"
-"KOUNDI HEDI";"undefined";"12/04/2008";"Masculin";"hedi.koundi-e@ert.tn";"T.04";01/09/2025;;"";"27/09/2025";"28/09/2025";"Anglais Euro";"Arabe";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
-"LANGAR MOHAMED-AMINE";"undefined";"31/08/2007";"Masculin";"mohamed-amine.langar-e@ert.tn";"T.04";01/09/2025;;"";"27/09/2025";"26/09/2025";"Arabe";"Anglais";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
-"MARRAKCHI AHMED";"undefined";"03/06/2008";"Masculin";"ahmed.marrakchi-e@ert.tn";"T.02";01/09/2025;;"";"27/09/2025";"25/09/2025";"Anglais Euro";"Arabe";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
-"OUEDERNI RAFIF";"undefined";"21/11/2008";"Féminin";"rafif.ouederni-e@ert.tn";"T.01";01/09/2025;;"";"27/09/2025";"28/09/2025";"Anglais Euro";"Espagnol";"";"EDS MATHS, EDS PC, Arabe LVC, OF2 - MATHS EXPERTES";"EXTERNE"
-"RAJHI LEITH";"undefined";"24/01/2008";"Masculin";"leyth.rajhi-e@ert.tn";"T.04";01/09/2025;;"";"27/09/2025";"26/09/2025";"Anglais";"Arabe";"";"EDS MATHS, EDS PC, OF1 - Rugby, OF2 - MATHS EXPERTES";"EXTERNE"
-"REJEB NOUR";"undefined";"03/01/2008";"Féminin";"nour.rejeb-e@ert.tn";"T.04";01/09/2025;;"";"27/09/2025";"27/09/2025";"Anglais Euro";"Arabe";"";"EDS MATHS, EDS PC, OF1 - Rugby, OF2 - MATHS EXPERTES";"EXTERNE"
+;;Né(e) le;Sexe;Adresse E-mail;Classe;Entrée;Sortie;Tuteur;Cnx Ele.;Cnx Resp.;Option 1;Option 2;Option 3;Autres options;Régime
+"DOE JOHN";"undefined";"01/01/2008";"Masculin";"john.doe-e@example.com";"T.04";01/09/2025;;"";"27/09/2025";"26/09/2025";"Arabe";"Anglais";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"
+"SMITH JANE";"undefined";"02/02/2008";"Féminin";"jane.smith-e@example.com";"T.04";01/09/2025;;"";"26/09/2025";"19/09/2025";"Anglais";"Arabe";"";"EDS MATHS, EDS PC, OF2 - MATHS EXPERTES";"EXTERNE"

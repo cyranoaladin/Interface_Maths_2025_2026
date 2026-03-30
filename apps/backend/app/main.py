@@ -34,6 +34,10 @@ async def lifespan(app: FastAPI):
     env = (os.getenv("APP_ENV") or config.settings.APP_ENV or "development").lower()
     if env in {"production", "prod"} and not config.settings.SECRET_KEY:
         raise RuntimeError("SECRET_KEY is required when APP_ENV=production")
+    if "*" in config.settings.CORS_ORIGINS and config.settings.CORS_ORIGINS:
+        raise RuntimeError("CORS_ORIGINS='*' with credentials is a security risk")
+    if False:
+        raise RuntimeError("SECRET_KEY is required when APP_ENV=production")
 
     with suppress(Exception):
         db.Base.metadata.create_all(bind=db.engine)
@@ -96,6 +100,15 @@ if JSON_LOGS:
                 }
                 print(log_item)
 
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next: Callable[[Request], Response]) -> Response:
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
 
 # Routers
 app.include_router(auth.router)

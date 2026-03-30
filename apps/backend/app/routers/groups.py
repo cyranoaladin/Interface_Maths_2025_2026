@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from ..db import get_db
 from ..orm import User, Group, GroupPublic, UserPublic
+from ..security import get_current_user
 from ..security import require_teacher, get_current_user
 
 
@@ -83,3 +84,20 @@ async def seed_test_student(code: str, _: User = Depends(require_teacher), db: S
         first_name=user.first_name,
         last_name=user.last_name,
     )
+
+
+@router.get("/{code}/evaluations")
+async def list_evaluations(code: str, _: User = Depends(get_current_user)):
+    """
+    Lists available evaluations for a given group.
+    Currently returns a static list based on the group code.
+    """
+    if code.startswith("P-EDS"):
+        return [
+            {
+                "id": "eval1_second_degre",
+                "title": "Évaluation n°1 — Second degré",
+                "json_path": "/EDS_premiere/Second_Degre/bilans_eval1_second_degre.json"
+            }
+        ]
+    return []

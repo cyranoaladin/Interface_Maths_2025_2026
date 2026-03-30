@@ -46,12 +46,29 @@ async function init() {
   // Liens ressources
   document.getElementById('s-resources')?.addEventListener('click', async (e) => {
     e.preventDefault();
-    // Pour Première EDS par défaut
-    const links = [withBase('/EDS_premiere/index.html')];
-    const body = ['<div class="cards">'];
-    links.forEach(href => body.push(`<a class="card-link" href="${href}">Ressources — Première EDS</a>`));
-    body.push('</div>');
-    setPanel('Ressources', body.join(''));
+    try {
+      const gRes = await fetchWithAuth('/auth/me/groups');
+      const groups = await gRes.json();
+      
+      const body = ['<div class="cards">'];
+      let added = false;
+      
+      for (const g of groups) {
+        if (g.code.startsWith('P-EDS')) { body.push(`<a class="card-link" href="${withBase('/EDS_premiere/index.html')}">Ressources — ${escapeHtml(g.name)}</a>`); added = true; }
+        else if (g.code.startsWith('T-EDS')) { body.push(`<a class="card-link" href="${withBase('/EDS_terminale/index.html')}">Ressources — ${escapeHtml(g.name)}</a>`); added = true; }
+        else if (g.code.startsWith('MX')) { body.push(`<a class="card-link" href="${withBase('/Maths_expertes/index.html')}">Ressources — ${escapeHtml(g.name)}</a>`); added = true; }
+      }
+      
+      if (!added) {
+        // Fallback
+        body.push(`<a class="card-link" href="${withBase('/EDS_premiere/index.html')}">Ressources — Première EDS</a>`);
+      }
+      
+      body.push('</div>');
+      setPanel('Ressources', body.join(''));
+    } catch (e) {
+      setPanel('Ressources', '<p>Erreur de chargement des ressources.</p>');
+    }
   });
 
   // Bilans évaluations (Première EDS: JSON existant)

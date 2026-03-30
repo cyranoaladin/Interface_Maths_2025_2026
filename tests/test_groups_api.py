@@ -35,6 +35,8 @@ def create_teacher_and_get_token(client, session, email: str) -> str:
 
 
 def test_groups_list_and_students_seed_authorized(client, session):
+    import os
+    os.environ["TESTING"] = "1"
     token = create_teacher_and_get_token(client, session, email="teacher.test@example.com")
 
     # Authorized list groups

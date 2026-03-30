@@ -22,11 +22,19 @@ def test_compat_login_form(test_client, seeded_db):
     assert "access_token" in response.json()
     assert "auth_token" in response.headers.get("set-cookie", "")
 
-def test_compat_session_missing_token(test_client):
+def test_compat_session_missing_token(test_client, seeded_db):
+    test_client.cookies.clear()
     import os
+    original = os.environ.get("ALLOW_UNAUTHENTICATED_DEV")
     os.environ["ALLOW_UNAUTHENTICATED_DEV"] = "0"
-    response = test_client.get("/api/v1/session")
-    assert response.status_code == 401
+    try:
+        response = test_client.get("/api/v1/session")
+        assert response.status_code == 401
+    finally:
+        if original is not None:
+            os.environ["ALLOW_UNAUTHENTICATED_DEV"] = original
+        else:
+            del os.environ["ALLOW_UNAUTHENTICATED_DEV"]
 
 def test_compat_session_with_token(test_client, seeded_db):
     # Log in first
@@ -52,7 +60,7 @@ def test_compat_change_password(test_client, seeded_db):
     new_login_resp = test_client.post("/api/v1/login", json={"email": "student@example.com", "password": "new_student_pass"})
     assert new_login_resp.status_code == 200
 
-def test_compat_logout(test_client):
+def test_compat_logout(test_client, seeded_db):
     response = test_client.post("/api/v1/logout")
     assert response.status_code == 200
     assert "auth_token" in response.headers.get("set-cookie", "")

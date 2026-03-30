@@ -20,11 +20,13 @@ if command -v docker >/dev/null 2>&1; then
   docker run --rm \
     -v "$ROOT_DIR:/work" \
     -w /work \
+    -e TESTING=1 \
+    -e ALLOW_UNAUTHENTICATED_DEV=1 \
     python:3.11-slim \
-    bash -lc "pip install -q -r apps/backend/requirements.txt && TESTING=1 pytest -q apps/backend/tests tests/test_auth_routes.py tests/test_config.py tests/test_groups_api.py tests/test_security.py"
+    bash -lc "pip install -q -r apps/backend/requirements.txt && pytest -q apps/backend/tests tests/test_auth_routes.py tests/test_config.py tests/test_groups_api.py tests/test_security.py"
 else
   echo "Docker not found, falling back to local .venv for backend tests."
-  TESTING=1 "${ROOT_DIR}/.venv/bin/python3" -m pytest -q \
+  "${ROOT_DIR}/.venv/bin/python3" -m pytest -q \
     apps/backend/tests \
     tests/test_auth_routes.py tests/test_config.py tests/test_groups_api.py tests/test_security.py
 fi

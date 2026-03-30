@@ -107,6 +107,11 @@ async def security_headers(request: Request, call_next: Callable[[Request], Resp
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     return response
 
+@app.get("/api/v1/ping", include_in_schema=False)
+async def ping():
+    """Health check endpoint."""
+    return {"ok": True}
+
 # Routers
 app.include_router(auth.router)
 app.include_router(groups.router)
@@ -193,10 +198,6 @@ async def read_root():
     }
 
 
-@app.get("/api/v1/ping", include_in_schema=False)
-async def ping():
-    """Health check endpoint."""
-    return {"ok": True}
 
 
 @app.get("/api/version", include_in_schema=False)

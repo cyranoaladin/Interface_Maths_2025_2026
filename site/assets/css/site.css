@@ -1351,3 +1351,51 @@ html[data-theme="light"] {
 body.a11y-dyslexia, body.a11y-dyslexia * { font-family: 'OpenDyslexic', sans-serif !important }
 body.a11y-contrast { --text: #ffffff; --bg: #000000; --bg2: #0a0a0a; --card: #1a1a1a; --muted: #cccccc; --border: #555555 }
 body.a11y-large { font-size: 120% }
+
+/* Extracted from dashboard.html & student.html */
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      height: calc(100vh - 32px)
+    }
+
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .side-nav a,
+    .side-nav button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+      color: var(--text);
+      text-decoration: none
+    }
+
+    .side-nav a[aria-current="page"] {
+      border-color: var(--accent)
+    }
+
+    .content {
+      min-height: 60vh
+    }
+
+    @media (max-width:980px) {
+      .layout {
+        grid-template-columns: 1fr
+      }
+    }
+  

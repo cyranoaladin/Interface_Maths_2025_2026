@@ -196,6 +196,12 @@ async def read_root():
     }
 
 
+@app.get("/api/v1/ping", include_in_schema=False)
+async def ping():
+    """Health check endpoint."""
+    return {"ok": True}
+
+
 @app.get("/api/version", include_in_schema=False)
 def api_version():
     """Returns application version information."""

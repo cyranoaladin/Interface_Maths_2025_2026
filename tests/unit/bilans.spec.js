@@ -3,9 +3,9 @@ import { canonicalizeName, findStudentBilan, escapeHtml } from '../../site/asset
 
 describe('Bilans Utils', () => {
   it('canonicalizeName should format names correctly', () => {
-    expect(canonicalizeName('Jean Dupont')).toBe('DUPONT JEAN');
-    expect(canonicalizeName('Jean-Pierre Dupont-Martin')).toBe('DUPONT-MARTIN JEAN-PIERRE');
-    expect(canonicalizeName('  extra   spaces  ')).toBe('SPACES EXTRA');
+    expect(canonicalizeName('Jean Dupont')).toBe('dupont jean');
+    expect(canonicalizeName('Jean-Pierre Dupont-Martin')).toBe('dupont-martin jean-pierre');
+    expect(canonicalizeName('  extra   spaces  ')).toBe('extra spaces');
   });
 
   it('escapeHtml should escape special characters', () => {

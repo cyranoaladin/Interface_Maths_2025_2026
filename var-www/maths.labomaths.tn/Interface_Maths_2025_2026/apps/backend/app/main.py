@@ -21,7 +21,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
 from . import config, db, schemas_tree, tree, orm
-from .routers import auth, compat, groups, testing
+from .routers import admin, auth, compat, evaluations, groups, resources, testing
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -114,7 +114,10 @@ async def ping():
 
 # Routers
 app.include_router(auth.router)
+app.include_router(admin.router)
 app.include_router(groups.router)
+app.include_router(resources.router)
+app.include_router(evaluations.router)
 app.include_router(testing.router)
 app.include_router(compat.router)
 

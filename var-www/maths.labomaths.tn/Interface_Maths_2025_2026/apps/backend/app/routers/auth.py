@@ -34,10 +34,19 @@ async def login_for_access_token(
     user = authenticate_user(database, form_data.username, form_data.password)
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")
+    from datetime import datetime, timezone
+
+    user.last_login_at = datetime.now(timezone.utc)
+    database.commit()
     token = security.create_access_token(
         {"sub": str(user.id)}
     )
-    return {"access_token": token, "token_type": "bearer"}
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "role": user.role,
+        "must_change_password": bool(user.must_change_password),
+    }
 
 
 @router.get("/me", response_model=UserPublic)
@@ -50,6 +59,7 @@ async def read_me(current_user: User = Depends(security.get_current_user)):
         role=current_user.role,
         first_name=current_user.first_name,
         last_name=current_user.last_name,
+        must_change_password=current_user.must_change_password,
     )
 
 
@@ -59,15 +69,15 @@ async def read_my_groups(current_user: User = Depends(security.get_current_user)
     return [GroupPublic(id=g.id, code=g.code, name=g.name) for g in current_user.groups]
 
 
-# Example teacher-only endpoint
+# Backward-compatible admin listing endpoint.
 @router.get("/admin/users", response_model=List[UserPublic])
 async def list_users_teacher_only(
     skip: int = 0,
     limit: int = 100,
-    _: User = Depends(security.require_teacher),
+    _: User = Depends(security.require_admin),
     database: Session = Depends(db.get_db),
 ):
-    """(Teacher only) Returns a list of all users."""
+    """(Admin only) Returns a list of all users."""
     all_users = database.query(User).order_by(User.id.asc()).offset(skip).limit(limit).all()
     return [
         UserPublic(
@@ -77,6 +87,7 @@ async def list_users_teacher_only(
             role=u.role,
             first_name=u.first_name,
             last_name=u.last_name,
+            must_change_password=u.must_change_password,
         )
         for u in all_users
     ]
@@ -97,6 +108,7 @@ async def change_password(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     user.hashed_password = security.get_password_hash(new_password)
+    user.must_change_password = False
     database.commit()
     return {"ok": True}
 
@@ -105,7 +117,7 @@ async def change_password(
 @router.post("/reset-student-password")
 async def reset_student_password(
     email: str = Body(..., embed=True),
-    _: User = Depends(security.require_teacher),
+    current_user: User = Depends(security.require_teacher),
     database: Session = Depends(db.get_db),
 ):
     """(Teacher only) Resets a student's password to a secure temporary value."""
@@ -114,11 +126,14 @@ async def reset_student_password(
     user = database.query(User).filter(User.email == email.lower()).one_or_none()
     if not user or user.role != "student":
         raise HTTPException(status_code=404, detail="Student not found")
+    if not security.shares_group_with(current_user, user):
+        raise HTTPException(status_code=404, detail="Student not found")
 
     # Generate a secure temporary password
     alphabet = string.ascii_letters + string.digits
     temp_password = "".join(secrets.choice(alphabet) for _ in range(12))
 
     user.hashed_password = security.get_password_hash(temp_password)
+    user.must_change_password = True
     database.commit()
     return {"ok": True, "temp_password": temp_password}

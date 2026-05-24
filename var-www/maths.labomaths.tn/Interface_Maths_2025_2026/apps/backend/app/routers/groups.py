@@ -8,23 +8,26 @@ from sqlalchemy.orm import Session
 
 from ..db import get_db
 from ..orm import User, Group, GroupPublic, UserPublic
-from ..security import get_current_user
-from ..security import require_teacher, get_current_user
+from ..security import can_manage_group, get_current_user, require_teacher
 
 
 router = APIRouter(prefix="/groups", tags=["groups"])
 
 
 @router.get("/", response_model=List[GroupPublic])
-async def list_groups(_: User = Depends(require_teacher), db: Session = Depends(get_db)):
-    groups = db.query(Group).order_by(Group.code.asc()).all()
+async def list_groups(current_user: User = Depends(require_teacher), db: Session = Depends(get_db)):
+    if current_user.role == "admin":
+        groups = db.query(Group).order_by(Group.code.asc()).all()
+    else:
+        user = db.get(User, current_user.id)
+        groups = sorted(user.groups if user else [], key=lambda group: group.code)
     return [GroupPublic(id=g.id, code=g.code, name=g.name) for g in groups]
 
 
 @router.get("/{code}/students", response_model=List[UserPublic])
-async def list_students_in_group(code: str, _: User = Depends(require_teacher), db: Session = Depends(get_db)):
+async def list_students_in_group(code: str, current_user: User = Depends(require_teacher), db: Session = Depends(get_db)):
     grp = db.query(Group).filter_by(code=code).one_or_none()
-    if not grp:
+    if not grp or not can_manage_group(current_user, code):
         raise HTTPException(status_code=404, detail="Groupe introuvable")
     # members relationship is loaded with selectin; ensure order for stable UI
     students = [m for m in grp.members if m.role == "student"]
@@ -37,6 +40,7 @@ async def list_students_in_group(code: str, _: User = Depends(require_teacher), 
             role=s.role,
             first_name=s.first_name,
             last_name=s.last_name,
+            must_change_password=s.must_change_password,
         )
         for s in students
     ]
@@ -52,10 +56,12 @@ async def my_groups(me: User = Depends(get_current_user), db: Session = Depends(
 
 
 @router.post("/{code}/seed-test", response_model=UserPublic)
-async def seed_test_student(code: str, _: User = Depends(require_teacher), db: Session = Depends(get_db)):
+async def seed_test_student(code: str, current_user: User = Depends(require_teacher), db: Session = Depends(get_db)):
     import os
     if os.getenv("TESTING") != "1":
         raise HTTPException(status_code=403, detail="disabled")
+    if not can_manage_group(current_user, code):
+        raise HTTPException(status_code=404, detail="Groupe introuvable")
 
     from ..orm import create_student
 
@@ -83,15 +89,20 @@ async def seed_test_student(code: str, _: User = Depends(require_teacher), db: S
         role=user.role,
         first_name=user.first_name,
         last_name=user.last_name,
+        must_change_password=user.must_change_password,
     )
 
 
 @router.get("/{code}/evaluations")
-async def list_evaluations(code: str, _: User = Depends(get_current_user)):
+async def list_evaluations(code: str, current_user: User = Depends(get_current_user)):
     """
     Lists available evaluations for a given group.
     Currently returns a static list based on the group code.
     """
+    if current_user.role == "student" and code not in {group.code for group in current_user.groups}:
+        raise HTTPException(status_code=404, detail="Groupe introuvable")
+    if current_user.role == "teacher" and not can_manage_group(current_user, code):
+        raise HTTPException(status_code=404, detail="Groupe introuvable")
     if code.startswith("P-EDS"):
         return [
             {

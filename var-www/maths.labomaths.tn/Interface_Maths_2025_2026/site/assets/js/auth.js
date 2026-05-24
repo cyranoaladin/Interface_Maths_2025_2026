@@ -1,72 +1,69 @@
-const API_BASE = "/"; // same origin; backend should be served under same host or proxied
+import {
+  apiFetch,
+  apiJson,
+  clearToken,
+  dashboardPathForRole,
+  fetchWithAuth,
+  getMe,
+  getToken,
+  logout,
+  saveToken,
+  withBase,
+} from './api-client.js';
 
-export function withBase(path) {
-  const base = location.pathname.startsWith('/content/') ? '/content' : '';
-  return base + path;
-}
+export {
+  apiFetch,
+  apiJson,
+  clearToken,
+  fetchWithAuth,
+  getMe,
+  getToken,
+  logout,
+  saveToken,
+  withBase,
+};
 
-export function saveToken(token) {
-  try {
-    localStorage.setItem('auth_token', token);
-  } catch (_) {}
-}
-
-export function getToken() {
-  try { return localStorage.getItem('auth_token') || ''; } catch (_) { return ''; }
-}
-
-export function clearToken() {
-  try { localStorage.removeItem('auth_token'); } catch (_) {}
-}
-
-export async function fetchWithAuth(path, options = {}) {
-  const token = getToken();
-  const headers = new Headers(options.headers || {});
-  if (token) headers.set('Authorization', `Bearer ${token}`);
-  // API endpoints should not be content-prefixed
-  const isApi = path.startsWith('/api/') || path.startsWith('/auth/') || path.startsWith('/groups') || path.startsWith('/testing');
-  const url = isApi ? path : withBase(path);
-  const res = await fetch(url, { ...options, headers, cache: isApi ? 'no-store' : (options.cache || 'default') });
-  if (res.status === 401) {
-    clearToken();
-    if (!location.pathname.endsWith('/login.html')) location.href = withBase('/login.html');
-    throw new Error('Unauthorized');
+async function loginWithPassword(email, password) {
+  const body = new URLSearchParams();
+  body.set('username', email);
+  body.set('password', password);
+  const data = await apiJson('/auth/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body,
+  });
+  saveToken(data.access_token);
+  if (data.must_change_password) {
+    localStorage.setItem('first_login', '1');
   }
-  return res;
+  const me = await getMe();
+  return { ...data, me };
 }
 
-// Attach login form handler if present
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('login-form');
   if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const fd = new FormData(form);
-      const email = (fd.get('email') || fd.get('username') || '').toString();
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const email = (formData.get('email') || formData.get('username') || '').toString().trim();
+      const password = (formData.get('password') || '').toString();
+      const output = document.getElementById('login-msg');
+      if (output) output.textContent = 'Connexion en cours...';
       try {
-        const res = await fetch('/api/v1/login-form', { method: 'POST', body: fd });
-        if (!res.ok) { throw new Error('Échec de connexion'); }
-        const data = await res.json();
-        saveToken(data.access_token);
-        if (data.first_login) {
-          // force password change page if provided, else redirect to dashboard which will prompt
-          const next = withBase('/dashboard.html');
-          localStorage.setItem('first_login', '1');
-          location.href = next;
-          return;
-        }
-        location.href = withBase('/dashboard.html');
-      } catch (err) {
-        const out = document.getElementById('login-msg');
-        if (out) out.textContent = err.message || 'Identifiants invalides';
+        const data = await loginWithPassword(email, password);
+        location.href = dashboardPathForRole(data.me.role);
+      } catch (error) {
+        clearToken();
+        if (output) output.textContent = error.message || 'Identifiants invalides';
       }
     });
   }
 
-  const logout = document.getElementById('logout-btn');
-  if (logout) {
-    logout.addEventListener('click', () => {
-      clearToken();
+  const logoutButton = document.getElementById('logout-btn');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', async () => {
+      await logout();
       location.href = withBase('/index.html');
     });
   }

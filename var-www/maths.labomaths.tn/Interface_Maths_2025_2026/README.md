@@ -19,10 +19,9 @@
 
 ## 2) Architecture (monorepo simple)
 
-- `site/` — Site public principal (HTML/CSS/JS), servi comme racine de contenu.
-- `apps/backend/` — API FastAPI (Python 3.12), SQLite via SQLAlchemy, JWT, endpoints groupes/utilisateurs, scripts d’import/seed.
-- `apps/vue-client/` — Prototype Vue 3 (migration progressive), distinct du site principal.
-- `tests/` — Tests E2E Playwright (et tests unitaires JS/TS si présents).
+- `site/` — Site public principal (HTML/CSS/JS), espaces élève/enseignant, client API commun.
+- `apps/backend/` — API FastAPI, SQLite via SQLAlchemy, JWT, rôles, groupes, ressources, évaluations, scripts d’import/seed.
+- `tests/` — Tests backend, unitaires JS et E2E Playwright.
 - `deploy/` — Script de déploiement unique `deploy_all.sh` + exemples infra.
 
 Schéma:
@@ -36,7 +35,6 @@ Interface_Maths_2025_2026/
       data/app.db             # SQLite (créée auto)
       outputs/                # Exports CSV et journaux applicatifs
       scripts/                # import/export/seed/bootstrap
-    vue-client/               # prototype Vue 3
   tests/                      # E2E Playwright
   deploy/deploy_all.sh        # Déploiement VPS one‑shot
 ```
@@ -46,8 +44,9 @@ Interface_Maths_2025_2026/
 ## 3) Backend — Modèle, Auth, Endpoints, Scripts
 
 - Framework: FastAPI (+ Starlette). ORM: SQLAlchemy 2.x. DB: SQLite (fichier géré par défaut).
-- Utilisateurs: `User { id, email, full_name, role: teacher|student, hashed_password, is_active, created_at }`
-- Groupes: `Group { id, code, name }` + table d’association `user_groups` (un élève peut être dans plusieurs groupes).
+- Utilisateurs: `User { id, email, full_name, first_name, last_name, role: admin|teacher|student, hashed_password, is_active, must_change_password, created_at, updated_at, last_login_at }`
+- Groupes: `Group { id, code, name, level, subject, school_year, is_active, created_at, updated_at }` + table d’association `user_groups`.
+- Ressources et évaluations: modèles SQLAlchemy préparés (`Resource`, `Evaluation`, `StudentReport`) et manifeste JSON transitoire `site/assets/data/resources.json`.
 - Authentification: JWT (HS256), `OAuth2PasswordBearer`; hash mots de passe via `passlib` (bcrypt_sha256).
 
 Endpoints principaux:
@@ -56,9 +55,16 @@ Endpoints principaux:
 - `GET /auth/me` — profil courant
 - `POST /auth/change-password` — changer son mot de passe
 - `POST /auth/reset-student-password` — enseignant → génère un mot de passe temporaire aléatoire
-- `GET /groups/` — liste des groupes (enseignant)
-- `GET /groups/{code}/students` — élèves d’un groupe (enseignant)
+- `GET /groups/` — groupes visibles par l’enseignant ou tous les groupes pour l’admin
+- `GET /groups/{code}/students` — élèves d’un groupe visible par l’enseignant/admin
 - `GET /groups/my` — groupes associés à l’utilisateur courant (élève/enseignant)
+- `GET /resources/my` — ressources filtrées par rôle/groupe
+- `GET /resources/{id}` — ressource si visible
+- `GET /evaluations/my` — évaluations visibles par l’utilisateur courant
+- `GET /evaluations/{id}/my-report` — bilan de l’élève courant
+- `GET /teacher/groups/{code}/evaluations` — évaluations d’un groupe autorisé
+- `GET /teacher/students/{student_id}/reports` — bilans d’un élève autorisé
+- `GET /admin/users`, `GET /admin/groups` — administration minimale, admin uniquement
 - `GET /api/v1/session` — session compat (utilisée par le frontend `auth.js`)
 
 Exemples cURL:
@@ -67,10 +73,10 @@ Exemples cURL:
 # Login (OAuth2)
 curl -s -X POST http://localhost:8000/auth/token \
   -H 'content-type: application/x-www-form-urlencoded' \
-  -d 'username=alaeddine.benrhouma@ert.tn&password=secret'
+  -d 'username=teacher.test@example.com&password=<mot-de-passe-local>'
 
 # Garder le token dans une variable
-TOKEN="$(curl -s -X POST http://localhost:8000/auth/token -H 'content-type: application/x-www-form-urlencoded' -d 'username=alaeddine.benrhouma@ert.tn&password=secret' | jq -r .access_token)"
+TOKEN="$(curl -s -X POST http://localhost:8000/auth/token -H 'content-type: application/x-www-form-urlencoded' -d 'username=teacher.test@example.com&password=<mot-de-passe-local>' | jq -r .access_token)"
 
 # Lister les groupes (enseignant)
 curl -s http://localhost:8000/groups/ -H "authorization: Bearer $TOKEN" | jq
@@ -102,15 +108,15 @@ Bootstrap automatique au démarrage:
 - Pages publiques: `index.html`, rubriques `EDS_premiere/`, `EDS_terminale/`, `Maths_expertes/`, progression, mentions, etc.
 - Tableaux de bord:
   - Élève (`site/student.html`, `assets/js/student.js`):
-    - « Ressources » (cartes EDS Première), « Changer mon mot de passe », bilans d’évaluations (lecture JSON et rendu stylé, filtrage par élève)
+    - aperçu groupes/ressources/évaluations, ressources via `/resources/my`, bilans via `/evaluations/{id}/my-report`, changement de mot de passe
   - Enseignant (`site/dashboard.html`, `assets/js/dashboard.js`):
-    - Liste des groupes → table des élèves (nom nettoyé, email)
-    - Actions: « Voir bilan » (rendu carte détaillée), « Réinitialiser » (mot de passe)
+    - groupes via `/groups/`, élèves via `/groups/{code}/students`, bilans via `/teacher/students/{id}/reports`
+    - actions: « Voir bilan », « Réinitialiser » avec contrôle backend des groupes
 
 Rendu des bilans (EDS Première, Second Degré):
 
-- Source JSON: `site/EDS_premiere/Second_Degre/bilans_eval1second_degre.json`
-- Filtrage: par email (si présent) ou par nom complet normalisé
+- Source JSON actuelle: `site/EDS_premiere/Second_Degre/bilans_eval1_second_degre.json`
+- Filtrage sensible: côté backend dans `apps/backend/app/services/evaluation_service.py`
 - Mise en page: carte avec titre « Évaluation n°1 — Fonctions de second degré et forme canonique », date, mention, sections Points forts / Axes d’amélioration / Conseils / Appréciation / tableau des exercices.
 
 Structure JS/CSS:
@@ -125,12 +131,12 @@ Structure JS/CSS:
 
 ### Routage & workflows (UX)
 
-- Auth côté client: `assets/js/auth.js` gère token (localStorage) + helper `fetchWithAuth()` (ajout Bearer + redirection 401)
+- Auth côté client: `assets/js/api-client.js` centralise token, Bearer, JSON, 401/403 et helpers `getMe()`/`logout()`.
 - Élève: `/login.html` → sur succès → `/student.html`
   - Panneaux: Aperçu, Ressources, Bilans évaluations (lecture JSON), Changer mot de passe
 - Enseignant: `/login.html` → sur succès → `/dashboard.html`
   - Menu latéral Groupes → clic groupe → liste cartes élèves → Voir bilan (carte détaillée + retour)
-  - Actions enseignants protégées par rôle côté API (403 sinon)
+- Actions enseignants protégées par rôle et groupe côté API (`403` rôle insuffisant, `404` ressource non visible).
 
 ### Charte graphique & composants
 
@@ -212,10 +218,10 @@ pip install -U pip
 pip install -r apps/backend/requirements.txt
 ```
 
-Build frontend et copier assets:
+Installer les dépendances JS pour les tests et outils:
 
 ```bash
-cd apps/vue-client && npm ci || npm install && npm run build
+npm install
 ```
 
 Démarrer l’API en dev (sert aussi `site/`):
@@ -244,7 +250,8 @@ Commandes:
 npx playwright install chromium
 npm run test:e2e
 npm run test:e2e:local -- tests/e2e/login_flow.spec.ts
-. apps/backend/.venv/bin/activate && pytest -q apps/backend
+. apps/backend/.venv/bin/activate && pytest -q tests
+npm run test:unit
 ```
 
 Notes:
@@ -268,7 +275,7 @@ bash deploy/deploy_all.sh
 Ce script:
 
 - Crée la venv, installe le backend
-- (Optionnel) Build du prototype Vue `apps/vue-client/`
+- Installe les dépendances backend et prépare les assets statiques existants
 - Bootstrape la base (schéma + groupes + enseignant réel via `TEACHER_EMAIL`/`TEACHER_SECRET`)
 - Crée/active un service systemd `interface-maths` (API sur `127.0.0.1:8000`)
 - Configure Nginx pour servir `site/` en `/content` et reverse‑proxy `/(api|auth|groups|api/v1)` vers l’API
@@ -276,7 +283,7 @@ Ce script:
 Accès:
 
 - Site: `http://<votre_domaine>/content/index.html`
-- Connexion enseignant: `alaeddine.benrhouma@ert.tn` / `secret` (modifiez ensuite dans l’UI)
+- Connexion enseignant: compte défini par `TEACHER_EMAIL` et mot de passe local `TEACHER_SECRET`, à modifier ensuite dans l’UI.
 
 Reconstruction totale (disaster recovery):
 

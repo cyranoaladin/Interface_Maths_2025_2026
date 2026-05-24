@@ -1,15 +1,19 @@
-import { clearToken, fetchWithAuth, withBase } from './auth.js';
-import { findStudentBilan, renderBilan, escapeHtml, canonicalizeName } from './bilans.js';
+import { apiJson, logout, withBase } from './api-client.js';
+import { renderBilan, escapeHtml } from './bilans.js';
 
 
 let currentUser = null;
 
 async function init() {
   const sub = document.getElementById('student-subtitle');
-  const meRes = await fetchWithAuth('/api/v1/session');
-  const me = await meRes.json();
+  const me = await apiJson('/auth/me');
   currentUser = me;
+  if (me.role !== 'student') {
+    location.href = withBase('/dashboard.html');
+    return;
+  }
   if (sub) sub.textContent = `${me.full_name || me.email} — Élève`;
+  await renderOverview();
 
   // Forcer changement de mot de passe à la première connexion (flag posé par auth.js)
   try {
@@ -27,8 +31,7 @@ async function init() {
         const val = field && field.value ? String(field.value) : '';
         if (val.length < 8) { alert('Mot de passe trop court'); return; }
         try {
-          const res = await fetchWithAuth('/api/v1/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: val }) });
-          if (!res.ok) throw new Error('Erreur');
+          await apiJson('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: val }) });
           alert('Mot de passe mis à jour.');
           setPanel('Aperçu', `
             <p>Bienvenue dans votre espace. Retrouvez vos <strong>ressources</strong>, vos <strong>bilans</strong> et vos informations personnelles au même endroit.</p>
@@ -47,23 +50,19 @@ async function init() {
   document.getElementById('s-resources')?.addEventListener('click', async (e) => {
     e.preventDefault();
     try {
-      const gRes = await fetchWithAuth('/auth/me/groups');
-      const groups = await gRes.json();
-      
+      const resources = await apiJson('/resources/my');
       const body = ['<div class="cards">'];
-      let added = false;
-      
-      for (const g of groups) {
-        if (g.code.startsWith('P-EDS')) { body.push(`<a class="card-link" href="${withBase('/EDS_premiere/index.html')}">Ressources — ${escapeHtml(g.name)}</a>`); added = true; }
-        else if (g.code.startsWith('T-EDS')) { body.push(`<a class="card-link" href="${withBase('/EDS_terminale/index.html')}">Ressources — ${escapeHtml(g.name)}</a>`); added = true; }
-        else if (g.code.startsWith('MX')) { body.push(`<a class="card-link" href="${withBase('/Maths_expertes/index.html')}">Ressources — ${escapeHtml(g.name)}</a>`); added = true; }
+      if (!resources.length) {
+        body.push('<p>Aucune ressource disponible pour vos groupes.</p>');
       }
-      
-      if (!added) {
-        // Fallback
-        body.push(`<a class="card-link" href="${withBase('/EDS_premiere/index.html')}">Ressources — Première EDS</a>`);
+      for (const resource of resources) {
+        body.push(`
+          <a class="card-link" href="${withBase(resource.url || '#')}">
+            <strong>${escapeHtml(resource.title)}</strong>
+            <span class="small">${escapeHtml([resource.level, resource.chapter, resource.type].filter(Boolean).join(' · '))}</span>
+          </a>
+        `);
       }
-      
       body.push('</div>');
       setPanel('Ressources', body.join(''));
     } catch (e) {
@@ -84,14 +83,7 @@ async function init() {
 
   document.getElementById('s-overview')?.addEventListener('click', (e) => {
     e.preventDefault();
-    setPanel('Aperçu', `
-      <p>Bienvenue dans votre espace. Retrouvez vos <strong>ressources</strong>, vos <strong>bilans</strong> et vos informations personnelles au même endroit.</p>
-      <ul>
-        <li>Consultez les supports de cours et exercices dans l’onglet Ressources</li>
-        <li>Suivez vos évaluations et progressez grâce au bilan personnalisé</li>
-        <li>Vous pouvez changer votre mot de passe à tout moment</li>
-      </ul>
-    `);
+    renderOverview();
   });
 
   // Changer mot de passe (panel in-page, pas de prompt)
@@ -113,51 +105,50 @@ async function init() {
       if (p1.length < 8) { if (fb) fb.textContent = 'Mot de passe trop court (8 caractères minimum)'; return; }
       if (p1 !== p2) { if (fb) fb.textContent = 'Les mots de passe ne correspondent pas'; return; }
       try {
-        const res = await fetchWithAuth('/api/v1/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: p1 }) });
-        if (!res.ok) throw new Error('Erreur');
+        await apiJson('/auth/change-password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ new_password: p1 }) });
         setPanel('Mot de passe', '<p style="color:#22c55e">Mot de passe mis à jour avec succès.</p>');
       } catch { if (fb) fb.textContent = 'Échec de mise à jour.'; }
     });
   });
 
-  document.getElementById('logout-btn')?.addEventListener('click', () => { clearToken(); location.href = withBase('/index.html'); });
-}
-
-async function showResourcesForGroup(g) {
-  // Simple: lister des liens directs selon code
-  const links = [
-    g.code.startsWith('P-EDS') ? withBase('/EDS_premiere/index.html') : null,
-    g.code.startsWith('T-EDS') ? withBase('/EDS_terminale/index.html') : null,
-    g.code.startsWith('MX') ? withBase('/Maths_expertes/index.html') : null,
-  ].filter(Boolean);
-  const body = ['<div class="cards">'];
-  links.forEach(href => body.push(`<a class="card-link" href="${href}">Ressources ${escapeHtml(g.name)}</a>`));
-  body.push('</div>');
-  setPanel(g.name, body.join(''));
+  document.getElementById('logout-btn')?.addEventListener('click', async () => { await logout(); location.href = withBase('/index.html'); });
 }
 
 async function showBilans() {
-  // Première EDS: charger JSON Second Degré si présent
   try {
-    const data = await loadSecondDegreBilans();
-    // Afficher directement le bilan (évite doublon carte + bilan)
-    const studentBilan = findStudentBilan(data, currentUser);
-    if (!studentBilan) {
-      setPanel('Bilans', '<p>Aucun bilan correspondant à votre profil.</p>');
+    const evaluations = await apiJson('/evaluations/my');
+    if (!evaluations.length) {
+      setPanel('Bilans', '<p>Aucune évaluation disponible pour vos groupes.</p>');
       return;
     }
-    const html = renderBilan(studentBilan);
-    setPanel('Bilan — Évaluation n°1 sur les fonctions de second degré et forme canonique', html);
-  } catch {
+    const first = evaluations[0];
+    const report = await apiJson(`/evaluations/${encodeURIComponent(first.id)}/my-report`);
+    setPanel(`Bilan — ${escapeHtml(first.title)}`, renderBilan(report));
+  } catch (error) {
     setPanel('Bilans', '<p>Aucun bilan disponible pour votre niveau.</p>');
   }
 }
 
-async function loadSecondDegreBilans() {
-  const url = withBase('/EDS_premiere/Second_Degre/bilans_eval1_second_degre.json');
-  const r = await fetch(url);
-  if (!r.ok) throw new Error('not found');
-  return await r.json();
+async function renderOverview() {
+  try {
+    const [groups, resources, evaluations] = await Promise.all([
+      apiJson('/auth/me/groups'),
+      apiJson('/resources/my'),
+      apiJson('/evaluations/my'),
+    ]);
+    const groupText = groups.map(g => g.code).join(', ') || 'aucun groupe';
+    setPanel('Aperçu', `
+      <p>Bonjour ${escapeHtml(currentUser.first_name || currentUser.full_name || currentUser.email)}.</p>
+      <div class="cards">
+        <div class="card"><strong>Groupes</strong><br>${escapeHtml(groupText)}</div>
+        <div class="card"><strong>Ressources</strong><br>${resources.length}</div>
+        <div class="card"><strong>Évaluations</strong><br>${evaluations.length}</div>
+      </div>
+      <p class="small">Vos ressources et bilans sont filtrés par le serveur selon vos groupes.</p>
+    `);
+  } catch {
+    setPanel('Aperçu', '<p>Bienvenue dans votre espace.</p>');
+  }
 }
 
 function setPanel(title, html) {
@@ -166,7 +157,6 @@ function setPanel(title, html) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
-
 
 
 

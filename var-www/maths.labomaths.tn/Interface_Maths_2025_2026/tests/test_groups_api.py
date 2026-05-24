@@ -18,7 +18,7 @@ def create_teacher_and_get_token(client, session, email: str) -> str:
             email=email,
             full_name="Teacher One",
             role="teacher",
-            hashed_password=get_password_hash("secret"),
+            hashed_password=get_password_hash("test-only-credential"),
         )
         session.add(teacher)
     group = session.query(Group).filter_by(code="T-EDS-3").one_or_none()

@@ -93,11 +93,47 @@ async def get_current_user(
     return user
 
 
+def require_active_user(user: "User" = Depends(get_current_user)) -> "User":
+    """Return the authenticated active user."""
+    return user
+
+
 def require_teacher(user: "User" = Depends(get_current_user)) -> "User":
     """
-    Dependency that requires the current user to have the 'teacher' role.
+    Dependency that requires the current user to have the 'teacher' or 'admin' role.
     Raises a 403 Forbidden error otherwise.
     """
-    if user.role != "teacher":
+    if user.role not in {"teacher", "admin"}:
         raise HTTPException(status_code=403, detail="Insufficient permissions")
     return user
+
+
+def require_admin(user: "User" = Depends(get_current_user)) -> "User":
+    """Dependency that requires the current user to have the 'admin' role."""
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Insufficient permissions")
+    return user
+
+
+def is_admin(user: "User") -> bool:
+    return user.role == "admin"
+
+
+def user_group_codes(user: "User") -> set[str]:
+    return {group.code for group in getattr(user, "groups", [])}
+
+
+def can_manage_group(user: "User", group_code: str) -> bool:
+    """Admins can manage all groups; teachers only their assigned groups."""
+    if is_admin(user):
+        return True
+    if user.role != "teacher":
+        return False
+    return group_code in user_group_codes(user)
+
+
+def shares_group_with(user: "User", other: "User") -> bool:
+    """Return whether two non-admin users share at least one group."""
+    if is_admin(user):
+        return True
+    return bool(user_group_codes(user) & user_group_codes(other))

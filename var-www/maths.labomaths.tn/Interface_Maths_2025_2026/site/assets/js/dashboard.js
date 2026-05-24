@@ -1,24 +1,22 @@
-import { fetchWithAuth, withBase } from './auth.js';
-import { findStudentBilan, renderBilan, escapeHtml, canonicalizeName } from './bilans.js';
+import { apiJson, logout, withBase } from './api-client.js';
+import { renderBilan, escapeHtml } from './bilans.js';
 let lastGroup = null;
 
 async function init() {
   // Fetch profile
-  const meRes = await fetchWithAuth('/api/v1/session');
-  const me = await meRes.json();
+  const me = await apiJson('/auth/me');
   if (me.role === 'student') { location.href = withBase('/student.html'); return; }
   const sub = document.getElementById('user-subtitle');
-  if (sub) sub.textContent = `${me.full_name || me.email} — ${me.role === 'teacher' ? 'Enseignant' : 'Élève'}`;
+  if (sub) sub.textContent = `${me.full_name || me.email} — ${me.role === 'admin' ? 'Administration' : 'Enseignant'}`;
 
   // Role-based menu
   const teacherBox = document.getElementById('teacher-groups');
-  if (me.role === 'teacher' && teacherBox) {
+  if ((me.role === 'teacher' || me.role === 'admin') && teacherBox) {
     const wrap = document.createElement('div');
     wrap.innerHTML = `<h3 class="small" style="margin:10px 0">Groupes</h3>`;
     teacherBox.appendChild(wrap);
     try {
-      const gr = await fetchWithAuth('/groups/');
-      const groups = await gr.json();
+      const groups = await apiJson('/groups/');
       const list = document.createElement('div');
       groups.forEach(g => {
         const a = document.createElement('a');
@@ -37,7 +35,12 @@ async function init() {
   // Default panel
   document.getElementById('lnk-overview')?.addEventListener('click', (e) => {
     e.preventDefault();
-    setPanel('Aperçu', `<p>Bienvenue dans votre espace.</p>`);
+    renderOverview(me);
+  });
+  await renderOverview(me);
+  document.getElementById('logout-btn')?.addEventListener('click', async () => {
+    await logout();
+    location.href = withBase('/index.html');
   });
 }
 
@@ -45,9 +48,10 @@ async function loadGroup(code, name) {
   setPanel(name, `<p>Chargement des élèves…</p>`);
   lastGroup = { code, name };
   try {
-    const res = await fetchWithAuth(`/groups/${encodeURIComponent(code)}/students`);
-    const students = await res.json();
+    const students = await apiJson(`/groups/${encodeURIComponent(code)}/students`);
+    const evaluations = await apiJson(`/teacher/groups/${encodeURIComponent(code)}/evaluations`);
     const html = [
+      `<p class="small">${students.length} élève(s) · ${evaluations.length} évaluation(s)</p>`,
       `<table class="table-simple"><thead><tr><th>Nom</th><th>Email</th><th>Actions</th></tr></thead><tbody>`
     ];
     students.forEach((s, idx) => {
@@ -58,7 +62,7 @@ async function loadGroup(code, name) {
         `<td>${escapeHtml(fullName)}</td>`,
         `<td>${escapeHtml(email)}</td>`,
         `<td>` +
-        `<a href="#" class="bilan-btn" data-email="${escapeHtml(email)}" data-name="${escapeHtml(fullName)}">Voir bilan</a>` +
+        `<a href="#" class="bilan-btn" data-id="${s.id}" data-email="${escapeHtml(email)}" data-name="${escapeHtml(fullName)}">Voir bilan</a>` +
         ` &nbsp; ` +
         `<button type="button" class="reset-btn" data-email="${escapeHtml(email)}" aria-label="Réinitialiser le mot de passe de ${escapeHtml(fullName)}">Réinitialiser</button>` +
         `</td>`,
@@ -73,9 +77,9 @@ async function loadGroup(code, name) {
     body?.querySelectorAll('a.bilan-btn').forEach(a => {
       a.addEventListener('click', (ev) => {
         ev.preventDefault();
-        const email = a.getAttribute('data-email') || '';
+        const studentId = a.getAttribute('data-id') || '';
         const fullName = a.getAttribute('data-name') || '';
-        showBilanForStudent(email, fullName, name);
+        showBilanForStudent(studentId, fullName, name);
       });
     });
     body?.querySelectorAll('button.reset-btn').forEach(btn => {
@@ -145,38 +149,30 @@ async function resetStudentPassword(email) {
   const sure = confirm(`Réinitialiser le mot de passe pour\n${email} ?`);
   if (!sure) return;
   try {
-    const res = await fetchWithAuth('/auth/reset-student-password', {
+    const data = await apiJson('/auth/reset-student-password', {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email })
     });
-    if (!res.ok) {
-      let msg = 'Échec de réinitialisation.';
-      try { const err = await res.json(); if (err && err.detail) msg = String(err.detail); } catch {}
-      showToast(msg, 'error');
-      return;
-    }
-    const data = await res.json();
     prompt(`Mot de passe réinitialisé. Copiez le nouveau mot de passe temporaire :`, data.temp_password);
     showToast('Mot de passe réinitialisé.', 'success');
-  } catch {
-    showToast('Erreur réseau.', 'error');
+  } catch (error) {
+    showToast(error.message || 'Erreur réseau.', 'error');
   }
 }
 
 // ====== Bilans (enseignant) ======
-async function showBilanForStudent(email, fullName, groupTitle) {
+async function showBilanForStudent(studentId, fullName, groupTitle) {
   try {
-    const data = await loadSecondDegreBilans();
-    const meLike = { email, full_name: fullName };
-    const studentBilan = findStudentBilan(data, meLike);
-    if (!studentBilan) {
+    const reports = await apiJson(`/teacher/students/${encodeURIComponent(studentId)}/reports`);
+    if (!reports.length) {
       const back = `<p><a href="#" id="back-to-group">← Retour</a></p>`;
       setPanel(`Bilan — ${groupTitle}`, back + '<p>Aucun bilan correspondant pour cet élève.</p>');
       document.getElementById('back-to-group')?.addEventListener('click', (e) => { e.preventDefault(); if (lastGroup) loadGroup(lastGroup.code, lastGroup.name); });
       return;
     }
-    const html = renderBilan(studentBilan);
+    const report = reports[0];
+    const html = renderBilan(report);
     const back = `<p style="margin:0 0 10px 0"><a href="#" id="back-to-group">← Retour</a></p>`;
-    setPanel('Bilan — Évaluation n°1 sur les fonctions de second degré et forme canonique', back + html);
+    setPanel(`Bilan — ${escapeHtml(report.evaluation_title || fullName)}`, back + html);
     document.getElementById('back-to-group')?.addEventListener('click', (e) => { e.preventDefault(); if (lastGroup) loadGroup(lastGroup.code, lastGroup.name); });
   } catch {
     const back = `<p><a href="#" id="back-to-group">← Retour</a></p>`;
@@ -185,9 +181,20 @@ async function showBilanForStudent(email, fullName, groupTitle) {
   }
 }
 
-async function loadSecondDegreBilans() {
-  const url = withBase('/EDS_premiere/Second_Degre/bilans_eval1_second_degre.json');
-  const r = await fetch(url);
-  if (!r.ok) throw new Error('not found');
-  return await r.json();
+async function renderOverview(me) {
+  try {
+    const groups = await apiJson('/groups/');
+    const resources = await apiJson('/resources/my');
+    setPanel('Aperçu', `
+      <p>Bonjour ${escapeHtml(me.first_name || me.full_name || me.email)}.</p>
+      <div class="cards">
+        <div class="card"><strong>Rôle</strong><br>${escapeHtml(me.role)}</div>
+        <div class="card"><strong>Groupes accessibles</strong><br>${groups.length}</div>
+        <div class="card"><strong>Ressources visibles</strong><br>${resources.length}</div>
+      </div>
+      <p class="small">Les groupes, élèves et bilans sont filtrés par le backend.</p>
+    `);
+  } catch {
+    setPanel('Aperçu', '<p>Bienvenue dans votre espace.</p>');
+  }
 }

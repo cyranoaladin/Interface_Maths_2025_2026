@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 from datetime import datetime, timezone
 
-from sqlalchemy import Table, Column, Integer, String, Boolean, DateTime, ForeignKey, UniqueConstraint
+from sqlalchemy import Table, Column, Integer, String, Boolean, DateTime, ForeignKey, UniqueConstraint, Text, Float
 from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
 
 from pathlib import Path
@@ -30,6 +30,16 @@ class Group(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     code: Mapped[str] = mapped_column(String(64), unique=True, index=True)
     name: Mapped[str] = mapped_column(String(128))
+    level: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    subject: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    school_year: Mapped[Optional[str]] = mapped_column(String(32), nullable=True, default="2025-2026")
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
 
     members: Mapped[List["User"]] = relationship(
         "User", secondary=user_groups, back_populates="groups", lazy="selectin"
@@ -44,10 +54,17 @@ class User(Base):
     # Champs explicites pour prénom/nom
     first_name: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
     last_name: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
-    role: Mapped[str] = mapped_column(String(32), default="student")  # 'student' | 'teacher'
+    role: Mapped[str] = mapped_column(String(32), default="student")  # admin | teacher | student
     hashed_password: Mapped[str] = mapped_column(String(255))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    must_change_password: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
+    last_login_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
     groups: Mapped[List[Group]] = relationship(
         Group, secondary=user_groups, back_populates="members", lazy="selectin"
@@ -79,12 +96,75 @@ class UserPublic:
     role: str
     first_name: str | None = None
     last_name: str | None = None
+    must_change_password: bool = False
+
+
+class Resource(Base):
+    __tablename__ = "resources"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    title: Mapped[str] = mapped_column(String(255))
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    type: Mapped[str] = mapped_column(String(64), default="other")
+    level: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    subject: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    chapter: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    group_code: Mapped[Optional[str]] = mapped_column(String(64), nullable=True, index=True)
+    visibility: Mapped[str] = mapped_column(String(32), default="authenticated")
+    file_path: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
+    url: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
+
+
+class Evaluation(Base):
+    __tablename__ = "evaluations"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    slug: Mapped[str] = mapped_column(String(128), unique=True, index=True)
+    title: Mapped[str] = mapped_column(String(255))
+    group_code: Mapped[Optional[str]] = mapped_column(String(64), nullable=True, index=True)
+    subject: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    chapter: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    date: Mapped[Optional[str]] = mapped_column(String(32), nullable=True)
+    json_path: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
+    source_path: Mapped[Optional[str]] = mapped_column(String(512), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
+
+
+class StudentReport(Base):
+    __tablename__ = "student_reports"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    student_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    evaluation_id: Mapped[int] = mapped_column(ForeignKey("evaluations.id", ondelete="CASCADE"), index=True)
+    data_json: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    max_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    mention: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
 
 
 DEFAULT_GROUPS = [
-    ("T-EDS-3", "Terminale EDS Maths — Groupe 3"),
-    ("P-EDS-6", "Première EDS Maths — Groupe 6"),
-    ("MX-1", "Maths expertes — Groupe 1"),
+    ("T-EDS-3", "Terminale EDS Maths — Groupe 3", "Terminale", "EDS Maths"),
+    ("P-EDS-6", "Première EDS Maths — Groupe 6", "Première", "EDS Maths"),
+    ("MX-1", "Maths expertes — Groupe 1", "Terminale", "Maths expertes"),
 ]
 
 
@@ -95,11 +175,23 @@ def _hash_password(password: str) -> str:
     return hash_password(password)
 
 
-def _ensure_group(db: Session, code: str, name: str) -> Group:
+def _ensure_group(db: Session, code: str, name: str, level: str | None = None, subject: str | None = None) -> Group:
     grp = db.query(Group).filter_by(code=code).one_or_none()
     if grp:
+        changed = False
+        if level and not grp.level:
+            grp.level = level
+            changed = True
+        if subject and not grp.subject:
+            grp.subject = subject
+            changed = True
+        if not grp.school_year:
+            grp.school_year = "2025-2026"
+            changed = True
+        if changed:
+            db.commit()
         return grp
-    grp = Group(code=code, name=name)
+    grp = Group(code=code, name=name, level=level, subject=subject, school_year="2025-2026")
     db.add(grp)
     db.commit()
     db.refresh(grp)
@@ -157,11 +249,27 @@ def ensure_bootstrap() -> None:
             conn.exec_driver_sql("ALTER TABLE users ADD COLUMN last_name VARCHAR(128)")
     except Exception:
         pass
+    for statement in [
+        "ALTER TABLE users ADD COLUMN must_change_password BOOLEAN DEFAULT 0",
+        "ALTER TABLE users ADD COLUMN updated_at DATETIME",
+        "ALTER TABLE users ADD COLUMN last_login_at DATETIME",
+        "ALTER TABLE groups ADD COLUMN level VARCHAR(64)",
+        "ALTER TABLE groups ADD COLUMN subject VARCHAR(128)",
+        "ALTER TABLE groups ADD COLUMN school_year VARCHAR(32) DEFAULT '2025-2026'",
+        "ALTER TABLE groups ADD COLUMN is_active BOOLEAN DEFAULT 1",
+        "ALTER TABLE groups ADD COLUMN created_at DATETIME",
+        "ALTER TABLE groups ADD COLUMN updated_at DATETIME",
+    ]:
+        try:
+            with engine.connect() as conn:
+                conn.exec_driver_sql(statement)
+        except Exception:
+            pass
     with Session(bind=engine) as db:
         # Groups
         code_to_group = {}
-        for code, name in DEFAULT_GROUPS:
-            code_to_group[code] = _ensure_group(db, code, name)
+        for code, name, level, subject in DEFAULT_GROUPS:
+            code_to_group[code] = _ensure_group(db, code, name, level, subject)
 
         # Teachers
         for email in settings.TEACHER_EMAILS:
@@ -206,6 +314,7 @@ def create_student(db: Session, email: str, full_name: str, group_codes: List[st
         last_name=last,
         role="student",
         hashed_password=_hash_password(password),
+        must_change_password=True,
     )
     db.add(user)
     # Attach groups

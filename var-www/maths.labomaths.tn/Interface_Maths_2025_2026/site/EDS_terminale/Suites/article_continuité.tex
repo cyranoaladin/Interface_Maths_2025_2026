@@ -1,0 +1,79 @@
+% filepath: /home/alaeddine/Documents/Interface__Maths_2025_2026/Interface_Maths_2025_2026/site/EDS_terminale/Suites/article_continuité.tex
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb}
+
+\geometry{margin=2.5cm}
+\setstretch{1.3}
+
+\title{
+    \Huge\textbf{Continuité : de l’intuition au formalisme moderne}\\[0.4cm]
+    \large Un voyage entre rigueur mathématique, paradoxes et vulgarisation
+}
+\author{} % L'auteur peut être ajouté ici
+\date{}   % On peut supprimer la date si non désirée
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\section*{Introduction}
+Qu’est-ce qu’une fonction continue ? Posée ainsi, la question semble simple : c’est une fonction que l’on peut tracer « sans lever le crayon ». Mais cette image naïve cache une histoire riche et complexe. Depuis l’Antiquité jusqu’au formalisme moderne, la continuité a été au cœur des grands débats mathématiques. Elle illustre à merveille le cheminement des mathématiques : partir d’analogies et d’intuitions, rencontrer des paradoxes, puis construire une définition rigoureuse capable de résister à toutes les objections.
+
+\section*{1. L’intuition grecque : le continu contre le discret}
+Pour les Grecs, le monde était fait de grandeurs continues (lignes, temps, mouvements) et d’objets discrets (points, nombres entiers). \textbf{Aristote} considérait déjà que « le continu est ce qui peut être divisé sans fin ». Mais aucune définition mathématique précise ne soutenait cette intuition. La continuité était un concept philosophique, presque métaphysique.
+
+\section*{2. XVII\textsuperscript{e} siècle : Descartes, Newton et Leibniz}
+Avec \textbf{Descartes}, la géométrie analytique permet de représenter une courbe par une équation. Une courbe « bien tracée » correspond donc à une équation simple et régulière. Puis, avec le calcul infinitésimal de \textbf{Newton} et \textbf{Leibniz}, la continuité devient implicite : pour dériver ou intégrer, il faut supposer que les variations sont progressives, sans rupture. L’image du « crayon que l’on ne lève pas » s’impose. Mais sur le plan mathématique, l’idée repose encore sur le flou des « infiniment petits ».
+
+\section*{3. XVIII\textsuperscript{e} siècle : les premiers paradoxes}
+Les travaux de \textbf{Euler} et \textbf{d’Alembert} mettent en lumière des contradictions. Certaines séries infinies, bien définies par une formule, produisent des graphes qui ne respectent pas l’intuition de la continuité. D’où un paradoxe : peut-on être « continu » et pourtant « imprévisible » ? Cette tension va pousser les mathématiciens à chercher une définition plus solide.
+
+\section*{4. XIX\textsuperscript{e} siècle : la rigueur des limites}
+Le tournant arrive avec \textbf{Cauchy}. Il introduit une première définition rigoureuse : une fonction $f$ est continue en un point $a$ si $f(x)$ tend vers $f(a)$ quand $x$ tend vers $a$. En langage moderne :
+\[
+\lim_{x \to a} f(x) = f(a).
+\]
+Cette formulation, claire mais encore un peu vague, est précisée par \textbf{Bolzano}, qui donne une démonstration rigoureuse du théorème des valeurs intermédiaires : une fonction continue sur un intervalle prend toutes les valeurs intermédiaires.
+
+Enfin, \textbf{Weierstrass} pose le cadre définitif avec la définition $\varepsilon$-$\delta$ :
+\[
+f \text{ est continue en } a \iff \forall \varepsilon > 0, \, \exists \delta > 0 : |x - a| < \delta \implies |f(x) - f(a)| < \varepsilon.
+\]
+Ici, plus d’« infiniment petits » : tout est exprimé avec des inégalités réelles. C’est le socle de l’analyse moderne.
+
+\section*{5. Fonctions pathologiques : quand l’intuition s’effondre}
+Le XIX\textsuperscript{e} siècle révèle aussi des fonctions surprenantes, voire choquantes :
+\begin{itemize}
+    \item La fonction de \textbf{Dirichlet}, qui vaut $1$ sur les rationnels et $0$ sur les irrationnels, est discontinue partout.
+    \item La fonction de \textbf{Weierstrass}, continue partout mais dérivable nulle part, contredit l’intuition « continuité = douceur ».
+\end{itemize}
+Ces exemples montrent que la continuité ne garantit pas la régularité. L’intuition visuelle cède la place à la rigueur abstraite.
+
+\section*{6. XX\textsuperscript{e} siècle : abstraction et généralisation}
+La continuité sort du cadre des fonctions réelles.
+\begin{itemize}
+    \item En \textbf{topologie}, elle devient une notion structurelle : une application est continue si l’image réciproque de tout ouvert est un ouvert.
+    \item En \textbf{analyse fonctionnelle}, elle concerne des opérateurs sur des espaces de dimension infinie.
+    \item En \textbf{sciences appliquées}, elle sert à modéliser des phénomènes progressifs (ondes, flux, croissance économique, traitement du signal).
+\end{itemize}
+
+\section*{7. Une leçon pédagogique et philosophique}
+L’histoire de la continuité est une histoire de maturation intellectuelle :
+\begin{itemize}
+    \item De l’analogie simple (« tracer sans lever le crayon »),
+    \item Aux paradoxes qui révèlent les limites de l’intuition,
+    \item Jusqu’à la définition rigoureuse qui met fin à toute ambiguïté,
+    \item Puis à la généralisation qui fait de la continuité une clé de voûte de la pensée mathématique.
+\end{itemize}
+En classe, enseigner cette évolution permet de montrer aux élèves que les mathématiques ne sont pas des vérités tombées du ciel, mais une construction humaine, progressive, parfois chaotique, toujours guidée par le besoin de précision.
+
+\section*{Conclusion}
+De l’Antiquité à aujourd’hui, la continuité illustre la trajectoire des mathématiques : une quête permanente d’équilibre entre intuition et rigueur. C’est une notion à la fois simple — « pas de saut » — et profondément riche, qui irrigue toute la pensée scientifique. L’enseigner, c’est transmettre non seulement une technique, mais aussi une histoire intellectuelle qui aide à mieux comprendre la nature même des mathématiques.
+
+\end{document}

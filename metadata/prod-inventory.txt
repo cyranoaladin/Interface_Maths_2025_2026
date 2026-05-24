@@ -1,0 +1,30 @@
+REMOTE_HOST=korrigo
+REMOTE_DATE=2026-05-24T14:48:27+02:00
+
+# nginx config path
+/etc/nginx/sites-enabled/maths.labomaths.tn
+
+# docker ps relevant
+infra-postgres-1	pgvector/pgvector:pg15	5432/tcp
+infra-redis-1	redis:7-alpine	6379/tcp
+math-correction-frontend-1	math-correction-frontend	127.0.0.1:3011->3000/tcp
+math-correction-backend-1	math-correction-backend	127.0.0.1:8010->8000/tcp
+math-correction-worker-1	math-correction-worker	8000/tcp
+math-correction-redis-1	redis:7-alpine	6379/tcp
+math-correction-postgres-1	pgvector/pgvector:pg16	5432/tcp
+nexus-postgres-db	pgvector/pgvector:pg15	127.0.0.1:5435->5432/tcp
+docker-redis-1	redis:7-alpine	6379/tcp
+docker-db-1	postgres:15-alpine	127.0.0.1:5432->5432/tcp
+journey-redis	8b81dd37ff02	6379/tcp
+journey-postgres	fceb6f86328c	5432/tcp
+
+# listeners
+LISTEN 0      4096       127.0.0.1:3011       0.0.0.0:*    users:(("docker-proxy",pid=2188394,fd=8))                                                                                                                                                                                                                                                                                                                                       
+LISTEN 0      511        127.0.0.1:8037       0.0.0.0:*    users:(("node",pid=3241299,fd=18))                                                                                                                                                                                                                                                                                                                                              
+LISTEN 0      4096       127.0.0.1:8010       0.0.0.0:*    users:(("docker-proxy",pid=2188316,fd=8))                                                                                                                                                                                                                                                                                                                                       
+
+# expose premiers process
+3241299 root     Thu May 21 06:15:46 2026 /usr/bin/node /opt/expose_premiers/server.mjs
+
+# compose labels
+project=math-correction working_dir=/opt/math-correction config=/opt/math-correction/docker-compose.labomaths.yml

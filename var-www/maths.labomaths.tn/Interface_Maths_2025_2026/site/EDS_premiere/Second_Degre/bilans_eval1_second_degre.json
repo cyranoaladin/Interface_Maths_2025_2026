@@ -1,0 +1,51 @@
+[
+    {
+        "nom_prenom": "ALICE DUPONT",
+        "email": "alice.dupont-e@example.com",
+        "note_finale": 16.5,
+        "mention": "Très Bien",
+        "bilan_personnalise": {
+            "points_forts": ["Rigueur", "Calcul algébrique"],
+            "axes_amelioration": ["Rédaction à soigner"],
+            "conseils": ["Continuer ainsi"],
+            "appreciation_finale": "Excellent travail."
+        },
+        "recapitulatif_exercices": [
+            { "exercice": "Ex. 1", "bareme": 6.0, "note": 6.0, "commentaire": "Parfait" },
+            { "exercice": "Ex. 2", "bareme": 5.0, "note": 4.5, "commentaire": "Petite erreur de signe" }
+        ],
+        "_audit": { "barreme_total": 20.0, "notes_total": 16.5, "issues": [] }
+    },
+    {
+        "nom_prenom": "Cov Student",
+        "email": "student.cov@example.com",
+        "note_finale": 16.5,
+        "mention": "Très Bien",
+        "bilan_personnalise": {
+            "points_forts": ["Rigueur"],
+            "axes_amelioration": [],
+            "conseils": [],
+            "appreciation_finale": "Excellent travail."
+        },
+        "recapitulatif_exercices": [
+            { "exercice": "Ex. 1", "bareme": 6.0, "note": 6.0, "commentaire": "Parfait" }
+        ],
+        "_audit": { "barreme_total": 20.0, "notes_total": 16.5, "issues": [] }
+    },
+    {
+        "nom_prenom": "Élève Test P-EDS-6",
+        "email": "eleve.test.p-eds-6@example.com",
+        "note_finale": 16.5,
+        "mention": "Très Bien",
+        "bilan_personnalise": {
+            "points_forts": ["Rigueur"],
+            "axes_amelioration": [],
+            "conseils": [],
+            "appreciation_finale": "Excellent travail."
+        },
+        "recapitulatif_exercices": [
+            { "exercice": "Ex. 1", "bareme": 6.0, "note": 6.0, "commentaire": "Parfait" }
+        ],
+        "_audit": { "barreme_total": 20.0, "notes_total": 16.5, "issues": [] }
+    }
+]

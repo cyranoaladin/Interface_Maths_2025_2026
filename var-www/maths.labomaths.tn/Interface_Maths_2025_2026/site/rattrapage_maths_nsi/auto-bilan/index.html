@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Auto-bilan programmes officiels - Safa</title>
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --text: #172033;
+      --muted: #5c6675;
+      --line: #d9e1ec;
+      --accent: #0f4c81;
+      --accent-soft: #eaf3fb;
+      --red-soft: #fff1f2;
+      --red-border: #fda4af;
+      --red-text: #9f1239;
+      --orange-soft: #fff7ed;
+      --orange-border: #fdba74;
+      --orange-text: #9a3412;
+      --green-soft: #f0fdf4;
+      --green-border: #86efac;
+      --green-text: #065f46;
+      --shadow: 0 10px 24px rgba(23, 32, 51, .08);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.45; }
+    header { background: #18324d; color: #fff; border-bottom: 4px solid #6aa6c8; }
+    .wrap { width: min(1160px, 94vw); margin: 0 auto; }
+    .hero { padding: 1rem 0; }
+    h1 { margin: 0 0 .35rem; font-size: 1.75rem; letter-spacing: 0; }
+    h2 { margin: 0 0 .65rem; font-size: 1.25rem; letter-spacing: 0; }
+    h3 { margin: .25rem 0 .45rem; font-size: 1.02rem; letter-spacing: 0; }
+    p { margin: .45rem 0; }
+    .muted { color: var(--muted); font-size: .94rem; }
+    .tabs { position: sticky; top: 0; z-index: 10; display: flex; gap: .45rem; overflow-x: auto; padding: .7rem 0; background: rgba(246, 248, 251, .96); border-bottom: 1px solid var(--line); }
+    button { font: inherit; font-weight: 700; cursor: pointer; border-radius: 8px; border: 1px solid transparent; background: var(--accent); color: #fff; padding: .56rem .82rem; }
+    button.secondary { background: #fff; color: var(--accent); border-color: #b9c9db; }
+    button.danger { background: #b91c1c; }
+    .tab { white-space: nowrap; background: #fff; color: #203045; border-color: var(--line); }
+    .tab[aria-selected="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+    button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #facc15; outline-offset: 2px; }
+    main { padding: 1rem 0 2.5rem; }
+    [role="tabpanel"] { display: none; }
+    [role="tabpanel"].active { display: block; }
+    .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: .85rem; }
+    .block { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: .95rem; box-shadow: var(--shadow); }
+    .span-12 { grid-column: span 12; }
+    .span-8 { grid-column: span 8; }
+    .span-7 { grid-column: span 7; }
+    .span-6 { grid-column: span 6; }
+    .span-5 { grid-column: span 5; }
+    .span-4 { grid-column: span 4; }
+    .callout { margin-top: .65rem; border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 8px; padding: .65rem .72rem; }
+    .callout.red { background: var(--red-soft); border-left-color: #be123c; color: var(--red-text); }
+    .callout.orange { background: var(--orange-soft); border-left-color: #ea580c; color: var(--orange-text); }
+    .callout.green { background: var(--green-soft); border-left-color: #16a34a; color: var(--green-text); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+    table { width: 100%; border-collapse: collapse; min-width: 690px; }
+    th, td { text-align: left; padding: .62rem; border-bottom: 1px solid #e7edf5; vertical-align: top; }
+    th { background: #f8fafc; color: #334155; }
+    tr:last-child td { border-bottom: 0; }
+    .score-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; margin-top: .7rem; }
+    .score { border: 1px solid var(--line); border-radius: 8px; padding: .75rem; background: #fff; }
+    .score strong { display: block; font-size: 1.45rem; margin: .12rem 0; }
+    .meter { height: 8px; background: #e7edf5; border-radius: 999px; overflow: hidden; margin-top: .45rem; }
+    .meter span { display: block; height: 100%; width: 0; }
+    .status { display: inline-flex; border-radius: 999px; padding: .14rem .46rem; font-size: .76rem; font-weight: 800; }
+    .ok .status, .ok .meter span { background: #16a34a; color: #fff; }
+    .warn .status, .warn .meter span { background: #ea580c; color: #fff; }
+    .bad .status, .bad .meter span { background: #dc2626; color: #fff; }
+    .rating-row { display: flex; gap: .42rem; min-width: 330px; }
+    .rating-card { flex: 1; min-height: 54px; border: 1px solid var(--line); border-radius: 8px; padding: .42rem; display: grid; align-items: center; justify-items: center; text-align: center; cursor: pointer; font-size: .82rem; font-weight: 750; }
+    .rating-card input { position: absolute; opacity: 0; pointer-events: none; }
+    .rating-card.red { background: var(--red-soft); color: var(--red-text); border-color: var(--red-border); }
+    .rating-card.orange { background: var(--orange-soft); color: var(--orange-text); border-color: var(--orange-border); }
+    .rating-card.green { background: var(--green-soft); color: var(--green-text); border-color: var(--green-border); }
+    .rating-card input:checked + span { border-radius: 999px; box-shadow: inset 0 0 0 2px currentColor; padding: .08rem .36rem; background: rgba(255,255,255,.72); }
+    .quiz-card { border: 1px solid var(--line); border-radius: 8px; padding: .75rem; margin: .6rem 0; background: #fff; }
+    .choices { display: grid; gap: .4rem; margin-top: .45rem; }
+    .choice { border: 1px solid #dce5f1; border-radius: 8px; padding: .5rem .6rem; display: flex; gap: .45rem; cursor: pointer; }
+    .choice:hover { background: #f8fafc; }
+    .feedback { display: none; margin-top: .5rem; border-radius: 8px; padding: .55rem .65rem; font-size: .92rem; }
+    .feedback.correct { display: block; background: var(--green-soft); color: var(--green-text); border: 1px solid var(--green-border); }
+    .feedback.wrong { display: block; background: var(--red-soft); color: var(--red-text); border: 1px solid var(--red-border); }
+    .btn-row { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .7rem; }
+    .timer { text-align: center; font-size: 3rem; font-weight: 800; font-variant-numeric: tabular-nums; margin: .4rem 0; }
+    textarea { width: 100%; min-height: 230px; resize: vertical; border: 1px solid var(--line); border-radius: 8px; padding: .7rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; line-height: 1.4; background: #fbfdff; color: #111827; }
+    .todo-list { display: grid; gap: .55rem; margin-top: .55rem; }
+    .todo-item { border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: .62rem .7rem; background: #fff; }
+    .todo-item.urgent { border-left-color: #be123c; background: var(--red-soft); }
+    .todo-item.consolidate { border-left-color: #ea580c; background: var(--orange-soft); }
+    .program-list { display: grid; gap: .65rem; }
+    .program-item { border: 1px solid var(--line); border-radius: 8px; padding: .7rem; background: #fff; }
+    .math-style { display: inline-block; font-family: "DejaVu Serif", "Liberation Serif", "Noto Serif", Georgia, "Times New Roman", serif; font-size: 1.04em; font-style: italic; white-space: nowrap; }
+    .math-style sup, .math-style sub { font-size: .72em; line-height: 1; position: relative; vertical-align: baseline; }
+    .math-style sup { top: -.48em; }
+    .math-style sub { bottom: -.18em; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .math-frac { display: inline-block; vertical-align: middle; font-style: normal; }
+    .math-frac-visual { display: inline-grid; grid-template-rows: auto auto; text-align: center; line-height: 1.05; }
+    .math-frac-visual span:first-child { border-bottom: 1px solid currentColor; padding: 0 .18em .04em; }
+    .math-frac-visual span:last-child { padding: .04em .18em 0; }
+    .math-binom { display: inline-block; vertical-align: middle; font-style: normal; line-height: 1; }
+    .math-binom-visual { display: inline-flex; align-items: center; gap: .06em; }
+    .math-binom-visual::before, .math-binom-visual::after { font-size: 1.65em; line-height: .82; font-style: normal; }
+    .math-binom-visual::before { content: "("; }
+    .math-binom-visual::after { content: ")"; }
+    .math-binom-stack { display: inline-grid; grid-template-rows: auto auto; text-align: center; font-style: italic; line-height: .88; }
+    @media (max-width: 900px) {
+      .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; }
+      .score-grid { grid-template-columns: 1fr; }
+      .timer { font-size: 2.3rem; }
+      h1 { font-size: 1.45rem; }
+    }
+    @media print {
+      .tabs, .btn-row, .no-print { display: none !important; }
+      body { background: #fff; }
+      [role="tabpanel"] { display: none !important; }
+      #bilan { display: block !important; }
+      .block { box-shadow: none; border-color: #b9c4d2; }
+      .print-page { break-after: page; page-break-after: always; }
+      .print-page:last-child { break-after: auto; page-break-after: auto; }
+      textarea { min-height: 340px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <h1>Auto-bilan programmes officiels - Safa</h1>
+      <p>Diagnostic court pour préparer les oraux de contrôle en Mathématiques et NSI.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="tabs" role="tablist" aria-label="Navigation">
+      <button type="button" class="tab" role="tab" id="tab-accueil" aria-selected="true" aria-controls="accueil" data-tab="accueil">Accueil</button>
+      <button type="button" class="tab" role="tab" id="tab-maths" aria-selected="false" aria-controls="maths" data-tab="maths">Diagnostic Maths</button>
+      <button type="button" class="tab" role="tab" id="tab-nsi" aria-selected="false" aria-controls="nsi" data-tab="nsi">Diagnostic NSI</button>
+      <button type="button" class="tab" role="tab" id="tab-oral" aria-selected="false" aria-controls="oral" data-tab="oral">Oral blanc</button>
+      <button type="button" class="tab" role="tab" id="tab-bilan" aria-selected="false" aria-controls="bilan" data-tab="bilan">Bilan final</button>
+      <button type="button" class="tab" role="tab" id="tab-programme" aria-selected="false" aria-controls="programme" data-tab="programme">Programme officiel</button>
+    </nav>
+
+    <main>
+      <section id="accueil" role="tabpanel" aria-labelledby="tab-accueil" class="active">
+        <div class="grid">
+          <article class="block span-8">
+            <h2>Stratégie de travail</h2>
+            <p>La page sert à diagnostiquer les priorités. Elle ne remplace pas un entraînement complet, mais elle aide Safa à choisir les gestes à savoir expliquer au tableau.</p>
+            <div class="callout orange"><strong>Maths :</strong> priorité : stabiliser fonctions, probabilités, géométrie et suites.</div>
+            <div class="callout green"><strong>NSI :</strong> priorité : consolider Python court, SQL, structures, graphes, systèmes et routage.</div>
+            <div class="callout"><strong>Formules à oraliser :</strong> <span class="math-style">ln(u) : u &gt; 0</span> ; <span class="math-style">P(X = k)=<span class="math-binom" aria-label="k parmi n"><span class="sr-only">k parmi n</span><span class="math-binom-visual" aria-hidden="true"><span class="math-binom-stack"><span>n</span><span>k</span></span></span></span>p<sup>k</sup>(1-p)<sup>n-k</sup></span> ; <span class="math-style">y=f′(a)(x-a)+f(a)</span>.</div>
+            <div class="callout"><strong>Patron Python à savoir expliquer :</strong> <button type="button" class="secondary" data-copy-target="python-occurrences">Copier</button><pre><code id="python-occurrences">def occurrences(t):
+    d = {}
+    for x in t:
+        if x in d:
+            d[x] = d[x] + 1
+        else:
+            d[x] = 1
+    return d</code></pre></div>
+          </article>
+          <article class="block span-4">
+            <h2>Parcours conseillé</h2>
+            <ol>
+              <li>Faire les diagnostics.</li>
+              <li>Corriger les quiz.</li>
+              <li>Faire un oral blanc.</li>
+              <li>Lire le bilan final.</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+
+      <section id="maths" role="tabpanel" aria-labelledby="tab-maths">
+        <div class="grid">
+          <article class="block span-12">
+            <h2>Diagnostic Mathématiques</h2>
+            <div class="table-wrap"><table><thead><tr><th>Compétence</th><th>Niveau</th></tr></thead><tbody id="mathChecklist"></tbody></table></div>
+            <div class="score-grid" id="mathScores"></div>
+          </article>
+          <article class="block span-7">
+            <h2>Quiz Maths</h2>
+            <div id="mathQuiz"></div>
+            <div class="btn-row no-print">
+              <button type="button" id="gradeMath">Corriger Maths</button>
+              <button type="button" class="secondary" id="clearMath">Effacer Maths</button>
+            </div>
+            <div id="mathQuizResult"></div>
+          </article>
+          <aside class="block span-5">
+            <h2>Scripts Maths</h2>
+            <p>Je commence par déterminer le domaine de définition.</p>
+            <p>Je calcule la dérivée pour étudier les variations.</p>
+            <p>Les hypothèses du TVI sont la continuité et l'encadrement de la valeur cherchée.</p>
+            <p>Le calcul me bloque, mais la méthode consiste à...</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="nsi" role="tabpanel" aria-labelledby="tab-nsi">
+        <div class="grid">
+          <article class="block span-12">
+            <h2>Diagnostic NSI</h2>
+            <div class="table-wrap"><table><thead><tr><th>Compétence</th><th>Niveau</th></tr></thead><tbody id="nsiChecklist"></tbody></table></div>
+            <div class="score-grid" id="nsiScores"></div>
+          </article>
+          <article class="block span-7">
+            <h2>Quiz NSI</h2>
+            <div id="nsiQuiz"></div>
+            <div class="btn-row no-print">
+              <button type="button" id="gradeNsi">Corriger NSI</button>
+              <button type="button" class="secondary" id="clearNsi">Effacer NSI</button>
+            </div>
+            <div id="nsiQuizResult"></div>
+          </article>
+          <aside class="block span-5">
+            <h2>Scripts NSI</h2>
+            <p>Je commence par spécifier les entrées, les sorties et les types.</p>
+            <p>Pour SQL, je repère les tables, la clef primaire, la clef étrangère, puis la jointure.</p>
+            <p>Pour le routage, RIP choisit selon le nombre de sauts, OSPF selon un coût.</p>
+            <p>Pour sécuriser HTTPS, on combine asymétrique pour l'échange de clef et symétrique pour la communication.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="oral" role="tabpanel" aria-labelledby="tab-oral">
+        <div class="grid">
+          <article class="block span-6">
+            <h2>Minuteur</h2>
+            <div class="timer" id="timerDisplay">20:00</div>
+            <p class="muted" id="timerLabel" style="text-align:center">Préparation</p>
+            <div class="btn-row no-print" style="justify-content:center">
+              <button type="button" id="prepTimer">Préparation 20 min</button>
+              <button type="button" id="talkTimer">Entretien 20 min</button>
+              <button type="button" class="secondary" id="toggleTimer">Démarrer</button>
+              <button type="button" class="secondary" id="resetTimer">Réinitialiser</button>
+            </div>
+          </article>
+          <article class="block span-6">
+            <h2>Auto-évaluation orale</h2>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Critère</th><th>Oui</th></tr></thead>
+                <tbody>
+                  <tr><td>Méthode annoncée</td><td><label for="oral-method"><input id="oral-method" type="checkbox" class="oral" data-key="method"> Oui</label></td></tr>
+                  <tr><td>Tableau structuré</td><td><label for="oral-board"><input id="oral-board" type="checkbox" class="oral" data-key="board"> Oui</label></td></tr>
+                  <tr><td>Verbalisation continue</td><td><label for="oral-speech"><input id="oral-speech" type="checkbox" class="oral" data-key="speech"> Oui</label></td></tr>
+                  <tr><td>Réponse aux indications</td><td><label for="oral-help"><input id="oral-help" type="checkbox" class="oral" data-key="help"> Oui</label></td></tr>
+                  <tr><td>Conclusion claire</td><td><label for="oral-conclusion"><input id="oral-conclusion" type="checkbox" class="oral" data-key="conclusion"> Oui</label></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="bilan" role="tabpanel" aria-labelledby="tab-bilan">
+        <div class="grid">
+          <article class="block span-12 print-page"><h2>Scores</h2><div class="score-grid" id="globalScores"></div></article>
+          <article class="block span-12 print-page"><h2>Priorités pédagogiques</h2><div class="todo-list" id="todoList"></div></article>
+          <article class="block span-12 print-page">
+            <h2>Synthèse</h2>
+            <div class="btn-row no-print">
+              <button type="button" id="copySummary">Copier le résumé</button>
+              <button type="button" class="secondary" id="printPage">Imprimer</button>
+              <button type="button" class="danger" id="resetAll">Réinitialiser</button>
+            </div>
+            <textarea id="summary" aria-label="Synthèse de Safa"></textarea>
+          </article>
+        </div>
+      </section>
+
+      <section id="programme" role="tabpanel" aria-labelledby="tab-programme">
+        <div class="grid">
+          <article class="block span-6">
+            <h2>Carte Maths</h2>
+            <div class="program-list" id="mathProgram"></div>
+          </article>
+          <article class="block span-6">
+            <h2>Carte NSI</h2>
+            <div class="program-list" id="nsiProgram"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "safa_auto_bilan_v1";
+
+    const levels = [
+      { value: 0, text: "Rouge", cls: "red", hint: "0 pt" },
+      { value: 1, text: "Orange", cls: "orange", hint: "1 pt" },
+      { value: 2, text: "Vert", cls: "green", hint: "2 pt" }
+    ];
+
+    const programCards = {
+      math: [
+        ["Algèbre et géométrie", "Dénombrement, récurrence, vecteurs, droites, plans, produit scalaire.", "Priorité 2"],
+        ["Analyse", "Suites, limites, dérivées, TVI, convexité, logarithme, trigonométrie, intégrales.", "Priorité 1"],
+        ["Probabilités", "Arbres, conditionnelles, totales, Bernoulli, binomiale, concentration.", "Priorité 1"],
+        ["Algorithmique et logique", "Listes Python en maths, seuil, dichotomie, implication, contre-exemple.", "Priorité 3"]
+      ],
+      nsi: [
+        ["Histoire de l'informatique", "Repères sur machines, algorithmes, langages et information.", "Priorité 3"],
+        ["Structures de données", "Interface, implémentation, pile, file, dictionnaire, arbre, graphe.", "Priorité 1"],
+        ["Bases de données", "Relations, attributs, clefs, schéma, SGBD, SQL.", "Priorité 1"],
+        ["Architectures, systèmes, réseaux", "Système sur puce, processus, deadlock, RIP, OSPF, chiffrement.", "Priorité 2"],
+        ["Langages et programmation", "Récursivité, modularité, paradigmes, calculabilité, tests.", "Priorité 1"],
+        ["Algorithmique", "Arbres, graphes, tri fusion, programmation dynamique, Boyer-Moore, complexité.", "Priorité 2"]
+      ]
+    };
+
+    const checklist = {
+      math: [
+        { id: "domain", theme: "Fonctions", text: "Domaine : ln, racine, quotient" },
+        { id: "limits", theme: "Fonctions", text: "Limites et asymptotes parallèles aux axes" },
+        { id: "derivative", theme: "Fonctions", text: "Dérivée produit, quotient, composition" },
+        { id: "variation", theme: "Fonctions", text: "Variations et tangente" },
+        { id: "tvi", theme: "Fonctions", text: "Continuité et TVI" },
+        { id: "convexity", theme: "Fonctions", text: "Dérivée seconde, convexité, inflexion" },
+        { id: "logtrig", theme: "Analyse", text: "Logarithme, sinus, cosinus" },
+        { id: "seqgeo", theme: "Suites", text: "Suite géométrique et limite" },
+        { id: "recur", theme: "Suites", text: "Raisonnement par récurrence" },
+        { id: "line", theme: "Géométrie", text: "Droite paramétrique et vecteur directeur" },
+        { id: "plane", theme: "Géométrie", text: "Plan cartésien et vecteur normal" },
+        { id: "scalar", theme: "Géométrie", text: "Produit scalaire, orthogonalité, projeté simple" },
+        { id: "treeprob", theme: "Probabilités", text: "Arbre, conditionnelle, probabilités totales" },
+        { id: "binom", theme: "Probabilités", text: "Bernoulli, loi binomiale, espérance, variance" },
+        { id: "concentration", theme: "Probabilités", text: "Bienaymé-Tchebychev, concentration, grands nombres" },
+        { id: "integral", theme: "Calcul", text: "Primitives, intégrales, intégration par parties" },
+        { id: "diff", theme: "Calcul", text: "Équations différentielles y'=ay et y'=ay+b" },
+        { id: "counting", theme: "Combinatoire", text: "Principes additif/multiplicatif, combinaisons" }
+      ],
+      nsi: [
+        { id: "history", theme: "Histoire", text: "Repères historiques essentiels" },
+        { id: "interface", theme: "Structures", text: "Interface et implémentation" },
+        { id: "object", theme: "Structures", text: "Classe, attribut, méthode, objet" },
+        { id: "stackqueue", theme: "Structures", text: "Pile LIFO, file FIFO" },
+        { id: "dict", theme: "Structures", text: "Liste, dictionnaire, clé, valeur, index" },
+        { id: "tree", theme: "Structures", text: "Arbre binaire, racine, feuille, sous-arbres" },
+        { id: "graph", theme: "Structures", text: "Graphe orienté/non orienté, matrice d'adjacence, successeurs" },
+        { id: "relational", theme: "Bases de données", text: "Relation, attribut, domaine, clefs, schéma" },
+        { id: "sqlselect", theme: "Bases de données", text: "SELECT, FROM, WHERE, JOIN, ON" },
+        { id: "sqlupdate", theme: "Bases de données", text: "INSERT, UPDATE, DELETE" },
+        { id: "soc", theme: "Systèmes", text: "Système sur puce, vitesse, consommation" },
+        { id: "process", theme: "Systèmes", text: "Processus, ordonnancement, ressources, deadlock" },
+        { id: "routing", theme: "Systèmes", text: "Routage par table, RIP, OSPF" },
+        { id: "crypto", theme: "Systèmes", text: "Chiffrement symétrique/asymétrique et HTTPS" },
+        { id: "recursion", theme: "Langages", text: "Récursivité : cas de base et appel plus petit" },
+        { id: "debug", theme: "Langages", text: "Spécification, assertions, tests, bugs typiques" },
+        { id: "algo", theme: "Algorithmique", text: "Parcours arbres/graphes, tri fusion, rendu de monnaie" },
+        { id: "complexity", theme: "Algorithmique", text: "Complexité O(n), O(n²), O(log n), O(n log n), Boyer-Moore" }
+      ]
+    };
+
+    const quizzes = {
+      math: [
+        { tag: "domain", q: "Domaine de ln(3-x) :", choices: ["x < 3", "x <= 3", "x > 3", "tout réel"], a: 0, exp: "ln(u) exige u>0. Donc 3-x>0, soit x<3." },
+        { tag: "derivative", q: "Dérivée de e^{2x+1} :", choices: ["e^{2x+1}", "2e^{2x+1}", "(2x+1)e^{2x}", "2x e^{2x+1}"], a: 1, exp: "C'est une composée : (e^u)'=u'e^u avec u=2x+1." },
+        { tag: "tvi", q: "Le TVI garantit une solution si :", choices: ["f est continue et k est entre f(a) et f(b)", "f' change de signe", "f est positive", "f est une droite"], a: 0, exp: "Le TVI porte sur la continuité de f et l'encadrement de la valeur k." },
+        { tag: "variation", q: "Tangente en a :", choices: ["y=f(a)(x-a)+f'(a)", "y=f'(a)(x-a)+f(a)", "y=f'(x)(x-a)", "y=f(a)x"], a: 1, exp: "La formule est y=f'(a)(x-a)+f(a)." },
+        { tag: "convexity", q: "Si f''>0 sur un intervalle, f est :", choices: ["concave", "convexe", "constante", "périodique"], a: 1, exp: "La dérivée seconde positive donne la convexité." },
+        { tag: "seqgeo", q: "Si v_{n+1}=qv_n, alors :", choices: ["v_n=v_0+nq", "v_n=v_0q^n", "v_n=\\frac{q}{n}", "v_n=nq"], a: 1, exp: "C'est la formule d'une suite géométrique." },
+        { tag: "recur", q: "Une récurrence contient :", choices: ["initialisation, hérédité, conclusion", "domaine, dérivée, tangente", "arbre, produit, somme", "SELECT, FROM, WHERE"], a: 0, exp: "Ces trois étapes doivent apparaître clairement." },
+        { tag: "line", q: "Dans x=1+2t, y=3-t, z=4+t, un vecteur directeur est :", choices: ["(1;3;4)", "(2;-1;1)", "(2;1;4)", "(3;4;1)"], a: 1, exp: "On lit les coefficients de t." },
+        { tag: "plane", q: "Pour 2x-y+z+3=0, un vecteur normal est :", choices: ["(2;-1;1)", "(2;1;3)", "(-1;1;0)", "(3;2;-1)"], a: 0, exp: "Dans ax+by+cz+d=0, un normal est (a;b;c)." },
+        { tag: "binom", q: "Si X suit B(n,p), P(X=k) vaut :", choices: ["np", "\\binom{n}{k}p^k(1-p)^{n-k}", "\\frac{p}{n}", "\\frac{k}{n}"], a: 1, exp: "Formule de la loi binomiale." },
+        { tag: "treeprob", q: "Probabilités totales pour B avec A et son contraire :", choices: ["P(B)=P(A)+P(B)", "P(B)=P(A∩B)+P(Abar∩B)", "P(B)=P(A)P(B)", "P(B)=1-P(A)"], a: 1, exp: "On additionne les branches compatibles avec B." },
+        { tag: "binom", q: "Pour X suivant B(n,p), E(X) et V(X) sont :", choices: ["np et np(1-p)", "p et n", "n+p et np", "0 et 1"], a: 0, exp: "Espérance np, variance np(1-p)." },
+        { tag: "integral", q: "IPP :", choices: ["∫uv'=[uv]-∫u'v", "∫uv'=u'v", "∫\\frac{u}{v}=uv", "∫u'=u'+C"], a: 0, exp: "Formule d'intégration par parties." },
+        { tag: "diff", q: "Solution de y'=ay :", choices: ["Ce^{ax}", "ax+b", "\\frac{C}{a}", "e^{x+a}"], a: 0, exp: "Les solutions sont y(x)=Ce^{ax}." },
+        { tag: "concentration", q: "Bienaymé-Tchebychev donne une borne pour :", choices: ["P(|X-mu|>=delta)", "P(X=0)", "f'(x)", "une tangente"], a: 0, exp: "Elle majore une probabilité d'écart à l'espérance." },
+        { tag: "counting", q: "Nombre de combinaisons de k éléments parmi n :", choices: ["\\frac{n!}{k!}", "\\dfrac{n!}{k!(n-k)!}", "k^n", "n+k"], a: 1, exp: "C'est le coefficient binomial \\binom{n}{k}." },
+        { tag: "logtrig", q: "Dérivée de cos(x) :", choices: ["sin(x)", "-sin(x)", "cos(x)", "-cos(x)"], a: 1, exp: "La dérivée de cos est -sin." },
+        { tag: "scalar", q: "Deux vecteurs sont orthogonaux si :", choices: ["leur produit scalaire est nul", "leurs coordonnées sont égales", "leur somme est nulle", "leurs normes sont égales"], a: 0, exp: "Orthogonalité : produit scalaire nul." }
+      ],
+      nsi: [
+        { tag: "interface", q: "Une interface décrit :", choices: ["les opérations disponibles", "la couleur du code", "un temps d'exécution", "un fichier image"], a: 0, exp: "L'interface dit comment utiliser la structure, pas comment elle est réalisée." },
+        { tag: "object", q: "Dans une classe, une méthode est :", choices: ["une fonction associée à la classe", "une valeur fixe", "une table SQL", "un sommet"], a: 0, exp: "Une méthode est une fonction définie pour les objets de la classe." },
+        { tag: "stackqueue", q: "Pile et file :", choices: ["pile LIFO, file FIFO", "pile FIFO, file LIFO", "les deux FIFO", "les deux LIFO"], a: 0, exp: "Pile : dernier entré premier sorti. File : premier entré premier sorti." },
+        { tag: "dict", q: "Un dictionnaire associe :", choices: ["clé et valeur", "sommet et arête", "processus et route", "classe et table"], a: 0, exp: "Le dictionnaire stocke des associations clé/valeur." },
+        { tag: "tree", q: "Un arbre binaire possède au plus :", choices: ["deux fils par noeud", "trois fils par noeud", "un seul noeud", "aucune feuille"], a: 0, exp: "Un arbre binaire possède au plus deux enfants par noeud : gauche et droit." },
+        { tag: "tree", q: "Parcours infixe d'un arbre binaire :", choices: ["gauche, racine, droite", "racine, gauche, droite", "gauche, droite, racine", "niveau par niveau"], a: 0, exp: "Infixe : sous-arbre gauche, racine, sous-arbre droit." },
+        { tag: "graph", q: "Un graphe orienté contient :", choices: ["des arcs avec sens", "seulement des files", "des clefs primaires", "des assertions"], a: 0, exp: "Dans un graphe orienté, les relations ont un sens." },
+        { tag: "graph", q: "BFS et DFS utilisent classiquement :", choices: ["file pour BFS, pile ou récursion pour DFS", "pile pour BFS seulement", "SQL", "une clef publique"], a: 0, exp: "BFS explore en largeur avec une file ; DFS explore en profondeur." },
+        { tag: "sqlselect", q: "Requête d'interrogation de base :", choices: ["SELECT ... FROM ... WHERE ...", "INSERT ... VALUES ... seulement", "def ... return ...", "if ... else ..."], a: 0, exp: "SELECT cible les colonnes, FROM la table, WHERE filtre." },
+        { tag: "sqlupdate", q: "Pour modifier une ligne existante :", choices: ["UPDATE ... SET ... WHERE ...", "SELECT ... FROM ...", "JOIN ... ON ...", "return"], a: 0, exp: "UPDATE sert à modifier, SET indique la valeur, WHERE cible les lignes." },
+        { tag: "relational", q: "Une clef étrangère sert à :", choices: ["relier deux relations", "trier une liste", "parcourir un arbre", "arrêter une récursion"], a: 0, exp: "Elle référence une clef d'une autre relation." },
+        { tag: "process", q: "L'ordonnancement concerne :", choices: ["le choix des processus exécutés", "le choix d'une clef SQL", "le parcours infixe", "la dérivée seconde"], a: 0, exp: "Le système choisit quel processus utilise le processeur." },
+        { tag: "process", q: "Un deadlock correspond à :", choices: ["des processus bloqués en attente de ressources", "un graphe orienté", "un type de liste", "une jointure"], a: 0, exp: "Chaque processus attend une ressource détenue par un autre." },
+        { tag: "routing", q: "RIP choisit selon :", choices: ["le nombre de sauts", "un coût de route", "une clef privée", "un parcours infixe"], a: 0, exp: "RIP utilise le nombre de sauts." },
+        { tag: "routing", q: "OSPF choisit selon :", choices: ["un coût de route", "le nombre de mots", "la hauteur d'un arbre", "la variance"], a: 0, exp: "OSPF utilise un coût associé aux routes." },
+        { tag: "crypto", q: "Chiffrement asymétrique :", choices: ["clef publique et clef privée", "une seule clef partagée", "une pile", "un index"], a: 0, exp: "Le chiffrement asymétrique utilise un couple clef publique / clef privée." },
+        { tag: "recursion", q: "Récursivité :", choices: ["cas de base et appel plus petit", "jointure et clef", "arête et sommet seulement", "tri sans comparaison"], a: 0, exp: "Le cas de base arrête les appels ; l'appel récursif réduit le problème." },
+        { tag: "complexity", q: "Boyer-Moore sert à :", choices: ["accélérer une recherche de motif", "ordonner des processus", "chiffrer une clef", "calculer une variance"], a: 0, exp: "L'intérêt est le prétraitement du motif pour chercher plus vite." }
+      ]
+    };
+
+    function initialState() {
+      return {
+        version: 1,
+        ratings: {
+          math: Object.fromEntries(checklist.math.map(item => [item.id, 0])),
+          nsi: Object.fromEntries(checklist.nsi.map(item => [item.id, 0]))
+        },
+        quiz: { math: {}, nsi: {} },
+        graded: { math: false, nsi: false },
+        oral: { method: false, board: false, speech: false, help: false, conclusion: false }
+      };
+    }
+
+    function loadState() {
+      const base = initialState();
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        if (raw.version !== 1) return base;
+        for (const subject of ["math", "nsi"]) {
+          for (const item of checklist[subject]) {
+            const val = Number(raw.ratings?.[subject]?.[item.id]);
+            base.ratings[subject][item.id] = Number.isInteger(val) && val >= 0 && val <= 2 ? val : 0;
+          }
+          base.quiz[subject] = raw.quiz?.[subject] && typeof raw.quiz[subject] === "object" ? raw.quiz[subject] : {};
+          base.graded[subject] = !!raw.graded?.[subject];
+        }
+        for (const key of Object.keys(base.oral)) base.oral[key] = !!raw.oral?.[key];
+        return base;
+      } catch (error) {
+        return base;
+      }
+    }
+
+    let state = loadState();
+    let timer = { seconds: 1200, initial: 1200, label: "Préparation", running: false, id: null };
+
+    function save() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (error) {
+        // Le diagnostic reste utilisable si le stockage local est désactivé ou plein.
+      }
+    }
+    function percent(got, max) { return max ? Math.round((got / max) * 100) : 0; }
+    function statusClass(p) { return p >= 75 ? { cls: "ok", text: "vert" } : p >= 50 ? { cls: "warn", text: "orange" } : { cls: "bad", text: "rouge" }; }
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
+    }
+
+    const mathSnippets = [
+      "P(B)=P(A∩B)+P(Abar∩B)",
+      "\\binom{n}{k}p^k(1-p)^{n-k}",
+      "y=f'(a)(x-a)+f(a)",
+      "y=f(a)(x-a)+f'(a)",
+      "y=f'(x)(x-a)",
+      "∫uv'=[uv]-∫u'v",
+      "∫\\frac{u}{v}=uv",
+      "(2x+1)e^{2x}",
+      "2x e^{2x+1}",
+      "2e^{2x+1}",
+      "(e^u)'=u'e^u",
+      "v_{n+1}=qv_n",
+      "v_n=v_0+nq",
+      "v_n=v_0q^n",
+      "P(|X-mu|>=delta)",
+      "\\dfrac{n!}{k!(n-k)!}",
+      "\\frac{n!}{k!}",
+      "\\frac{p}{n}",
+      "\\frac{k}{n}",
+      "\\frac{q}{n}",
+      "\\frac{C}{a}",
+      "P(B)=P(A)+P(B)",
+      "P(B)=P(A)P(B)",
+      "P(B)=1-P(A)",
+      "2x-y+z+3=0",
+      "ax+by+cz+d=0",
+      "x=1+2t",
+      "y=3-t",
+      "z=4+t",
+      "e^{2x+1}",
+      "e^{x+a}",
+      "Ce^{ax}",
+      "y(x)=Ce^{ax}",
+      "f''>0",
+      "y'=ay",
+      "u=2x+1",
+      "3-x>0",
+      "x <= 3",
+      "x < 3",
+      "x > 3",
+      "x<3",
+      "u>0",
+      "P(X = k)",
+      "P(X=k)",
+      "P(A∩B)",
+      "P(Abar∩B)",
+      "B(n,p)",
+      "E(X)",
+      "V(X)",
+      "np(1-p)",
+      "n+p",
+      "ax+b",
+      "q^n",
+      "k^n",
+      "n+k",
+      "v_n",
+      "v_0",
+      "nq",
+      "f'",
+      "f'(a)",
+      "f'(x)",
+      "f(a)",
+      "f(b)",
+      "∫uv'=u'v",
+      "∫u'=u'+C",
+      "-sin(x)",
+      "-cos(x)",
+      "(a;b;c)"
+    ].sort((a, b) => b.length - a.length);
+
+    function formatFormula(raw) {
+      const normalized = String(raw)
+        .replace(/([A-Za-z)])''/g, "$1′′")
+        .replace(/([A-Za-z)])'/g, "$1′");
+      let html = escapeHtml(normalized)
+        .replace(/\\d?frac\{([^{}]+)\}\{([^{}]+)\}/g, (match, top, bottom) => `<span class="math-frac" aria-label="${top} sur ${bottom}"><span class="sr-only">${top}/${bottom}</span><span class="math-frac-visual" aria-hidden="true"><span>${top}</span><span>${bottom}</span></span></span>`)
+        .replace(/\\binom\{([^{}]+)\}\{([^{}]+)\}/g, (match, top, bottom) => `<span class="math-binom" aria-label="${bottom} parmi ${top}"><span class="sr-only">${bottom} parmi ${top}</span><span class="math-binom-visual" aria-hidden="true"><span class="math-binom-stack"><span>${top}</span><span>${bottom}</span></span></span></span>`)
+        .replace(/&lt;=/g, "≤")
+        .replace(/&gt;=/g, "≥")
+        .replace(/Abar/g, "A\u0305")
+        .replace(/\bmu\b/g, "μ")
+        .replace(/\bdelta\b/g, "δ")
+        .replace(/([A-Za-z0-9)\]])\^\{([^}]+)\}/g, "$1<sup>$2</sup>")
+        .replace(/([A-Za-z0-9)\]])\^([A-Za-z0-9]+)/g, "$1<sup>$2</sup>")
+        .replace(/([A-Za-z])_\{([^}]+)\}/g, "$1<sub>$2</sub>")
+        .replace(/([A-Za-z])_([A-Za-z0-9]+)/g, "$1<sub>$2</sub>");
+      return `<span class="math-style">${html}</span>`;
+    }
+
+    function renderMathText(value) {
+      const tokens = [];
+      const token = raw => {
+        const marker = `@@M${tokens.length}@@`;
+        tokens.push(formatFormula(raw));
+        return marker;
+      };
+      let text = String(value);
+      for (const snippet of mathSnippets) {
+        text = text.replace(new RegExp(snippet.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), () => token(snippet));
+      }
+      text = text.replace(/\\d?frac\{[^{}]+\}\{[^{}]+\}/g, match => token(match));
+      text = text.replace(/\\binom\{[^{}]+\}\{[^{}]+\}/g, match => token(match));
+      text = text.replace(/\b(?:ln|sin|cos)\([^)]*\)/g, match => token(match));
+      text = text.replace(/\b[PEV]\([^)]*\)/g, match => token(match));
+      text = text.replace(/[A-Za-z0-9)]\^\{[^}]+\}/g, match => token(match));
+      text = text.replace(/[A-Za-z]_\{[^}]+\}/g, match => token(match));
+      text = text.replace(/\b[xyuvf]\s*(?:<=|>=|<|>)\s*-?\d+/g, match => token(match));
+      let html = escapeHtml(text);
+      tokens.forEach((replacement, index) => { html = html.replaceAll(`@@M${index}@@`, replacement); });
+      return html;
+    }
+
+    function renderScoreBlock(title, got, max) {
+      const p = percent(got, max);
+      const st = statusClass(p);
+      return `<div class="score ${st.cls}"><span class="status">${st.text}</span><strong>${p}%</strong><div class="muted">${title} - ${got}/${max}</div><div class="meter"><span style="width:${p}%"></span></div></div>`;
+    }
+
+    function renderChecklist(subject) {
+      const target = document.getElementById(subject === "math" ? "mathChecklist" : "nsiChecklist");
+      target.innerHTML = checklist[subject].map(item => {
+        const current = Number(state.ratings[subject][item.id]);
+        return `<tr><td><strong>${renderMathText(item.text)}</strong><div class="muted">${escapeHtml(item.theme)}</div></td><td><div class="rating-row" role="radiogroup" aria-label="${escapeHtml(item.text)}">${levels.map(level => `<label class="rating-card ${level.cls}"><input type="radio" name="${subject}-${item.id}" value="${level.value}" data-subject="${subject}" data-id="${item.id}" ${current === level.value ? "checked" : ""}><span>${escapeHtml(level.text)}<br>${escapeHtml(level.hint)}</span></label>`).join("")}</div></td></tr>`;
+      }).join("");
+    }
+
+    function scoreRatings(subject) {
+      const got = checklist[subject].reduce((sum, item) => sum + Number(state.ratings[subject][item.id] || 0), 0);
+      return { got, max: checklist[subject].length * 2 };
+    }
+
+    function scoreQuiz(subject) {
+      let got = 0;
+      quizzes[subject].forEach((item, index) => { if (Number(state.quiz[subject][index]) === item.a) got++; });
+      return { got, max: quizzes[subject].length };
+    }
+
+    function renderScores() {
+      const mr = scoreRatings("math");
+      const mq = scoreQuiz("math");
+      const nr = scoreRatings("nsi");
+      const nq = scoreQuiz("nsi");
+      document.getElementById("mathScores").innerHTML = [renderScoreBlock("Auto-évaluation Maths", mr.got, mr.max), renderScoreBlock("Quiz Maths", mq.got, mq.max), renderScoreBlock("Total Maths", mr.got + mq.got, mr.max + mq.max)].join("");
+      document.getElementById("nsiScores").innerHTML = [renderScoreBlock("Auto-évaluation NSI", nr.got, nr.max), renderScoreBlock("Quiz NSI", nq.got, nq.max), renderScoreBlock("Total NSI", nr.got + nq.got, nr.max + nq.max)].join("");
+      document.getElementById("globalScores").innerHTML = [renderScoreBlock("Maths", mr.got + mq.got, mr.max + mq.max), renderScoreBlock("NSI", nr.got + nq.got, nr.max + nq.max), renderScoreBlock("Global", mr.got + mq.got + nr.got + nq.got, mr.max + mq.max + nr.max + nq.max)].join("");
+    }
+
+    function renderQuiz(subject) {
+      document.getElementById(subject + "Quiz").innerHTML = quizzes[subject].map((item, index) => {
+        const selected = state.quiz[subject][index];
+        return `<div class="quiz-card"><strong>${index + 1}. ${renderMathText(item.q)}</strong><div class="choices">${item.choices.map((choice, i) => `<label class="choice"><input type="radio" name="${subject}-quiz-${index}" value="${i}" data-subject="${subject}" data-index="${index}" ${Number(selected) === i ? "checked" : ""}><span>${renderMathText(choice)}</span></label>`).join("")}</div><div class="feedback" id="${subject}-feedback-${index}"></div></div>`;
+      }).join("");
+      if (state.graded[subject]) showQuizFeedback(subject);
+    }
+
+    function showQuizFeedback(subject) {
+      let got = 0;
+      quizzes[subject].forEach((item, index) => {
+        const ok = Number(state.quiz[subject][index]) === item.a;
+        if (ok) got++;
+        const fb = document.getElementById(`${subject}-feedback-${index}`);
+        if (fb) {
+          fb.className = `feedback ${ok ? "correct" : "wrong"}`;
+          fb.innerHTML = ok ? `Correct. ${renderMathText(item.exp)}` : `À reprendre. Réponse attendue : ${renderMathText(item.choices[item.a])}. ${renderMathText(item.exp)}`;
+        }
+      });
+      const p = percent(got, quizzes[subject].length);
+      const c = p >= 75 ? "green" : p >= 50 ? "orange" : "red";
+      document.getElementById(subject + "QuizResult").innerHTML = `<div class="callout ${c}"><strong>Résultat ${subject === "math" ? "Maths" : "NSI"} :</strong> ${got}/${quizzes[subject].length}, soit ${p}%.</div>`;
+    }
+
+    function clearQuizFeedback(subject) {
+      document.getElementById(subject + "QuizResult").innerHTML = "";
+      document.querySelectorAll(`[id^="${subject}-feedback-"]`).forEach(fb => {
+        fb.className = "feedback";
+        fb.textContent = "";
+      });
+    }
+
+    function isWrong(subject, index) {
+      if (state.quiz[subject][index] === undefined) return false;
+      return Number(state.quiz[subject][index]) !== quizzes[subject][index].a;
+    }
+
+    function addTodo(list, seen, text, level) {
+      if (seen.has(text)) return;
+      seen.add(text);
+      list.push({ text, level });
+    }
+
+    function buildTodo() {
+      const list = [];
+      const seen = new Set();
+      const r = state.ratings;
+      if (["domain", "derivative", "variation", "tvi", "convexity"].some(id => r.math[id] < 2) || [0, 1, 2, 3, 4].some(i => isWrong("math", i))) addTodo(list, seen, "Maths - Fonctions rouge : refaire domaine, dérivée, variations, tangente, TVI.", 1);
+      if (["treeprob", "binom", "concentration"].some(id => r.math[id] < 2) || [9, 10, 11, 14].some(i => isWrong("math", i))) addTodo(list, seen, "Maths - Probabilités rouge : refaire arbre, conditionnelle, totale, binomiale.", 1);
+      if (["line", "plane", "scalar"].some(id => r.math[id] < 2) || [7, 8, 17].some(i => isWrong("math", i))) addTodo(list, seen, "Maths - Géométrie rouge : reprendre droite paramétrique, plan, produit scalaire.", 1);
+      if (["integral", "diff"].some(id => r.math[id] < 2) || [12, 13].some(i => isWrong("math", i))) addTodo(list, seen, "Maths - Analyse bonus : revoir intégration par parties et équations différentielles.", 2);
+      if (["relational", "sqlselect", "sqlupdate"].some(id => r.nsi[id] < 2) || [8, 9, 10].some(i => isWrong("nsi", i))) addTodo(list, seen, "NSI - SQL rouge : revoir relation, attribut, clef primaire, clef étrangère, SELECT/FROM/WHERE/JOIN.", 1);
+      if (["process", "routing", "crypto", "soc"].some(id => r.nsi[id] < 2) || [11, 12, 13, 14, 15].some(i => isWrong("nsi", i))) addTodo(list, seen, "NSI - Systèmes/réseaux rouge : revoir processus, ordonnancement, deadlock, RIP/OSPF, chiffrement.", 1);
+      if (["interface", "object", "stackqueue", "dict", "tree", "graph"].some(id => r.nsi[id] < 2) || [0, 1, 2, 3, 4, 5, 6, 7].some(i => isWrong("nsi", i))) addTodo(list, seen, "NSI - Structures : revoir interface, objet, pile, file, arbre, graphe.", 1);
+      if (["recursion", "algo", "complexity"].some(id => r.nsi[id] < 2) || [16, 17].some(i => isWrong("nsi", i))) addTodo(list, seen, "NSI - Algorithmique : revoir récursivité, complexité, Boyer-Moore.", 2);
+      if (list.length === 0) addTodo(list, seen, "Consolidation : faire deux oraux blancs complets en parlant à voix haute.", 3);
+      while (list.length < 3) addTodo(list, seen, "Conserver la stratégie : peu de notions, mais expliquées clairement au tableau.", 3);
+      return list.sort((a, b) => a.level - b.level).slice(0, 8);
+    }
+
+    function renderTodo() {
+      document.getElementById("todoList").innerHTML = buildTodo().map((item, index) => `<div class="todo-item ${item.level === 1 ? "urgent" : "consolidate"}"><strong>${index + 1}. ${item.text}</strong></div>`).join("");
+    }
+
+    function buildSummary() {
+      const mr = scoreRatings("math");
+      const mq = scoreQuiz("math");
+      const nr = scoreRatings("nsi");
+      const nq = scoreQuiz("nsi");
+      const oral = Object.entries(state.oral).filter(([, v]) => v).map(([k]) => ({ method: "méthode annoncée", board: "tableau structuré", speech: "verbalisation continue", help: "réponse aux indications", conclusion: "conclusion claire" })[k]);
+      const totalGot = mr.got + mq.got + nr.got + nq.got;
+      const totalMax = mr.max + mq.max + nr.max + nq.max;
+      document.getElementById("summary").value = [
+        "AUTO-BILAN PROGRAMMES OFFICIELS - SAFA",
+        "",
+        `Maths : auto-évaluation ${mr.got}/${mr.max}, quiz ${mq.got}/${mq.max}.`,
+        `NSI : auto-évaluation ${nr.got}/${nr.max}, quiz ${nq.got}/${nq.max}.`,
+        `Score global : ${totalGot}/${totalMax} (${percent(totalGot, totalMax)}%).`,
+        "",
+        "Priorités :",
+        ...buildTodo().map((item, i) => `${i + 1}. ${item.text}`),
+        "",
+        `Oral blanc : ${oral.length ? oral.join(", ") : "non renseigné"}.`,
+        "",
+        "Méthode : annoncer l'objectif, écrire une formule ou une structure, verbaliser le raisonnement, conclure."
+      ].join("\n");
+    }
+
+    function updateAll() { renderScores(); renderTodo(); buildSummary(); save(); }
+    function renderProgram() {
+      document.getElementById("mathProgram").innerHTML = programCards.math.map(card => `<div class="program-item"><h3>${card[0]}</h3><p>${card[1]}</p><strong>${card[2]}</strong></div>`).join("");
+      document.getElementById("nsiProgram").innerHTML = programCards.nsi.map(card => `<div class="program-item"><h3>${card[0]}</h3><p>${card[1]}</p><strong>${card[2]}</strong></div>`).join("");
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll(".tab").forEach(btn => btn.setAttribute("aria-selected", btn.dataset.tab === tab ? "true" : "false"));
+      document.querySelectorAll('[role="tabpanel"]').forEach(panel => panel.classList.toggle("active", panel.id === tab));
+      if (tab === "bilan") updateAll();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).then(() => true).catch(() => false);
+      const area = document.createElement("textarea");
+      area.value = text;
+      document.body.appendChild(area);
+      area.select();
+      const ok = document.execCommand("copy");
+      area.remove();
+      return Promise.resolve(ok);
+    }
+
+    function renderTimer() {
+      const m = String(Math.floor(timer.seconds / 60)).padStart(2, "0");
+      const s = String(timer.seconds % 60).padStart(2, "0");
+      document.getElementById("timerDisplay").textContent = `${m}:${s}`;
+      document.getElementById("timerLabel").textContent = timer.label;
+      document.getElementById("toggleTimer").textContent = timer.running ? "Pause" : "Démarrer";
+      document.title = timer.running ? `${m}:${s} - ${timer.label}` : "Auto-bilan programmes officiels - Safa";
+    }
+
+    function pauseTimer() {
+      if (timer.id) window.clearInterval(timer.id);
+      timer.id = null;
+      timer.running = false;
+      renderTimer();
+    }
+
+    function setTimer(label) {
+      pauseTimer();
+      timer = { seconds: 1200, initial: 1200, label, running: false, id: null };
+      renderTimer();
+    }
+
+    function tick() {
+      if (timer.seconds > 0) {
+        timer.seconds -= 1;
+        renderTimer();
+        return;
+      }
+      pauseTimer();
+      alert(`Temps écoulé : ${timer.label}.`);
+    }
+
+    function startTimer() {
+      if (timer.running) { pauseTimer(); return; }
+      timer.running = true;
+      timer.id = window.setInterval(tick, 1000);
+      renderTimer();
+    }
+
+    function resetTimer() { pauseTimer(); timer.seconds = timer.initial; renderTimer(); }
+
+    function init() {
+      renderChecklist("math");
+      renderChecklist("nsi");
+      renderQuiz("math");
+      renderQuiz("nsi");
+      renderProgram();
+      document.querySelectorAll(".oral").forEach(box => { box.checked = !!state.oral[box.dataset.key]; });
+      updateAll();
+      renderTimer();
+    }
+
+    document.querySelector(".tabs").addEventListener("click", event => {
+      const btn = event.target.closest(".tab");
+      if (btn) switchTab(btn.dataset.tab);
+    });
+    document.addEventListener("change", event => {
+      const target = event.target;
+      if (target.matches(".rating-card input")) { state.ratings[target.dataset.subject][target.dataset.id] = Number(target.value); updateAll(); }
+      if (target.matches(".choice input")) { state.quiz[target.dataset.subject][target.dataset.index] = Number(target.value); state.graded[target.dataset.subject] = false; clearQuizFeedback(target.dataset.subject); updateAll(); }
+      if (target.matches(".oral")) { state.oral[target.dataset.key] = target.checked; updateAll(); }
+    });
+    document.getElementById("gradeMath").addEventListener("click", () => { state.graded.math = true; showQuizFeedback("math"); updateAll(); });
+    document.getElementById("gradeNsi").addEventListener("click", () => { state.graded.nsi = true; showQuizFeedback("nsi"); updateAll(); });
+    document.getElementById("clearMath").addEventListener("click", () => { state.quiz.math = {}; state.graded.math = false; document.getElementById("mathQuizResult").innerHTML = ""; renderQuiz("math"); updateAll(); });
+    document.getElementById("clearNsi").addEventListener("click", () => { state.quiz.nsi = {}; state.graded.nsi = false; document.getElementById("nsiQuizResult").innerHTML = ""; renderQuiz("nsi"); updateAll(); });
+    document.getElementById("prepTimer").addEventListener("click", () => setTimer("Préparation"));
+    document.getElementById("talkTimer").addEventListener("click", () => setTimer("Entretien"));
+    document.getElementById("toggleTimer").addEventListener("click", startTimer);
+    document.getElementById("resetTimer").addEventListener("click", resetTimer);
+    document.getElementById("copySummary").addEventListener("click", async () => { buildSummary(); const summary = document.getElementById("summary"); summary.focus(); summary.select(); await copyText(summary.value); });
+    document.getElementById("printPage").addEventListener("click", () => window.print());
+    document.getElementById("resetAll").addEventListener("click", () => { if (!confirm("Réinitialiser toutes les réponses de Safa ?")) return; try { localStorage.removeItem(STORAGE_KEY); } catch (error) {} state = initialState(); init(); });
+
+    init();
+
+    document.addEventListener('click', function(event) {
+      const button = event.target.closest('[data-copy-target]');
+      if (!button) return;
+      const target = document.getElementById(button.dataset.copyTarget);
+      if (!target) return;
+      const value = target.innerText || target.textContent || '';
+      const done = function() {
+        const previous = button.textContent;
+        button.textContent = 'Copié';
+        setTimeout(function() { button.textContent = previous; }, 1100);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(value).then(done).catch(function() {});
+      } else {
+        const area = document.createElement('textarea');
+        area.value = value;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        area.remove();
+        done();
+      }
+    });
+
+  </script>
+</body>
+</html>

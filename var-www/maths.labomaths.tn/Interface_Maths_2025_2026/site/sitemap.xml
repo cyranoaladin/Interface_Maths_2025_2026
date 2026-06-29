@@ -2,11 +2,36 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>/</loc></url>
   <url><loc>/EDS_premiere/Calcul_litteral/fiche_exercices_calcul_litteral_premiere.html</loc></url>
+  <url><loc>/EDS_premiere/Epreuve_Anticipee/index.html</loc></url>
+  <url><loc>/EDS_premiere/Progression/index.html</loc></url>
   <url><loc>/EDS_premiere/Second_Degre/cours_second_degre.html</loc></url>
   <url><loc>/EDS_premiere/Second_Degre/fiche_eleve_second_degre.html</loc></url>
+  <url><loc>/EDS_premiere/Second_Degre/flashcards.html</loc></url>
+  <url><loc>/EDS_premiere/Second_Degre/labo_interactif.html</loc></url>
+  <url><loc>/EDS_premiere/Second_Degre/qcm_second_degre.html</loc></url>
+  <url><loc>/EDS_premiere/index.html</loc></url>
+  <url><loc>/EDS_terminale/Progression/index.html</loc></url>
+  <url><loc>/EDS_terminale/Suites/continuite.html</loc></url>
   <url><loc>/EDS_terminale/Suites/cours_suites.html</loc></url>
+  <url><loc>/EDS_terminale/Suites/fiche_eleve_suites.html</loc></url>
   <url><loc>/EDS_terminale/Suites/fiche_eleve_suites_rappels_premiere.html</loc></url>
+  <url><loc>/EDS_terminale/index.html</loc></url>
   <url><loc>/Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html</loc></url>
   <url><loc>/Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/fiche_eleve_arith_chap1.html</loc></url>
+  <url><loc>/Maths_expertes/Progression/index.html</loc></url>
+  <url><loc>/Maths_expertes/index.html</loc></url>
+  <url><loc>/analytics.html</loc></url>
+  <url><loc>/cleanup.html</loc></url>
+  <url><loc>/credits.html</loc></url>
+  <url><loc>/dashboard.html</loc></url>
+  <url><loc>/evaluations.html</loc></url>
   <url><loc>/index.html</loc></url>
+  <url><loc>/login.html</loc></url>
+  <url><loc>/mentions.html</loc></url>
+  <url><loc>/parents.html</loc></url>
+  <url><loc>/programme-epreuves.html</loc></url>
+  <url><loc>/rattrapage_maths_nsi/index.html</loc></url>
+  <url><loc>/ressources.html</loc></url>
+  <url><loc>/showcase.html</loc></url>
+  <url><loc>/student.html</loc></url>
 </urlset>

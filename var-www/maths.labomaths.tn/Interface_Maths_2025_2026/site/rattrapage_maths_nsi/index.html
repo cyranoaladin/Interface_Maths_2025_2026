@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Rattrapage Maths & NSI - Portail de préparation orale</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#accueil" aria-label="Accueil du portail">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>
+          <strong>Portail Safa</strong>
+          <small>Rattrapage Maths & NSI</small>
+        </span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button>
+      <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+        <a href="#accueil">Accueil</a>
+        <a href="#auto-bilan">Auto-bilan</a>
+        <a href="#guides">Guides PDF</a>
+        <a href="#sujets-maths">Sujets Maths</a>
+        <a href="#sujets-nsi">Sujets NSI</a>
+        <a href="#simulation">Simulation orale</a>
+        <a href="#planning">Planning express</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenu">
+    <section id="accueil" class="hero section-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">Préparation orale courte et ciblée</p>
+        <h1>Rattrapage Maths & NSI - Portail de préparation orale</h1>
+        <p class="lead">Diagnostic, guides de révision et sujets blancs pour préparer efficacement les oraux.</p>
+        <p class="strategy">Objectif : travailler peu, mais travailler juste ; savoir expliquer au tableau.</p>
+        <div class="hero-actions no-print">
+          <a class="button button-primary" href="auto-bilan/">Ouvrir l’auto-bilan</a>
+          <button class="button button-secondary" type="button" id="resume-last" hidden>Reprendre le dernier PDF</button>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="Méthode recommandée">
+        <h2>Méthode en trois temps</h2>
+        <ol class="steps">
+          <li><strong>Diagnostiquer</strong> : auto-bilan Maths/NSI.</li>
+          <li><strong>Consolider</strong> : guides PDF, uniquement les priorités rouges ou orange.</li>
+          <li><strong>S’entraîner</strong> : sujets blancs ciblés et oral blanc chronométré.</li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="quick-actions section-shell" aria-labelledby="actions-title">
+      <div class="section-heading">
+        <p class="eyebrow">Actions immédiates</p>
+        <h2 id="actions-title">Commencer sans se disperser</h2>
+      </div>
+      <div class="card-grid three">
+        <article class="action-card accent-blue">
+          <span class="badge">Priorité 1</span>
+          <h3>Faire l’auto-bilan</h3>
+          <p>Repérer les points rouges et orange avant d’ouvrir les guides.</p>
+          <a class="button button-primary" href="auto-bilan/">Commencer</a>
+        </article>
+        <article class="action-card accent-maths">
+          <span class="badge">Maths</span>
+          <h3>Lire le guide Maths</h3>
+          <p>Reprendre les méthodes de tableau : domaine, dérivée, TVI, probabilités, géométrie.</p>
+          <button class="button button-secondary js-open-pdf" type="button" data-resource-id="guide-maths">Lire dans la page</button>
+        </article>
+        <article class="action-card accent-nsi">
+          <span class="badge">NSI</span>
+          <h3>Lire le guide NSI</h3>
+          <p>Réviser les patrons courts : Python, SQL, structures, graphes, systèmes et sécurité.</p>
+          <button class="button button-secondary js-open-pdf" type="button" data-resource-id="guide-nsi">Lire dans la page</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="auto-bilan" class="section-shell split-section">
+      <div>
+        <p class="eyebrow">Diagnostic interactif</p>
+        <h2>Auto-bilan Maths/NSI</h2>
+        <p>L’auto-bilan sert à choisir les ressources utiles. Il n’est pas un entraînement exhaustif : il aide à décider quoi revoir en premier.</p>
+      </div>
+      <div class="panel-soft">
+        <h3>Ordre conseillé</h3>
+        <ol class="compact-list">
+          <li>Répondre aux diagnostics Maths et NSI.</li>
+          <li>Lire le bilan final.</li>
+          <li>Ouvrir seulement les guides ou sujets associés aux priorités.</li>
+        </ol>
+        <a class="button button-primary" href="auto-bilan/">Ouvrir l’auto-bilan</a>
+      </div>
+    </section>
+
+    <section id="guides" class="section-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Documents essentiels</p>
+        <h2>Guides PDF et accès rapide</h2>
+        <p>Chaque document peut être lu dans la page, téléchargé ou ouvert dans un nouvel onglet.</p>
+      </div>
+      <div id="guides-list" class="card-grid two" aria-live="polite"></div>
+    </section>
+
+    <section id="sujets-maths" class="section-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Entraînement Maths</p>
+        <h2>Sujets blancs de mathématiques</h2>
+        <p>Le livret contient 16 sujets corrigés. Il ne faut pas tout faire : choisir deux ou trois sujets, comprendre la méthode, puis expliquer au tableau.</p>
+      </div>
+      <div id="maths-subjects" class="card-grid one"></div>
+    </section>
+
+    <section id="sujets-nsi" class="section-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Entraînement NSI</p>
+        <h2>Sujets blancs NSI classés</h2>
+        <p>Choisir une famille, ouvrir un sujet, puis préparer une explication courte : vocabulaire, méthode, exemple au tableau.</p>
+      </div>
+      <div id="nsi-filters" class="filters no-print" aria-label="Filtres de sujets NSI"></div>
+      <div id="nsi-subjects" class="subject-list" aria-live="polite"></div>
+    </section>
+
+    <section id="simulation" class="section-shell split-section">
+      <div>
+        <p class="eyebrow">Oral blanc</p>
+        <h2>Simulation orale</h2>
+        <p>Préparation courte, parole claire, tableau lisible. Le but est de montrer une méthode, même si le calcul est incomplet.</p>
+        <ul class="check-list">
+          <li>Lire le sujet, entourer les mots-clés, écrire les hypothèses.</li>
+          <li>Annoncer la méthode avant les calculs.</li>
+          <li>Si un calcul bloque, expliquer la suite prévue.</li>
+          <li>Répondre calmement aux questions de relance.</li>
+        </ul>
+      </div>
+      <div class="timer-card no-print">
+        <h3>Minuteur 20 min / 20 min</h3>
+        <div class="timer-row">
+          <div>
+            <span class="timer-label">Préparation</span>
+            <output id="prep-timer" class="timer-display">20:00</output>
+          </div>
+          <button class="button button-primary js-timer" type="button" data-timer="prep" data-action="start">Démarrer</button>
+          <button class="button button-ghost js-timer" type="button" data-timer="prep" data-action="reset">Réinitialiser</button>
+        </div>
+        <div class="timer-row">
+          <div>
+            <span class="timer-label">Entretien</span>
+            <output id="talk-timer" class="timer-display">20:00</output>
+          </div>
+          <button class="button button-primary js-timer" type="button" data-timer="talk" data-action="start">Démarrer</button>
+          <button class="button button-ghost js-timer" type="button" data-timer="talk" data-action="reset">Réinitialiser</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="planning" class="section-shell">
+      <div class="section-heading">
+        <p class="eyebrow">Planning express</p>
+        <h2>Réviser avec un ordre simple</h2>
+      </div>
+      <div class="timeline">
+        <article><strong>Ce soir</strong><span>Auto-bilan + une ressource Maths + une ressource NSI.</span></article>
+        <article><strong>Demain matin</strong><span>Sujets ciblés Maths : fonctions, probabilités ou géométrie.</span></article>
+        <article><strong>Demain après-midi</strong><span>Sujets ciblés NSI + oral blanc chronométré.</span></article>
+        <article><strong>Dernière soirée</strong><span>Relire les scripts oraux et préparer le matériel.</span></article>
+        <article><strong>Jour J</strong><span>Arriver en avance, parler clairement, écrire lisiblement.</span></article>
+      </div>
+    </section>
+
+    <section class="section-shell official-map" aria-labelledby="programme-title">
+      <div class="section-heading">
+        <p class="eyebrow">Repères programme officiel</p>
+        <h2 id="programme-title">Carte rapide des attendus</h2>
+      </div>
+      <div class="card-grid two">
+        <article class="info-card">
+          <h3>Mathématiques</h3>
+          <p>Algèbre et géométrie ; analyse ; probabilités ; algorithmique, programmation et vocabulaire logique.</p>
+        </article>
+        <article class="info-card">
+          <h3>NSI</h3>
+          <p>Histoire de l’informatique ; structures de données ; bases de données ; architectures, systèmes et réseaux ; langages ; algorithmique.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="pdf-viewer section-shell" aria-live="polite" hidden>
+      <div class="pdf-viewer__header" tabindex="-1">
+        <div>
+          <p class="eyebrow">Aperçu PDF</p>
+          <h2 id="pdf-title">Document</h2>
+        </div>
+        <div class="pdf-actions no-print">
+          <a id="pdf-download" class="button button-secondary" href="#" download>Télécharger</a>
+          <a id="pdf-open" class="button button-secondary" href="#" target="_blank" rel="noopener">Nouvel onglet</a>
+          <button id="pdf-close" class="button button-ghost" type="button">Fermer</button>
+        </div>
+      </div>
+      <iframe id="pdf-frame" src="about:blank" title="Aperçu du document PDF" loading="lazy"></iframe>
+      <p class="pdf-fallback">Si le PDF ne s’affiche pas correctement sur tablette, utiliser Télécharger ou Nouvel onglet.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Portail statique sans collecte de données, sans outil de suivi et sans dépendance externe.</p>
+  </footer>
+
+  <script src="assets/js/resources.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

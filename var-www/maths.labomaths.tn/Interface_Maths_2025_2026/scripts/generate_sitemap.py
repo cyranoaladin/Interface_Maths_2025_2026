@@ -12,6 +12,7 @@ OUT = SITE / "sitemap.xml"
 
 EXCLUDE_DIRS = {"assets"}
 EXCLUDE_FILES = {"404.html", "sw.js", "manifest.webmanifest", "robots.txt", "sitemap.xml"}
+EXCLUDE_PATHS = {"rattrapage_maths_nsi/auto-bilan/index.html"}
 
 urls: list[str] = ["/"]
 
@@ -21,6 +22,8 @@ for p in SITE.rglob("*.html"):
     if parts[0] in EXCLUDE_DIRS:  # skip assets
         continue
     if parts[-1] in EXCLUDE_FILES:
+        continue
+    if rel in EXCLUDE_PATHS:
         continue
     urls.append("/" + rel)
 
@@ -34,4 +37,3 @@ xml.append("</urlset>")
 
 OUT.write_text("\n".join(xml), encoding="utf-8")
 print(f"Wrote {OUT}")
-

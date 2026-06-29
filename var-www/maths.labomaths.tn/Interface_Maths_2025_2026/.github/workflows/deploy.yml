@@ -147,8 +147,9 @@ jobs:
         run: |
           set -euo pipefail
           test -n "$VPS_HOST" && test -n "$VPS_USER" && test -n "$VPS_PATH" || { echo "Secrets VPS_HOST/VPS_USER/VPS_PATH manquants"; exit 1; }
-          # Publish the contents of site/ directly into the webroot, excluding PDFs
+          # Publish site/ directly into the webroot. Keep the rattrapage PDF pack available.
           rsync -az --delete --delete-excluded \
+            --include='/rattrapage_maths_nsi/docs/***' \
             --exclude='*.pdf' --exclude='*.PDF' --exclude='*.Pdf' \
             --human-readable --progress \
             site/ "$VPS_USER@$VPS_HOST:$VPS_PATH/"

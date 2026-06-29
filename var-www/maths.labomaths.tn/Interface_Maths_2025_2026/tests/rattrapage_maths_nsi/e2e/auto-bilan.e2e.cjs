@@ -84,8 +84,29 @@ function isAllowedBrowserUrl(url) {
   assert.equal(pageState.hasNoInlineHandlers, true, "aucun handler inline");
 
   await clickTab(page, /Diagnostic Maths/i);
+  const mathRendering = await page.evaluate(() => {
+    const quiz = document.querySelector("#mathQuiz");
+    const visibleText = quiz ? quiz.innerText : "";
+    return {
+      mathStyleCount: quiz ? quiz.querySelectorAll(".math-style").length : 0,
+      visibleText
+    };
+  });
+  assert.ok(mathRendering.mathStyleCount >= 12, "formules dynamiques rendues avec math-style");
+  assert.doesNotMatch(mathRendering.visibleText, /\^\{|_\{|\\(frac|binom|mathcal|Rightarrow|sqrt|vec|cdot|int|le|ge)|\$\$?|\\\(|\\\[|\{[a-z0-9+\-*/= ]+\}/i, "aucune formule LaTeX brute visible dans le quiz Maths");
+
   await answerAllVisibleRadios(page);
-  await clickIfExists(page, /Corriger le quiz Maths/i);
+  await clickIfExists(page, /Corriger Maths/i);
+  const mathFeedbackRendering = await page.evaluate(() => {
+    const quiz = document.querySelector("#mathQuiz");
+    const visibleText = quiz ? quiz.innerText : "";
+    return {
+      mathStyleCount: quiz ? quiz.querySelectorAll(".feedback .math-style").length : 0,
+      visibleText
+    };
+  });
+  assert.ok(mathFeedbackRendering.mathStyleCount >= 8, "explications de correction Maths rendues avec math-style");
+  assert.doesNotMatch(mathFeedbackRendering.visibleText, /\^\{|_\{|\\(frac|binom|mathcal|Rightarrow|sqrt|vec|cdot|int|le|ge)|\$\$?|\\\(|\\\[|\{[a-z0-9+\-*/= ]+\}/i, "aucune formule LaTeX brute visible dans les corrections Maths");
 
   await clickTab(page, /Diagnostic NSI/i);
   await answerAllVisibleRadios(page);

@@ -95,7 +95,13 @@
     .todo-item.consolidate { border-left-color: #ea580c; background: var(--orange-soft); }
     .program-list { display: grid; gap: .65rem; }
     .program-item { border: 1px solid var(--line); border-radius: 8px; padding: .7rem; background: #fff; }
-    .math-style { font-family: Georgia, 'Times New Roman', serif; font-style: italic; white-space: nowrap; }
+    .math-style { display: inline-block; font-family: "DejaVu Serif", "Liberation Serif", "Noto Serif", Georgia, "Times New Roman", serif; font-size: 1.04em; font-style: italic; white-space: nowrap; }
+    .math-style sup, .math-style sub { font-size: .72em; line-height: 1; position: relative; vertical-align: baseline; }
+    .math-style sup { top: -.48em; }
+    .math-style sub { bottom: -.18em; }
+    .math-frac { display: inline-grid; grid-template-rows: auto auto; text-align: center; vertical-align: middle; font-style: normal; line-height: 1.05; }
+    .math-frac span:first-child { border-bottom: 1px solid currentColor; padding: 0 .18em .04em; }
+    .math-frac span:last-child { padding: .04em .18em 0; }
     @media (max-width: 900px) {
       .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; }
       .score-grid { grid-template-columns: 1fr; }
@@ -140,7 +146,7 @@
             <p>La page sert à diagnostiquer les priorités. Elle ne remplace pas un entraînement complet, mais elle aide Safa à choisir les gestes à savoir expliquer au tableau.</p>
             <div class="callout orange"><strong>Maths :</strong> priorité : stabiliser fonctions, probabilités, géométrie et suites.</div>
             <div class="callout green"><strong>NSI :</strong> priorité : consolider Python court, SQL, structures, graphes, systèmes et routage.</div>
-            <div class="callout"><strong>Formules à oraliser :</strong> <span class="math-style">ln(u) : u &gt; 0</span> ; <span class="math-style">P(X = k)=C(n,k)p^k(1-p)^{n-k}</span> ; <span class="math-style">y=f'(a)(x-a)+f(a)</span>.</div>
+            <div class="callout"><strong>Formules à oraliser :</strong> <span class="math-style">ln(u) : u &gt; 0</span> ; <span class="math-style">P(X = k)=C(n,k)p<sup>k</sup>(1-p)<sup>n-k</sup></span> ; <span class="math-style">y=f′(a)(x-a)+f(a)</span>.</div>
             <div class="callout"><strong>Patron Python à savoir expliquer :</strong> <button type="button" class="secondary" data-copy-target="python-occurrences">Copier</button><pre><code id="python-occurrences">def occurrences(t):
     d = {}
     for x in t:
@@ -427,6 +433,122 @@
     function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
     function percent(got, max) { return max ? Math.round((got / max) * 100) : 0; }
     function statusClass(p) { return p >= 75 ? { cls: "ok", text: "vert" } : p >= 50 ? { cls: "warn", text: "orange" } : { cls: "bad", text: "rouge" }; }
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
+    }
+
+    const mathSnippets = [
+      "P(B)=P(A∩B)+P(Abar∩B)",
+      "C(n,k)p^k(1-p)^{n-k}",
+      "y=f'(a)(x-a)+f(a)",
+      "y=f(a)(x-a)+f'(a)",
+      "y=f'(x)(x-a)",
+      "∫uv'=[uv]-∫u'v",
+      "(2x+1)e^{2x}",
+      "2x e^{2x+1}",
+      "2e^{2x+1}",
+      "(e^u)'=u'e^u",
+      "v_{n+1}=qv_n",
+      "v_n=v_0+nq",
+      "v_n=v_0q^n",
+      "P(|X-mu|>=delta)",
+      "n!/(k!(n-k)!)",
+      "P(B)=P(A)+P(B)",
+      "P(B)=P(A)P(B)",
+      "P(B)=1-P(A)",
+      "2x-y+z+3=0",
+      "ax+by+cz+d=0",
+      "x=1+2t",
+      "y=3-t",
+      "z=4+t",
+      "e^{2x+1}",
+      "e^{x+a}",
+      "Ce^{ax}",
+      "y(x)=Ce^{ax}",
+      "f''>0",
+      "y'=ay",
+      "u=2x+1",
+      "3-x>0",
+      "n!/k!",
+      "x <= 3",
+      "x < 3",
+      "x > 3",
+      "x<3",
+      "u>0",
+      "P(X = k)",
+      "P(X=k)",
+      "P(A∩B)",
+      "P(Abar∩B)",
+      "B(n,p)",
+      "E(X)",
+      "V(X)",
+      "np(1-p)",
+      "n+p",
+      "p/n",
+      "k/n",
+      "ax+b",
+      "C/a",
+      "q^n",
+      "k^n",
+      "n+k",
+      "v_n",
+      "v_0",
+      "q/n",
+      "nq",
+      "f'",
+      "f'(a)",
+      "f'(x)",
+      "f(a)",
+      "f(b)",
+      "∫uv'=u'v",
+      "∫u/v=uv",
+      "∫u'=u'+C",
+      "-sin(x)",
+      "-cos(x)",
+      "C(n,k)",
+      "(a;b;c)"
+    ].sort((a, b) => b.length - a.length);
+
+    function formatFormula(raw) {
+      if (raw === "n!/(k!(n-k)!)") {
+        return '<span class="math-style"><span class="math-frac"><span>n!</span><span>k!(n-k)!</span></span></span>';
+      }
+      const normalized = String(raw)
+        .replace(/([A-Za-z)])''/g, "$1′′")
+        .replace(/([A-Za-z)])'/g, "$1′");
+      let html = escapeHtml(normalized)
+        .replace(/&lt;=/g, "≤")
+        .replace(/&gt;=/g, "≥")
+        .replace(/Abar/g, "A\u0305")
+        .replace(/\bmu\b/g, "μ")
+        .replace(/\bdelta\b/g, "δ")
+        .replace(/([A-Za-z0-9)\]])\^\{([^}]+)\}/g, "$1<sup>$2</sup>")
+        .replace(/([A-Za-z0-9)\]])\^([A-Za-z0-9]+)/g, "$1<sup>$2</sup>")
+        .replace(/([A-Za-z])_\{([^}]+)\}/g, "$1<sub>$2</sub>")
+        .replace(/([A-Za-z])_([A-Za-z0-9]+)/g, "$1<sub>$2</sub>");
+      return `<span class="math-style">${html}</span>`;
+    }
+
+    function renderMathText(value) {
+      const tokens = [];
+      const token = raw => {
+        const marker = `@@M${tokens.length}@@`;
+        tokens.push(formatFormula(raw));
+        return marker;
+      };
+      let text = String(value);
+      for (const snippet of mathSnippets) {
+        text = text.replace(new RegExp(snippet.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), () => token(snippet));
+      }
+      text = text.replace(/\b(?:ln|sin|cos)\([^)]*\)/g, match => token(match));
+      text = text.replace(/\b[PEV]\([^)]*\)/g, match => token(match));
+      text = text.replace(/[A-Za-z0-9)]\^\{[^}]+\}/g, match => token(match));
+      text = text.replace(/[A-Za-z]_\{[^}]+\}/g, match => token(match));
+      text = text.replace(/\b[xyuvf]\s*(?:<=|>=|<|>)\s*-?\d+/g, match => token(match));
+      let html = escapeHtml(text);
+      tokens.forEach((replacement, index) => { html = html.replaceAll(`@@M${index}@@`, replacement); });
+      return html;
+    }
 
     function renderScoreBlock(title, got, max) {
       const p = percent(got, max);
@@ -438,7 +560,7 @@
       const target = document.getElementById(subject === "math" ? "mathChecklist" : "nsiChecklist");
       target.innerHTML = checklist[subject].map(item => {
         const current = Number(state.ratings[subject][item.id]);
-        return `<tr><td><strong>${item.text}</strong><div class="muted">${item.theme}</div></td><td><div class="rating-row" role="radiogroup" aria-label="${item.text}">${levels.map(level => `<label class="rating-card ${level.cls}"><input type="radio" name="${subject}-${item.id}" value="${level.value}" data-subject="${subject}" data-id="${item.id}" ${current === level.value ? "checked" : ""}><span>${level.text}<br>${level.hint}</span></label>`).join("")}</div></td></tr>`;
+        return `<tr><td><strong>${renderMathText(item.text)}</strong><div class="muted">${escapeHtml(item.theme)}</div></td><td><div class="rating-row" role="radiogroup" aria-label="${escapeHtml(item.text)}">${levels.map(level => `<label class="rating-card ${level.cls}"><input type="radio" name="${subject}-${item.id}" value="${level.value}" data-subject="${subject}" data-id="${item.id}" ${current === level.value ? "checked" : ""}><span>${escapeHtml(level.text)}<br>${escapeHtml(level.hint)}</span></label>`).join("")}</div></td></tr>`;
       }).join("");
     }
 
@@ -466,7 +588,7 @@
     function renderQuiz(subject) {
       document.getElementById(subject + "Quiz").innerHTML = quizzes[subject].map((item, index) => {
         const selected = state.quiz[subject][index];
-        return `<div class="quiz-card"><strong>${index + 1}. ${item.q}</strong><div class="choices">${item.choices.map((choice, i) => `<label class="choice"><input type="radio" name="${subject}-quiz-${index}" value="${i}" data-subject="${subject}" data-index="${index}" ${Number(selected) === i ? "checked" : ""}><span>${choice}</span></label>`).join("")}</div><div class="feedback" id="${subject}-feedback-${index}"></div></div>`;
+        return `<div class="quiz-card"><strong>${index + 1}. ${renderMathText(item.q)}</strong><div class="choices">${item.choices.map((choice, i) => `<label class="choice"><input type="radio" name="${subject}-quiz-${index}" value="${i}" data-subject="${subject}" data-index="${index}" ${Number(selected) === i ? "checked" : ""}><span>${renderMathText(choice)}</span></label>`).join("")}</div><div class="feedback" id="${subject}-feedback-${index}"></div></div>`;
       }).join("");
       if (state.graded[subject]) showQuizFeedback(subject);
     }
@@ -479,7 +601,7 @@
         const fb = document.getElementById(`${subject}-feedback-${index}`);
         if (fb) {
           fb.className = `feedback ${ok ? "correct" : "wrong"}`;
-          fb.textContent = ok ? `Correct. ${item.exp}` : `À reprendre. Réponse attendue : ${item.choices[item.a]}. ${item.exp}`;
+          fb.innerHTML = ok ? `Correct. ${renderMathText(item.exp)}` : `À reprendre. Réponse attendue : ${renderMathText(item.choices[item.a])}. ${renderMathText(item.exp)}`;
         }
       });
       const p = percent(got, quizzes[subject].length);

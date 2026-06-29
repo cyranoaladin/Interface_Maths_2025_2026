@@ -102,6 +102,11 @@
     .math-frac { display: inline-grid; grid-template-rows: auto auto; text-align: center; vertical-align: middle; font-style: normal; line-height: 1.05; }
     .math-frac span:first-child { border-bottom: 1px solid currentColor; padding: 0 .18em .04em; }
     .math-frac span:last-child { padding: .04em .18em 0; }
+    .math-binom { display: inline-flex; align-items: center; gap: .06em; vertical-align: middle; font-style: normal; line-height: 1; }
+    .math-binom::before, .math-binom::after { font-size: 1.65em; line-height: .82; font-style: normal; }
+    .math-binom::before { content: "("; }
+    .math-binom::after { content: ")"; }
+    .math-binom-stack { display: inline-grid; grid-template-rows: auto auto; text-align: center; font-style: italic; line-height: .88; }
     @media (max-width: 900px) {
       .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; }
       .score-grid { grid-template-columns: 1fr; }
@@ -146,7 +151,7 @@
             <p>La page sert à diagnostiquer les priorités. Elle ne remplace pas un entraînement complet, mais elle aide Safa à choisir les gestes à savoir expliquer au tableau.</p>
             <div class="callout orange"><strong>Maths :</strong> priorité : stabiliser fonctions, probabilités, géométrie et suites.</div>
             <div class="callout green"><strong>NSI :</strong> priorité : consolider Python court, SQL, structures, graphes, systèmes et routage.</div>
-            <div class="callout"><strong>Formules à oraliser :</strong> <span class="math-style">ln(u) : u &gt; 0</span> ; <span class="math-style">P(X = k)=C(n,k)p<sup>k</sup>(1-p)<sup>n-k</sup></span> ; <span class="math-style">y=f′(a)(x-a)+f(a)</span>.</div>
+            <div class="callout"><strong>Formules à oraliser :</strong> <span class="math-style">ln(u) : u &gt; 0</span> ; <span class="math-style">P(X = k)=<span class="math-binom"><span class="math-binom-stack"><span>n</span><span>k</span></span></span>p<sup>k</sup>(1-p)<sup>n-k</sup></span> ; <span class="math-style">y=f′(a)(x-a)+f(a)</span>.</div>
             <div class="callout"><strong>Patron Python à savoir expliquer :</strong> <button type="button" class="secondary" data-copy-target="python-occurrences">Copier</button><pre><code id="python-occurrences">def occurrences(t):
     d = {}
     for x in t:
@@ -358,17 +363,17 @@
         { tag: "tvi", q: "Le TVI garantit une solution si :", choices: ["f est continue et k est entre f(a) et f(b)", "f' change de signe", "f est positive", "f est une droite"], a: 0, exp: "Le TVI porte sur la continuité de f et l'encadrement de la valeur k." },
         { tag: "variation", q: "Tangente en a :", choices: ["y=f(a)(x-a)+f'(a)", "y=f'(a)(x-a)+f(a)", "y=f'(x)(x-a)", "y=f(a)x"], a: 1, exp: "La formule est y=f'(a)(x-a)+f(a)." },
         { tag: "convexity", q: "Si f''>0 sur un intervalle, f est :", choices: ["concave", "convexe", "constante", "périodique"], a: 1, exp: "La dérivée seconde positive donne la convexité." },
-        { tag: "seqgeo", q: "Si v_{n+1}=qv_n, alors :", choices: ["v_n=v_0+nq", "v_n=v_0q^n", "v_n=q/n", "v_n=nq"], a: 1, exp: "C'est la formule d'une suite géométrique." },
+        { tag: "seqgeo", q: "Si v_{n+1}=qv_n, alors :", choices: ["v_n=v_0+nq", "v_n=v_0q^n", "v_n=\\frac{q}{n}", "v_n=nq"], a: 1, exp: "C'est la formule d'une suite géométrique." },
         { tag: "recur", q: "Une récurrence contient :", choices: ["initialisation, hérédité, conclusion", "domaine, dérivée, tangente", "arbre, produit, somme", "SELECT, FROM, WHERE"], a: 0, exp: "Ces trois étapes doivent apparaître clairement." },
         { tag: "line", q: "Dans x=1+2t, y=3-t, z=4+t, un vecteur directeur est :", choices: ["(1;3;4)", "(2;-1;1)", "(2;1;4)", "(3;4;1)"], a: 1, exp: "On lit les coefficients de t." },
         { tag: "plane", q: "Pour 2x-y+z+3=0, un vecteur normal est :", choices: ["(2;-1;1)", "(2;1;3)", "(-1;1;0)", "(3;2;-1)"], a: 0, exp: "Dans ax+by+cz+d=0, un normal est (a;b;c)." },
-        { tag: "binom", q: "Si X suit B(n,p), P(X=k) vaut :", choices: ["np", "C(n,k)p^k(1-p)^{n-k}", "p/n", "k/n"], a: 1, exp: "Formule de la loi binomiale." },
+        { tag: "binom", q: "Si X suit B(n,p), P(X=k) vaut :", choices: ["np", "\\binom{n}{k}p^k(1-p)^{n-k}", "\\frac{p}{n}", "\\frac{k}{n}"], a: 1, exp: "Formule de la loi binomiale." },
         { tag: "treeprob", q: "Probabilités totales pour B avec A et son contraire :", choices: ["P(B)=P(A)+P(B)", "P(B)=P(A∩B)+P(Abar∩B)", "P(B)=P(A)P(B)", "P(B)=1-P(A)"], a: 1, exp: "On additionne les branches compatibles avec B." },
         { tag: "binom", q: "Pour X suivant B(n,p), E(X) et V(X) sont :", choices: ["np et np(1-p)", "p et n", "n+p et np", "0 et 1"], a: 0, exp: "Espérance np, variance np(1-p)." },
-        { tag: "integral", q: "IPP :", choices: ["∫uv'=[uv]-∫u'v", "∫uv'=u'v", "∫u/v=uv", "∫u'=u'+C"], a: 0, exp: "Formule d'intégration par parties." },
-        { tag: "diff", q: "Solution de y'=ay :", choices: ["Ce^{ax}", "ax+b", "C/a", "e^{x+a}"], a: 0, exp: "Les solutions sont y(x)=Ce^{ax}." },
+        { tag: "integral", q: "IPP :", choices: ["∫uv'=[uv]-∫u'v", "∫uv'=u'v", "∫\\frac{u}{v}=uv", "∫u'=u'+C"], a: 0, exp: "Formule d'intégration par parties." },
+        { tag: "diff", q: "Solution de y'=ay :", choices: ["Ce^{ax}", "ax+b", "\\frac{C}{a}", "e^{x+a}"], a: 0, exp: "Les solutions sont y(x)=Ce^{ax}." },
         { tag: "concentration", q: "Bienaymé-Tchebychev donne une borne pour :", choices: ["P(|X-mu|>=delta)", "P(X=0)", "f'(x)", "une tangente"], a: 0, exp: "Elle majore une probabilité d'écart à l'espérance." },
-        { tag: "counting", q: "Nombre de combinaisons de k éléments parmi n :", choices: ["n!/k!", "n!/(k!(n-k)!)", "k^n", "n+k"], a: 1, exp: "C'est le coefficient binomial C(n,k)." },
+        { tag: "counting", q: "Nombre de combinaisons de k éléments parmi n :", choices: ["\\frac{n!}{k!}", "\\dfrac{n!}{k!(n-k)!}", "k^n", "n+k"], a: 1, exp: "C'est le coefficient binomial \\binom{n}{k}." },
         { tag: "logtrig", q: "Dérivée de cos(x) :", choices: ["sin(x)", "-sin(x)", "cos(x)", "-cos(x)"], a: 1, exp: "La dérivée de cos est -sin." },
         { tag: "scalar", q: "Deux vecteurs sont orthogonaux si :", choices: ["leur produit scalaire est nul", "leurs coordonnées sont égales", "leur somme est nulle", "leurs normes sont égales"], a: 0, exp: "Orthogonalité : produit scalaire nul." }
       ],
@@ -439,11 +444,12 @@
 
     const mathSnippets = [
       "P(B)=P(A∩B)+P(Abar∩B)",
-      "C(n,k)p^k(1-p)^{n-k}",
+      "\\binom{n}{k}p^k(1-p)^{n-k}",
       "y=f'(a)(x-a)+f(a)",
       "y=f(a)(x-a)+f'(a)",
       "y=f'(x)(x-a)",
       "∫uv'=[uv]-∫u'v",
+      "∫\\frac{u}{v}=uv",
       "(2x+1)e^{2x}",
       "2x e^{2x+1}",
       "2e^{2x+1}",
@@ -452,7 +458,12 @@
       "v_n=v_0+nq",
       "v_n=v_0q^n",
       "P(|X-mu|>=delta)",
-      "n!/(k!(n-k)!)",
+      "\\dfrac{n!}{k!(n-k)!}",
+      "\\frac{n!}{k!}",
+      "\\frac{p}{n}",
+      "\\frac{k}{n}",
+      "\\frac{q}{n}",
+      "\\frac{C}{a}",
       "P(B)=P(A)+P(B)",
       "P(B)=P(A)P(B)",
       "P(B)=1-P(A)",
@@ -469,7 +480,6 @@
       "y'=ay",
       "u=2x+1",
       "3-x>0",
-      "n!/k!",
       "x <= 3",
       "x < 3",
       "x > 3",
@@ -484,16 +494,12 @@
       "V(X)",
       "np(1-p)",
       "n+p",
-      "p/n",
-      "k/n",
       "ax+b",
-      "C/a",
       "q^n",
       "k^n",
       "n+k",
       "v_n",
       "v_0",
-      "q/n",
       "nq",
       "f'",
       "f'(a)",
@@ -501,22 +507,19 @@
       "f(a)",
       "f(b)",
       "∫uv'=u'v",
-      "∫u/v=uv",
       "∫u'=u'+C",
       "-sin(x)",
       "-cos(x)",
-      "C(n,k)",
       "(a;b;c)"
     ].sort((a, b) => b.length - a.length);
 
     function formatFormula(raw) {
-      if (raw === "n!/(k!(n-k)!)") {
-        return '<span class="math-style"><span class="math-frac"><span>n!</span><span>k!(n-k)!</span></span></span>';
-      }
       const normalized = String(raw)
         .replace(/([A-Za-z)])''/g, "$1′′")
         .replace(/([A-Za-z)])'/g, "$1′");
       let html = escapeHtml(normalized)
+        .replace(/\\d?frac\{([^{}]+)\}\{([^{}]+)\}/g, '<span class="math-frac"><span>$1</span><span>$2</span></span>')
+        .replace(/\\binom\{([^{}]+)\}\{([^{}]+)\}/g, '<span class="math-binom"><span class="math-binom-stack"><span>$1</span><span>$2</span></span></span>')
         .replace(/&lt;=/g, "≤")
         .replace(/&gt;=/g, "≥")
         .replace(/Abar/g, "A\u0305")
@@ -540,6 +543,8 @@
       for (const snippet of mathSnippets) {
         text = text.replace(new RegExp(snippet.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"), () => token(snippet));
       }
+      text = text.replace(/\\d?frac\{[^{}]+\}\{[^{}]+\}/g, match => token(match));
+      text = text.replace(/\\binom\{[^{}]+\}\{[^{}]+\}/g, match => token(match));
       text = text.replace(/\b(?:ln|sin|cos)\([^)]*\)/g, match => token(match));
       text = text.replace(/\b[PEV]\([^)]*\)/g, match => token(match));
       text = text.replace(/[A-Za-z0-9)]\^\{[^}]+\}/g, match => token(match));

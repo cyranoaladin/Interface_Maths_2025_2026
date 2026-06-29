@@ -89,11 +89,16 @@ function isAllowedBrowserUrl(url) {
     const visibleText = quiz ? quiz.innerText : "";
     return {
       mathStyleCount: quiz ? quiz.querySelectorAll(".math-style").length : 0,
+      binomialCount: quiz ? quiz.querySelectorAll(".math-binom").length : 0,
+      fractionCount: quiz ? quiz.querySelectorAll(".math-frac").length : 0,
       visibleText
     };
   });
   assert.ok(mathRendering.mathStyleCount >= 12, "formules dynamiques rendues avec math-style");
+  assert.ok(mathRendering.binomialCount >= 1, "coefficient binomial rendu avec parenthèses n parmi k");
+  assert.ok(mathRendering.fractionCount >= 4, "fractions rendues en structure verticale");
   assert.doesNotMatch(mathRendering.visibleText, /\^\{|_\{|\\(frac|binom|mathcal|Rightarrow|sqrt|vec|cdot|int|le|ge)|\$\$?|\\\(|\\\[|\{[a-z0-9+\-*/= ]+\}/i, "aucune formule LaTeX brute visible dans le quiz Maths");
+  assert.doesNotMatch(mathRendering.visibleText, /C\(n,k\)|\bn!\/k!\b|\bp\/n\b|\bk\/n\b|\bq\/n\b|\bC\/a\b|u\/v/i, "aucune fraction slash ou notation C(n,k) visible dans le quiz Maths");
 
   await answerAllVisibleRadios(page);
   await clickIfExists(page, /Corriger Maths/i);

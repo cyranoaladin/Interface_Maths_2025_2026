@@ -13,6 +13,10 @@ function browserLaunchOptions() {
   return options;
 }
 
+function isAllowedBrowserUrl(url) {
+  return url.startsWith("data:") || url.startsWith("blob:") || url.startsWith("chrome:") || url.startsWith("chrome-extension:");
+}
+
 (async () => {
   const browser = await chromium.launch(browserLaunchOptions());
   const page = await browser.newPage();
@@ -23,7 +27,7 @@ function browserLaunchOptions() {
 
   page.on("request", (request) => {
     const url = request.url();
-    if (!url.startsWith(TARGET_URL.replace(/auto-bilan\/$/, "")) && !url.startsWith("data:") && !url.startsWith("blob:")) {
+    if (!url.startsWith(TARGET_URL.replace(/auto-bilan\/$/, "")) && !isAllowedBrowserUrl(url)) {
       externalRequests.push(url);
     }
   });

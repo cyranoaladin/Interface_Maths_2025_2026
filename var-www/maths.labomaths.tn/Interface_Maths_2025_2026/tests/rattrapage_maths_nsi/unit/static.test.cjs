@@ -83,6 +83,8 @@ const auto = read("site/rattrapage_maths_nsi/auto-bilan/index.html");
 const css = read("site/rattrapage_maths_nsi/assets/css/style.css");
 const app = read("site/rattrapage_maths_nsi/assets/js/app.js");
 const resources = read("site/rattrapage_maths_nsi/assets/js/resources.js");
+const deployWorkflow = read(".github/workflows/deploy.yml");
+const sitemapScript = read("scripts/generate_sitemap.py");
 const publicText = walk(site)
   .filter((file) => publicExt.has(path.extname(file)))
   .map((file) => fs.readFileSync(file, "utf8"))
@@ -93,6 +95,9 @@ const publicTextNoSvg = walk(site)
   .join("\n");
 
 match(index, /noindex,nofollow,noarchive/, "meta robots présent");
+match(auto, /noindex,nofollow,noarchive/, "meta robots auto-bilan présent");
+match(sitemapScript, /rattrapage_maths_nsi\/auto-bilan\/index\.html/, "auto-bilan exclu du sitemap");
+match(deployWorkflow, /--include='\/rattrapage_maths_nsi\/docs\/\*\*\*'/, "PDF rattrapage explicitement inclus au déploiement global");
 notMatch(publicTextNoSvg, /https?:\/\/|file:\/\/|\/mnt\/data|C:\\/i, "aucun lien externe ou local absolu dans HTML/CSS/JS");
 notMatch(publicText, /\son[a-z]+\s*=/i, "aucun handler inline");
 notMatch(publicText, /analytics|gtag|googletagmanager|cdn/i, "aucun tracker ou CDN");
@@ -130,7 +135,9 @@ notMatch(publicText, /objectif\s+[0-9]/i, "aucun objectif chiffré public");
 match(css, /@media\s*\(max-width:\s*980px\)/, "CSS responsive tablette/mobile présent");
 match(css, /@media\s+print/, "CSS impression présent");
 match(css, /min-height:\s*44px/, "cibles tactiles 44 px présentes");
-match(app, /localStorage\.setItem/, "mémorisation du dernier PDF présente");
+match(app, /function storageGet/, "lecture localStorage protégée");
+match(app, /function storageSet/, "écriture localStorage protégée");
+match(app, /Date\.now\(\)/, "minuteurs basés sur le temps réel");
 match(app, /addEventListener/, "événements non inline présents");
 match(resources, /RATTRAPAGE_RESOURCES/, "données de ressources présentes");
 
@@ -143,6 +150,11 @@ match(auto, /u\s*>\s*0|ln\(u\)/i, "condition de domaine logarithme présente");
 match(auto, /def\s+\w+\(|return\s+/i, "programme Python présent");
 match(auto, /renderScoreBlock/, "rendu des scores présent");
 match(auto, /buildSummary/, "résumé final présent");
+match(auto, /function save\(\)\s*\{\s*try\s*\{/s, "sauvegarde auto-bilan protégée");
+match(auto, /math-frac[^>]+aria-label=/, "fractions rendues avec libellé accessible");
+match(auto, /math-frac-visual[^>]+aria-hidden="true"/, "fraction visuelle masquée aux lecteurs d'écran");
+match(auto, /math-binom[^>]+aria-label=/, "binômes rendus avec libellé accessible");
+match(auto, /math-binom-visual[^>]+aria-hidden="true"/, "binôme visuel masqué aux lecteurs d'écran");
 notMatch(auto, /renderSummary\(/, "aucun appel à renderSummary inexistant");
 notMatch(auto, /onclick=|onchange=/i, "auto-bilan sans gestionnaires inline");
 

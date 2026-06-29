@@ -7,8 +7,15 @@ apps/**
 !apps/
 
 **
+!site/
+!site/assets/
+!site/assets/js/
+!site/assets/js/**/*.js
+!site/rattrapage_maths_nsi/
+!site/rattrapage_maths_nsi/assets/
+!site/rattrapage_maths_nsi/assets/js/
+!site/rattrapage_maths_nsi/assets/js/**/*.js
 src/**
 site/dist/**
 
 **/node_modules/**
-

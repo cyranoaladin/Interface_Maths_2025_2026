@@ -5,6 +5,7 @@ module.exports = {
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   ignorePatterns: ['ui/**', '**/node_modules/**', '**/*.min.js', '**/lucide.min.js'],
   rules: {
+    'no-empty': ['error', { allowEmptyCatch: true }],
     'no-unused-vars': ['warn', { args: 'none' }]
   },
   globals: {

@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
   <title>Auto-bilan programmes officiels - Safa</title>
   <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
   <style>
@@ -99,13 +100,16 @@
     .math-style sup, .math-style sub { font-size: .72em; line-height: 1; position: relative; vertical-align: baseline; }
     .math-style sup { top: -.48em; }
     .math-style sub { bottom: -.18em; }
-    .math-frac { display: inline-grid; grid-template-rows: auto auto; text-align: center; vertical-align: middle; font-style: normal; line-height: 1.05; }
-    .math-frac span:first-child { border-bottom: 1px solid currentColor; padding: 0 .18em .04em; }
-    .math-frac span:last-child { padding: .04em .18em 0; }
-    .math-binom { display: inline-flex; align-items: center; gap: .06em; vertical-align: middle; font-style: normal; line-height: 1; }
-    .math-binom::before, .math-binom::after { font-size: 1.65em; line-height: .82; font-style: normal; }
-    .math-binom::before { content: "("; }
-    .math-binom::after { content: ")"; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .math-frac { display: inline-block; vertical-align: middle; font-style: normal; }
+    .math-frac-visual { display: inline-grid; grid-template-rows: auto auto; text-align: center; line-height: 1.05; }
+    .math-frac-visual span:first-child { border-bottom: 1px solid currentColor; padding: 0 .18em .04em; }
+    .math-frac-visual span:last-child { padding: .04em .18em 0; }
+    .math-binom { display: inline-block; vertical-align: middle; font-style: normal; line-height: 1; }
+    .math-binom-visual { display: inline-flex; align-items: center; gap: .06em; }
+    .math-binom-visual::before, .math-binom-visual::after { font-size: 1.65em; line-height: .82; font-style: normal; }
+    .math-binom-visual::before { content: "("; }
+    .math-binom-visual::after { content: ")"; }
     .math-binom-stack { display: inline-grid; grid-template-rows: auto auto; text-align: center; font-style: italic; line-height: .88; }
     @media (max-width: 900px) {
       .span-8, .span-7, .span-6, .span-5, .span-4 { grid-column: span 12; }
@@ -151,7 +155,7 @@
             <p>La page sert à diagnostiquer les priorités. Elle ne remplace pas un entraînement complet, mais elle aide Safa à choisir les gestes à savoir expliquer au tableau.</p>
             <div class="callout orange"><strong>Maths :</strong> priorité : stabiliser fonctions, probabilités, géométrie et suites.</div>
             <div class="callout green"><strong>NSI :</strong> priorité : consolider Python court, SQL, structures, graphes, systèmes et routage.</div>
-            <div class="callout"><strong>Formules à oraliser :</strong> <span class="math-style">ln(u) : u &gt; 0</span> ; <span class="math-style">P(X = k)=<span class="math-binom"><span class="math-binom-stack"><span>n</span><span>k</span></span></span>p<sup>k</sup>(1-p)<sup>n-k</sup></span> ; <span class="math-style">y=f′(a)(x-a)+f(a)</span>.</div>
+            <div class="callout"><strong>Formules à oraliser :</strong> <span class="math-style">ln(u) : u &gt; 0</span> ; <span class="math-style">P(X = k)=<span class="math-binom" aria-label="k parmi n"><span class="sr-only">k parmi n</span><span class="math-binom-visual" aria-hidden="true"><span class="math-binom-stack"><span>n</span><span>k</span></span></span></span>p<sup>k</sup>(1-p)<sup>n-k</sup></span> ; <span class="math-style">y=f′(a)(x-a)+f(a)</span>.</div>
             <div class="callout"><strong>Patron Python à savoir expliquer :</strong> <button type="button" class="secondary" data-copy-target="python-occurrences">Copier</button><pre><code id="python-occurrences">def occurrences(t):
     d = {}
     for x in t:
@@ -435,7 +439,13 @@
     let state = loadState();
     let timer = { seconds: 1200, initial: 1200, label: "Préparation", running: false, id: null };
 
-    function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function save() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (error) {
+        // Le diagnostic reste utilisable si le stockage local est désactivé ou plein.
+      }
+    }
     function percent(got, max) { return max ? Math.round((got / max) * 100) : 0; }
     function statusClass(p) { return p >= 75 ? { cls: "ok", text: "vert" } : p >= 50 ? { cls: "warn", text: "orange" } : { cls: "bad", text: "rouge" }; }
     function escapeHtml(value) {
@@ -518,8 +528,8 @@
         .replace(/([A-Za-z)])''/g, "$1′′")
         .replace(/([A-Za-z)])'/g, "$1′");
       let html = escapeHtml(normalized)
-        .replace(/\\d?frac\{([^{}]+)\}\{([^{}]+)\}/g, '<span class="math-frac"><span>$1</span><span>$2</span></span>')
-        .replace(/\\binom\{([^{}]+)\}\{([^{}]+)\}/g, '<span class="math-binom"><span class="math-binom-stack"><span>$1</span><span>$2</span></span></span>')
+        .replace(/\\d?frac\{([^{}]+)\}\{([^{}]+)\}/g, (match, top, bottom) => `<span class="math-frac" aria-label="${top} sur ${bottom}"><span class="sr-only">${top}/${bottom}</span><span class="math-frac-visual" aria-hidden="true"><span>${top}</span><span>${bottom}</span></span></span>`)
+        .replace(/\\binom\{([^{}]+)\}\{([^{}]+)\}/g, (match, top, bottom) => `<span class="math-binom" aria-label="${bottom} parmi ${top}"><span class="sr-only">${bottom} parmi ${top}</span><span class="math-binom-visual" aria-hidden="true"><span class="math-binom-stack"><span>${top}</span><span>${bottom}</span></span></span></span>`)
         .replace(/&lt;=/g, "≤")
         .replace(/&gt;=/g, "≥")
         .replace(/Abar/g, "A\u0305")
@@ -612,6 +622,14 @@
       const p = percent(got, quizzes[subject].length);
       const c = p >= 75 ? "green" : p >= 50 ? "orange" : "red";
       document.getElementById(subject + "QuizResult").innerHTML = `<div class="callout ${c}"><strong>Résultat ${subject === "math" ? "Maths" : "NSI"} :</strong> ${got}/${quizzes[subject].length}, soit ${p}%.</div>`;
+    }
+
+    function clearQuizFeedback(subject) {
+      document.getElementById(subject + "QuizResult").innerHTML = "";
+      document.querySelectorAll(`[id^="${subject}-feedback-"]`).forEach(fb => {
+        fb.className = "feedback";
+        fb.textContent = "";
+      });
     }
 
     function isWrong(subject, index) {
@@ -753,7 +771,7 @@
     document.addEventListener("change", event => {
       const target = event.target;
       if (target.matches(".rating-card input")) { state.ratings[target.dataset.subject][target.dataset.id] = Number(target.value); updateAll(); }
-      if (target.matches(".choice input")) { state.quiz[target.dataset.subject][target.dataset.index] = Number(target.value); state.graded[target.dataset.subject] = false; updateAll(); }
+      if (target.matches(".choice input")) { state.quiz[target.dataset.subject][target.dataset.index] = Number(target.value); state.graded[target.dataset.subject] = false; clearQuizFeedback(target.dataset.subject); updateAll(); }
       if (target.matches(".oral")) { state.oral[target.dataset.key] = target.checked; updateAll(); }
     });
     document.getElementById("gradeMath").addEventListener("click", () => { state.graded.math = true; showQuizFeedback("math"); updateAll(); });
@@ -766,7 +784,7 @@
     document.getElementById("resetTimer").addEventListener("click", resetTimer);
     document.getElementById("copySummary").addEventListener("click", async () => { buildSummary(); const summary = document.getElementById("summary"); summary.focus(); summary.select(); await copyText(summary.value); });
     document.getElementById("printPage").addEventListener("click", () => window.print());
-    document.getElementById("resetAll").addEventListener("click", () => { if (!confirm("Réinitialiser toutes les réponses de Safa ?")) return; localStorage.removeItem(STORAGE_KEY); state = initialState(); init(); });
+    document.getElementById("resetAll").addEventListener("click", () => { if (!confirm("Réinitialiser toutes les réponses de Safa ?")) return; try { localStorage.removeItem(STORAGE_KEY); } catch (error) {} state = initialState(); init(); });
 
     init();
 

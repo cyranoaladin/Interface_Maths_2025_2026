@@ -3,8 +3,8 @@
 
   var STORAGE_KEY = "safa_rattrapage_last_pdf";
   var timers = {
-    prep: { remaining: 20 * 60, interval: null, outputId: "prep-timer" },
-    talk: { remaining: 20 * 60, interval: null, outputId: "talk-timer" }
+    prep: { duration: 20 * 60, remaining: 20 * 60, interval: null, outputId: "prep-timer", endsAt: 0 },
+    talk: { duration: 20 * 60, remaining: 20 * 60, interval: null, outputId: "talk-timer", endsAt: 0 }
   };
 
   function $(selector, root) {
@@ -21,6 +21,30 @@
   function allResources() {
     var data = window.RATTRAPAGE_RESOURCES;
     return [].concat(data.guides, data.mathsSubjects, data.nsiSubjects);
+  }
+
+  function storageGet(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function storageSet(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {
+      // Le portail reste utilisable si le stockage local est désactivé ou plein.
+    }
+  }
+
+  function storageRemove(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      // Ignorer les erreurs de stockage non critiques.
+    }
   }
 
   function findResource(id) {
@@ -134,7 +158,7 @@
     download.download = resource.path.split("/").pop();
     open.href = resource.path;
     viewer.hidden = false;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: resource.id, title: resource.title, path: resource.path }));
+    storageSet(STORAGE_KEY, JSON.stringify({ id: resource.id, title: resource.title, path: resource.path }));
     updateResumeButton();
     viewer.scrollIntoView({ behavior: "smooth", block: "start" });
     setTimeout(function focusViewer() {
@@ -150,7 +174,7 @@
 
   function updateResumeButton() {
     var button = $("#resume-last");
-    var raw = localStorage.getItem(STORAGE_KEY);
+    var raw = storageGet(STORAGE_KEY);
     if (!raw) {
       button.hidden = true;
       return;
@@ -161,7 +185,7 @@
       button.textContent = "Reprendre : " + resource.title;
       button.dataset.resourceId = resource.id;
     } catch (error) {
-      localStorage.removeItem(STORAGE_KEY);
+      storageRemove(STORAGE_KEY);
       button.hidden = true;
     }
   }
@@ -181,14 +205,17 @@
   function startTimer(name) {
     var timer = timers[name];
     if (timer.interval) return;
+    timer.endsAt = Date.now() + timer.remaining * 1000;
     timer.interval = window.setInterval(function tick() {
-      timer.remaining = Math.max(0, timer.remaining - 1);
+      timer.remaining = Math.max(0, Math.ceil((timer.endsAt - Date.now()) / 1000));
       renderTimer(name);
       if (timer.remaining === 0) {
         window.clearInterval(timer.interval);
         timer.interval = null;
+        timer.endsAt = 0;
       }
-    }, 1000);
+    }, 250);
+    renderTimer(name);
   }
 
   function resetTimer(name) {
@@ -197,7 +224,8 @@
       window.clearInterval(timer.interval);
       timer.interval = null;
     }
-    timer.remaining = 20 * 60;
+    timer.endsAt = 0;
+    timer.remaining = timer.duration;
     renderTimer(name);
   }
 

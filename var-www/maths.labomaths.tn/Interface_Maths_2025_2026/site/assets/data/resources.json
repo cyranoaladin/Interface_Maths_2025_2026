@@ -1,0 +1,67 @@
+[
+  {
+    "id": "premiere-second-degre-cours",
+    "title": "Cours - Second degré",
+    "description": "Cours de spécialité Première sur les fonctions polynômes du second degré.",
+    "type": "lesson",
+    "level": "Première",
+    "subject": "EDS Maths",
+    "chapter": "Second degré",
+    "group_code": "P-EDS-6",
+    "visibility": "group",
+    "url": "/EDS_premiere/Second_Degre/cours_second_degre.html",
+    "is_active": true
+  },
+  {
+    "id": "premiere-second-degre-qcm",
+    "title": "QCM - Second degré",
+    "description": "Entraînement interactif sur les formes et signes du second degré.",
+    "type": "exercise",
+    "level": "Première",
+    "subject": "EDS Maths",
+    "chapter": "Second degré",
+    "group_code": "P-EDS-6",
+    "visibility": "group",
+    "url": "/EDS_premiere/Second_Degre/qcm_second_degre.html",
+    "is_active": true
+  },
+  {
+    "id": "terminale-suites-cours",
+    "title": "Cours - Suites",
+    "description": "Cours de spécialité Terminale sur les suites numériques.",
+    "type": "lesson",
+    "level": "Terminale",
+    "subject": "EDS Maths",
+    "chapter": "Suites",
+    "group_code": "T-EDS-3",
+    "visibility": "group",
+    "url": "/EDS_terminale/Suites/cours_suites.html",
+    "is_active": true
+  },
+  {
+    "id": "maths-expertes-arithmetique",
+    "title": "Arithmétique - Divisibilité et congruences",
+    "description": "Chapitre de Maths expertes sur la divisibilité, les congruences et les raisonnements arithmétiques.",
+    "type": "lesson",
+    "level": "Terminale",
+    "subject": "Maths expertes",
+    "chapter": "Arithmétique",
+    "group_code": "MX-1",
+    "visibility": "group",
+    "url": "/Maths_expertes/Arithmetique/Chap1_divisibilite_congruence/chap1_divisibilite_congruence.html",
+    "is_active": true
+  },
+  {
+    "id": "programme-epreuves",
+    "title": "Programme et épreuves",
+    "description": "Repères publics sur les programmes et les épreuves.",
+    "type": "method",
+    "level": "Lycée",
+    "subject": "Mathématiques",
+    "chapter": "Orientation",
+    "group_code": null,
+    "visibility": "authenticated",
+    "url": "/programme-epreuves.html",
+    "is_active": true
+  }
+]

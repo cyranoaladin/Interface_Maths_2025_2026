@@ -1,0 +1,114 @@
+from __future__ import annotations
+
+import secrets
+from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+
+from ..db import get_db
+from ..orm import User, Group, GroupPublic, UserPublic
+from ..security import can_manage_group, get_current_user, require_teacher
+
+
+router = APIRouter(prefix="/groups", tags=["groups"])
+
+
+@router.get("/", response_model=List[GroupPublic])
+async def list_groups(current_user: User = Depends(require_teacher), db: Session = Depends(get_db)):
+    if current_user.role == "admin":
+        groups = db.query(Group).order_by(Group.code.asc()).all()
+    else:
+        user = db.get(User, current_user.id)
+        groups = sorted(user.groups if user else [], key=lambda group: group.code)
+    return [GroupPublic(id=g.id, code=g.code, name=g.name) for g in groups]
+
+
+@router.get("/{code}/students", response_model=List[UserPublic])
+async def list_students_in_group(code: str, current_user: User = Depends(require_teacher), db: Session = Depends(get_db)):
+    grp = db.query(Group).filter_by(code=code).one_or_none()
+    if not grp or not can_manage_group(current_user, code):
+        raise HTTPException(status_code=404, detail="Groupe introuvable")
+    # members relationship is loaded with selectin; ensure order for stable UI
+    students = [m for m in grp.members if m.role == "student"]
+    students.sort(key=lambda u: (u.full_name or u.email).lower())
+    return [
+        UserPublic(
+            id=s.id,
+            email=s.email,
+            full_name=s.full_name,
+            role=s.role,
+            first_name=s.first_name,
+            last_name=s.last_name,
+            must_change_password=s.must_change_password,
+        )
+        for s in students
+    ]
+
+
+@router.get("/my", response_model=List[GroupPublic])
+async def my_groups(me: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    # Return groups for current user (student or teacher)
+    user = db.get(User, me.id)
+    if not user:
+        return []
+    return [GroupPublic(id=g.id, code=g.code, name=g.name) for g in user.groups]
+
+
+@router.post("/{code}/seed-test", response_model=UserPublic)
+async def seed_test_student(code: str, current_user: User = Depends(require_teacher), db: Session = Depends(get_db)):
+    import os
+    if os.getenv("TESTING") != "1":
+        raise HTTPException(status_code=403, detail="disabled")
+    if not can_manage_group(current_user, code):
+        raise HTTPException(status_code=404, detail="Groupe introuvable")
+
+    from ..orm import create_student
+
+    # ensure group exists
+    grp = db.query(Group).filter_by(code=code).one_or_none()
+    if not grp:
+        grp = Group(code=code, name=code)
+        db.add(grp)
+        db.commit()
+        db.refresh(grp)
+
+    # Unique test user per call to avoid cross-test password reset collisions
+    suffix = secrets.token_hex(3)
+    email = f"eleve.test.{code.lower()}.{suffix}@example.com"
+    full_name = f"Élève Test {code}"
+    create_student(db, email=email, full_name=full_name, group_codes=[code])
+
+    # fetch created/updated user
+    user = db.query(User).filter_by(email=email).one()
+    # Note: password is returned only via outputs file for security; not in API
+    return UserPublic(
+        id=user.id,
+        email=user.email,
+        full_name=user.full_name,
+        role=user.role,
+        first_name=user.first_name,
+        last_name=user.last_name,
+        must_change_password=user.must_change_password,
+    )
+
+
+@router.get("/{code}/evaluations")
+async def list_evaluations(code: str, current_user: User = Depends(get_current_user)):
+    """
+    Lists available evaluations for a given group.
+    Currently returns a static list based on the group code.
+    """
+    if current_user.role == "student" and code not in {group.code for group in current_user.groups}:
+        raise HTTPException(status_code=404, detail="Groupe introuvable")
+    if current_user.role == "teacher" and not can_manage_group(current_user, code):
+        raise HTTPException(status_code=404, detail="Groupe introuvable")
+    if code.startswith("P-EDS"):
+        return [
+            {
+                "id": "eval1_second_degre",
+                "title": "Évaluation n°1 — Second degré",
+                "json_path": "/EDS_premiere/Second_Degre/bilans_eval1_second_degre.json"
+            }
+        ]
+    return []

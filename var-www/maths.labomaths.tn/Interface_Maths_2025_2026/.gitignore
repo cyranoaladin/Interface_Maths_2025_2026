@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+
+# Build outputs
+site/dist/
+ui/dist/
+
+# Database
+apps/backend/data/*.db
+apps/backend/data/*.db-shm
+apps/backend/data/*.db-wal
+apps/backend/data/*.db-journal
+
+# Secrets & env
+.env*
+*.env
+!.env.example
+!**/.env.example
+!**/.env.*.example
+deploy/**/env*.*
+deploy/**/.env*
+
+# Generated outputs
+apps/backend/outputs/
+test-results/
+.lighthouseci/
+lhci-reports/
+
+# Backups & temporaries
+*.bak
+*.bak.*
+*.tmp
+*.merge
+*~
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+*.log

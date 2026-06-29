@@ -1,0 +1,61 @@
+;
+; Archive created at 2026-05-24 12:47:42 CET
+;     dbname: correction_db
+;     TOC Entries: 50
+;     Compression: gzip
+;     Dump Version: 1.15-0
+;     Format: CUSTOM
+;     Integer: 4 bytes
+;     Offset: 8 bytes
+;     Dumped from database version: 16.14 (Debian 16.14-1.pgdg12+1)
+;     Dumped by pg_dump version: 16.14 (Debian 16.14-1.pgdg12+1)
+;
+;
+; Selected TOC Entries:
+;
+2; 3079 16475 EXTENSION - vector 
+3747; 0 0 COMMENT - EXTENSION vector 
+216; 1259 16385 TABLE public alembic_version correction_user
+219; 1259 16416 TABLE public copy_pages correction_user
+221; 1259 16452 TABLE public corrections correction_user
+217; 1259 16390 TABLE public exams correction_user
+223; 1259 16819 TABLE public knowledge_chunks correction_user
+222; 1259 16803 TABLE public knowledge_documents correction_user
+218; 1259 16400 TABLE public student_copies correction_user
+220; 1259 16431 TABLE public transcriptions correction_user
+3733; 0 16385 TABLE DATA public alembic_version correction_user
+3736; 0 16416 TABLE DATA public copy_pages correction_user
+3738; 0 16452 TABLE DATA public corrections correction_user
+3734; 0 16390 TABLE DATA public exams correction_user
+3740; 0 16819 TABLE DATA public knowledge_chunks correction_user
+3739; 0 16803 TABLE DATA public knowledge_documents correction_user
+3735; 0 16400 TABLE DATA public student_copies correction_user
+3737; 0 16431 TABLE DATA public transcriptions correction_user
+3554; 2606 16389 CONSTRAINT public alembic_version alembic_version_pkc correction_user
+3561; 2606 16423 CONSTRAINT public copy_pages copy_pages_pkey correction_user
+3569; 2606 16463 CONSTRAINT public corrections corrections_pkey correction_user
+3556; 2606 16399 CONSTRAINT public exams exams_pkey correction_user
+3580; 2606 16827 CONSTRAINT public knowledge_chunks knowledge_chunks_pkey correction_user
+3573; 2606 16813 CONSTRAINT public knowledge_documents knowledge_documents_pkey correction_user
+3559; 2606 16409 CONSTRAINT public student_copies student_copies_pkey correction_user
+3567; 2606 16439 CONSTRAINT public transcriptions transcriptions_pkey correction_user
+3582; 2606 16877 CONSTRAINT public knowledge_chunks uq_knowledge_chunks_doc_chunk correction_user
+3562; 1259 16429 INDEX public ix_copy_pages_copy_id correction_user
+3570; 1259 16469 INDEX public ix_corrections_copy_id correction_user
+3576; 1259 16833 INDEX public ix_knowledge_chunks_document_id correction_user
+3577; 1259 16835 INDEX public ix_knowledge_chunks_embedding_hnsw correction_user
+3578; 1259 16834 INDEX public ix_knowledge_chunks_question_id correction_user
+3557; 1259 16415 INDEX public ix_student_copies_exam_id correction_user
+3564; 1259 16450 INDEX public ix_transcriptions_copy_id correction_user
+3565; 1259 16451 INDEX public ix_transcriptions_page_id correction_user
+3563; 1259 16430 INDEX public uq_copy_pages_copy_id_page_number correction_user
+3571; 1259 16470 INDEX public uq_corrections_copy_id_question_id correction_user
+3574; 1259 16874 INDEX public uq_knowledge_documents_exam_hash correction_user
+3575; 1259 16875 INDEX public uq_knowledge_documents_owner_hash_path correction_user
+3584; 2606 16424 FK CONSTRAINT public copy_pages copy_pages_copy_id_fkey correction_user
+3587; 2606 16464 FK CONSTRAINT public corrections corrections_copy_id_fkey correction_user
+3589; 2606 16828 FK CONSTRAINT public knowledge_chunks knowledge_chunks_document_id_fkey correction_user
+3588; 2606 16814 FK CONSTRAINT public knowledge_documents knowledge_documents_exam_id_fkey correction_user
+3583; 2606 16410 FK CONSTRAINT public student_copies student_copies_exam_id_fkey correction_user
+3585; 2606 16440 FK CONSTRAINT public transcriptions transcriptions_copy_id_fkey correction_user
+3586; 2606 16445 FK CONSTRAINT public transcriptions transcriptions_page_id_fkey correction_user

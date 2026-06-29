@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Progression — Maths expertes (2025–2026)</title>
+  <meta name="description" content="Progression Maths expertes — à venir." />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="icon" href="../../assets/img/icon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="/Maths_expertes/Progression/index.html" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'">
+  <link rel="stylesheet" href="../../assets/css/site.css?v=4" />
+  <script type="module">
+    import { loadLegacyScripts } from '../../assets/js/legacy-loader.js';
+
+    loadLegacyScripts([
+      '../../assets/js/lucide.min.js',
+      '../../assets/js/icons.js',
+      '../../assets/js/theme-toggle.js',
+    ]);
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <div class="wrap">
+    <header class="header-sticky"
+      data-crumbs="Accueil,/index.html|Maths expertes,/Maths_expertes/index.html|Progression,/Maths_expertes/Progression/index.html">
+      <div class="title-block">
+        <img loading="lazy" class="logo" src="../../assets/img/icon.svg" alt="Logo Interface Maths" />
+        <img loading="lazy" class="logo" src="../../assets/img/logo_pmf.svg" alt="Logo Lycée Pierre Mendès France" />
+        <div class="title-text">
+          <h1>Progression — Maths expertes</h1>
+          <small class="subtitle"><span class="i" aria-hidden="true">🎓</span> Alaeddine BEN RHOUMA - Lycée Pierre
+            Mendès France de Tunis</small>
+        </div>
+      </div>
+      <nav aria-label="Navigation principale">
+        <a class="btn" href="../../index.html">Accueil</a>
+        <button id="theme-toggle" class="btn" type="button" aria-pressed="false"
+          aria-label="Basculer le thème">Thème</button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="card">
+        <h2>Progression à venir</h2>
+        <p>Le détail de la progression pour l'option Maths expertes sera ajouté prochainement.</p>
+      </section>
+    </main>
+
+    <footer class="card">
+      <small>© 2025 — Alaeddine Ben Rhouma. Licence CC BY-NC-SA 4.0.</small>
+    </footer>
+  </div>
+  <script type="module">
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const light = root.getAttribute('data-theme') === 'light';
+      root.setAttribute('data-theme', light ? 'dark' : 'light');
+      btn.setAttribute('aria-pressed', String(!light));
+    });
+  </script>
+</body>
+
+</html>

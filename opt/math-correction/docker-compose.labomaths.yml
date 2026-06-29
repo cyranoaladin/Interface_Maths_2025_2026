@@ -1,0 +1,110 @@
+# docker-compose.labomaths.yml
+# Stack workflowcorrection pour intégration dans maths.labomaths.tn
+# Caddy est géré en SERVICE SYSTÈME sur le serveur (pas en Docker).
+# Le backend écoute sur 127.0.0.1:8010 et le frontend sur 127.0.0.1:3011
+# pour que le Caddy système puisse les proxifier sans conflit de ports.
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      APP_ENV: production
+      LOCAL_STORAGE_PATH: /app/storage
+      RAG_PROVIDER: http
+      RAG_HTTP_BASE_URL: http://compose-ingestor-1:8001
+      RAG_HTTP_API_TOKEN: ${RAG_HTTP_API_TOKEN}
+      RAG_HTTP_AUTH_HEADER: Authorization
+      RAG_HTTP_COLLECTION: rag_math_correction
+    volumes:
+      - ./storage:/app/storage
+    ports:
+      - "127.0.0.1:8010:8000"   # Accessible uniquement depuis localhost pour Caddy système
+    networks:
+      - default
+      - rag_external
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      APP_ENV: production
+      LOCAL_STORAGE_PATH: /app/storage
+      RAG_PROVIDER: http
+      RAG_HTTP_BASE_URL: http://compose-ingestor-1:8001
+      RAG_HTTP_API_TOKEN: ${RAG_HTTP_API_TOKEN}
+      RAG_HTTP_AUTH_HEADER: Authorization
+      RAG_HTTP_COLLECTION: rag_math_correction
+    volumes:
+      - ./storage:/app/storage
+    command: celery -A app.workers.celery_app.celery worker --loglevel=INFO --concurrency=2
+    networks:
+      - default
+      - rag_external
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
+        NEXT_PUBLIC_BASE_PATH: /correction
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
+      NEXT_PUBLIC_BASE_PATH: /correction
+    ports:
+      - "127.0.0.1:3011:3000"   # Accessible uniquement depuis localhost pour Caddy système
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+  rag_external:
+    name: compose_rag_ui_net
+    external: true

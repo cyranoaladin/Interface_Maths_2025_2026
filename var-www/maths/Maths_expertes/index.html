@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maths expertes — Ressources</title>
+  <meta name="description"
+    content="Ressources Maths expertes — cartes visuelles avec tags, type et favoris (progression à venir)." />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" href="../assets/img/icon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://maths.labomaths.tn/content/Maths_expertes/index.html" />
+
+  <link rel="stylesheet" href="../assets/css/site.css?v=4" />
+  <script type="module">
+    import { loadLegacyScripts } from '../assets/js/legacy-loader.js';
+
+    loadLegacyScripts([
+      '../assets/js/lucide.min.js',
+      '../assets/js/icons.js',
+      '../assets/js/levels.js',
+      '../assets/js/neon-toggle.js',
+      '../assets/js/theme-toggle.js',
+    ]);
+  </script>
+</head>
+
+<body data-level="Maths_expertes">
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <main id="main">
+    <div class="wrap">
+      <a class="skip-link" href="#contenu">Aller au contenu</a>
+      <header class="header-sticky" data-crumbs="Accueil,/index.html|Maths expertes,/Maths_expertes/index.html">
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <div class="title-block">
+          <img loading="lazy" class="logo" src="../assets/img/icon.svg" alt="Logo Interface Maths" />
+          <img loading="lazy" class="logo" src="../assets/img/logo_pmf.svg" alt="Logo Lycée Pierre Mendès France" />
+          <div class="title-text">
+            <h1>Maths expertes — Ressources</h1>
+            <small class="subtitle"><span class="i" aria-hidden="true">🎓</span> Carte des fiches (progression à
+              venir)</small>
+          </div>
+        </div>
+        <nav aria-label="Navigation principale">
+          <a class="btn" href="Progression/index.html"><i aria-hidden="true"
+              data-lucide="list-checks"></i><span>Progression</span></a>
+          <a class="btn" href="../index.html">Accueil</a>
+          <button id="neon-toggle" class="btn" type="button" aria-pressed="false"
+            aria-label="Activer le mode néon">Néon</button>
+          <button id="theme-toggle" class="btn" type="button" aria-pressed="false"
+            aria-label="Basculer le thème">Thème</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="card">
+          <h2>Ressources</h2>
+          <label for="level-search" class="mb-0">Rechercher</label>
+          <input id="level-search" class="search-input mt-6" type="search" placeholder="Rechercher une ressource…" />
+          <div id="level-filters" class="mt-6">
+            <div id="level-type-filters" class="chips" aria-label="Filtres par type"></div>
+            <div id="level-tag-filters" class="chips mt-6" aria-label="Filtres thématiques"></div>
+            <div class="mt-6">
+              <button id="level-reset-filters" type="button" class="btn btn--secondary">Réinitialiser les
+                filtres</button>
+            </div>
+          </div>
+          <div id="level-cards" class="grid cols-3 mt-8"></div>
+        </section>
+      </main>
+
+      <footer class="block footer-block">
+        <div class="footer-row">
+          <div class="footer-links">
+            <a href="../mentions.html">Mentions légales</a>
+            <a href="../credits.html">Crédits</a>
+          </div>
+          <small>© 2025 — Alaeddine Ben Rhouma • « Les mathématiques sont la poésie des sciences. »</small>
+        </div>
+      </footer>
+    </div>
+    <script type="module">
+      const btn = document.getElementById('theme-toggle');
+      btn?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const light = root.getAttribute('data-theme') === 'light';
+        root.setAttribute('data-theme', light ? 'dark' : 'light');
+        btn.setAttribute('aria-pressed', String(!light));
+      });
+    </script>
+  </main>
+  <script src="/assets/js/accessibility.js"></script>
+</body>
+
+</html>

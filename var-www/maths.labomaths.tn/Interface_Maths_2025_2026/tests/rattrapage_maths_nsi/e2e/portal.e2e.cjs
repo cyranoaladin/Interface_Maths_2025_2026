@@ -5,8 +5,16 @@ const assert = require("node:assert/strict");
 
 const TARGET_URL = process.env.TARGET_URL || "http://127.0.0.1:8877/";
 
+function browserLaunchOptions() {
+  const options = { headless: true };
+  if (process.env.PLAYWRIGHT_CHROME_CHANNEL) {
+    options.channel = process.env.PLAYWRIGHT_CHROME_CHANNEL;
+  }
+  return options;
+}
+
 (async () => {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch(browserLaunchOptions());
   const page = await browser.newPage();
   const externalRequests = [];
   const pageErrors = [];

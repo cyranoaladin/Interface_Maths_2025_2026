@@ -28,23 +28,25 @@ jobs:
         run: |
           docker build --no-cache \
             -t interface-maths/backend:ci \
-            -f deploy/prod/Dockerfile.backend .
+            -f apps/backend/Dockerfile apps/backend
 
       - name: Run container
         run: |
-          docker network create infra_nsi_network || true
           docker run -d --name maths_backend_ci \
-            --network infra_nsi_network \
+            --network bridge \
             -p 127.0.0.1:18001:8000 \
-            -e DATABASE_URL="postgresql+psycopg://u:p@localhost:5432/db" \
+            -e DATABASE_URL="sqlite:////data/ci.db" \
+            -e APP_ENV="production" \
+            -e AUTO_BOOTSTRAP="0" \
+            -e TESTING="0" \
             -e CORS_ORIGINS='["http://localhost"]' \
             -e SERVE_STATIC="false" \
             -e CONTENT_ROOT="/site" \
-            -e SECRET_KEY="ci-secret" \
+            -e SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" \
             interface-maths/backend:ci
           # attendre que ça réponde
           for i in {1..30}; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:18001/api/v1/ping || true)
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:18001/api/health || true)
             if [ "$code" = "200" ]; then echo "app ready"; exit 0; fi
             sleep 1
           done
@@ -52,10 +54,12 @@ jobs:
 
       - name: Smoke tests
         run: |
+          curl -fsS http://127.0.0.1:18001/api/health | jq -e '.ok == true and .database == "ready"' >/dev/null
           curl -fsS http://127.0.0.1:18001/api/v1/ping | jq -e '.ok == true' >/dev/null
           curl -fsS http://127.0.0.1:18001/openapi.json -o /tmp/openapi.json
           jq -e '.openapi and .info and .paths' /tmp/openapi.json >/dev/null
           test "$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:18001/groups/)" = "401"
+          docker exec maths_backend_ci python -c 'import sqlite3; c=sqlite3.connect("/data/ci.db"); assert c.execute("PRAGMA integrity_check").fetchone()[0] == "ok"; counts={name:c.execute("SELECT COUNT(*) FROM "+name).fetchone()[0] for name in ("users","groups","user_groups")}; assert counts == {"users":0,"groups":0,"user_groups":0}; print("SQLite schema, integrity and empty fixture verified")'
 
       - name: Show last logs on failure
         if: failure()
@@ -65,4 +69,3 @@ jobs:
         if: always()
         run: |
           docker rm -f maths_backend_ci || true
-          docker network rm infra_nsi_network || true

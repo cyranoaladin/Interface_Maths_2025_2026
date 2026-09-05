@@ -14,11 +14,12 @@ jobs:
           python-version: '3.11'
       - name: Install deps
         run: |
-          pip install -r apps/backend/requirements.txt
+          python -m pip install --require-hashes -r apps/backend/requirements.lock.txt
+          python -m pip check
       - name: Lint and tests (coverage 55%)
         env:
           TESTING: '1'
         run: |
           cd apps/backend
           flake8 || true
-          pytest --cov=app --cov-report=term-missing --cov-fail-under=55
+          pytest --cov=apps.backend.app --cov-report=term-missing --cov-fail-under=55

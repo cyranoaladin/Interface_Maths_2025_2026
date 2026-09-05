@@ -59,6 +59,7 @@ async def compat_login(
         key="auth_token",
         value=token,
         httponly=True,
+        secure=app_settings.APP_ENV.lower() in {"production", "prod"},
         samesite="lax",
         max_age=3600 * 24
     )
@@ -95,6 +96,7 @@ async def compat_login_form(
         key="auth_token",
         value=token,
         httponly=True,
+        secure=app_settings.APP_ENV.lower() in {"production", "prod"},
         samesite="lax",
         max_age=3600 * 24
     )
@@ -129,6 +131,7 @@ async def compat_login_dev(
         key="auth_token",
         value=token,
         httponly=True,
+        secure=app_settings.APP_ENV.lower() in {"production", "prod"},
         samesite="lax",
         max_age=3600 * 24
     )
@@ -175,8 +178,8 @@ async def compat_session(request: Request, db: Session = Depends(get_db)):
             raise HTTPException(status_code=401, detail="Invalid token payload")
             
         user = db.query(User).filter(User.id == int(user_id)).one_or_none()
-        if not user:
-            raise HTTPException(status_code=401, detail="User not found")
+        if not user or not user.is_active:
+            raise HTTPException(status_code=401, detail="Invalid session")
             
         return UserPublic(
             id=user.id,
@@ -216,8 +219,8 @@ async def compat_change_password(
             raise HTTPException(status_code=422, detail="Password too long")
             
         user = db.query(User).filter(User.id == int(user_id)).one_or_none()
-        if not user:
-            raise HTTPException(status_code=404, detail="User not found")
+        if not user or not user.is_active:
+            raise HTTPException(status_code=401, detail="Invalid session")
             
         user.hashed_password = get_password_hash(new_password)
         db.commit()

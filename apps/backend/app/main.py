@@ -14,6 +14,7 @@ from typing import Callable
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
 from slowapi import Limiter, _rate_limit_exceeded_handler
@@ -36,8 +37,10 @@ async def lifespan(app: FastAPI):
         raise RuntimeError("SECRET_KEY is required when APP_ENV=production")
     if "*" in config.settings.CORS_ORIGINS and config.settings.CORS_ORIGINS:
         raise RuntimeError("CORS_ORIGINS='*' with credentials is a security risk")
-    with suppress(Exception):
+    try:
         db.Base.metadata.create_all(bind=db.engine)
+    except Exception:
+        raise RuntimeError("Database initialization failed") from None
 
     # Optional: auto-bootstrap groups in production when AUTO_BOOTSTRAP=1
     if os.getenv("AUTO_BOOTSTRAP") == "1":
@@ -199,6 +202,18 @@ async def ping():
     return {"ok": True}
 
 
+@app.get("/api/health", include_in_schema=False)
+def database_health():
+    """Check the configured database and essential tables without returning records."""
+    try:
+        with db.engine.connect() as connection:
+            connection.execute(text("SELECT 1 FROM users LIMIT 1"))
+            connection.execute(text("SELECT 1 FROM groups LIMIT 1"))
+    except Exception:
+        raise HTTPException(status_code=503, detail="Service unavailable") from None
+    return {"ok": True, "database": "ready"}
+
+
 @app.get("/api/version", include_in_schema=False)
 def api_version():
     """Returns application version information."""
@@ -215,8 +230,8 @@ async def api_tree():
     """Returns the full directory tree."""
     try:
         return get_full_tree_cached()
-    except RuntimeError as e:
-        raise HTTPException(status_code=500, detail=str(e)) from e
+    except (RuntimeError, OSError):
+        raise HTTPException(status_code=500, detail="Content unavailable") from None
 
 
 @app.get("/api/tree/{subpath:path}", response_model=schemas_tree.DirNode)
